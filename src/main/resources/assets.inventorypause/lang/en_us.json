@@ -1,0 +1,9 @@
+{
+  "text.autoconfig.inventorypause.title": "Inventory Pause Config",
+  "text.autoconfig.inventorypause.option.pauseInventory": "Pause on Inventory",
+  "text.autoconfig.inventorypause.option.pauseFurnace": "Pause on Furnace",
+  "text.autoconfig.inventorypause.option.pauseCraftingTable": "Pause on Crafting Table",
+  "text.autoconfig.inventorypause.option.pauseShulkerBox": "Pause on Shulker Box",
+  "text.autoconfig.inventorypause.option.customScreens": "Custom mod class names",
+  "text.autoconfig.inventorypause.option.debug": "Enable Debug Mode"
+}
