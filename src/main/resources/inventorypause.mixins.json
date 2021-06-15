@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "de.macbrayne.forge.inventorypause.inventorypause.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "inventorypause.refmap.json",
+  "mixins": [
+    "ContainerScreenMixin",
+    "MinecraftMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
