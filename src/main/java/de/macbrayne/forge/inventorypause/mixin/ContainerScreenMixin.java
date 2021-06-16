@@ -3,6 +3,7 @@ package de.macbrayne.forge.inventorypause.mixin;
 import de.macbrayne.forge.inventorypause.utils.ModConfig;
 import de.macbrayne.forge.inventorypause.utils.ScreenHelper;
 import me.shedaniel.autoconfig.AutoConfig;
+import net.minecraft.client.gui.screen.Screen;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,7 +21,7 @@ public class ContainerScreenMixin {
 
     @Inject(method = "isPauseScreen", at = @At("HEAD"), cancellable = true)
     public void isPauseScreen(CallbackInfoReturnable cir) {
-        if(ScreenHelper.isConfiguredScreen(this)) {
+        if(ScreenHelper.isConfiguredScreen((Screen) (Object) this)) {
             cir.setReturnValue(true);
             cir.cancel();
         } else if(config.debug) {
