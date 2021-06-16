@@ -14,7 +14,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
 group = 'de.macbrayne.forge'
-version = 'mc1.16.5_v0.1'
+version = 'mc1.16.5_v0.2'
 archivesBaseName = 'inventorypause'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
