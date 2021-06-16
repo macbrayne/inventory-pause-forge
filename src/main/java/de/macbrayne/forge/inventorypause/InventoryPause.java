@@ -1,7 +1,7 @@
-package de.macbrayne.forge.inventorypause.inventorypause;
+package de.macbrayne.forge.inventorypause;
 
-import de.macbrayne.forge.inventorypause.inventorypause.utils.ForgeConfigHelper;
-import de.macbrayne.forge.inventorypause.inventorypause.utils.ModConfig;
+import de.macbrayne.forge.inventorypause.utils.ForgeConfigHelper;
+import de.macbrayne.forge.inventorypause.utils.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.minecraftforge.api.distmarker.Dist;

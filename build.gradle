@@ -13,7 +13,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
-group = 'de.macbrayne.forge.inventorypause'
+group = 'de.macbrayne.forge'
 version = 'mc1.16.5_v0.1'
 archivesBaseName = 'inventorypause'
 

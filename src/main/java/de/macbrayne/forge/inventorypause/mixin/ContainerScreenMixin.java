@@ -1,7 +1,7 @@
-package de.macbrayne.forge.inventorypause.inventorypause.mixin;
+package de.macbrayne.forge.inventorypause.mixin;
 
-import de.macbrayne.forge.inventorypause.inventorypause.utils.ModConfig;
-import de.macbrayne.forge.inventorypause.inventorypause.utils.ScreenHelper;
+import de.macbrayne.forge.inventorypause.utils.ModConfig;
+import de.macbrayne.forge.inventorypause.utils.ScreenHelper;
 import me.shedaniel.autoconfig.AutoConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
