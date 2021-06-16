@@ -21,11 +21,6 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 
 
 repositories {
     maven { url "https://maven.shedaniel.me/" }
-    maven {
-        //location of the maven for vazkii's mods
-        name "blamejared"
-        url "https://maven.blamejared.com/"
-    }
 }
 
 minecraft {
@@ -154,12 +149,6 @@ dependencies {
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
-    // i'll leave this here commented for easier testing
-    //runtimeOnly fg.deobf("vazkii.arl:AutoRegLib:1.4-35.69")
-    //runtimeOnly fg.deobf("vazkii.quark:Quark:r2.0-212.984")
-    //runtimeOnly fg.deobf("slimeknights.mantle:Mantle:1.16.5-1.6.103")
-    //runtimeOnly fg.deobf("slimeknights.tconstruct:TConstruct:1.16.5-3.0.3.168")
 
     annotationProcessor 'org.spongepowered:mixin:0.8:processor'
 }
