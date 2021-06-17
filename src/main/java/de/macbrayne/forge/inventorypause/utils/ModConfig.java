@@ -2,17 +2,27 @@ package de.macbrayne.forge.inventorypause.utils;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Config(name = "inventorypause")
 public class ModConfig implements ConfigData {
-    boolean pauseInventory = true;
-    boolean pauseFurnace = false;
-    boolean pauseCraftingTable = false;
-    boolean pauseShulkerBox = false;
-    List<String> customScreens = new ArrayList<>();
-
+    public boolean enabled = true;
     public boolean debug = false;
+
+    @ConfigEntry.Category("abilities")
+    @ConfigEntry.Gui.TransitiveObject
+    public Abilities abilities = new Abilities();
+
+    static class Abilities {
+        boolean pauseInventory = true;
+        boolean pauseFurnace = false;
+        boolean pauseCraftingTable = false;
+        boolean pauseShulkerBox = false;
+    }
+
+    @ConfigEntry.Category("modCompat")
+    List<String> customScreens = new ArrayList<>();
 }

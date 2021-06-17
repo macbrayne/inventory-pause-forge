@@ -11,23 +11,23 @@ public class ScreenHelper {
     private static final ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
     public static boolean isConfiguredScreen(Screen screen) {
-        return screen != null && (isInventory(screen) || isFurnace(screen) || isCraftingTable(screen) || isShulkerBox(screen) || isCustomMenu(screen));
+        return screen != null && config.enabled && (isInventory(screen) || isFurnace(screen) || isCraftingTable(screen) || isShulkerBox(screen) || isCustomMenu(screen));
     }
 
     private static boolean isInventory(Screen screen) {
-        return config.pauseInventory && screen instanceof InventoryScreen;
+        return config.abilities.pauseInventory && screen instanceof InventoryScreen;
     }
 
     private static boolean isFurnace(Screen screen) {
-        return config.pauseFurnace && screen instanceof AbstractFurnaceScreen;
+        return config.abilities.pauseFurnace && screen instanceof AbstractFurnaceScreen;
     }
 
     private static boolean isCraftingTable(Screen screen) {
-        return config.pauseCraftingTable && screen instanceof CraftingScreen;
+        return config.abilities.pauseCraftingTable && screen instanceof CraftingScreen;
     }
 
     private static boolean isShulkerBox(Screen screen) {
-        return config.pauseShulkerBox && screen instanceof ShulkerBoxScreen;
+        return config.abilities.pauseShulkerBox && screen instanceof ShulkerBoxScreen;
     }
 
     private static boolean isCustomMenu(Screen screen) {
