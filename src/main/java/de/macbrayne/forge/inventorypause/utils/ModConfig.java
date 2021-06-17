@@ -18,6 +18,7 @@ public class ModConfig implements ConfigData {
 
     static class Abilities {
         boolean pauseInventory = true;
+        boolean pauseCreativeInventory = true;
         boolean pauseFurnace = false;
         boolean pauseCraftingTable = false;
         boolean pauseShulkerBox = false;
