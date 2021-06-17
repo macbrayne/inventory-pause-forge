@@ -189,3 +189,7 @@ task publishModrinth (type: TaskModrinthUpload){ // Make sure it runs after buil
     addLoader('forge')
 }
 
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
