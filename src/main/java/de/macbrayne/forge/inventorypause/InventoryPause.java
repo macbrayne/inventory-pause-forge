@@ -52,7 +52,7 @@ public class InventoryPause {
 
             int line = 0;
             for(Class cl = screen.getClass(); cl.getSuperclass() != null; cl = cl.getSuperclass()) {
-                Minecraft.getInstance().fontRenderer.drawStringWithShadow(new MatrixStack(), cl.getName(), 1f, 1f + 10 * line, 0xffffffff);
+                Minecraft.getInstance().fontRenderer.drawStringWithShadow(new MatrixStack(), cl.getName(), MOD_CONFIG.debugText.x, MOD_CONFIG.debugText.y + 10 * line, 0xffffffff);
                 line++;
             }
         }

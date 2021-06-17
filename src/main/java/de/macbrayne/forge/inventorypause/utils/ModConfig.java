@@ -12,6 +12,14 @@ public class ModConfig implements ConfigData {
     public boolean enabled = true;
     public boolean debug = false;
 
+    @ConfigEntry.Gui.CollapsibleObject
+    public DebugText debugText = new DebugText();
+
+    public static class DebugText {
+        public float x = 4f;
+        public float y = 4f;
+    }
+
     @ConfigEntry.Category("abilities")
     @ConfigEntry.Gui.TransitiveObject
     public Abilities abilities = new Abilities();
