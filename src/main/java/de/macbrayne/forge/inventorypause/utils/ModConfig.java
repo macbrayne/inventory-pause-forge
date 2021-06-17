@@ -18,6 +18,7 @@ public class ModConfig implements ConfigData {
     public static class DebugText {
         public float x = 4f;
         public float y = 4f;
+        public int maxDepth = 3;
     }
 
     @ConfigEntry.Category("abilities")

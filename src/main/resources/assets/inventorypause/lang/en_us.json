@@ -7,6 +7,7 @@
   "text.autoconfig.inventorypause.option.debugText": "Debug Overlay Options",
   "text.autoconfig.inventorypause.option.debugText.x": "X-Coordinate",
   "text.autoconfig.inventorypause.option.debugText.y": "Y-Coordinate",
+  "text.autoconfig.inventorypause.option.debugText.maxDepth": "Maximum Crawl Depth",
 
   "text.autoconfig.inventorypause.category.abilities": "Abilities",
   "text.autoconfig.inventorypause.option.abilities.pauseInventory": "Pause on Inventory",
