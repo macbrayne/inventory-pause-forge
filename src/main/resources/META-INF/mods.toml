@@ -56,3 +56,10 @@ Pause your single player game when Inventory is open
    versionRange="[1.16.5,1.17)"
    ordering="NONE"
    side="BOTH"
+
+[[dependencies.inventorypause]]
+    modId="cloth-config"
+    mandatory=true
+    versionRange="[4.10,)"
+    ordering="NONE"
+    side="CLIENT"
