@@ -1,7 +1,9 @@
 {
   "text.autoconfig.inventorypause.title": "Inventory Pause Config",
 
+
   "text.autoconfig.inventorypause.category.default": "General",
+
   "text.autoconfig.inventorypause.option.enabled": "Enable Mod",
   "text.autoconfig.inventorypause.option.debug": "Enable Debug Mode",
   "text.autoconfig.inventorypause.option.debugText": "Debug Overlay Options",
@@ -9,23 +11,27 @@
   "text.autoconfig.inventorypause.option.debugText.y": "Y-Coordinate",
   "text.autoconfig.inventorypause.option.debugText.maxDepth": "Maximum Crawl Depth",
 
+
   "text.autoconfig.inventorypause.category.abilities": "Abilities",
+
   "text.autoconfig.inventorypause.option.abilities.pauseInventory": "Pause on Inventory",
   "text.autoconfig.inventorypause.option.abilities.pauseCreativeInventory": "Pause on Creative Inventory",
   "text.autoconfig.inventorypause.option.abilities.pauseFurnace": "Pause on Furnace",
   "text.autoconfig.inventorypause.option.abilities.pauseCraftingTable": "Pause on Crafting Table",
   "text.autoconfig.inventorypause.option.abilities.pauseShulkerBox": "Pause on Shulker Box",
+  "text.autoconfig.inventorypause.option.abilities.pauseChest": "Pause on Chests",
+
   "text.autoconfig.inventorypause.option.abilities.additionalGUIs": "Additional GUIs",
   "text.autoconfig.inventorypause.option.abilities.additionalGUIs.pauseAnvil": "Pause on Anvil",
   "text.autoconfig.inventorypause.option.abilities.additionalGUIs.pauseBeacon": "Pause on Beacon",
-  "text.autoconfig.inventorypause.option.abilities.worldGUIs": "World GUIs",
-  "text.autoconfig.inventorypause.option.abilities.worldGUIs.pauseHorse": "Pause on Horse Inventory",
   "text.autoconfig.inventorypause.option.abilities.additionalGUIs.pauseDispenser": "Pause on Dispenser / Dropper",
   "text.autoconfig.inventorypause.option.abilities.additionalGUIs.pauseBrewingStand": "Pause on Brewing Stand",
   "text.autoconfig.inventorypause.option.abilities.additionalGUIs.pauseCartographyTable": "Pause on Cartography Table",
-  "text.autoconfig.inventorypause.option.abilities.pauseChest": "Pause on Chests",
-  "text.autoconfig.inventorypause.option.abilities.worldGUIs.pauseMerchant": "Pause on Villager",
   "text.autoconfig.inventorypause.option.abilities.additionalGUIs.pauseStonecutter": "Pause on Stonecutter",
+
+  "text.autoconfig.inventorypause.option.abilities.worldGUIs": "World GUIs",
+  "text.autoconfig.inventorypause.option.abilities.worldGUIs.pauseHorse": "Pause on Horse Inventory",
+  "text.autoconfig.inventorypause.option.abilities.worldGUIs.pauseMerchant": "Pause on Villager",
 
   "text.autoconfig.inventorypause.category.modCompat": "Mod Compat",
   "text.autoconfig.inventorypause.option.customScreens": "Custom mod class names"

@@ -26,11 +26,6 @@ public class ModConfig implements ConfigData {
     public Abilities abilities = new Abilities();
 
     static class Abilities {
-        static class WorldGUIs {
-            boolean pauseHorse = false;
-            boolean pauseMerchant = false;
-        }
-
         static class AdditionalGUIs {
             boolean pauseAnvil = false;
             boolean pauseBeacon = false;
@@ -38,6 +33,11 @@ public class ModConfig implements ConfigData {
             boolean pauseBrewingStand = false;
             boolean pauseCartographyTable = false;
             boolean pauseStonecutter = false;
+        }
+
+        static class WorldGUIs {
+            boolean pauseHorse = false;
+            boolean pauseMerchant = false;
         }
 
         boolean pauseInventory = true;
