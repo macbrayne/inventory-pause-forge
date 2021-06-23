@@ -19,15 +19,15 @@ public class VanillaHelper {
         configProviderMap.put(AbstractFurnaceScreen.class, (value) -> config.abilities.pauseFurnace);
         configProviderMap.put(CraftingScreen.class, (value) -> config.abilities.pauseCraftingTable);
         configProviderMap.put(ShulkerBoxScreen.class, (value) -> config.abilities.pauseShulkerBox);
-        configProviderMap.put(AnvilScreen.class, (value) -> config.abilities.pauseAnvil);
-        configProviderMap.put(BeaconScreen.class, (value) -> config.abilities.pauseBeacon);
-        configProviderMap.put(HorseInventoryScreen.class, (value) -> config.abilities.pauseHorse);
-        configProviderMap.put(DispenserScreen.class, (value) -> config.abilities.pauseDispenser);
-        configProviderMap.put(BrewingStandScreen.class, (value) -> config.abilities.pauseBrewingStand);
-        configProviderMap.put(CartographyTableScreen.class, (value) -> config.abilities.pauseCartographyTable);
+        configProviderMap.put(AnvilScreen.class, (value) -> config.abilities.additionalGUIs.pauseAnvil);
+        configProviderMap.put(BeaconScreen.class, (value) -> config.abilities.additionalGUIs.pauseBeacon);
+        configProviderMap.put(HorseInventoryScreen.class, (value) -> config.abilities.worldGUIs.pauseHorse);
+        configProviderMap.put(DispenserScreen.class, (value) -> config.abilities.additionalGUIs.pauseDispenser);
+        configProviderMap.put(BrewingStandScreen.class, (value) -> config.abilities.additionalGUIs.pauseBrewingStand);
+        configProviderMap.put(CartographyTableScreen.class, (value) -> config.abilities.additionalGUIs.pauseCartographyTable);
         configProviderMap.put(ChestScreen.class, (value) -> config.abilities.pauseChest);
-        configProviderMap.put(MerchantScreen.class, (value) -> config.abilities.pauseMerchant);
-        configProviderMap.put(StonecutterScreen.class, (value) -> config.abilities.pauseStonecutter);
+        configProviderMap.put(MerchantScreen.class, (value) -> config.abilities.worldGUIs.pauseMerchant);
+        configProviderMap.put(StonecutterScreen.class, (value) -> config.abilities.additionalGUIs.pauseStonecutter);
         vanillaClasses = configProviderMap.keySet().toArray(new Class[0]);
     }
 

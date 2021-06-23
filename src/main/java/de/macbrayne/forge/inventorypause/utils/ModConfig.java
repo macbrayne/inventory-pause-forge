@@ -26,21 +26,32 @@ public class ModConfig implements ConfigData {
     public Abilities abilities = new Abilities();
 
     static class Abilities {
+        static class WorldGUIs {
+            boolean pauseHorse = false;
+            boolean pauseMerchant = false;
+        }
+
+        static class AdditionalGUIs {
+            boolean pauseAnvil = false;
+            boolean pauseBeacon = false;
+            boolean pauseDispenser = false;
+            boolean pauseBrewingStand = false;
+            boolean pauseCartographyTable = false;
+            boolean pauseStonecutter = false;
+        }
+
         boolean pauseInventory = true;
         boolean pauseCreativeInventory = true;
-        boolean pauseFurnace = false;
         boolean pauseCraftingTable = false;
+        boolean pauseFurnace = false;
         boolean pauseShulkerBox = false;
-        boolean pauseAnvil = false;
-        boolean pauseBeacon = false;
-        boolean pauseHorse = false;
-        boolean pauseDispenser = false;
-        boolean pauseBrewingStand = false;
-        boolean pauseCartographyTable = false;
         boolean pauseChest = false;
-        boolean pauseMerchant = false;
-        boolean pauseStonecutter = false;
+        @ConfigEntry.Gui.CollapsibleObject
+        WorldGUIs worldGUIs = new WorldGUIs();
+        @ConfigEntry.Gui.CollapsibleObject
+        AdditionalGUIs additionalGUIs = new AdditionalGUIs();
     }
+
 
     @ConfigEntry.Category("modCompat")
     List<String> customScreens = new ArrayList<>();
