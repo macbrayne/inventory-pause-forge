@@ -10,8 +10,8 @@ import java.util.function.Function;
 
 public class VanillaHelper {
     private static final ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
-    private static final Class[] vanillaClasses;
-    private static Map<Class, Function<Class, Boolean>> configProviderMap = new HashMap<>();
+    private static final Class<?>[] vanillaClasses;
+    private static final Map<Class<?>, Function<Class<?>, Boolean>> configProviderMap = new HashMap<>();
 
     static {
         configProviderMap.put(InventoryScreen.class, (value) -> config.abilities.pauseInventory);
@@ -31,7 +31,7 @@ public class VanillaHelper {
         vanillaClasses = configProviderMap.keySet().toArray(new Class[0]);
     }
 
-    public static boolean handleScreen(Class vanillaClass) {
+    public static boolean handleScreen(Class<?> vanillaClass) {
         if(Arrays.stream(vanillaClasses).noneMatch(vanillaClass::equals)) {
             return false;
         }
