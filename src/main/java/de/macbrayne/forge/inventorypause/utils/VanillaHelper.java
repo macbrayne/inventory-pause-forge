@@ -14,20 +14,27 @@ public class VanillaHelper {
     private static final Map<Class<?>, Function<Class<?>, Boolean>> configProviderMap = new HashMap<>();
 
     static {
+        // Abilities Screen top layer
         configProviderMap.put(InventoryScreen.class, (value) -> config.abilities.pauseInventory);
         configProviderMap.put(CreativeScreen.class, (value) -> config.abilities.pauseCreativeInventory);
         configProviderMap.put(AbstractFurnaceScreen.class, (value) -> config.abilities.pauseFurnace);
         configProviderMap.put(CraftingScreen.class, (value) -> config.abilities.pauseCraftingTable);
         configProviderMap.put(ShulkerBoxScreen.class, (value) -> config.abilities.pauseShulkerBox);
+        configProviderMap.put(ChestScreen.class, (value) -> config.abilities.pauseChest);
+
+        // Additional GUIs
         configProviderMap.put(AnvilScreen.class, (value) -> config.abilities.additionalGUIs.pauseAnvil);
         configProviderMap.put(BeaconScreen.class, (value) -> config.abilities.additionalGUIs.pauseBeacon);
-        configProviderMap.put(HorseInventoryScreen.class, (value) -> config.abilities.worldGUIs.pauseHorse);
         configProviderMap.put(DispenserScreen.class, (value) -> config.abilities.additionalGUIs.pauseDispenser);
         configProviderMap.put(BrewingStandScreen.class, (value) -> config.abilities.additionalGUIs.pauseBrewingStand);
         configProviderMap.put(CartographyTableScreen.class, (value) -> config.abilities.additionalGUIs.pauseCartographyTable);
-        configProviderMap.put(ChestScreen.class, (value) -> config.abilities.pauseChest);
-        configProviderMap.put(MerchantScreen.class, (value) -> config.abilities.worldGUIs.pauseMerchant);
         configProviderMap.put(StonecutterScreen.class, (value) -> config.abilities.additionalGUIs.pauseStonecutter);
+
+        // World GUIs
+        configProviderMap.put(HorseInventoryScreen.class, (value) -> config.abilities.worldGUIs.pauseHorse);
+        configProviderMap.put(MerchantScreen.class, (value) -> config.abilities.worldGUIs.pauseMerchant);
+
+        // Cache keySet to improve performance
         vanillaClasses = configProviderMap.keySet().toArray(new Class[0]);
     }
 
