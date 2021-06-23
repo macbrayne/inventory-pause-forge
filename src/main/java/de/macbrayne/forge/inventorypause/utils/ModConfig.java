@@ -31,6 +31,15 @@ public class ModConfig implements ConfigData {
         boolean pauseFurnace = false;
         boolean pauseCraftingTable = false;
         boolean pauseShulkerBox = false;
+        boolean pauseAnvil = false;
+        boolean pauseBeacon = false;
+        boolean pauseHorse = false;
+        boolean pauseDispenser = false;
+        boolean pauseBrewingStand = false;
+        boolean pauseCartographyTable = false;
+        boolean pauseChest = false;
+        boolean pauseMerchant = false;
+        boolean pauseStonecutter = false;
     }
 
     @ConfigEntry.Category("modCompat")
