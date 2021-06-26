@@ -17,7 +17,9 @@ public class VanillaHelper {
         // Abilities Screen top layer
         configProviderMap.put(InventoryScreen.class, (value) -> config.abilities.pauseInventory);
         configProviderMap.put(CreativeScreen.class, (value) -> config.abilities.pauseCreativeInventory);
-        configProviderMap.put(AbstractFurnaceScreen.class, (value) -> config.abilities.pauseFurnace);
+        configProviderMap.put(FurnaceScreen.class, (value) -> config.abilities.pauseFurnace);
+        configProviderMap.put(SmokerScreen.class, (value) -> config.abilities.pauseFurnace);
+        configProviderMap.put(BlastFurnaceScreen.class, (value) -> config.abilities.pauseFurnace);
         configProviderMap.put(CraftingScreen.class, (value) -> config.abilities.pauseCraftingTable);
         configProviderMap.put(ShulkerBoxScreen.class, (value) -> config.abilities.pauseShulkerBox);
         configProviderMap.put(ChestScreen.class, (value) -> config.abilities.pauseChest);
