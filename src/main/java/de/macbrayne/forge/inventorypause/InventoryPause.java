@@ -1,6 +1,7 @@
 package de.macbrayne.forge.inventorypause;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import de.macbrayne.forge.inventorypause.compat.IronchestCompat;
 import de.macbrayne.forge.inventorypause.compat.WaystonesCompat;
 import de.macbrayne.forge.inventorypause.utils.ForgeConfigHelper;
 import de.macbrayne.forge.inventorypause.utils.ModConfig;
@@ -69,6 +70,8 @@ public class InventoryPause {
         LOGGER.error(Arrays.toString(ModList.get().getMods().toArray()));
         if (ModList.get().isLoaded("waystones")) {
             new WaystonesCompat().register();
+        }if (ModList.get().isLoaded("ironchest")) {
+            new IronchestCompat().register();
         }
     }
 }
