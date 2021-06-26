@@ -7,6 +7,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("CanBeFinal")
 @Config(name = "inventorypause")
 public class ModConfig implements ConfigData {
     public boolean enabled = true;
@@ -59,6 +60,7 @@ public class ModConfig implements ConfigData {
     public static class ModCompat {
         public boolean waystonesCompat = true;
         public boolean ironchestCompat = true;
+
         List<String> customScreens = new ArrayList<>();
     }
 }

@@ -59,7 +59,7 @@ public class InventoryPause {
             Screen screen = event.getGui();
 
             int line = 0;
-            for(Class cl = screen.getClass(); cl.getSuperclass() != null && line < MOD_CONFIG.debugText.maxDepth; cl = cl.getSuperclass()) {
+            for(Class<?> cl = screen.getClass(); cl.getSuperclass() != null && line < MOD_CONFIG.debugText.maxDepth; cl = cl.getSuperclass()) {
                 Minecraft.getInstance().fontRenderer.drawStringWithShadow(new MatrixStack(), cl.getName(), MOD_CONFIG.debugText.x, MOD_CONFIG.debugText.y + 10 * line, 0xffffffff);
                 line++;
             }
