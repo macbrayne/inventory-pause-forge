@@ -1,6 +1,7 @@
 package de.macbrayne.forge.inventorypause;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import de.macbrayne.forge.inventorypause.compat.WaystonesCompat;
 import de.macbrayne.forge.inventorypause.utils.ForgeConfigHelper;
 import de.macbrayne.forge.inventorypause.utils.ModConfig;
 import de.macbrayne.forge.inventorypause.utils.ScreenHelper;
@@ -15,12 +16,17 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.FMLNetworkConstants;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.Arrays;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("inventorypause")
@@ -32,6 +38,7 @@ public class InventoryPause {
         AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
         MOD_CONFIG = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
         ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ForgeConfigHelper::registerConfig);
 
@@ -55,6 +62,13 @@ public class InventoryPause {
                 Minecraft.getInstance().fontRenderer.drawStringWithShadow(new MatrixStack(), cl.getName(), MOD_CONFIG.debugText.x, MOD_CONFIG.debugText.y + 10 * line, 0xffffffff);
                 line++;
             }
+        }
+    }
+
+    private void enqueueIMC(InterModEnqueueEvent event) {
+        LOGGER.error(Arrays.toString(ModList.get().getMods().toArray()));
+        if (ModList.get().isLoaded("waystones")) {
+            new WaystonesCompat().register();
         }
     }
 }
