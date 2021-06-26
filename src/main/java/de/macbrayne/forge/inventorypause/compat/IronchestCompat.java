@@ -17,6 +17,6 @@ public class IronchestCompat implements ModCompat {
 
     @Override
     public Function<Class<?>, Boolean> getConfig() {
-        return (value) -> config.ironchestCompat;
+        return (value) -> config.modCompat.ironchestCompat;
     }
 }

@@ -25,6 +25,10 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.TransitiveObject
     public Abilities abilities = new Abilities();
 
+    @ConfigEntry.Category("modCompat")
+    @ConfigEntry.Gui.TransitiveObject
+    public ModCompat modCompat = new ModCompat();
+
     static class Abilities {
         static class AdditionalGUIs {
             boolean pauseAnvil = false;
@@ -52,11 +56,9 @@ public class ModConfig implements ConfigData {
         AdditionalGUIs additionalGUIs = new AdditionalGUIs();
     }
 
-
-    @ConfigEntry.Category("modCompat")
-    public boolean waystonesCompat = true;
-    @ConfigEntry.Category("modCompat")
-    public boolean ironchestCompat = true;
-    @ConfigEntry.Category("modCompat")
-    List<String> customScreens = new ArrayList<>();
+    public static class ModCompat {
+        public boolean waystonesCompat = true;
+        public boolean ironchestCompat = true;
+        List<String> customScreens = new ArrayList<>();
+    }
 }

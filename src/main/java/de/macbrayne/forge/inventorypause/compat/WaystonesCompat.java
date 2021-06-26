@@ -20,6 +20,6 @@ public class WaystonesCompat implements ModCompat {
 
     @Override
     public Function<Class<?>, Boolean> getConfig() {
-        return (value) -> config.waystonesCompat;
+        return (value) -> config.modCompat.waystonesCompat;
     }
 }
