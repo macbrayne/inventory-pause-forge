@@ -54,5 +54,7 @@ public class ModConfig implements ConfigData {
 
 
     @ConfigEntry.Category("modCompat")
+    public boolean waystonesCompat = true;
+    @ConfigEntry.Category("modCompat")
     List<String> customScreens = new ArrayList<>();
 }

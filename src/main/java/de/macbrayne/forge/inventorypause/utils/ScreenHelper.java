@@ -7,7 +7,8 @@ public class ScreenHelper {
     private static final ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
     public static boolean isConfiguredScreen(Screen screen) {
-        return screen != null && config.enabled && (VanillaHelper.handleScreen(screen.getClass()) || isCustomMenu(screen));
+        return screen != null && config.enabled && (VanillaHelper.handleScreen(screen.getClass()) ||
+                ModHelper.handleScreen(screen.getClass()) || isCustomMenu(screen));
     }
 
     private static boolean isCustomMenu(Screen screen) {
