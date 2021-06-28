@@ -1,9 +1,9 @@
 package de.macbrayne.forge.inventorypause;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import de.macbrayne.forge.inventorypause.compat.AppliedEnergistics2Compat;
-import de.macbrayne.forge.inventorypause.compat.IronchestCompat;
-import de.macbrayne.forge.inventorypause.compat.WaystonesCompat;
+import de.macbrayne.forge.inventorypause.compat.mod.AppliedEnergistics2Compat;
+import de.macbrayne.forge.inventorypause.compat.mod.IronchestCompat;
+import de.macbrayne.forge.inventorypause.compat.mod.WaystonesCompat;
 import de.macbrayne.forge.inventorypause.utils.ForgeConfigHelper;
 import de.macbrayne.forge.inventorypause.utils.ModConfig;
 import de.macbrayne.forge.inventorypause.utils.ScreenHelper;
@@ -27,8 +27,6 @@ import net.minecraftforge.fml.network.FMLNetworkConstants;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.Arrays;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("inventorypause")

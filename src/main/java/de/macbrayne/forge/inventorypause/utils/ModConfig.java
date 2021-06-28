@@ -30,30 +30,32 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.TransitiveObject
     public ModCompat modCompat = new ModCompat();
 
-    static class Abilities {
-        static class AdditionalGUIs {
-            boolean pauseAnvil = false;
-            boolean pauseBeacon = false;
-            boolean pauseDispenser = false;
-            boolean pauseBrewingStand = false;
-            boolean pauseCartographyTable = false;
-            boolean pauseStonecutter = false;
+    public static class Abilities {
+        public static class AdditionalGUIs {
+            public boolean pauseAnvil = false;
+            public boolean pauseBeacon = false;
+            public boolean pauseDispenser = false;
+            public boolean pauseBrewingStand = false;
+            public boolean pauseCartographyTable = false;
+            public boolean pauseStonecutter = false;
         }
 
-        static class WorldGUIs {
-            boolean pauseHorse = false;
-            boolean pauseMerchant = false;
+        public static class WorldGUIs {
+            public boolean pauseHorse = false;
+            public boolean pauseMerchant = false;
         }
 
-        boolean pauseInventory = true;
-        boolean pauseCreativeInventory = true;
-        boolean pauseCraftingTable = false;
-        boolean pauseFurnace = false;
-        boolean pauseShulkerBox = false;
-        boolean pauseChest = false;
+        public boolean pauseInventory = true;
+        public boolean pauseCreativeInventory = true;
+        public boolean pauseCraftingTable = false;
+        public boolean pauseFurnace = false;
+        public boolean pauseShulkerBox = false;
+        public boolean pauseChest = false;
         @ConfigEntry.Gui.CollapsibleObject
+        public
         WorldGUIs worldGUIs = new WorldGUIs();
         @ConfigEntry.Gui.CollapsibleObject
+        public
         AdditionalGUIs additionalGUIs = new AdditionalGUIs();
     }
 

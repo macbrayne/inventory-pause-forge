@@ -1,5 +1,7 @@
 package de.macbrayne.forge.inventorypause.utils;
 
+import de.macbrayne.forge.inventorypause.compat.ModHelper;
+import de.macbrayne.forge.inventorypause.compat.VanillaHelper;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.gui.screen.Screen;
 

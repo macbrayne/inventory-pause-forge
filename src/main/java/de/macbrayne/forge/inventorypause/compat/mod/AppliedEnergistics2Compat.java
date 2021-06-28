@@ -1,8 +1,9 @@
-package de.macbrayne.forge.inventorypause.compat;
+package de.macbrayne.forge.inventorypause.compat.mod;
 
 import appeng.client.gui.implementations.*;
+import de.macbrayne.forge.inventorypause.compat.ModCompat;
+import de.macbrayne.forge.inventorypause.compat.ModHelper;
 import de.macbrayne.forge.inventorypause.utils.ModConfig;
-import de.macbrayne.forge.inventorypause.utils.ModHelper;
 import me.shedaniel.autoconfig.AutoConfig;
 
 import java.util.function.Function;
