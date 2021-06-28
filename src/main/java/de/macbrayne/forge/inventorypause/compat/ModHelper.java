@@ -2,6 +2,7 @@ package de.macbrayne.forge.inventorypause.compat;
 
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;
+import net.minecraft.client.gui.screen.inventory.AbstractFurnaceScreen;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,7 +10,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class ModHelper {
-    private static final ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
     private static Class<?>[] modClasses = new Class[0];
     private static final Map<Class<?>, Function<Class<?>, Boolean>> configProviderMap = new HashMap<>();
 
@@ -19,10 +19,10 @@ public class ModHelper {
         modClasses = configProviderMap.keySet().toArray(new Class[0]);
     }
 
-    public static boolean handleScreen(Class<?> vanillaClass) {
-        if(Arrays.stream(modClasses).noneMatch(vanillaClass::equals)) {
+    public static boolean handleScreen(Class<?> screenClass) {
+        if(Arrays.stream(modClasses).noneMatch(screenClass::equals)) {
             return false;
         }
-        return configProviderMap.get(vanillaClass).apply(vanillaClass);
+        return configProviderMap.get(screenClass).apply(screenClass);
     }
 }

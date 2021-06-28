@@ -41,11 +41,11 @@ public class VanillaHelper {
         vanillaClasses = configProviderMap.keySet().toArray(new Class[0]);
     }
 
-    public static boolean handleScreen(Class<?> vanillaClass) {
-        if(Arrays.stream(vanillaClasses).noneMatch(vanillaClass::equals)) {
+    public static boolean handleScreen(Class<?> screenClass) {
+        if(Arrays.stream(vanillaClasses).noneMatch(screenClass::equals)) {
             return false;
         }
-        return configProviderMap.get(vanillaClass).apply(vanillaClass);
+        return configProviderMap.get(screenClass).apply(screenClass);
     }
 
 }
