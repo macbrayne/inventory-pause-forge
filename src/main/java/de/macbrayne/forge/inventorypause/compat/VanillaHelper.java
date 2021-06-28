@@ -6,8 +6,10 @@ import net.minecraft.client.gui.screen.inventory.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class VanillaHelper {
     private static final ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
@@ -18,9 +20,7 @@ public class VanillaHelper {
         // Abilities Screen top layer
         configProviderMap.put(InventoryScreen.class, (value) -> config.abilities.pauseInventory);
         configProviderMap.put(CreativeScreen.class, (value) -> config.abilities.pauseCreativeInventory);
-        configProviderMap.put(FurnaceScreen.class, (value) -> config.abilities.pauseFurnace);
-        configProviderMap.put(SmokerScreen.class, (value) -> config.abilities.pauseFurnace);
-        configProviderMap.put(BlastFurnaceScreen.class, (value) -> config.abilities.pauseFurnace);
+        configProviderMap.put(AbstractFurnaceScreen.class, (value) -> config.abilities.pauseFurnace);
         configProviderMap.put(CraftingScreen.class, (value) -> config.abilities.pauseCraftingTable);
         configProviderMap.put(ShulkerBoxScreen.class, (value) -> config.abilities.pauseShulkerBox);
         configProviderMap.put(ChestScreen.class, (value) -> config.abilities.pauseChest);
@@ -42,10 +42,15 @@ public class VanillaHelper {
     }
 
     public static boolean handleScreen(Class<?> screenClass) {
-        if(Arrays.stream(vanillaClasses).noneMatch(screenClass::equals)) {
+        List<Class<?>> applicableClasses = getApplicableClasses(screenClass);
+        if(applicableClasses.isEmpty()) {
             return false;
         }
-        return configProviderMap.get(screenClass).apply(screenClass);
+        return configProviderMap.get(applicableClasses.get(0)).apply(screenClass);
+    }
+
+    private static List<Class<?>> getApplicableClasses(Class<?> screenClass) {
+        return Arrays.stream(vanillaClasses).filter((vanillaClass -> vanillaClass.isAssignableFrom(screenClass))).collect(Collectors.toList());
     }
 
 }
