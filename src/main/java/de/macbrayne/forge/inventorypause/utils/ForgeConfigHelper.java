@@ -1,5 +1,6 @@
 package de.macbrayne.forge.inventorypause.utils;
 
+import de.macbrayne.forge.inventorypause.common.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;

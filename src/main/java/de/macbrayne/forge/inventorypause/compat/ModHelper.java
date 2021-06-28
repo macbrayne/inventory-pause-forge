@@ -1,6 +1,6 @@
 package de.macbrayne.forge.inventorypause.compat;
 
-import de.macbrayne.forge.inventorypause.utils.ModConfig;
+import de.macbrayne.forge.inventorypause.common.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 
 import java.util.Arrays;

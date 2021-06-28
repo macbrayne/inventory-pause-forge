@@ -1,4 +1,4 @@
-package de.macbrayne.forge.inventorypause.utils;
+package de.macbrayne.forge.inventorypause.common;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;

@@ -1,4 +1,4 @@
-package de.macbrayne.forge.inventorypause.utils;
+package de.macbrayne.forge.inventorypause.common;
 
 import de.macbrayne.forge.inventorypause.compat.ModHelper;
 import de.macbrayne.forge.inventorypause.compat.VanillaHelper;

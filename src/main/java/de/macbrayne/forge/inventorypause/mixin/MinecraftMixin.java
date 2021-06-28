@@ -1,6 +1,6 @@
 package de.macbrayne.forge.inventorypause.mixin;
 
-import de.macbrayne.forge.inventorypause.utils.ScreenHelper;
+import de.macbrayne.forge.inventorypause.common.ScreenHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.screen.Screen;
