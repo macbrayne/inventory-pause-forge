@@ -13,11 +13,13 @@ public class ModHelper {
 
     public static void register(Class<?> modClass, Function<Class<?>, Boolean> configProvider) {
         configProviderMap.put(modClass, configProvider);
-        // Cache keySet to improve performance
-        modClasses = configProviderMap.keySet().toArray(new Class[0]);
     }
 
     public static boolean handleScreen(Class<?> screenClass) {
+        // Cache keySet to improve performance
+        if(modClasses == null) {
+            modClasses = configProviderMap.keySet().toArray(new Class[0]);
+        }
         List<Class<?>> applicableClasses = getApplicableClasses(screenClass);
         if(applicableClasses.isEmpty()) {
             return false;
