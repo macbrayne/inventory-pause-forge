@@ -170,6 +170,7 @@ dependencies {
     compileOnly fg.deobf('curse.maven:waystones-245755:3332276')
     compileOnly fg.deobf('curse.maven:ironchest-228756:3105315')
     compileOnly fg.deobf("appeng:appliedenergistics2:8.4.0")
+    compileOnly fg.deobf('curse.maven:chisels-bits-231095:3234842')
 
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
