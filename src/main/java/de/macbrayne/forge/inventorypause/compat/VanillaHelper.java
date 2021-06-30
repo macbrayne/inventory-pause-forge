@@ -6,15 +6,14 @@ import net.minecraft.client.gui.screen.inventory.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class VanillaHelper {
     private static final ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
     private static final Class<?>[] vanillaClasses;
-    private static final Map<Class<?>, Function<Class<?>, Boolean>> configProviderMap = new HashMap<>();
+    private static final Map<Class<?>, Function<Class<?>, Boolean>> configProviderMap = new HashMap<>(14);
 
     static {
         // Abilities Screen top layer
@@ -42,15 +41,15 @@ public class VanillaHelper {
     }
 
     public static boolean handleScreen(Class<?> screenClass) {
-        List<Class<?>> applicableClasses = getApplicableClasses(screenClass);
-        if(applicableClasses.isEmpty()) {
+        Optional<Class<?>> registeredParentClass = getRegisteredParentClass(screenClass);
+        if(!registeredParentClass.isPresent()) {
             return false;
         }
-        return configProviderMap.get(applicableClasses.get(0)).apply(screenClass);
+        return configProviderMap.get(registeredParentClass.get()).apply(screenClass);
     }
 
-    private static List<Class<?>> getApplicableClasses(Class<?> screenClass) {
-        return Arrays.stream(vanillaClasses).filter((vanillaClass -> vanillaClass.isAssignableFrom(screenClass))).collect(Collectors.toList());
+    private static Optional<Class<?>> getRegisteredParentClass(Class<?> screenClass) {
+        return Arrays.stream(vanillaClasses).filter((vanillaClass -> vanillaClass.isAssignableFrom(screenClass))).findFirst();
     }
 
 }

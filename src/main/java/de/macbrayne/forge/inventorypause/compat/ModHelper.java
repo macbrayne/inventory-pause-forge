@@ -1,11 +1,7 @@
 package de.macbrayne.forge.inventorypause.compat;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class ModHelper {
     private static Class<?>[] modClasses = new Class[0];
@@ -20,14 +16,14 @@ public class ModHelper {
         if(modClasses == null) {
             modClasses = configProviderMap.keySet().toArray(new Class[0]);
         }
-        List<Class<?>> applicableClasses = getApplicableClasses(screenClass);
-        if(applicableClasses.isEmpty()) {
+        Optional<Class<?>> registeredParentClass = getRegisteredParentClass(screenClass);
+        if(!registeredParentClass.isPresent()) {
             return false;
         }
-        return configProviderMap.get(applicableClasses.get(0)).apply(screenClass);
+        return configProviderMap.get(registeredParentClass.get()).apply(screenClass);
     }
 
-    private static List<Class<?>> getApplicableClasses(Class<?> screenClass) {
-        return Arrays.stream(modClasses).filter((vanillaClass -> vanillaClass.isAssignableFrom(screenClass))).collect(Collectors.toList());
+    private static Optional<Class<?>> getRegisteredParentClass(Class<?> screenClass) {
+        return Arrays.stream(modClasses).filter((modClass -> modClass.isAssignableFrom(screenClass))).findFirst();
     }
 }
