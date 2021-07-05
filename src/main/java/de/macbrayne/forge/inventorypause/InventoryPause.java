@@ -1,10 +1,10 @@
 package de.macbrayne.forge.inventorypause;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import de.macbrayne.forge.inventorypause.compat.mod.*;
-import de.macbrayne.forge.inventorypause.utils.ForgeConfigHelper;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
+import de.macbrayne.forge.inventorypause.utils.ForgeConfigHelper;
+import de.macbrayne.forge.inventorypause.utils.ModCompatHelper;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.minecraft.client.Minecraft;
@@ -16,7 +16,6 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ExtensionPoint;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
@@ -64,23 +63,6 @@ public class InventoryPause {
     }
 
     private void enqueueIMC(InterModEnqueueEvent event) {
-        if (ModList.get().isLoaded("waystones")) {
-            new WaystonesCompat().register();
-        }
-        if (ModList.get().isLoaded("ironchest")) {
-            new IronchestCompat().register();
-        }
-        if (ModList.get().isLoaded("appliedenergistics2")) {
-            new AppliedEnergistics2Compat().register();
-        }
-        if (ModList.get().isLoaded("twilightforest")) {
-            new TheTwilightForestCompat().register();
-        }
-        if (ModList.get().isLoaded("botania")) {
-            new BotaniaCompat().register();
-        }
-        if (ModList.get().isLoaded("curios")) {
-            new CuriosCompat().register();
-        }
+        ModCompatHelper.registerModCompat();
     }
 }
