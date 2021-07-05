@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class VanillaHelper {
+public class VanillaScreenDictionary {
     private static final ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
     private static final Class<?>[] vanillaClasses;
     private static final Map<Class<?>, Function<Class<?>, Boolean>> configProviderMap = new HashMap<>(14);
@@ -45,6 +45,7 @@ public class VanillaHelper {
         if(!registeredParentClass.isPresent()) {
             return false;
         }
+
         return configProviderMap.get(registeredParentClass.get()).apply(screenClass);
     }
 

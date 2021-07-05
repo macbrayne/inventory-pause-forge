@@ -1,15 +1,14 @@
 package de.macbrayne.forge.inventorypause.compat.mod;
 
 import com.progwml6.ironchest.client.screen.IronChestScreen;
-import de.macbrayne.forge.inventorypause.compat.ModCompat;
-import de.macbrayne.forge.inventorypause.compat.ModHelper;
+import de.macbrayne.forge.inventorypause.compat.ModScreenDictionary;
 
 import java.util.function.Function;
 
 public class IronchestCompat implements ModCompat {
     @Override
     public void register() {
-        ModHelper.register(IronChestScreen.class, getConfig());
+        ModScreenDictionary.register(IronChestScreen.class, getConfig());
     }
 
     @Override

@@ -1,4 +1,4 @@
-package de.macbrayne.forge.inventorypause.compat;
+package de.macbrayne.forge.inventorypause.compat.mod;
 
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;

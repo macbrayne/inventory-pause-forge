@@ -3,7 +3,7 @@ package de.macbrayne.forge.inventorypause.compat;
 import java.util.*;
 import java.util.function.Function;
 
-public class ModHelper {
+public class ModScreenDictionary {
     private static Class<?>[] modClasses = new Class[0];
     private static final Map<Class<?>, Function<Class<?>, Boolean>> configProviderMap = new HashMap<>();
     private static boolean dirty;
@@ -18,6 +18,7 @@ public class ModHelper {
         if(dirty || modClasses == null) {
             modClasses = configProviderMap.keySet().toArray(new Class[0]);
         }
+
         dirty = false;
         Optional<Class<?>> registeredParentClass = getRegisteredParentClass(screenClass);
         if(!registeredParentClass.isPresent()) {
