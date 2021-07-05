@@ -11,11 +11,11 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class VanillaScreenDictionary {
-    private static final ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
-    private static final Class<?>[] vanillaClasses;
-    private static final Map<Class<?>, Function<Class<?>, Boolean>> configProviderMap = new HashMap<>(14);
+    private final ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+    private final Class<?>[] vanillaClasses;
+    private final Map<Class<?>, Function<Class<?>, Boolean>> configProviderMap = new HashMap<>(14);
 
-    static {
+    public VanillaScreenDictionary() {
         // Abilities Screen top layer
         configProviderMap.put(InventoryScreen.class, (value) -> config.abilities.pauseInventory);
         configProviderMap.put(CreativeScreen.class, (value) -> config.abilities.pauseCreativeInventory);
@@ -38,9 +38,10 @@ public class VanillaScreenDictionary {
 
         // Cache keySet to improve performance
         vanillaClasses = configProviderMap.keySet().toArray(new Class[0]);
+
     }
 
-    public static boolean handleScreen(Class<?> screenClass) {
+    public boolean handleScreen(Class<?> screenClass) {
         Optional<Class<?>> registeredParentClass = getRegisteredParentClass(screenClass);
         if(!registeredParentClass.isPresent()) {
             return false;
@@ -49,7 +50,7 @@ public class VanillaScreenDictionary {
         return configProviderMap.get(registeredParentClass.get()).apply(screenClass);
     }
 
-    private static Optional<Class<?>> getRegisteredParentClass(Class<?> screenClass) {
+    private Optional<Class<?>> getRegisteredParentClass(Class<?> screenClass) {
         return Arrays.stream(vanillaClasses).filter((vanillaClass -> vanillaClass.isAssignableFrom(screenClass))).findFirst();
     }
 

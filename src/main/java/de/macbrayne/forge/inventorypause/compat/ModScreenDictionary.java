@@ -4,16 +4,16 @@ import java.util.*;
 import java.util.function.Function;
 
 public class ModScreenDictionary {
-    private static Class<?>[] modClasses = new Class[0];
-    private static final Map<Class<?>, Function<Class<?>, Boolean>> configProviderMap = new HashMap<>();
-    private static boolean dirty;
+    private Class<?>[] modClasses = new Class[0];
+    private final Map<Class<?>, Function<Class<?>, Boolean>> configProviderMap = new HashMap<>();
+    private boolean dirty;
 
-    public static void register(Class<?> modClass, Function<Class<?>, Boolean> configProvider) {
+    public void register(Class<?> modClass, Function<Class<?>, Boolean> configProvider) {
         configProviderMap.put(modClass, configProvider);
         dirty = true;
     }
 
-    public static boolean handleScreen(Class<?> screenClass) {
+    public boolean handleScreen(Class<?> screenClass) {
         // Cache keySet to improve performance
         if(dirty || modClasses == null) {
             modClasses = configProviderMap.keySet().toArray(new Class[0]);
@@ -27,7 +27,7 @@ public class ModScreenDictionary {
         return configProviderMap.get(registeredParentClass.get()).apply(screenClass);
     }
 
-    private static Optional<Class<?>> getRegisteredParentClass(Class<?> screenClass) {
+    private Optional<Class<?>> getRegisteredParentClass(Class<?> screenClass) {
         return Arrays.stream(modClasses).filter((modClass -> modClass.isAssignableFrom(screenClass))).findFirst();
     }
 }
