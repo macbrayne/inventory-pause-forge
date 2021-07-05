@@ -62,6 +62,9 @@ public class ModConfig implements ConfigData {
     public static class ModCompat {
         public boolean waystonesCompat = true;
         public boolean ironchestCompat = true;
+        public boolean botaniaCompat = true;
+        public boolean curiosCompat = true;
+        public boolean theTwilightForestCompat = true;
 
         List<String> customScreens = new ArrayList<>();
     }

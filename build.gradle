@@ -32,10 +32,12 @@ repositories {
     maven {
         name "Modmaven"
         url "https://modmaven.dev/"
-        // For Gradle 5.1 and above, limit it to just AE2
-        content {
-            includeGroup 'appeng'
-        }
+    }
+    maven {
+        url 'https://maven.blamejared.com'
+    }
+    maven {
+        url = "https://maven.theillusivec4.top/"
     }
 }
 
@@ -153,24 +155,36 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.16.5-36.1.31'
 
-    // You may put jars on which you depend on in ./libs or you may define them like so..
-    // compile "some.group:artifact:version:classifier"
-    // compile "some.group:artifact:version"
-
-    // Real examples
-    // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
+    // Mod Dependencies
     compile fg.deobf("me.shedaniel.cloth:cloth-config-forge:${project.cloth_version}")
 
-    // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+    // Compat Dependencies
 
-    // These dependencies get remapped to your current MCP mappings
-    // deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+    // Waystones
+    // runtimeOnly fg.deobf('curse.maven:waystones-245755:3332276')
     compileOnly fg.deobf('curse.maven:waystones-245755:3332276')
+
+    // IronChest
+    // runtimeOnly fg.deobf('curse.maven:ironchest-228756:3105315')
     compileOnly fg.deobf('curse.maven:ironchest-228756:3105315')
+
+    // AppliedEnergistics2
+    // runtimeOnly fg.deobf("appeng:appliedenergistics2:8.4.0")
     compileOnly fg.deobf("appeng:appliedenergistics2:8.4.0")
-    compileOnly fg.deobf('curse.maven:chisels-bits-231095:3234842')
+
+    // The Twilight Forest Mod
+    // runtimeOnly fg.deobf('curse.maven:the-twilight-forest-227639:3334287')
+    compileOnly fg.deobf('curse.maven:the-twilight-forest-227639:3334287')
+
+    // Curios Mod
+    // runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.2")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.2")
+
+    // Botania Mod
+    // runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.1")
+    // runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.107")
+    // runtimeOnly fg.deobf("vazkii.botania:Botania:1.16.5-418")
+    compileOnly fg.deobf("vazkii.botania:Botania:1.16.5-418")
 
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html

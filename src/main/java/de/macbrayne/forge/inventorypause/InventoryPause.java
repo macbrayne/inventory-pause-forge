@@ -1,9 +1,7 @@
 package de.macbrayne.forge.inventorypause;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import de.macbrayne.forge.inventorypause.compat.mod.AppliedEnergistics2Compat;
-import de.macbrayne.forge.inventorypause.compat.mod.IronchestCompat;
-import de.macbrayne.forge.inventorypause.compat.mod.WaystonesCompat;
+import de.macbrayne.forge.inventorypause.compat.mod.*;
 import de.macbrayne.forge.inventorypause.utils.ForgeConfigHelper;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
@@ -74,6 +72,15 @@ public class InventoryPause {
         }
         if (ModList.get().isLoaded("appliedenergistics2")) {
             new AppliedEnergistics2Compat().register();
+        }
+        if (ModList.get().isLoaded("twilightforest")) {
+            new TheTwilightForestCompat().register();
+        }
+        if (ModList.get().isLoaded("botania")) {
+            new BotaniaCompat().register();
+        }
+        if (ModList.get().isLoaded("curios")) {
+            new CuriosCompat().register();
         }
     }
 }

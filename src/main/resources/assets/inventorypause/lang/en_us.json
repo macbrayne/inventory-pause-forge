@@ -36,5 +36,8 @@
   "text.autoconfig.inventorypause.category.modCompat": "Mod Compat",
   "text.autoconfig.inventorypause.option.modCompat.waystonesCompat": "Waystones Compat",
   "text.autoconfig.inventorypause.option.modCompat.ironchestCompat": "Iron Chest Compat",
+  "text.autoconfig.inventorypause.option.modCompat.botaniaCompat": "Botania Compat",
+  "text.autoconfig.inventorypause.option.modCompat.curiosCompat": "Curios Compat",
+  "text.autoconfig.inventorypause.option.modCompat.theTwilightForestCompat": "The Twilight Forest Compat",
   "text.autoconfig.inventorypause.option.modCompat.customScreens": "Custom mod class names"
 }
