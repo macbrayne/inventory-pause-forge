@@ -2,7 +2,7 @@ package de.macbrayne.forge.inventorypause;
 
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.utils.ForgeConfigHelper;
-import de.macbrayne.forge.inventorypause.utils.ModCompatHelper;
+import de.macbrayne.forge.inventorypause.utils.ForgeLifetimeEvents;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.minecraftforge.api.distmarker.Dist;
@@ -25,14 +25,10 @@ public class InventoryPause {
         AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
         MOD_CONFIG = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ForgeLifetimeEvents::enqueueIMC);
         ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ForgeConfigHelper::registerConfig);
 
         MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    private void enqueueIMC(InterModEnqueueEvent event) {
-        ModCompatHelper.registerModCompat();
     }
 }
