@@ -17,6 +17,10 @@ public class ModScreenDictionary {
         dirty = true;
     }
 
+    public void register(Class<?> mod, @Nonnull BooleanSupplier configProvider, @Nonnull BooleanSupplier customConfigProvider) {
+        register(mod, () -> configProvider.getAsBoolean() && customConfigProvider.getAsBoolean());
+    }
+
     public boolean handleScreen(@Nonnull Class<?> screenClass) {
         // Cache keySet to improve performance
         if(dirty || modClasses == null) {

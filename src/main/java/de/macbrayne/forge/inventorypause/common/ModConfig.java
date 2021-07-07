@@ -1,5 +1,7 @@
 package de.macbrayne.forge.inventorypause.common;
 
+import de.macbrayne.forge.inventorypause.compat.mod.AppliedEnergistics2Compat;
+import de.macbrayne.forge.inventorypause.compat.mod.WaystonesCompat;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
@@ -65,7 +67,15 @@ public class ModConfig implements ConfigData {
         public boolean botaniaCompat = true;
         public boolean curiosCompat = true;
         public boolean theTwilightForestCompat = true;
+        public FineTuning fineTuning = new FineTuning();
 
         List<String> customScreens = new ArrayList<>();
+
+        public static class FineTuning {
+            @ConfigEntry.Gui.Excluded
+            public WaystonesCompat.WaystonesConfig waystonesConfig = new WaystonesCompat.WaystonesConfig();
+            @ConfigEntry.Gui.Excluded
+            public AppliedEnergistics2Compat.AppliedEnergistics2Config appliedEnergistics2Config = new AppliedEnergistics2Compat.AppliedEnergistics2Config();
+        }
     }
 }
