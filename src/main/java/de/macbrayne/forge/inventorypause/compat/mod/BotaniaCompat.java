@@ -3,8 +3,6 @@ package de.macbrayne.forge.inventorypause.compat.mod;
 import vazkii.botania.client.gui.bag.GuiFlowerBag;
 import vazkii.botania.client.gui.box.GuiBaubleBox;
 
-import java.util.function.Function;
-
 public class BotaniaCompat implements ModCompat {
     @Override
     public void register() {
@@ -13,7 +11,7 @@ public class BotaniaCompat implements ModCompat {
     }
 
     @Override
-    public Function<Class<?>, Boolean> getConfig() {
-        return value -> config.modCompat.botaniaCompat;
+    public boolean getConfigKey() {
+        return config.modCompat.botaniaCompat;
     }
 }

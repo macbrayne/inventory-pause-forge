@@ -1,14 +1,17 @@
 package de.macbrayne.forge.inventorypause.compat;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.BooleanSupplier;
 
 public class ModScreenDictionary {
     private Class<?>[] modClasses = new Class[0];
-    private final Map<Class<?>, Function<Class<?>, Boolean>> configProviderMap = new HashMap<>();
+    private final Map<Class<?>, BooleanSupplier> configProviderMap = new HashMap<>();
     private boolean dirty;
 
-    public void register(Class<?> modClass, Function<Class<?>, Boolean> configProvider) {
+    public void register(Class<?> modClass, BooleanSupplier configProvider) {
         configProviderMap.put(modClass, configProvider);
         dirty = true;
     }
@@ -24,7 +27,7 @@ public class ModScreenDictionary {
         if(!registeredParentClass.isPresent()) {
             return false;
         }
-        return configProviderMap.get(registeredParentClass.get()).apply(screenClass);
+        return configProviderMap.get(registeredParentClass.get()).getAsBoolean();
     }
 
     private Optional<Class<?>> getRegisteredParentClass(Class<?> screenClass) {

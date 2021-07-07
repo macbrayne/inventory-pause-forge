@@ -2,8 +2,6 @@ package de.macbrayne.forge.inventorypause.compat.mod;
 
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
-import java.util.function.Function;
-
 public class CuriosCompat implements ModCompat {
     @Override
     public void register() {
@@ -11,7 +9,7 @@ public class CuriosCompat implements ModCompat {
     }
 
     @Override
-    public Function<Class<?>, Boolean> getConfig() {
-        return value -> config.modCompat.curiosCompat;
+    public boolean getConfigKey() {
+        return config.modCompat.curiosCompat;
     }
 }

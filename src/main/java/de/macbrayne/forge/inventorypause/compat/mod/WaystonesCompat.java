@@ -5,8 +5,6 @@ import net.blay09.mods.waystones.client.gui.screen.WarpPlateScreen;
 import net.blay09.mods.waystones.client.gui.screen.WaystoneSelectionScreen;
 import net.blay09.mods.waystones.client.gui.screen.WaystoneSettingsScreen;
 
-import java.util.function.Function;
-
 public class WaystonesCompat implements ModCompat {
     @Override
     public void register() {
@@ -17,7 +15,7 @@ public class WaystonesCompat implements ModCompat {
     }
 
     @Override
-    public Function<Class<?>, Boolean> getConfig() {
-        return (value) -> config.modCompat.waystonesCompat;
+    public boolean getConfigKey() {
+        return config.modCompat.waystonesCompat;
     }
 }

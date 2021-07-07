@@ -2,8 +2,6 @@ package de.macbrayne.forge.inventorypause.compat.mod;
 
 import appeng.client.gui.implementations.*;
 
-import java.util.function.Function;
-
 public class AppliedEnergistics2Compat implements ModCompat {
     @Override
     public void register() {
@@ -33,7 +31,7 @@ public class AppliedEnergistics2Compat implements ModCompat {
     }
 
     @Override
-    public Function<Class<?>, Boolean> getConfig() {
-        return (value) -> config.modCompat.ironchestCompat;
+    public boolean getConfigKey() {
+        return config.modCompat.ironchestCompat;
     }
 }
