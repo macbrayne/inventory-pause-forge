@@ -4,6 +4,7 @@ import de.macbrayne.forge.inventorypause.common.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.gui.screen.inventory.*;
 
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,16 +42,12 @@ public class VanillaScreenDictionary {
 
     }
 
-    public boolean handleScreen(Class<?> screenClass) {
+    public boolean handleScreen(@Nonnull Class<?> screenClass) {
         Optional<Class<?>> registeredParentClass = getRegisteredParentClass(screenClass);
-        if(!registeredParentClass.isPresent()) {
-            return false;
-        }
-
-        return configProviderMap.get(registeredParentClass.get()).getAsBoolean();
+        return registeredParentClass.filter(aClass -> configProviderMap.get(aClass).getAsBoolean()).isPresent();
     }
 
-    private Optional<Class<?>> getRegisteredParentClass(Class<?> screenClass) {
+    private Optional<Class<?>> getRegisteredParentClass(@Nonnull Class<?> screenClass) {
         return Arrays.stream(vanillaClasses).filter((vanillaClass -> vanillaClass.isAssignableFrom(screenClass))).findFirst();
     }
 

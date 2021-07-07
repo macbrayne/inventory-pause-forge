@@ -1,5 +1,6 @@
 package de.macbrayne.forge.inventorypause.compat;
 
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,12 +12,12 @@ public class ModScreenDictionary {
     private final Map<Class<?>, BooleanSupplier> configProviderMap = new HashMap<>();
     private boolean dirty;
 
-    public void register(Class<?> modClass, BooleanSupplier configProvider) {
+    public void register(@Nonnull Class<?> modClass, @Nonnull BooleanSupplier configProvider) {
         configProviderMap.put(modClass, configProvider);
         dirty = true;
     }
 
-    public boolean handleScreen(Class<?> screenClass) {
+    public boolean handleScreen(@Nonnull Class<?> screenClass) {
         // Cache keySet to improve performance
         if(dirty || modClasses == null) {
             modClasses = configProviderMap.keySet().toArray(new Class[0]);
@@ -24,13 +25,10 @@ public class ModScreenDictionary {
 
         dirty = false;
         Optional<Class<?>> registeredParentClass = getRegisteredParentClass(screenClass);
-        if(!registeredParentClass.isPresent()) {
-            return false;
-        }
-        return configProviderMap.get(registeredParentClass.get()).getAsBoolean();
+        return registeredParentClass.filter(aClass -> configProviderMap.get(aClass).getAsBoolean()).isPresent();
     }
 
-    private Optional<Class<?>> getRegisteredParentClass(Class<?> screenClass) {
+    private Optional<Class<?>> getRegisteredParentClass(@Nonnull Class<?> screenClass) {
         return Arrays.stream(modClasses).filter((modClass -> modClass.isAssignableFrom(screenClass))).findFirst();
     }
 }

@@ -20,7 +20,7 @@ public abstract class MinecraftMixin {
     @Shadow private @Nullable IntegratedServer integratedServer;
 
     @Inject(at = @At("TAIL"), method = "displayGuiScreen")
-    public void openScreen(Screen screen, CallbackInfo ci) {
+    public void openScreen(@Nullable Screen screen, CallbackInfo ci) {
         if (ScreenHelper.isConfiguredScreen(screen))
         {
             boolean canPauseGame = isIntegratedServerRunning() && !this.integratedServer.getPublic();
