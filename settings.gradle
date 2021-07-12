@@ -1,1 +1,4 @@
 rootProject.name = 'inventorypause'
+include 'annotation'
+include 'annotation-compiler'
+
