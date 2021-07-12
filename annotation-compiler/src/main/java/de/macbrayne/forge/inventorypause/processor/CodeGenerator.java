@@ -1,24 +1,26 @@
 package de.macbrayne.forge.inventorypause.processor;
 
-import com.squareup.javapoet.*;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeSpec;
 
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.Modifier;
+import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class CodeGenerator {
-    public void generateCode(List<TypeMirror> mirrorList, Filer filer) throws IOException {
+    public void generateCode(Map<VariableElement, TypeMirror> mirrorMap, Filer filer) throws IOException {
         ClassName reference = ClassName.get("de.macbrayne.forge.inventorypause.utils", "Reference");
-
-        List<TypeName> typeNames = mirrorList.stream().map(TypeName::get).collect(Collectors.toList());
 
         MethodSpec.Builder registerBuilder = MethodSpec.methodBuilder("register")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(void.class);
-        typeNames.forEach(typeName -> registerBuilder.addStatement("$T.getModScreenDictionary().register($T.class, () -> true)", reference, typeName));
+        mirrorMap.forEach((key, value) -> registerBuilder.addStatement("$T.getModScreenDictionary().register($T.class, () -> $T.$L)",
+                reference, value, key.getEnclosingElement().asType(), key.getSimpleName()));
 
         TypeSpec registration = TypeSpec.classBuilder("Registration")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)

@@ -64,9 +64,9 @@ public class AppliedEnergistics2Compat implements ModCompat {
 
     public static class AppliedEnergistics2Config {
         @RegisterClass(CellWorkbenchScreen.class)
-        public boolean cellWorkbenchScreen = true;
+        public static boolean cellWorkbenchScreen = true;
         @RegisterClass(ChestScreen.class)
-        public boolean chestScreen = true;
+        public static boolean chestScreen = true;
         public boolean condenserScreen = true;
         public boolean driveScreen = true;
         public boolean formationPlaneScreen = true;
