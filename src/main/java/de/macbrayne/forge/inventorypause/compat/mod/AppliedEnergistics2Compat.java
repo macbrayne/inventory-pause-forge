@@ -7,7 +7,6 @@ import de.macbrayne.forge.inventorypause.common.ModConfig;
 public class AppliedEnergistics2Compat implements ModCompat {
     @Override
     public void register() {
-        new Registration().register();
         ModConfig.ModCompat.FineTuning fineTuning = config.modCompat.fineTuning;
         modDictionary.register(CellWorkbenchScreen.class, getConfig(),
                 () -> fineTuning.appliedEnergistics2Config.cellWorkbenchScreen);
@@ -64,9 +63,9 @@ public class AppliedEnergistics2Compat implements ModCompat {
 
     public static class AppliedEnergistics2Config {
         @RegisterClass(CellWorkbenchScreen.class)
-        public static boolean cellWorkbenchScreen = true;
+        public boolean cellWorkbenchScreen = true;
         @RegisterClass(ChestScreen.class)
-        public static boolean chestScreen = true;
+        public boolean chestScreen = true;
         public boolean condenserScreen = true;
         public boolean driveScreen = true;
         public boolean formationPlaneScreen = true;

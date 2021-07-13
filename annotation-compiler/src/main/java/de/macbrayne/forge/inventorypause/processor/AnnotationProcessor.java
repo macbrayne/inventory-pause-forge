@@ -32,10 +32,6 @@ public class AnnotationProcessor extends AbstractProcessor {
             for (VariableElement field : fields) {
                 TypeMirror fieldType = field.asType();
 
-                if(!(field.getModifiers().contains(Modifier.STATIC))) {
-                    processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Field must be static", field);
-                    continue;
-                }
                 if(!(fieldType instanceof PrimitiveType) || fieldType.getKind() != TypeKind.BOOLEAN) {
                     processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Field type must be boolean", field);
                     continue;
