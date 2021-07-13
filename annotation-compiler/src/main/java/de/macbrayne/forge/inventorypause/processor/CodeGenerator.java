@@ -47,6 +47,7 @@ public class CodeGenerator {
                     .addField(modConfig, "config", Modifier.FINAL)
                     .addField(TypeName.get(enclosingClassType), "registration", Modifier.FINAL)
                     .addMethod(MethodSpec.constructorBuilder()
+                            .addModifiers(Modifier.PUBLIC)
                             .addStatement("config = $T.getConfigHolder($T.class).getConfig()", autoConfig, modConfig)
                             .addStatement("registration = new $T()", enclosingClassType)
                             .build())
