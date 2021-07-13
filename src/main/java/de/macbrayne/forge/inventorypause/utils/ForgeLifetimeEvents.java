@@ -14,7 +14,7 @@ public class ForgeLifetimeEvents {
             new IronchestCompat().register();
         }
         if (ModList.get().isLoaded("appliedenergistics2")) {
-            new AppliedEnergistics2Compat().register();
+            new AppliedEnergistics2ConfigGen().register();
         }
         if (ModList.get().isLoaded("twilightforest")) {
             new TheTwilightForestCompat().register();

@@ -2,58 +2,10 @@ package de.macbrayne.forge.inventorypause.compat.mod;
 
 import appeng.client.gui.implementations.*;
 import de.macbrayne.forge.inventorypause.annotation.RegisterClass;
-import de.macbrayne.forge.inventorypause.common.ModConfig;
 
 public class AppliedEnergistics2Compat implements ModCompat {
     @Override
     public void register() {
-        ModConfig.ModCompat.FineTuning fineTuning = config.modCompat.fineTuning;
-        modDictionary.register(CellWorkbenchScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.cellWorkbenchScreen);
-        modDictionary.register(ChestScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.chestScreen);
-        modDictionary.register(CondenserScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.condenserScreen);
-        modDictionary.register(DriveScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.driveScreen);
-        modDictionary.register(FormationPlaneScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.formationPlaneScreen);
-        modDictionary.register(GrinderScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.grinderScreen);
-        modDictionary.register(InscriberScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.inscriberScreen);
-        modDictionary.register(InterfaceScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.interfaceScreen);
-        modDictionary.register(IOBusScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.IOBusScreen);
-        modDictionary.register(IOPortScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.IOPortScreen);
-        modDictionary.register(LevelEmitterScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.levelEmitterScreen);
-        modDictionary.register(MolecularAssemblerScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.molecularAssemblerScreen);
-        modDictionary.register(PriorityScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.priorityScreen);
-        modDictionary.register(QNBScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.QNBScreen);
-        modDictionary.register(QuartzKnifeScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.quartzKnifeScreen);
-        modDictionary.register(SecurityStationScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.securityStationScreen);
-        modDictionary.register(SkyChestScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.skyChestScreen);
-        modDictionary.register(SpatialAnchorScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.spatialAnchorScreen);
-        modDictionary.register(SpatialIOPortScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.spatialIOPortScreen);
-        modDictionary.register(StorageBusScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.storageBusScreen);
-        modDictionary.register(UpgradeableScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.upgradeableScreen);
-        modDictionary.register(VibrationChamberScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.vibrationChamberScreen);
-        modDictionary.register(WirelessScreen.class, getConfig(),
-                () -> fineTuning.appliedEnergistics2Config.wirelessScreen);
     }
 
     @Override
@@ -66,26 +18,45 @@ public class AppliedEnergistics2Compat implements ModCompat {
         public boolean cellWorkbenchScreen = true;
         @RegisterClass(ChestScreen.class)
         public boolean chestScreen = true;
+        @RegisterClass(CondenserScreen.class)
         public boolean condenserScreen = true;
+        @RegisterClass(DriveScreen.class)
         public boolean driveScreen = true;
+        @RegisterClass(FormationPlaneScreen.class)
         public boolean formationPlaneScreen = true;
+        @RegisterClass(GrinderScreen.class)
         public boolean grinderScreen = true;
+        @RegisterClass(InscriberScreen.class)
         public boolean inscriberScreen = true;
+        @RegisterClass(InterfaceScreen.class)
         public boolean interfaceScreen = true;
+        @RegisterClass(IOBusScreen.class)
         public boolean IOBusScreen = true;
+        @RegisterClass(IOPortScreen.class)
         public boolean IOPortScreen = true;
+        @RegisterClass(LevelEmitterScreen.class)
         public boolean levelEmitterScreen = true;
+        @RegisterClass(MolecularAssemblerScreen.class)
         public boolean molecularAssemblerScreen = true;
+        @RegisterClass(PriorityScreen.class)
         public boolean priorityScreen = true;
+        @RegisterClass(QNBScreen.class)
         public boolean QNBScreen = true;
+        @RegisterClass(QuartzKnifeScreen.class)
         public boolean quartzKnifeScreen = true;
+        @RegisterClass(SecurityStationScreen.class)
         public boolean securityStationScreen = true;
+        @RegisterClass(SkyChestScreen.class)
         public boolean skyChestScreen = true;
+        @RegisterClass(SpatialAnchorScreen.class)
         public boolean spatialAnchorScreen = true;
+        @RegisterClass(SpatialIOPortScreen.class)
         public boolean spatialIOPortScreen = true;
+        @RegisterClass(StorageBusScreen.class)
         public boolean storageBusScreen = true;
-        public boolean upgradeableScreen = true;
+        @RegisterClass(VibrationChamberScreen.class)
         public boolean vibrationChamberScreen = true;
+        @RegisterClass(WirelessScreen.class)
         public boolean wirelessScreen = true;
     }
 }
