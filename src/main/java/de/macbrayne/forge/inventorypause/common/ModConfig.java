@@ -14,6 +14,7 @@ import java.util.List;
 @Config(name = "inventorypause")
 public class ModConfig implements ConfigData {
     public boolean enabled = true;
+    public boolean disableSaving = false;
     public boolean debug = false;
 
     @ConfigEntry.Gui.CollapsibleObject

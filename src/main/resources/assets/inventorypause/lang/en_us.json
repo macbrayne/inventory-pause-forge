@@ -5,6 +5,7 @@
   "text.autoconfig.inventorypause.category.default": "General",
 
   "text.autoconfig.inventorypause.option.enabled": "Enable Mod",
+  "text.autoconfig.inventorypause.option.disableSaving": "Disable Save on Pause",
   "text.autoconfig.inventorypause.option.debug": "Enable Debug Mode",
   "text.autoconfig.inventorypause.option.debugText": "Debug Overlay Options",
   "text.autoconfig.inventorypause.option.debugText.x": "X-Coordinate",
@@ -39,6 +40,6 @@
   "text.autoconfig.inventorypause.option.modCompat.botaniaCompat": "Botania Compat",
   "text.autoconfig.inventorypause.option.modCompat.curiosCompat": "Curios Compat",
   "text.autoconfig.inventorypause.option.modCompat.theTwilightForestCompat": "The Twilight Forest Compat",
-  "text.autoconfig.inventorypause.option.modCompat.mekanismConfig": "Mekanism Compat",
+  "text.autoconfig.inventorypause.option.modCompat.mekanismCompat": "Mekanism Compat",
   "text.autoconfig.inventorypause.option.modCompat.customScreens": "Custom mod class names"
 }

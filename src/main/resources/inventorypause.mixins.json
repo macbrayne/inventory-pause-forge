@@ -6,6 +6,7 @@
   "refmap": "inventorypause.refmap.json",
   "mixins": [
     "ContainerScreenMixin",
+    "IntegratedServerMixin",
     "MinecraftMixin"
   ],
   "client": [

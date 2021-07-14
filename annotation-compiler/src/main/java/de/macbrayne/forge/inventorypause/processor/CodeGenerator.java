@@ -37,8 +37,7 @@ public class CodeGenerator {
 
             MethodSpec.Builder registerBuilder = MethodSpec.methodBuilder("register")
                     .addModifiers(Modifier.PUBLIC)
-                    .returns(void.class)
-                    .addStatement("registration.register()");
+                    .returns(void.class);
             filteredMap.forEach((key, value) -> registerBuilder.addStatement("$T.getModScreenDictionary().register($T.class, () -> registration.getConfigKey() && config.modCompat.fineTuning.$L.$L)",
                     reference, value, key.getEnclosingElement().getSimpleName().toString().substring(0, 1).toLowerCase(Locale.ROOT) + key.getEnclosingElement().getSimpleName().toString().substring(1), key.getSimpleName()));
 
