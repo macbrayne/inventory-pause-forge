@@ -8,7 +8,7 @@ public class ForgeLifetimeEvents {
 
     public static void enqueueIMC(@SuppressWarnings("unused") InterModEnqueueEvent event) {
         if (ModList.get().isLoaded("waystones")) {
-            new WaystonesCompat().register();
+            new WaystonesConfigGen().register();
         }
         if (ModList.get().isLoaded("ironchest")) {
             new IronchestCompat().register();
