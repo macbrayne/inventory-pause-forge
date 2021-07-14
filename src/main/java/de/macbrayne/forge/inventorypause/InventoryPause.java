@@ -4,7 +4,7 @@ import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.utils.ForgeConfigHelper;
 import de.macbrayne.forge.inventorypause.utils.ForgeLifetimeEvents;
 import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
@@ -21,7 +21,7 @@ public class InventoryPause {
     public static ModConfig MOD_CONFIG = new ModConfig();
 
     public InventoryPause() {
-        AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
+        AutoConfig.register(ModConfig.class, Toml4jConfigSerializer::new);
         MOD_CONFIG = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ForgeLifetimeEvents::enqueueIMC);
