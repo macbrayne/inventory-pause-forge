@@ -186,6 +186,19 @@ dependencies {
     // runtimeOnly fg.deobf("vazkii.botania:Botania:1.16.5-418")
     compileOnly fg.deobf("vazkii.botania:Botania:1.16.5-418")
 
+    // Industrial Foregoing
+    // compileOnly fg.deobf("curse.maven:industrial-foregoing-266515:3386008")
+
+    // Refined Storage
+    // compileOnly fg.deobf("curse.maven:refined-storage-243076:3351933")
+
+    // Mekanism
+    // compileOnly "mekanism:Mekanism:${mekanism_version}:api"
+    compileOnly fg.deobf("mekanism:Mekanism:${mekanism_version}")// core
+    // compileOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:additions")// Mekanism: Additions
+    // compileOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:generators")// Mekanism: Generators
+    // compileOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:tools")// Mekanism: Tools
+
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html

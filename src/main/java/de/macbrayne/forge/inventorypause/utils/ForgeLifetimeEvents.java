@@ -25,5 +25,8 @@ public class ForgeLifetimeEvents {
         if (ModList.get().isLoaded("curios")) {
             new CuriosCompat().register();
         }
+        if (ModList.get().isLoaded("mekanism")) {
+            new MekanismConfigGen().register();
+        }
     }
 }
