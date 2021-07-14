@@ -3,10 +3,7 @@ package de.macbrayne.forge.inventorypause.compat.mod;
 import appeng.client.gui.implementations.*;
 import de.macbrayne.forge.inventorypause.annotation.RegisterClass;
 
-public class AppliedEnergistics2Compat implements ModCompat {
-    @Override
-    public void register() {
-    }
+public class AppliedEnergistics2Compat implements GenericModCompat {
 
     @Override
     public boolean getConfigKey() {

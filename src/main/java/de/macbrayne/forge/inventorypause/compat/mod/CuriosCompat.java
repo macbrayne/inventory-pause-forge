@@ -2,7 +2,7 @@ package de.macbrayne.forge.inventorypause.compat.mod;
 
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
-public class CuriosCompat implements ModCompat {
+public class CuriosCompat implements CustomModCompat {
     @Override
     public void register() {
         modDictionary.register(CuriosScreen.class, getConfig());

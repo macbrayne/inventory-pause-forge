@@ -6,10 +6,7 @@ import net.blay09.mods.waystones.client.gui.screen.WarpPlateScreen;
 import net.blay09.mods.waystones.client.gui.screen.WaystoneSelectionScreen;
 import net.blay09.mods.waystones.client.gui.screen.WaystoneSettingsScreen;
 
-public class WaystonesCompat implements ModCompat {
-    @Override
-    public void register() {
-    }
+public class WaystonesCompat implements GenericModCompat {
 
     @Override
     public boolean getConfigKey() {
