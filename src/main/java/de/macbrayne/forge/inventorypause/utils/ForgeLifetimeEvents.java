@@ -28,5 +28,8 @@ public class ForgeLifetimeEvents {
         if (ModList.get().isLoaded("mekanism")) {
             new MekanismConfigGen().register();
         }
+        if (ModList.get().isLoaded("refinedstorage")) {
+            new RefinedStorageConfigGen().register();
+        }
     }
 }

@@ -190,7 +190,8 @@ dependencies {
     // compileOnly fg.deobf("curse.maven:industrial-foregoing-266515:3386008")
 
     // Refined Storage
-    // compileOnly fg.deobf("curse.maven:refined-storage-243076:3351933")
+    compileOnly fg.deobf("curse.maven:refined-storage-243076:3351933")
+    runtimeOnly fg.deobf("curse.maven:refined-storage-243076:3351933")
 
     // Mekanism
     // compileOnly "mekanism:Mekanism:${mekanism_version}:api"

@@ -2,6 +2,7 @@ package de.macbrayne.forge.inventorypause.common;
 
 import de.macbrayne.forge.inventorypause.compat.mod.AppliedEnergistics2Compat;
 import de.macbrayne.forge.inventorypause.compat.mod.MekanismCompat;
+import de.macbrayne.forge.inventorypause.compat.mod.RefinedStorageCompat;
 import de.macbrayne.forge.inventorypause.compat.mod.WaystonesCompat;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
@@ -70,6 +71,7 @@ public class ModConfig implements ConfigData {
         public boolean curiosCompat = true;
         public boolean theTwilightForestCompat = true;
         public boolean mekanismCompat = true;
+        public boolean refinedStorageCompat = false;
         @ConfigEntry.Gui.Excluded
         public FineTuning fineTuning = new FineTuning();
 
@@ -79,6 +81,7 @@ public class ModConfig implements ConfigData {
             public WaystonesCompat.WaystonesConfig waystonesConfig = new WaystonesCompat.WaystonesConfig();
             public AppliedEnergistics2Compat.AppliedEnergistics2Config appliedEnergistics2Config = new AppliedEnergistics2Compat.AppliedEnergistics2Config();
             public MekanismCompat.MekanismConfig mekanismConfig = new MekanismCompat.MekanismConfig();
+            public RefinedStorageCompat.RefinedStorageConfig refinedStorageConfig = new RefinedStorageCompat.RefinedStorageConfig();
         }
     }
 }
