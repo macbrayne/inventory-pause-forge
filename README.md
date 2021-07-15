@@ -1,7 +1,7 @@
 # Inventory Pause
-<a href="https://www.curseforge.com/minecraft/mc-mods/inventory-pause-forge"><img src="http://cf.way2muchnoise.eu/versions/inventory-pause-forge_all(555-0C8E8E-fff-010101).svg" alt="Supported Versions"></a>
+<a href="https://www.curseforge.com/minecraft/mc-mods/inventory-pause-forge"><img src="http://cf.way2muchnoise.eu/versions/495153_all(555-0C8E8E-fff-010101).svg" alt="Supported Versions"></a>
 <a href="https://modrinth.com/mod/inventory-pause-forge"><img src="https://waffle.coffee/modrinth/inventory-pause-forge/downloads" alt="Modrinth Download Count"></a>
-<a href="https://www.curseforge.com/minecraft/mc-mods/inventory-pause-forge"><img src="http://cf.way2muchnoise.eu/full_inventory-pause-forge_downloads(E04E14-555-fff-010101-1C1C1C).svg" alt="CurseForge Download Count"></a>
+<a href="https://www.curseforge.com/minecraft/mc-mods/inventory-pause-forge"><img src="http://cf.way2muchnoise.eu/full_495153_downloads(E04E14-555-fff-010101-1C1C1C).svg" alt="CurseForge Download Count"></a>
 <a href="https://github.com/PieKing1215/InvMove/blob/master/LICENSE.md"><img src="https://img.shields.io/github/license/macbrayne/inventory-pause-forge?style=flat&color=0C8E8E" alt="License"></a>
 ---
 ## Pause your single player game when you open your inventory.
@@ -45,6 +45,8 @@ The mod is licensed under the [MIT License](LICENSE.md)
 
 __General__:
 - Enable Mod: enables / disables every part of the mod apart from the debug overlay
+- Enable Save on Pause: this can help if you experience lag spikes when quickly opening and closing
+  inventories
 - Enable Debug Mode: enables an overlay for easier mod compat configuration
 - Debug Overlay Options:
     - X-Coordinate / Y-Coordinate: The position of the debug overlay

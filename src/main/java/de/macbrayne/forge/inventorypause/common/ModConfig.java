@@ -70,16 +70,14 @@ public class ModConfig implements ConfigData {
         public boolean curiosCompat = true;
         public boolean theTwilightForestCompat = true;
         public boolean mekanismCompat = true;
+        @ConfigEntry.Gui.Excluded
         public FineTuning fineTuning = new FineTuning();
 
         List<String> customScreens = new ArrayList<>();
 
         public static class FineTuning {
-            @ConfigEntry.Gui.Excluded
             public WaystonesCompat.WaystonesConfig waystonesConfig = new WaystonesCompat.WaystonesConfig();
-            @ConfigEntry.Gui.Excluded
             public AppliedEnergistics2Compat.AppliedEnergistics2Config appliedEnergistics2Config = new AppliedEnergistics2Compat.AppliedEnergistics2Config();
-            @ConfigEntry.Gui.Excluded
             public MekanismCompat.MekanismConfig mekanismConfig = new MekanismCompat.MekanismConfig();
         }
     }
