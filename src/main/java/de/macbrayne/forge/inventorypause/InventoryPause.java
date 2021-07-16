@@ -1,13 +1,10 @@
 package de.macbrayne.forge.inventorypause;
 
 import de.macbrayne.forge.inventorypause.common.ModConfig;
-import de.macbrayne.forge.inventorypause.utils.ForgeConfigHelper;
 import de.macbrayne.forge.inventorypause.utils.ForgeLifetimeEvents;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -24,9 +21,8 @@ public class InventoryPause {
         AutoConfig.register(ModConfig.class, Toml4jConfigSerializer::new);
         MOD_CONFIG = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(ForgeLifetimeEvents::enqueueIMC);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ForgeLifetimeEvents::clientSetup);
         ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ForgeConfigHelper::registerConfig);
 
         MinecraftForge.EVENT_BUS.register(this);
     }

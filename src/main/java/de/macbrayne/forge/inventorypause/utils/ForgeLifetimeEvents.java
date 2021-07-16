@@ -1,12 +1,18 @@
 package de.macbrayne.forge.inventorypause.utils;
 
+import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.compat.mod.*;
+import me.shedaniel.autoconfig.AutoConfig;
+import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class ForgeLifetimeEvents {
 
-    public static void enqueueIMC(@SuppressWarnings("unused") InterModEnqueueEvent event) {
+    public static void clientSetup(@SuppressWarnings("unused") FMLClientSetupEvent event) {
+        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> (client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get());
+
         if (ModList.get().isLoaded("waystones")) {
             new WaystonesConfigGen().register();
         }
