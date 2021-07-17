@@ -37,5 +37,11 @@ public class ForgeLifetimeEvents {
         if (ModList.get().isLoaded("refinedstorage")) {
             new RefinedStorageConfigGen().register();
         }
+        if (ModList.get().isLoaded("titanium")) {
+            new TitaniumCompat().register();
+        }
+        if (ModList.get().isLoaded("industrialforegoing")) {
+            new IndustrialForegoingConfigGen().register();
+        }
     }
 }
