@@ -43,5 +43,8 @@ public class ForgeLifetimeEvents {
         if (ModList.get().isLoaded("industrialforegoing")) {
             new IndustrialForegoingConfigGen().register();
         }
+        if (ModList.get().isLoaded("projecte")) {
+            new ProjectEConfigGen().register();
+        }
     }
 }

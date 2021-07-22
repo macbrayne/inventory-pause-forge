@@ -71,6 +71,7 @@ public class ModConfig implements ConfigData {
         public boolean refinedStorageCompat = false;
         public boolean titaniumCompat = true;
         public boolean industrialForegoingCompat = true;
+        public boolean projectECompat = false;
         @ConfigEntry.Gui.Excluded
         public FineTuning fineTuning = new FineTuning();
 
@@ -82,6 +83,7 @@ public class ModConfig implements ConfigData {
             public MekanismCompat.MekanismConfig mekanismConfig = new MekanismCompat.MekanismConfig();
             public RefinedStorageCompat.RefinedStorageConfig refinedStorageConfig = new RefinedStorageCompat.RefinedStorageConfig();
             public IndustrialForegoingCompat.IndustrialForegoingConfig industrialForegoingConfig = new IndustrialForegoingCompat.IndustrialForegoingConfig();
+            public ProjectECompat.ProjectEConfig projectEConfig = new ProjectECompat.ProjectEConfig();
         }
     }
 }
