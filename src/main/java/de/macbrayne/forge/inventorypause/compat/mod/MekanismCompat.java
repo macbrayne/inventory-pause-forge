@@ -10,10 +10,7 @@ import mekanism.client.gui.machine.*;
 import mekanism.client.gui.qio.*;
 import mekanism.client.gui.robit.*;
 
-public class MekanismCompat implements CustomModCompat {
-    @Override
-    public void register() {
-    }
+public class MekanismCompat implements GenericModCompat {
 
     @Override
     public boolean getConfigKey() {
