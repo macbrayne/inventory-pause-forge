@@ -62,6 +62,8 @@ public class ModConfig implements ConfigData {
     }
 
     public static class ModCompat {
+        // Mod compats which have problematic behaviour should be disabled by default
+
         public boolean waystonesCompat = true;
         public boolean ironchestCompat = true;
         public boolean botaniaCompat = true;
@@ -72,6 +74,7 @@ public class ModConfig implements ConfigData {
         public boolean titaniumCompat = true;
         public boolean industrialForegoingCompat = true;
         public boolean projectECompat = false;
+
         @ConfigEntry.Gui.Excluded
         public FineTuning fineTuning = new FineTuning();
 

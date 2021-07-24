@@ -42,5 +42,8 @@
   "text.autoconfig.inventorypause.option.modCompat.theTwilightForestCompat": "The Twilight Forest Compat",
   "text.autoconfig.inventorypause.option.modCompat.mekanismCompat": "Mekanism Compat",
   "text.autoconfig.inventorypause.option.modCompat.refinedStorageCompat": "Refined Storage Compat",
+  "text.autoconfig.inventorypause.option.modCompat.titaniumCompat": "Titanium Compat",
+  "text.autoconfig.inventorypause.option.modCompat.industrialForegoingCompat": "Industrial Foregoing Compat",
+  "text.autoconfig.inventorypause.option.modCompat.projectECompat": "ProjectE Compat",
   "text.autoconfig.inventorypause.option.modCompat.customScreens": "Custom mod class names"
 }
