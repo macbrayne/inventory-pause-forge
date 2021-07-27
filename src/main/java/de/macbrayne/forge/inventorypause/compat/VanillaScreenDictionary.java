@@ -2,6 +2,7 @@ package de.macbrayne.forge.inventorypause.compat;
 
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;
+import net.minecraft.client.gui.screen.HopperScreen;
 import net.minecraft.client.gui.screen.inventory.*;
 
 import javax.annotation.Nonnull;
@@ -30,6 +31,7 @@ public class VanillaScreenDictionary {
         configProviderMap.put(BeaconScreen.class, () -> config.abilities.additionalGUIs.pauseBeacon);
         configProviderMap.put(DispenserScreen.class, () -> config.abilities.additionalGUIs.pauseDispenser);
         configProviderMap.put(BrewingStandScreen.class, () -> config.abilities.additionalGUIs.pauseBrewingStand);
+        configProviderMap.put(HopperScreen.class, () -> config.abilities.additionalGUIs.pauseHopper);
         configProviderMap.put(CartographyTableScreen.class, () -> config.abilities.additionalGUIs.pauseCartographyTable);
         configProviderMap.put(StonecutterScreen.class, () -> config.abilities.additionalGUIs.pauseStonecutter);
 

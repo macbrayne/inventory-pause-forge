@@ -27,6 +27,7 @@
   "text.autoconfig.inventorypause.option.abilities.additionalGUIs.pauseBeacon": "Pause on Beacon",
   "text.autoconfig.inventorypause.option.abilities.additionalGUIs.pauseDispenser": "Pause on Dispenser / Dropper",
   "text.autoconfig.inventorypause.option.abilities.additionalGUIs.pauseBrewingStand": "Pause on Brewing Stand",
+  "text.autoconfig.inventorypause.option.abilities.additionalGUIs.pauseHopper": "Pause on Hopper",
   "text.autoconfig.inventorypause.option.abilities.additionalGUIs.pauseCartographyTable": "Pause on Cartography Table",
   "text.autoconfig.inventorypause.option.abilities.additionalGUIs.pauseStonecutter": "Pause on Stonecutter",
 
