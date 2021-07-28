@@ -34,8 +34,6 @@ public class CodeGenerator {
 
             ClassName genericModCompat = ClassName.get("de.macbrayne.forge.inventorypause.compat.mod", "GenericModCompat");
             ClassName reference = ClassName.get("de.macbrayne.forge.inventorypause.utils", "Reference");
-            ClassName modConfig = ClassName.get("de.macbrayne.forge.inventorypause.common", "ModConfig");
-            ClassName autoConfig = ClassName.get("me.shedaniel.autoconfig", "AutoConfig");
 
             MethodSpec getConfigKey = MethodSpec.methodBuilder("getConfigKey")
                     .returns(boolean.class)
@@ -57,11 +55,6 @@ public class CodeGenerator {
             TypeSpec registration = TypeSpec.classBuilder(outputNameCamelCase + "Gen")
                     .addSuperinterface(genericModCompat)
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                    .addField(modConfig, "config", Modifier.FINAL)
-                    .addMethod(MethodSpec.constructorBuilder()
-                            .addModifiers(Modifier.PUBLIC)
-                            .addStatement("config = $T.getConfigHolder($T.class).getConfig()", autoConfig, modConfig)
-                            .build())
                     .addMethod(registerBuilder.build())
                     .addMethod(getConfigKey)
                     .build();
