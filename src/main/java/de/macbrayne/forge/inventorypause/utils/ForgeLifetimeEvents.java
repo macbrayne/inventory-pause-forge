@@ -2,6 +2,7 @@ package de.macbrayne.forge.inventorypause.utils;
 
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.compat.mod.*;
+import de.macbrayne.forge.inventorypause.compat.mod.custom.*;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModList;

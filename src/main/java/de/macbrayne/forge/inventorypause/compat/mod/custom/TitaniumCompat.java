@@ -1,4 +1,4 @@
-package de.macbrayne.forge.inventorypause.compat.mod;
+package de.macbrayne.forge.inventorypause.compat.mod.custom;
 
 import com.hrznstudio.titanium.client.screen.container.BasicAddonScreen;
 
