@@ -178,7 +178,7 @@ dependencies {
 
     // Curios Mod
     // runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.2")
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.2")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.17.1-5.0.0.0")
 
     // Botania Mod
     // runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.1")
