@@ -15,13 +15,13 @@ public class ForgeLifetimeEvents {
         ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> (client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get());
 
         if (ModList.get().isLoaded("waystones")) {
-            new WaystonesConfigGen().register();
+            new WaystonesCompatGen().register();
         }
         if (ModList.get().isLoaded("ironchest")) {
             new IronchestCompat().register();
         }
         if (ModList.get().isLoaded("appliedenergistics2")) {
-            new AppliedEnergistics2ConfigGen().register();
+            new AppliedEnergistics2CompatGen().register();
         }
         if (ModList.get().isLoaded("twilightforest")) {
             new TheTwilightForestCompat().register();
@@ -33,19 +33,19 @@ public class ForgeLifetimeEvents {
             new CuriosCompat().register();
         }
         if (ModList.get().isLoaded("mekanism")) {
-            new MekanismConfigGen().register();
+            new MekanismCompatGen().register();
         }
         if (ModList.get().isLoaded("refinedstorage")) {
-            new RefinedStorageConfigGen().register();
+            new RefinedStorageCompatGen().register();
         }
         if (ModList.get().isLoaded("titanium")) {
             new TitaniumCompat().register();
         }
         if (ModList.get().isLoaded("industrialforegoing")) {
-            new IndustrialForegoingConfigGen().register();
+            new IndustrialForegoingCompatGen().register();
         }
         if (ModList.get().isLoaded("projecte")) {
-            new ProjectEConfigGen().register();
+            new ProjectECompatGen().register();
         }
     }
 }

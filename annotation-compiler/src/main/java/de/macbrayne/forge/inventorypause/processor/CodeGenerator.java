@@ -26,6 +26,7 @@ public class CodeGenerator {
                             .getSimpleName()
                             .equals(parentClass.getSimpleName()))
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            String configKey = parentClass.getAnnotation(RegisterCompat.class).configKey();
 
             if(filteredMap.size() == 0) {
                 continue;
@@ -40,7 +41,7 @@ public class CodeGenerator {
                     .returns(boolean.class)
                     .addAnnotation(Override.class)
                     .addModifiers(Modifier.PUBLIC)
-                    .addStatement("return config.modCompat.$L", parentClass.getAnnotation(RegisterCompat.class).configKey())
+                    .addStatement("return config.modCompat.$L", configKey)
                     .build();
 
             MethodSpec.Builder registerBuilder = MethodSpec.methodBuilder("register")
@@ -51,8 +52,9 @@ public class CodeGenerator {
             filteredMap.forEach((key, value) -> registerBuilder.addStatement("$T.getModScreenDictionary().register($T.class, () -> getConfigKey() && config.modCompat.fineTuning.$L.$L)",
                     reference, value, parentLowerCamelCase, key.getSimpleName()));
 
+            String outputNameCamelCase = configKey.substring(0, 1).toUpperCase(Locale.ROOT) + configKey.substring(1);
 
-            TypeSpec registration = TypeSpec.classBuilder(parentClass.getSimpleName().toString() + "Gen")
+            TypeSpec registration = TypeSpec.classBuilder(outputNameCamelCase + "Gen")
                     .addSuperinterface(genericModCompat)
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                     .addField(modConfig, "config", Modifier.FINAL)
