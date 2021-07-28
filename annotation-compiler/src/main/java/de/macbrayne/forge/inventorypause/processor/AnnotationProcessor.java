@@ -19,7 +19,7 @@ import javax.tools.Diagnostic;
 import java.io.IOException;
 import java.util.*;
 
-@SupportedAnnotationTypes("de.macbrayne.forge.inventorypause.annotation.RegisterClass")
+@SupportedAnnotationTypes("de.macbrayne.forge.inventorypause.annotation.*")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class AnnotationProcessor extends AbstractProcessor {
     @Override

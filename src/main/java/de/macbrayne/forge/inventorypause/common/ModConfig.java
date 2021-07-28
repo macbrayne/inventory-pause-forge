@@ -63,10 +63,11 @@ public class ModConfig implements ConfigData {
     }
 
     public static class ModCompat {
-        // Mod compats which have problematic behaviour should be disabled by default
+        // Mod compats which cause problematic behaviour should be disabled by default
 
         public boolean waystonesCompat = true;
         public boolean ironchestCompat = true;
+        public boolean appliedEnergistics2Compat = true;
         public boolean botaniaCompat = true;
         public boolean curiosCompat = true;
         public boolean theTwilightForestCompat = true;

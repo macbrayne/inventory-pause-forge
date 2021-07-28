@@ -7,7 +7,7 @@ public class AppliedEnergistics2Compat implements GenericModCompat {
 
     @Override
     public boolean getConfigKey() {
-        return config.modCompat.ironchestCompat;
+        return config.modCompat.appliedEnergistics2Compat;
     }
 
     public static class AppliedEnergistics2Config {
