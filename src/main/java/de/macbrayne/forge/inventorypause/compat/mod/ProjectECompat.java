@@ -1,6 +1,7 @@
 package de.macbrayne.forge.inventorypause.compat.mod;
 
 import de.macbrayne.forge.inventorypause.annotation.RegisterClass;
+import de.macbrayne.forge.inventorypause.annotation.RegisterCompat;
 import moze_intel.projecte.gameObjs.gui.*;
 
 public class ProjectECompat implements GenericModCompat {
@@ -9,6 +10,7 @@ public class ProjectECompat implements GenericModCompat {
         return config.modCompat.projectECompat;
     }
 
+    @RegisterCompat(configKey = "projectECompat")
     public static class ProjectEConfig {
         @RegisterClass(AbstractCollectorScreen.MK1.class)
         boolean abstractCollectorScreenMK1 = true;

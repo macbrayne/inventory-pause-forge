@@ -3,6 +3,7 @@ package de.macbrayne.forge.inventorypause.compat.mod;
 import com.buuz135.industrial.gui.conveyor.GuiConveyor;
 import com.buuz135.industrial.gui.transporter.GuiTransporter;
 import de.macbrayne.forge.inventorypause.annotation.RegisterClass;
+import de.macbrayne.forge.inventorypause.annotation.RegisterCompat;
 
 public class IndustrialForegoingCompat implements GenericModCompat {
     @Override
@@ -10,6 +11,7 @@ public class IndustrialForegoingCompat implements GenericModCompat {
         return config.modCompat.industrialForegoingCompat;
     }
 
+    @RegisterCompat(configKey = "industrialForegoingCompat")
     public static class IndustrialForegoingConfig {
         // com.buuz135.industrial.gui.transporter
         @RegisterClass(GuiTransporter.class)

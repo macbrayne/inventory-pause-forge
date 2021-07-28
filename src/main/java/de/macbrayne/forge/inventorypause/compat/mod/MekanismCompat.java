@@ -1,6 +1,7 @@
 package de.macbrayne.forge.inventorypause.compat.mod;
 
 import de.macbrayne.forge.inventorypause.annotation.RegisterClass;
+import de.macbrayne.forge.inventorypause.annotation.RegisterCompat;
 import mekanism.client.gui.*;
 import mekanism.client.gui.item.GuiDictionary;
 import mekanism.client.gui.item.GuiPersonalChestItem;
@@ -17,6 +18,7 @@ public class MekanismCompat implements GenericModCompat {
         return config.modCompat.mekanismCompat;
     }
 
+    @RegisterCompat(configKey = "mekanismCompat")
     public static class MekanismConfig {
         // mekanism.client.gui.item.*
         @RegisterClass(GuiDictionary.class)

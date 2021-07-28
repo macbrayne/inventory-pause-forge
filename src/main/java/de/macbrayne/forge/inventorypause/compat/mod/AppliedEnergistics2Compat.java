@@ -2,6 +2,7 @@ package de.macbrayne.forge.inventorypause.compat.mod;
 
 import appeng.client.gui.implementations.*;
 import de.macbrayne.forge.inventorypause.annotation.RegisterClass;
+import de.macbrayne.forge.inventorypause.annotation.RegisterCompat;
 
 public class AppliedEnergistics2Compat implements GenericModCompat {
 
@@ -10,6 +11,7 @@ public class AppliedEnergistics2Compat implements GenericModCompat {
         return config.modCompat.appliedEnergistics2Compat;
     }
 
+    @RegisterCompat(configKey = "appliedEnergistics2Compat")
     public static class AppliedEnergistics2Config {
         @RegisterClass(CellWorkbenchScreen.class)
         public boolean cellWorkbenchScreen = true;

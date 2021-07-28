@@ -2,6 +2,7 @@ package de.macbrayne.forge.inventorypause.compat.mod;
 
 import com.refinedmods.refinedstorage.screen.*;
 import de.macbrayne.forge.inventorypause.annotation.RegisterClass;
+import de.macbrayne.forge.inventorypause.annotation.RegisterCompat;
 
 public class RefinedStorageCompat implements GenericModCompat {
     @Override
@@ -9,6 +10,7 @@ public class RefinedStorageCompat implements GenericModCompat {
         return config.modCompat.refinedStorageCompat;
     }
 
+    @RegisterCompat(configKey = "refinedStorageCompat")
     public static class RefinedStorageConfig {
         @RegisterClass(ConstructorScreen.class)
         boolean constructorScreen = true;
