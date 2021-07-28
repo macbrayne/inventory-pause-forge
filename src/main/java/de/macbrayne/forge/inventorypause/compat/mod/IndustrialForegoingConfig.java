@@ -5,7 +5,7 @@ import com.buuz135.industrial.gui.transporter.GuiTransporter;
 import de.macbrayne.forge.inventorypause.annotation.RegisterClass;
 import de.macbrayne.forge.inventorypause.annotation.RegisterCompat;
 
-@RegisterCompat(configKey = "industrialForegoingCompat")
+@RegisterCompat(modId = "industrialforegoing", configKey = "industrialForegoingCompat")
 public class IndustrialForegoingConfig {
     // com.buuz135.industrial.gui.transporter
     @RegisterClass(GuiTransporter.class)

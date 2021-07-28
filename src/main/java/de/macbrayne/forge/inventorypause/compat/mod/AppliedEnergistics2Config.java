@@ -4,7 +4,7 @@ import appeng.client.gui.implementations.*;
 import de.macbrayne.forge.inventorypause.annotation.RegisterClass;
 import de.macbrayne.forge.inventorypause.annotation.RegisterCompat;
 
-@RegisterCompat(configKey = "appliedEnergistics2Compat")
+@RegisterCompat(modId = "appliedenergistics2", configKey = "appliedEnergistics2Compat")
 public class AppliedEnergistics2Config {
         @RegisterClass(CellWorkbenchScreen.class)
         public boolean cellWorkbenchScreen = true;

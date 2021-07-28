@@ -2,16 +2,14 @@ package de.macbrayne.forge.inventorypause.processor;
 
 import com.squareup.javapoet.*;
 import de.macbrayne.forge.inventorypause.annotation.RegisterCompat;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.Modifier;
-import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.sql.Types;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -50,9 +48,7 @@ public class CodeGenerator {
             filteredMap.forEach((key, value) -> registerBuilder.addStatement("$T.getModScreenDictionary().register($T.class, () -> getConfigKey() && config.modCompat.fineTuning.$L.$L)",
                     reference, value, parentLowerCamelCase, key.getSimpleName()));
 
-            String outputNameCamelCase = configKey.substring(0, 1).toUpperCase(Locale.ROOT) + configKey.substring(1);
-
-            TypeSpec registration = TypeSpec.classBuilder(outputNameCamelCase + "Gen")
+            TypeSpec registration = TypeSpec.classBuilder(getGeneratedClassName(parentClass))
                     .addSuperinterface(genericModCompat)
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                     .addMethod(registerBuilder.build())
@@ -65,5 +61,42 @@ public class CodeGenerator {
 
             javaFile.writeTo(filer);
         }
+    }
+
+    public void generateClientSetup(Set<TypeElement> parentClasses, Filer filer) throws IOException {
+        MethodSpec.Builder clientSetup = MethodSpec.methodBuilder("clientSetup")
+                .addModifiers(Modifier.FINAL)
+                .addModifiers(Modifier.STATIC)
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(FMLClientSetupEvent.class, "event");
+
+        ClassName modList = ClassName.get("net.minecraftforge.fml", "ModList");
+        for (TypeElement parentClass : parentClasses) {
+            RegisterCompat annotation = parentClass.getAnnotation(RegisterCompat.class);
+            ClassName parentName = ClassName.get("de.macbrayne.forge.inventorypause.compat.mod", getGeneratedClassName(parentClass));
+            CodeBlock codeBlock = CodeBlock.builder()
+                    .beginControlFlow("if($T.get().isLoaded(\"$L\"))", modList, annotation.modId())
+                    .addStatement("new $T().register()", parentName)
+                    .endControlFlow()
+                    .build();
+
+            clientSetup.addCode(codeBlock);
+        }
+
+        TypeSpec registration = TypeSpec.classBuilder("ForgeClientSetupGen")
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                .addMethod(clientSetup.build())
+                .build();
+
+        JavaFile javaFile = JavaFile.builder("de.macbrayne.forge.inventorypause.utils", registration)
+                .indent("    ")
+                .build();
+
+        javaFile.writeTo(filer);
+    }
+
+    private String getGeneratedClassName(TypeElement parent) {
+        String configKey = parent.getAnnotation(RegisterCompat.class).configKey();
+        return configKey.substring(0, 1).toUpperCase(Locale.ROOT) + configKey.substring(1) + "Gen";
     }
 }

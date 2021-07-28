@@ -11,7 +11,7 @@ import mekanism.client.gui.machine.*;
 import mekanism.client.gui.qio.*;
 import mekanism.client.gui.robit.*;
 
-@RegisterCompat(configKey = "mekanismCompat")
+@RegisterCompat(modId = "mekanism", configKey = "mekanismCompat")
 public class MekanismConfig {
     // mekanism.client.gui.item.*
     @RegisterClass(GuiDictionary.class)

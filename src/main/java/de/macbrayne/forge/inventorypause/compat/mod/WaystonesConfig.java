@@ -7,7 +7,7 @@ import net.blay09.mods.waystones.client.gui.screen.WarpPlateScreen;
 import net.blay09.mods.waystones.client.gui.screen.WaystoneSelectionScreen;
 import net.blay09.mods.waystones.client.gui.screen.WaystoneSettingsScreen;
 
-@RegisterCompat(configKey = "waystonesCompat")
+@RegisterCompat(modId = "waystones", configKey = "waystonesCompat")
 public class WaystonesConfig {
     @RegisterClass(WaystoneSelectionScreen.class)
     boolean waystonesSelectionScreen = true;

@@ -4,7 +4,7 @@ import de.macbrayne.forge.inventorypause.annotation.RegisterClass;
 import de.macbrayne.forge.inventorypause.annotation.RegisterCompat;
 import moze_intel.projecte.gameObjs.gui.*;
 
-@RegisterCompat(configKey = "projectECompat")
+@RegisterCompat(modId = "projecte", configKey = "projectECompat")
 public class ProjectEConfig {
     @RegisterClass(AbstractCollectorScreen.MK1.class)
     boolean abstractCollectorScreenMK1 = true;

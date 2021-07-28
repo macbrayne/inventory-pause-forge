@@ -75,6 +75,7 @@ public class AnnotationProcessor extends AbstractProcessor {
             try {
                 CodeGenerator codeGenerator = new CodeGenerator();
                 codeGenerator.generateCode(processedTypes, processedAnnotations, processingEnv.getFiler());
+                codeGenerator.generateClientSetup(processedTypes, processingEnv.getFiler());
             } catch (IOException e) {
                 e.printStackTrace();
             }

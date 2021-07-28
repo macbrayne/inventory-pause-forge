@@ -4,7 +4,7 @@ import com.refinedmods.refinedstorage.screen.*;
 import de.macbrayne.forge.inventorypause.annotation.RegisterClass;
 import de.macbrayne.forge.inventorypause.annotation.RegisterCompat;
 
-@RegisterCompat(configKey = "refinedStorageCompat")
+@RegisterCompat(modId = "refinedstorage", configKey = "refinedStorageCompat")
 public class RefinedStorageConfig {
     @RegisterClass(ConstructorScreen.class)
     boolean constructorScreen = true;
