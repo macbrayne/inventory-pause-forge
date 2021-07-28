@@ -19,9 +19,6 @@ import java.util.stream.Collectors;
 
 public class CodeGenerator {
     public void generateCode(Set<TypeElement> parentClasses, Map<VariableElement, TypeMirror> mirrorMap, Filer filer) throws IOException {
-        /*Name[] distinctClassNames = mirrorMap.keySet().stream()
-                .map(variableElement -> variableElement.getEnclosingElement().getSimpleName()).distinct().toArray(Name[]::new);*/
-        // Name[] distinctClassNames = parentClasses.stream().map(TypeElement::getSimpleName).toArray(Name[]::new);
         for(TypeElement parentClass : parentClasses) {
             Map<VariableElement, TypeMirror> filteredMap = mirrorMap.entrySet().stream()
                     .filter(variableElementTypeMirrorEntry -> variableElementTypeMirrorEntry.getKey()
@@ -34,33 +31,34 @@ public class CodeGenerator {
                 continue;
             }
 
+            ClassName genericModCompat = ClassName.get("de.macbrayne.forge.inventorypause.compat.mod", "GenericModCompat");
             ClassName reference = ClassName.get("de.macbrayne.forge.inventorypause.utils", "Reference");
             ClassName modConfig = ClassName.get("de.macbrayne.forge.inventorypause.common", "ModConfig");
             ClassName autoConfig = ClassName.get("me.shedaniel.autoconfig", "AutoConfig");
 
-            TypeMirror enclosingClassType = filteredMap.keySet().iterator().next()
-                    .getEnclosingElement().getEnclosingElement().asType();
-
             MethodSpec getConfigKey = MethodSpec.methodBuilder("getConfigKey")
                     .returns(boolean.class)
+                    .addAnnotation(Override.class)
+                    .addModifiers(Modifier.PUBLIC)
                     .addStatement("return config.modCompat.$L", parentClass.getAnnotation(RegisterCompat.class).configKey())
                     .build();
 
             MethodSpec.Builder registerBuilder = MethodSpec.methodBuilder("register")
                     .addModifiers(Modifier.PUBLIC)
                     .returns(void.class);
+            String parentSimple = parentClass.getSimpleName().toString();
+            String parentLowerCamelCase = parentSimple.substring(0, 1).toLowerCase(Locale.ROOT) + parentSimple.substring(1);
             filteredMap.forEach((key, value) -> registerBuilder.addStatement("$T.getModScreenDictionary().register($T.class, () -> getConfigKey() && config.modCompat.fineTuning.$L.$L)",
-                    reference, value, key.getEnclosingElement().getSimpleName().toString().substring(0, 1).toLowerCase(Locale.ROOT) + key.getEnclosingElement().getSimpleName().toString().substring(1), key.getSimpleName()));
+                    reference, value, parentLowerCamelCase, key.getSimpleName()));
 
 
             TypeSpec registration = TypeSpec.classBuilder(parentClass.getSimpleName().toString() + "Gen")
+                    .addSuperinterface(genericModCompat)
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                     .addField(modConfig, "config", Modifier.FINAL)
-                    .addField(TypeName.get(enclosingClassType), "registration", Modifier.FINAL)
                     .addMethod(MethodSpec.constructorBuilder()
                             .addModifiers(Modifier.PUBLIC)
                             .addStatement("config = $T.getConfigHolder($T.class).getConfig()", autoConfig, modConfig)
-                            .addStatement("registration = new $T()", enclosingClassType)
                             .build())
                     .addMethod(registerBuilder.build())
                     .addMethod(getConfigKey)
