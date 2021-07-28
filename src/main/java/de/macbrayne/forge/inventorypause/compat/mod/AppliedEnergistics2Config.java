@@ -4,15 +4,8 @@ import appeng.client.gui.implementations.*;
 import de.macbrayne.forge.inventorypause.annotation.RegisterClass;
 import de.macbrayne.forge.inventorypause.annotation.RegisterCompat;
 
-public class AppliedEnergistics2Compat implements GenericModCompat {
-
-    @Override
-    public boolean getConfigKey() {
-        return config.modCompat.appliedEnergistics2Compat;
-    }
-
-    @RegisterCompat(configKey = "appliedEnergistics2Compat")
-    public static class AppliedEnergistics2Config {
+@RegisterCompat(configKey = "appliedEnergistics2Compat")
+public class AppliedEnergistics2Config {
         @RegisterClass(CellWorkbenchScreen.class)
         public boolean cellWorkbenchScreen = true;
         @RegisterClass(ChestScreen.class)
@@ -58,4 +51,3 @@ public class AppliedEnergistics2Compat implements GenericModCompat {
         @RegisterClass(WirelessScreen.class)
         public boolean wirelessScreen = true;
     }
-}

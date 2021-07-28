@@ -83,12 +83,12 @@ public class ModConfig implements ConfigData {
         List<String> customScreens = new ArrayList<>();
 
         public static class FineTuning {
-            public WaystonesCompat.WaystonesConfig waystonesConfig = new WaystonesCompat.WaystonesConfig();
-            public AppliedEnergistics2Compat.AppliedEnergistics2Config appliedEnergistics2Config = new AppliedEnergistics2Compat.AppliedEnergistics2Config();
-            public MekanismCompat.MekanismConfig mekanismConfig = new MekanismCompat.MekanismConfig();
-            public RefinedStorageCompat.RefinedStorageConfig refinedStorageConfig = new RefinedStorageCompat.RefinedStorageConfig();
-            public IndustrialForegoingCompat.IndustrialForegoingConfig industrialForegoingConfig = new IndustrialForegoingCompat.IndustrialForegoingConfig();
-            public ProjectECompat.ProjectEConfig projectEConfig = new ProjectECompat.ProjectEConfig();
+            public WaystonesConfig waystonesConfig = new WaystonesConfig();
+            public AppliedEnergistics2Config appliedEnergistics2Config = new AppliedEnergistics2Config();
+            public MekanismConfig mekanismConfig = new MekanismConfig();
+            public RefinedStorageConfig refinedStorageConfig = new RefinedStorageConfig();
+            public IndustrialForegoingConfig industrialForegoingConfig = new IndustrialForegoingConfig();
+            public ProjectEConfig projectEConfig = new ProjectEConfig();
         }
     }
 }
