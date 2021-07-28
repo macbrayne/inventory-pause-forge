@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 
 group = 'de.macbrayne.forge'
-version = 'mc1.16.5_v0.6.0'
+version = rootProject.version
 archivesBaseName = 'annotation'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
