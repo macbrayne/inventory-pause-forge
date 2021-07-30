@@ -72,10 +72,13 @@ public class ModConfig implements ConfigData {
         public boolean curiosCompat = true;
         public boolean theTwilightForestCompat = true;
         public boolean mekanismCompat = true;
+        public boolean mekanismGeneratorsCompat = true;
         public boolean refinedStorageCompat = false;
         public boolean titaniumCompat = true;
         public boolean industrialForegoingCompat = true;
         public boolean projectECompat = false;
+        public boolean aquaculture2Compat = true;
+        public boolean pneumaticcraftCompat = false;
 
         @ConfigEntry.Gui.Excluded
         public FineTuning fineTuning = new FineTuning();
@@ -86,9 +89,11 @@ public class ModConfig implements ConfigData {
             public WaystonesConfig waystonesConfig = new WaystonesConfig();
             public AppliedEnergistics2Config appliedEnergistics2Config = new AppliedEnergistics2Config();
             public MekanismConfig mekanismConfig = new MekanismConfig();
+            public MekanismGeneratorsConfig mekanismGeneratorsConfig = new MekanismGeneratorsConfig();
             public RefinedStorageConfig refinedStorageConfig = new RefinedStorageConfig();
             public IndustrialForegoingConfig industrialForegoingConfig = new IndustrialForegoingConfig();
             public ProjectEConfig projectEConfig = new ProjectEConfig();
+            public PneumaticCraftConfig pneumaticCraftConfig = new PneumaticCraftConfig();
         }
     }
 }

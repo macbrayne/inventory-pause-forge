@@ -39,6 +39,10 @@ repositories {
     maven {
         url = "https://maven.theillusivec4.top/"
     }
+    maven {
+        // url of the maven that hosts Aquacultures files
+        url "https://girafi.dk/maven/"
+    }
 }
 
 minecraft {
@@ -156,7 +160,7 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.1.31'
 
     // Mod Dependencies
-    compile fg.deobf("me.shedaniel.cloth:cloth-config-forge:${project.cloth_version}")
+    implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:${project.cloth_version}")
 
     // Compat Dependencies
 
@@ -202,12 +206,20 @@ dependencies {
     // compileOnly "mekanism:Mekanism:${mekanism_version}:api"
     compileOnly fg.deobf("mekanism:Mekanism:${mekanism_version}")// core
     // compileOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:additions")// Mekanism: Additions
-    // compileOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:generators")// Mekanism: Generators
+    compileOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:generators")// Mekanism: Generators
     // compileOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:tools")// Mekanism: Tools
 
     // Refined Storage
     // runtimeOnly fg.deobf("curse.maven:refined-storage-226410:3223221")
     compileOnly fg.deobf("curse.maven:refined-storage-226410:3223221")
+
+    // Aquaculture 2
+    // runtimeOnly fg.deobf("com.teammetallurgy.aquaculture:aquaculture2_1.16.5:1.16.5-2.1.20")
+    compileOnly fg.deobf("com.teammetallurgy.aquaculture:aquaculture2_1.16.5:1.16.5-2.1.20")
+
+    //PneumaticCraft: Repressurized
+    // runtimeOnly fg.deobf("me.desht.pneumaticcraft:pneumaticcraft-repressurized:1.16.5-2.13.2-207")
+    compileOnly fg.deobf("me.desht.pneumaticcraft:pneumaticcraft-repressurized:1.16.5-2.13.2-207")
 
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html

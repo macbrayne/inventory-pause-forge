@@ -28,5 +28,8 @@ public class ForgeLifetimeEvents {
         if (ModList.get().isLoaded("titanium")) {
             new TitaniumCompat().register();
         }
+        if (ModList.get().isLoaded("aquaculture")) {
+            new Aquaculture2Compat().register();
+        }
     }
 }

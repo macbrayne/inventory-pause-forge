@@ -43,9 +43,12 @@
   "text.autoconfig.inventorypause.option.modCompat.curiosCompat": "Curios Compat",
   "text.autoconfig.inventorypause.option.modCompat.theTwilightForestCompat": "The Twilight Forest Compat",
   "text.autoconfig.inventorypause.option.modCompat.mekanismCompat": "Mekanism Compat",
+  "text.autoconfig.inventorypause.option.modCompat.mekanismGeneratorsCompat": "Mekanism Generators Compat",
   "text.autoconfig.inventorypause.option.modCompat.refinedStorageCompat": "Refined Storage Compat",
   "text.autoconfig.inventorypause.option.modCompat.titaniumCompat": "Titanium Compat",
   "text.autoconfig.inventorypause.option.modCompat.industrialForegoingCompat": "Industrial Foregoing Compat",
   "text.autoconfig.inventorypause.option.modCompat.projectECompat": "ProjectE Compat",
+  "text.autoconfig.inventorypause.option.modCompat.aquaculture2Compat": "Aquaculture 2 Compat",
+  "text.autoconfig.inventorypause.option.modCompat.pneumaticcraftCompat": "PneumaticCraft Compat",
   "text.autoconfig.inventorypause.option.modCompat.customScreens": "Custom mod class names"
 }
