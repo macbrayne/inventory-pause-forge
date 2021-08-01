@@ -1,6 +1,7 @@
 package de.macbrayne.forge.inventorypause.compat;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,16 +13,16 @@ public class ScreenDictionary {
     private final Map<Class<?>, BooleanSupplier> configProviderMap = new HashMap<>();
     private boolean dirty;
 
-    public void register(@Nonnull Class<?> aClass, @Nonnull BooleanSupplier configProvider) {
+    public void register(@NotNull Class<?> aClass, @NotNull BooleanSupplier configProvider) {
         configProviderMap.put(aClass, configProvider);
         dirty = true;
     }
 
-    public void register(Class<?> aClass, @Nonnull BooleanSupplier configProvider, @Nonnull BooleanSupplier customConfigProvider) {
+    public void register(Class<?> aClass, @NotNull BooleanSupplier configProvider, @NotNull BooleanSupplier customConfigProvider) {
         register(aClass, () -> configProvider.getAsBoolean() && customConfigProvider.getAsBoolean());
     }
 
-    public boolean handleScreen(@Nonnull Class<?> screenClass) {
+    public boolean handleScreen(@NotNull Class<?> screenClass) {
         // Cache keySet to improve performance
         if(dirty || cachedClasses == null) {
             cachedClasses = configProviderMap.keySet().toArray(new Class[0]);
@@ -32,7 +33,7 @@ public class ScreenDictionary {
         return registeredParentClass.filter(aClass -> configProviderMap.get(aClass).getAsBoolean()).isPresent();
     }
 
-    private Optional<Class<?>> getRegisteredParentClass(@Nonnull Class<?> screenClass) {
-        return Arrays.stream(cachedClasses).filter((aClass -> aClass.isAssignableFrom(screenClass))).findFirst();
+    private Optional<Class<?>> getRegisteredParentClass(@NotNull Class<?> screenClass) {
+        return Arrays.stream(cachedClasses).parallel().filter((aClass -> aClass.isAssignableFrom(screenClass))).findFirst();
     }
 }

@@ -1,0 +1,16 @@
+plugins {
+    id 'java-library'
+}
+
+group 'de.macbrayne.forge'
+version rootProject.version
+
+repositories {
+    mavenCentral()
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
+
+dependencies {
+    compileOnly 'org.jetbrains:annotations:21.0.1'
+}

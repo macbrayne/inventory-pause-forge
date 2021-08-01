@@ -1,4 +1,5 @@
 rootProject.name = 'inventorypause'
 include 'annotation'
 include 'annotation-compiler'
+include 'compat'
 

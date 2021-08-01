@@ -232,6 +232,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
 
+    implementation project(':compat')
     implementation project(':annotation')
     annotationProcessor project(':annotation-compiler')
     annotationProcessor 'org.spongepowered:mixin:0.8:processor'
