@@ -7,24 +7,24 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
 
-public class ModScreenDictionary {
-    private Class<?>[] modClasses = new Class[0];
+public class ScreenDictionary {
+    private Class<?>[] cachedClasses = new Class[0];
     private final Map<Class<?>, BooleanSupplier> configProviderMap = new HashMap<>();
     private boolean dirty;
 
-    public void register(@Nonnull Class<?> modClass, @Nonnull BooleanSupplier configProvider) {
-        configProviderMap.put(modClass, configProvider);
+    public void register(@Nonnull Class<?> aClass, @Nonnull BooleanSupplier configProvider) {
+        configProviderMap.put(aClass, configProvider);
         dirty = true;
     }
 
-    public void register(Class<?> mod, @Nonnull BooleanSupplier configProvider, @Nonnull BooleanSupplier customConfigProvider) {
-        register(mod, () -> configProvider.getAsBoolean() && customConfigProvider.getAsBoolean());
+    public void register(Class<?> aClass, @Nonnull BooleanSupplier configProvider, @Nonnull BooleanSupplier customConfigProvider) {
+        register(aClass, () -> configProvider.getAsBoolean() && customConfigProvider.getAsBoolean());
     }
 
     public boolean handleScreen(@Nonnull Class<?> screenClass) {
         // Cache keySet to improve performance
-        if(dirty || modClasses == null) {
-            modClasses = configProviderMap.keySet().toArray(new Class[0]);
+        if(dirty || cachedClasses == null) {
+            cachedClasses = configProviderMap.keySet().toArray(new Class[0]);
         }
 
         dirty = false;
@@ -33,6 +33,6 @@ public class ModScreenDictionary {
     }
 
     private Optional<Class<?>> getRegisteredParentClass(@Nonnull Class<?> screenClass) {
-        return Arrays.stream(modClasses).filter((modClass -> modClass.isAssignableFrom(screenClass))).findFirst();
+        return Arrays.stream(cachedClasses).filter((aClass -> aClass.isAssignableFrom(screenClass))).findFirst();
     }
 }

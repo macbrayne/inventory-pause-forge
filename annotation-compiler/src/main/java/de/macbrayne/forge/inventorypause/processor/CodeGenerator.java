@@ -30,7 +30,7 @@ public class CodeGenerator {
                 continue;
             }
 
-            ClassName genericModCompat = ClassName.get("de.macbrayne.forge.inventorypause.compat.mod", "GenericModCompat");
+            ClassName genericModCompat = ClassName.get("de.macbrayne.forge.inventorypause.compat", "GenericCompat");
             ClassName reference = ClassName.get("de.macbrayne.forge.inventorypause.utils", "Reference");
 
             MethodSpec getConfigKey = MethodSpec.methodBuilder("getConfigKey")
@@ -45,7 +45,7 @@ public class CodeGenerator {
                     .returns(void.class);
             String parentSimple = parentClass.getSimpleName().toString();
             String parentLowerCamelCase = parentSimple.substring(0, 1).toLowerCase(Locale.ROOT) + parentSimple.substring(1);
-            filteredMap.forEach((key, value) -> registerBuilder.addStatement("$T.getModScreenDictionary().register($T.class, () -> getConfigKey() && config.modCompat.fineTuning.$L.$L)",
+            filteredMap.forEach((key, value) -> registerBuilder.addStatement("$T.getScreenDictionary().register($T.class, () -> getConfigKey() && config.modCompat.fineTuning.$L.$L)",
                     reference, value, parentLowerCamelCase, key.getSimpleName()));
 
             TypeSpec registration = TypeSpec.classBuilder(getGeneratedClassName(parentClass))

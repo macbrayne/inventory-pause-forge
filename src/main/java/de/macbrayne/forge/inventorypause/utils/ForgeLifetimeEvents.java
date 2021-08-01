@@ -1,6 +1,7 @@
 package de.macbrayne.forge.inventorypause.utils;
 
 import de.macbrayne.forge.inventorypause.common.ModConfig;
+import de.macbrayne.forge.inventorypause.compat.VanillaCompat;
 import de.macbrayne.forge.inventorypause.compat.mod.custom.*;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraftforge.fml.ExtensionPoint;
@@ -12,6 +13,7 @@ public class ForgeLifetimeEvents {
 
     public static void clientSetup(@SuppressWarnings("unused") FMLClientSetupEvent event) {
         ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> (client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get());
+        new VanillaCompat().register();
 
         if (ModList.get().isLoaded("ironchest")) {
             new IronchestCompat().register();

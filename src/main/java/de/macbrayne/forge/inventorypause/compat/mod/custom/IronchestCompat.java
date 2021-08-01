@@ -1,8 +1,9 @@
 package de.macbrayne.forge.inventorypause.compat.mod.custom;
 
 import com.progwml6.ironchest.client.screen.IronChestScreen;
+import de.macbrayne.forge.inventorypause.compat.CustomCompat;
 
-public class IronchestCompat implements CustomModCompat {
+public class IronchestCompat implements CustomCompat {
     @Override
     public void register() {
         modDictionary.register(IronChestScreen.class, this::getConfigKey);

@@ -1,17 +1,11 @@
 package de.macbrayne.forge.inventorypause.utils;
 
-import de.macbrayne.forge.inventorypause.compat.ModScreenDictionary;
-import de.macbrayne.forge.inventorypause.compat.VanillaScreenDictionary;
+import de.macbrayne.forge.inventorypause.compat.ScreenDictionary;
 
 public class Reference {
-    private static final ModScreenDictionary modScreenDictionary = new ModScreenDictionary();
-    private static final VanillaScreenDictionary vanillaScreenDictionary = new VanillaScreenDictionary();
+    private static final ScreenDictionary SCREEN_DICTIONARY = new ScreenDictionary();
 
-    public static ModScreenDictionary getModScreenDictionary() {
-        return modScreenDictionary;
-    }
-
-    public static VanillaScreenDictionary getVanillaScreenDictionary() {
-        return vanillaScreenDictionary;
+    public static ScreenDictionary getScreenDictionary() {
+        return SCREEN_DICTIONARY;
     }
 }
