@@ -50,5 +50,6 @@
   "text.autoconfig.inventorypause.option.modCompat.projectECompat": "ProjectE Compat",
   "text.autoconfig.inventorypause.option.modCompat.aquaculture2Compat": "Aquaculture 2 Compat",
   "text.autoconfig.inventorypause.option.modCompat.pneumaticcraftCompat": "PneumaticCraft Compat",
+  "text.autoconfig.inventorypause.option.modCompat.extendedCraftingCompat": "Extended Crafting Compat",
   "text.autoconfig.inventorypause.option.modCompat.customScreens": "Custom mod class names"
 }

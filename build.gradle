@@ -217,9 +217,15 @@ dependencies {
     // runtimeOnly fg.deobf("com.teammetallurgy.aquaculture:aquaculture2_1.16.5:1.16.5-2.1.20")
     compileOnly fg.deobf("com.teammetallurgy.aquaculture:aquaculture2_1.16.5:1.16.5-2.1.20")
 
-    //PneumaticCraft: Repressurized
+    // PneumaticCraft: Repressurized
     // runtimeOnly fg.deobf("me.desht.pneumaticcraft:pneumaticcraft-repressurized:1.16.5-2.13.2-207")
     compileOnly fg.deobf("me.desht.pneumaticcraft:pneumaticcraft-repressurized:1.16.5-2.13.2-207")
+
+    // Extended Crafting
+    // runtimeOnly fg.deobf("curse.maven:cucumber-272335:3349690")
+    // runtimeOnly fg.deobf("curse.maven:extended-crafting-268387:3366953")
+    compileOnly fg.deobf("curse.maven:cucumber-272335:3349690")
+    compileOnly fg.deobf("curse.maven:extended-crafting-268387:3366953")
 
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html

@@ -79,6 +79,7 @@ public class ModConfig implements ConfigData {
         public boolean projectECompat = false;
         public boolean aquaculture2Compat = true;
         public boolean pneumaticcraftCompat = false;
+        public boolean extendedCraftingCompat = true;
 
         @ConfigEntry.Gui.Excluded
         public FineTuning fineTuning = new FineTuning();
@@ -94,6 +95,7 @@ public class ModConfig implements ConfigData {
             public IndustrialForegoingConfig industrialForegoingConfig = new IndustrialForegoingConfig();
             public ProjectEConfig projectEConfig = new ProjectEConfig();
             public PneumaticCraftConfig pneumaticCraftConfig = new PneumaticCraftConfig();
+            public ExtendedCraftingConfig extendedCraftingConfig = new ExtendedCraftingConfig();
         }
     }
 }
