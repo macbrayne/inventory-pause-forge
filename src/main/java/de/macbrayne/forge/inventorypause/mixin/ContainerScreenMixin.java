@@ -13,7 +13,6 @@ public class ContainerScreenMixin {
     public void isPauseScreen(CallbackInfoReturnable<Boolean> cir) {
         if(ScreenHelper.isConfiguredScreen((Screen) (Object) this)) {
             cir.setReturnValue(true);
-            cir.cancel();
         }
     }
 }
