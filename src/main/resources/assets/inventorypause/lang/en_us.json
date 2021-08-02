@@ -36,10 +36,10 @@
   "text.autoconfig.inventorypause.option.abilities.worldGUIs.pauseMerchant": "Pause on Villager",
 
   "text.autoconfig.inventorypause.category.modCompat": "Mod Compat",
-  "text.autoconfig.inventorypause.option.modCompat.@PrefixText": "Most mod compats are disabled by default as things might break unexpectedly. Here be dragons!\nMods which are known to break in major ways are marked with a ⚠",
+  "text.autoconfig.inventorypause.option.modCompat.@PrefixText": "Most mod compats are disabled by default as things might break unexpectedly. Here be dragons!\nMods which have broken GUIs with their compat option enabled are marked with a ⚠",
   "text.autoconfig.inventorypause.option.modCompat.waystonesCompat": "Waystones Compat",
   "text.autoconfig.inventorypause.option.modCompat.ironchestCompat": "Iron Chest Compat",
-  "text.autoconfig.inventorypause.option.modCompat.appliedEnergistics2Compat": "Applied Energistics 2 Compat",
+  "text.autoconfig.inventorypause.option.modCompat.appliedEnergistics2Compat": "Applied Energistics 2 Compat ⚠",
   "text.autoconfig.inventorypause.option.modCompat.botaniaCompat": "Botania Compat",
   "text.autoconfig.inventorypause.option.modCompat.curiosCompat": "Curios Compat",
   "text.autoconfig.inventorypause.option.modCompat.theTwilightForestCompat": "The Twilight Forest Compat",
