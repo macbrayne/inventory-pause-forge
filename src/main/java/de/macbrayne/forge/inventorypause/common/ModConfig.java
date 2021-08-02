@@ -63,23 +63,22 @@ public class ModConfig implements ConfigData {
     }
 
     public static class ModCompat {
-        // Mod compats which cause problematic behaviour should be disabled by default
-
-        public boolean waystonesCompat = true;
-        public boolean ironchestCompat = true;
-        public boolean appliedEnergistics2Compat = true;
-        public boolean botaniaCompat = true;
-        public boolean curiosCompat = true;
-        public boolean theTwilightForestCompat = true;
-        public boolean mekanismCompat = true;
-        public boolean mekanismGeneratorsCompat = true;
+        // All mod compats are disabled by default as things might break
+        public boolean waystonesCompat = false;
+        public boolean ironchestCompat = false;
+        public boolean appliedEnergistics2Compat = false;
+        public boolean botaniaCompat = false;
+        public boolean curiosCompat = false;
+        public boolean theTwilightForestCompat = false;
+        public boolean mekanismCompat = false;
+        public boolean mekanismGeneratorsCompat = false;
         public boolean refinedStorageCompat = false;
-        public boolean titaniumCompat = true;
-        public boolean industrialForegoingCompat = true;
+        public boolean titaniumCompat = false;
+        public boolean industrialForegoingCompat = false;
         public boolean projectECompat = false;
-        public boolean aquaculture2Compat = true;
+        public boolean aquaculture2Compat = false;
         public boolean pneumaticcraftCompat = false;
-        public boolean extendedCraftingCompat = true;
+        public boolean extendedCraftingCompat = false;
 
         @ConfigEntry.Gui.Excluded
         public FineTuning fineTuning = new FineTuning();
