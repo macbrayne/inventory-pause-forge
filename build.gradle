@@ -215,7 +215,7 @@ dependencies {
 
     // Aquaculture 2
     // runtimeOnly fg.deobf("com.teammetallurgy.aquaculture:aquaculture2_1.16.5:1.16.5-2.1.20")
-    compileOnly fg.deobf("com.teammetallurgy.aquaculture:aquaculture2_1.16.5:1.16.5-2.1.20")
+    compileOnly fg.deobf("com.teammetallurgy.aquaculture:aquaculture2_1.16.5:1.16.5-2.1.21")
 
     // PneumaticCraft: Repressurized
     // runtimeOnly fg.deobf("me.desht.pneumaticcraft:pneumaticcraft-repressurized:1.16.5-2.13.2-207")
