@@ -219,7 +219,7 @@ dependencies {
 
     // PneumaticCraft: Repressurized
     // runtimeOnly fg.deobf("me.desht.pneumaticcraft:pneumaticcraft-repressurized:1.16.5-2.13.2-207")
-    compileOnly fg.deobf("me.desht.pneumaticcraft:pneumaticcraft-repressurized:1.16.5-2.13.2-207")
+    compileOnly fg.deobf("me.desht.pneumaticcraft:pneumaticcraft-repressurized:1.16.5-2.14.4-263")
 
     // Extended Crafting
     // runtimeOnly fg.deobf("curse.maven:cucumber-272335:3349690")
