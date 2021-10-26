@@ -3,13 +3,26 @@ package de.macbrayne.forge.inventorypause.common;
 import de.macbrayne.forge.inventorypause.compat.ScreenDictionary;
 import de.macbrayne.forge.inventorypause.utils.Reference;
 import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.minecraft.client.gui.screens.Screen;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ScreenHelper {
-    private static final ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+    private static final ModConfig config;
+
+    static {
+        ModConfig tmpConfig;
+        try {
+            tmpConfig = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+        } catch (RuntimeException e) {
+            tmpConfig = new ModConfig();
+            AutoConfig.register(ModConfig.class, Toml4jConfigSerializer::new);
+        }
+        config = tmpConfig;
+    }
+
     private static final ScreenDictionary modDictionary = Reference.getScreenDictionary();
 
     public static boolean isConfiguredScreen(@Nullable Screen screen) {
