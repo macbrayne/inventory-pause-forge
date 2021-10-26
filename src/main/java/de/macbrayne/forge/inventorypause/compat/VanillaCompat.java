@@ -1,18 +1,17 @@
 package de.macbrayne.forge.inventorypause.compat;
 
-import net.minecraft.client.gui.screen.HopperScreen;
-import net.minecraft.client.gui.screen.inventory.*;
+import net.minecraft.client.gui.screens.inventory.*;
 
 public class VanillaCompat implements CustomCompat {
     @Override
     public void register() {
         // Abilities Screen top layer
         SCREEN_DICTIONARY.register(InventoryScreen.class, () -> config.abilities.pauseInventory);
-        SCREEN_DICTIONARY.register(CreativeScreen.class, () -> config.abilities.pauseCreativeInventory);
+        SCREEN_DICTIONARY.register(CreativeModeInventoryScreen.class, () -> config.abilities.pauseCreativeInventory);
         SCREEN_DICTIONARY.register(AbstractFurnaceScreen.class, () -> config.abilities.pauseFurnace);
         SCREEN_DICTIONARY.register(CraftingScreen.class, () -> config.abilities.pauseCraftingTable);
         SCREEN_DICTIONARY.register(ShulkerBoxScreen.class, () -> config.abilities.pauseShulkerBox);
-        SCREEN_DICTIONARY.register(ChestScreen.class, () -> config.abilities.pauseChest);
+        SCREEN_DICTIONARY.register(ContainerScreen.class, () -> config.abilities.pauseChest);
 
         // Additional GUIs
         SCREEN_DICTIONARY.register(AnvilScreen.class, () -> config.abilities.additionalGUIs.pauseAnvil);

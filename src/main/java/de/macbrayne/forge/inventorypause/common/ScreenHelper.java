@@ -3,7 +3,7 @@ package de.macbrayne.forge.inventorypause.common;
 import de.macbrayne.forge.inventorypause.compat.ScreenDictionary;
 import de.macbrayne.forge.inventorypause.utils.Reference;
 import me.shedaniel.autoconfig.AutoConfig;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screens.Screen;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

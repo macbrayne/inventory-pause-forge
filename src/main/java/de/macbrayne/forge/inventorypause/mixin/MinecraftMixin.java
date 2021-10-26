@@ -2,9 +2,9 @@ package de.macbrayne.forge.inventorypause.mixin;
 
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.server.integrated.IntegratedServer;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.server.IntegratedServer;
+import net.minecraft.client.sounds.SoundManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,17 +15,17 @@ import javax.annotation.Nullable;
 
 @Mixin(Minecraft.class)
 public abstract class MinecraftMixin {
-    @Shadow public abstract SoundHandler getSoundHandler();
-    @Shadow public abstract boolean isIntegratedServerRunning();
-    @Shadow private @Nullable IntegratedServer integratedServer;
+    @Shadow public abstract SoundManager getSoundManager();
+    @Shadow public abstract boolean isLocalServer();
+    @Shadow private @Nullable IntegratedServer singleplayerServer;
 
-    @Inject(at = @At("TAIL"), method = "displayGuiScreen")
+    @Inject(at = @At("TAIL"), method = "setScreen")
     public void openScreen(@Nullable Screen screen, CallbackInfo ci) {
         if (ScreenHelper.isConfiguredScreen(screen))
         {
-            boolean canPauseGame = isIntegratedServerRunning() && !this.integratedServer.getPublic();
+            boolean canPauseGame = isLocalServer() && !this.singleplayerServer.isPublished();
             if(canPauseGame) {
-                this.getSoundHandler().pause();
+                this.getSoundManager().pause();
             }
         }
     }
