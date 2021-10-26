@@ -6,7 +6,7 @@ import de.macbrayne.forge.inventorypause.compat.CustomCompat;
 public class IronchestCompat implements CustomCompat {
     @Override
     public void register() {
-        modDictionary.register(IronChestScreen.class, this::getConfigKey);
+        SCREEN_DICTIONARY.register(IronChestScreen.class, this::getConfigKey);
     }
 
     @Override

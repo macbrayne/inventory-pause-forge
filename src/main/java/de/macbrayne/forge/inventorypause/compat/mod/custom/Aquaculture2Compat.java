@@ -6,7 +6,7 @@ import de.macbrayne.forge.inventorypause.compat.CustomCompat;
 public class Aquaculture2Compat implements CustomCompat {
     @Override
     public void register() {
-        modDictionary.register(TackleBoxScreen.class, this::getConfigKey);
+        SCREEN_DICTIONARY.register(TackleBoxScreen.class, this::getConfigKey);
     }
 
     @Override

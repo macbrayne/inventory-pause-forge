@@ -6,7 +6,7 @@ import de.macbrayne.forge.inventorypause.compat.CustomCompat;
 public class TitaniumCompat implements CustomCompat {
     @Override
     public void register() {
-        modDictionary.register(BasicAddonScreen.class, this::getConfigKey);
+        SCREEN_DICTIONARY.register(BasicAddonScreen.class, this::getConfigKey);
     }
 
     @Override

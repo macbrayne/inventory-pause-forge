@@ -6,7 +6,7 @@ import twilightforest.client.GuiTFGoblinCrafting;
 public class TheTwilightForestCompat implements CustomCompat {
     @Override
     public void register() {
-        modDictionary.register(GuiTFGoblinCrafting.class, this::getConfigKey);
+        SCREEN_DICTIONARY.register(GuiTFGoblinCrafting.class, this::getConfigKey);
     }
 
     @Override

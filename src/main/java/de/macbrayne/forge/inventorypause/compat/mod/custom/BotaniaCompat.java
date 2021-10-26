@@ -7,8 +7,8 @@ import vazkii.botania.client.gui.box.GuiBaubleBox;
 public class BotaniaCompat implements CustomCompat {
     @Override
     public void register() {
-        modDictionary.register(GuiFlowerBag.class, this::getConfigKey);
-        modDictionary.register(GuiBaubleBox.class, this::getConfigKey);
+        SCREEN_DICTIONARY.register(GuiFlowerBag.class, this::getConfigKey);
+        SCREEN_DICTIONARY.register(GuiBaubleBox.class, this::getConfigKey);
     }
 
     @Override

@@ -7,25 +7,25 @@ public class VanillaCompat implements CustomCompat {
     @Override
     public void register() {
         // Abilities Screen top layer
-        modDictionary.register(InventoryScreen.class, () -> config.abilities.pauseInventory);
-        modDictionary.register(CreativeScreen.class, () -> config.abilities.pauseCreativeInventory);
-        modDictionary.register(AbstractFurnaceScreen.class, () -> config.abilities.pauseFurnace);
-        modDictionary.register(CraftingScreen.class, () -> config.abilities.pauseCraftingTable);
-        modDictionary.register(ShulkerBoxScreen.class, () -> config.abilities.pauseShulkerBox);
-        modDictionary.register(ChestScreen.class, () -> config.abilities.pauseChest);
+        SCREEN_DICTIONARY.register(InventoryScreen.class, () -> config.abilities.pauseInventory);
+        SCREEN_DICTIONARY.register(CreativeScreen.class, () -> config.abilities.pauseCreativeInventory);
+        SCREEN_DICTIONARY.register(AbstractFurnaceScreen.class, () -> config.abilities.pauseFurnace);
+        SCREEN_DICTIONARY.register(CraftingScreen.class, () -> config.abilities.pauseCraftingTable);
+        SCREEN_DICTIONARY.register(ShulkerBoxScreen.class, () -> config.abilities.pauseShulkerBox);
+        SCREEN_DICTIONARY.register(ChestScreen.class, () -> config.abilities.pauseChest);
 
         // Additional GUIs
-        modDictionary.register(AnvilScreen.class, () -> config.abilities.additionalGUIs.pauseAnvil);
-        modDictionary.register(BeaconScreen.class, () -> config.abilities.additionalGUIs.pauseBeacon);
-        modDictionary.register(DispenserScreen.class, () -> config.abilities.additionalGUIs.pauseDispenser);
-        modDictionary.register(BrewingStandScreen.class, () -> config.abilities.additionalGUIs.pauseBrewingStand);
-        modDictionary.register(HopperScreen.class, () -> config.abilities.additionalGUIs.pauseHopper);
-        modDictionary.register(CartographyTableScreen.class, () -> config.abilities.additionalGUIs.pauseCartographyTable);
-        modDictionary.register(StonecutterScreen.class, () -> config.abilities.additionalGUIs.pauseStonecutter);
+        SCREEN_DICTIONARY.register(AnvilScreen.class, () -> config.abilities.additionalGUIs.pauseAnvil);
+        SCREEN_DICTIONARY.register(BeaconScreen.class, () -> config.abilities.additionalGUIs.pauseBeacon);
+        SCREEN_DICTIONARY.register(DispenserScreen.class, () -> config.abilities.additionalGUIs.pauseDispenser);
+        SCREEN_DICTIONARY.register(BrewingStandScreen.class, () -> config.abilities.additionalGUIs.pauseBrewingStand);
+        SCREEN_DICTIONARY.register(HopperScreen.class, () -> config.abilities.additionalGUIs.pauseHopper);
+        SCREEN_DICTIONARY.register(CartographyTableScreen.class, () -> config.abilities.additionalGUIs.pauseCartographyTable);
+        SCREEN_DICTIONARY.register(StonecutterScreen.class, () -> config.abilities.additionalGUIs.pauseStonecutter);
 
         // World GUIs
-        modDictionary.register(HorseInventoryScreen.class, () -> config.abilities.worldGUIs.pauseHorse);
-        modDictionary.register(MerchantScreen.class, () -> config.abilities.worldGUIs.pauseMerchant);
+        SCREEN_DICTIONARY.register(HorseInventoryScreen.class, () -> config.abilities.worldGUIs.pauseHorse);
+        SCREEN_DICTIONARY.register(MerchantScreen.class, () -> config.abilities.worldGUIs.pauseMerchant);
     }
 
     @Override

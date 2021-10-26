@@ -6,7 +6,7 @@ import me.shedaniel.autoconfig.AutoConfig;
 
 public interface GenericCompat {
     ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
-    ScreenDictionary modDictionary = Reference.getScreenDictionary();
+    ScreenDictionary SCREEN_DICTIONARY = Reference.getScreenDictionary();
 
     boolean getConfigKey();
 }
