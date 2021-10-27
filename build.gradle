@@ -30,10 +30,9 @@ repositories {
             includeGroup "curse.maven"
         }
     }
-
     maven {
-        name = 'Jitpack'
-        url 'https://jitpack.io/'
+        url 'https://repo.maven.apache.org/maven2'
+        name 'Maven Central'
     }
 }
 
@@ -141,12 +140,10 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.17.1-37.0.103'
+    compileOnly 'org.jetbrains:annotations:22.0.0'
 
     // Mod Dependencies
     implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:${project.cloth_version}")
-
-    // Compat Provider
-    implementation 'com.github.macbrayne.inventory-pause-forge:compat:v0.8'
 
     annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
 }

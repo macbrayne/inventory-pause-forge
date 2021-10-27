@@ -58,7 +58,7 @@ Pause your single player game when Inventory is open
    side="BOTH"
 
 [[dependencies.inventorypause]]
-    modId="cloth-config"
+    modId="cloth_config"
     mandatory=true
     versionRange="[5.0,)"
     ordering="NONE"

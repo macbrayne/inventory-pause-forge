@@ -9,6 +9,7 @@ import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fmlclient.ConfigGuiHandler;
 import net.minecraftforge.fmllegacy.network.FMLNetworkConstants;
 
 // The value here should match an entry in the META-INF/mods.toml file
