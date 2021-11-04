@@ -1,5 +1,6 @@
 package de.macbrayne.forge.inventorypause.common;
 
+import de.macbrayne.forge.inventorypause.utils.Reference;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("CanBeFinal")
-@Config(name = "inventorypause")
+@Config(name = Reference.MOD_ID)
 public class ModConfig implements ConfigData {
     public boolean enabled = true;
     public boolean disableSaving = false;

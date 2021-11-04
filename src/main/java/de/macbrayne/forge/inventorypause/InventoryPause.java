@@ -2,6 +2,7 @@ package de.macbrayne.forge.inventorypause;
 
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.utils.ForgeLifetimeEvents;
+import de.macbrayne.forge.inventorypause.utils.Reference;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.minecraftforge.common.MinecraftForge;
@@ -9,11 +10,10 @@ import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fmlclient.ConfigGuiHandler;
 import net.minecraftforge.fmllegacy.network.FMLNetworkConstants;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod("inventorypause")
+@Mod(Reference.MOD_ID)
 public class InventoryPause {
     public static ModConfig MOD_CONFIG = new ModConfig();
 

@@ -21,8 +21,7 @@ public abstract class MinecraftMixin {
 
     @Inject(at = @At("TAIL"), method = "setScreen")
     public void openScreen(@Nullable Screen screen, CallbackInfo ci) {
-        if (ScreenHelper.isConfiguredScreen(screen))
-        {
+        if (ScreenHelper.isConfiguredScreen(screen)) {
             boolean canPauseGame = isLocalServer() && !this.singleplayerServer.isPublished();
             if(canPauseGame) {
                 this.getSoundManager().pause();
