@@ -1,31 +1,21 @@
-# Builds and tests the project
+# Builds and published to both CurseForge and Modrinth
 
-name: Java CI with Gradle
-
-# On pull requests
+name: Publish
+# On releases (or manual)
 on:
-  push:
-    paths:
-      - '**/src/**'
-      - '**/build.gradle'
-      - '**/gradle.properties'
-      - '**/settings.gradle.kts'
-      - .github/workflows/build.yml
-      - LICENCE
-  pull_request:
-    paths:
-      - '**/src/**'
-      - '**/build.gradle'
-      - '**/gradle.properties'
-      - '**/settings.gradle.kts'
-      - .github/workflows/build.yml
-      - LICENCE
+  workflow_dispatch:
+  release:
+    types: [published]
 
 jobs:
-  build:
-    name: Build
+  publish:
 
     runs-on: ubuntu-latest
+
+    env: # Or as an environment variable
+      MODRINTH: ${{ secrets.MODRINTH }}
+      CURSEFORGE: ${{ secrets.CURSEFORGE }}
+      CHANGELOG: ${{ github.event.release.body }}
 
     steps:
       - name: ✨ Checkout repository
@@ -51,6 +41,9 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: 🔨 Build artifacts
         run: gradle clean build
+
+      - name: 📢 Publish artifacts
+        run: gradle publishModrinth curseforge
 
       - name: 📦 Upload artifacts
         uses: actions/upload-artifact@v2
