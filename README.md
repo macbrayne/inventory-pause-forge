@@ -34,7 +34,9 @@ All of these features can be disabled individually inside the config menu (acces
 
 This mod is __client-side only__ and won't be active in LAN worlds or on servers.
 
-Current version: 1.16.5 only (1.17 as soon as Forge mixins are stable)
+Current versions:
+- 1.16.5: 0.8
+- 1.17: 0.9
 
 ## [Releases](https://github.com/macbrayne/inventory-pause-forge/releases)
 
