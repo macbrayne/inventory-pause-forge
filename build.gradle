@@ -174,7 +174,7 @@ dependencies {
 
     // AppliedEnergistics2
     // runtimeOnly fg.deobf("appeng:appliedenergistics2:8.4.0")
-    compileOnly fg.deobf("appeng:appliedenergistics2:8.4.0")
+    compileOnly fg.deobf("appeng:appliedenergistics2:8.4.6")
 
     // The Twilight Forest Mod
     // runtimeOnly fg.deobf('curse.maven:the-twilight-forest-227639:3334287')
