@@ -1,6 +1,6 @@
 # Inventory Pause
 <a href="https://www.curseforge.com/minecraft/mc-mods/inventory-pause-forge"><img src="http://cf.way2muchnoise.eu/versions/495153_all(555-0C8E8E-fff-010101).svg" alt="Supported Versions"></a>
-<a href="https://modrinth.com/mod/inventory-pause-forge"><img src="https://waffle.coffee/modrinth/inventory-pause-forge/downloads" alt="Modrinth Download Count"></a>
+<a href="https://modrinth.com/mod/inventory-pause-forge"><img src="https://img.shields.io/badge/dynamic/json?color=5da545&label=modrinth&prefix=downloads%20&query=downloads&url=https://api.modrinth.com/api/v1/mod/F39sgYmY" alt="Modrinth Download Count"></a>
 <a href="https://www.curseforge.com/minecraft/mc-mods/inventory-pause-forge"><img src="http://cf.way2muchnoise.eu/full_495153_downloads(E04E14-555-fff-010101-1C1C1C).svg" alt="CurseForge Download Count"></a>
 <a href="https://github.com/macbrayne/inventory-pause-forge/blob/master/LICENSE.md"><img src="https://img.shields.io/github/license/macbrayne/inventory-pause-forge?style=flat&color=0C8E8E" alt="License"></a>
 ---
