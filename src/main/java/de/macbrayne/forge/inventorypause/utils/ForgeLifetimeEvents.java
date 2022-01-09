@@ -3,9 +3,9 @@ package de.macbrayne.forge.inventorypause.utils;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.compat.VanillaCompat;
 import me.shedaniel.autoconfig.AutoConfig;
+import net.minecraftforge.client.ConfigGuiHandler;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fmlclient.ConfigGuiHandler;
 
 public class ForgeLifetimeEvents {
 

@@ -5,7 +5,7 @@ import de.macbrayne.forge.inventorypause.common.ScreenHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -19,16 +19,16 @@ public class ForgeGuiEvents {
     private static final Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onOpenGUI(GuiScreenEvent.DrawScreenEvent.InitGuiEvent.Pre event) {
-        if (MOD_CONFIG.debug && !ScreenHelper.isConfiguredScreen(event.getGui())) {
-            LOGGER.info(event.getGui().getClass().getName());
+    public static void onOpenGUI(ScreenEvent.DrawScreenEvent.InitScreenEvent.Pre event) {
+        if (MOD_CONFIG.debug && !ScreenHelper.isConfiguredScreen(event.getScreen())) {
+            LOGGER.info(event.getScreen().getClass().getName());
         }
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onGUIDrawPost(GuiScreenEvent.DrawScreenEvent.Post event) {
+    public static void onGUIDrawPost(ScreenEvent.DrawScreenEvent.Post event) {
         if (MOD_CONFIG.debug) {
-            Screen screen = event.getGui();
+            Screen screen = event.getScreen();
 
             int line = 0;
             for (Class<?> cl = screen.getClass(); cl.getSuperclass() != null && line < MOD_CONFIG.debugText.maxDepth; cl = cl.getSuperclass()) {

@@ -36,7 +36,7 @@
   "text.autoconfig.inventorypause.option.abilities.worldGUIs.pauseMerchant": "Pause on Villager",
 
   "text.autoconfig.inventorypause.category.modCompat": "Mod Compat",
-  "text.autoconfig.inventorypause.option.modCompat.@PrefixText": "All mod compats have been removed for the initial 1.17 release, however you can still add classes manually",
+  "text.autoconfig.inventorypause.option.modCompat.@PrefixText": "All mod compats have been removed for the initial 1.17/1.18 release, however you can still add classes manually",
   "text.autoconfig.inventorypause.option.modCompat.waystonesCompat": "Waystones Compat",
   "text.autoconfig.inventorypause.option.modCompat.ironchestCompat": "Iron Chest Compat",
   "text.autoconfig.inventorypause.option.modCompat.appliedEnergistics2Compat": "Applied Energistics 2 Compat ⚠",
