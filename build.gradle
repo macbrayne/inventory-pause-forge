@@ -8,7 +8,7 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-        // classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.2.1'
+        classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.2.1'
         //classpath "me.hypherionmc:CurseGradle:2.0.4"
     }
 }
@@ -166,7 +166,7 @@ jar {
 
 jar.finalizedBy('reobfJar')
 
-/*import com.modrinth.minotaur.TaskModrinthUpload
+import com.modrinth.minotaur.TaskModrinthUpload
 
 task publishModrinth (type: TaskModrinthUpload){ // Make sure it runs after build!
     onlyIf {
@@ -185,7 +185,7 @@ task publishModrinth (type: TaskModrinthUpload){ // Make sure it runs after buil
     addLoader('forge')
 }
 
-curseforge {
+/*curseforge {
     project {
         id = "495153"
         apiKey = System.getenv("CURSEFORGE")
