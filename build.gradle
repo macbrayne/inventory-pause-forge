@@ -142,7 +142,7 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
-    compileOnly 'org.jetbrains:annotations:22.0.0'
+    compileOnly 'org.jetbrains:annotations:23.0.0'
 
     // Mod Dependencies
     implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:${project.cloth_version}")
