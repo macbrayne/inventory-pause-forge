@@ -13,7 +13,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fmllegacy.network.FMLNetworkConstants;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(Reference.MOD_ID)
+@Mod("inventorypause")
 public class InventoryPause {
     public static ModConfig MOD_CONFIG = new ModConfig();
 
