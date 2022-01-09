@@ -22,7 +22,7 @@ version = "mc${project.minecraft_version}_v${project.mod_version}"
 
 java {
     archivesBaseName = project.archives_base_name
-    toolchain.languageVersion = JavaLanguageVersion.of(17) // Mojang ships Java 17 to end users, so your mod should target Java 16.
+    toolchain.languageVersion = JavaLanguageVersion.of(17) // Mojang ships Java 17 to end users, so your mod should target Java 17.
 }
 
 repositories {
@@ -187,7 +187,7 @@ task publishModrinth (type: TaskModrinthUpload){ // Make sure it runs after buil
     addLoader('forge')
 }
 
-/*curseforge {
+curseforge {
     project {
         id = "495153"
         apiKey = System.getenv("CURSEFORGE")
@@ -206,4 +206,4 @@ task publishModrinth (type: TaskModrinthUpload){ // Make sure it runs after buil
 tasks.withType(AbstractArchiveTask).configureEach {
     preserveFileTimestamps = false
     reproducibleFileOrder = true
-}*/
+}
