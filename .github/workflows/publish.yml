@@ -43,7 +43,7 @@ jobs:
         run: gradle clean build
 
       - name: 📢 Publish artifacts
-        run: gradle publishModrinth # curseforge
+        run: gradle publishModrinth curseforge
 
       - name: 📦 Upload artifacts
         uses: actions/upload-artifact@v2
