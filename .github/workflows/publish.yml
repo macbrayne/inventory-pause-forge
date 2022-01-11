@@ -42,8 +42,13 @@ jobs:
       - name: 🔨 Build artifacts
         run: gradle clean build
 
-      - name: 📢 Publish artifacts
-        run: gradle publishModrinth curseforge
+      - name: 📢 Publish artifacts to Modrinth
+        continue-on-error: true
+        run: gradle publishModrinth
+
+      - name: 📢 Publish artifacts to CurseForge
+        continue-on-error: true
+        run: gradle curseforge
 
       - name: 📦 Upload artifacts
         uses: actions/upload-artifact@v2
