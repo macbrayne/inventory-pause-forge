@@ -5,9 +5,8 @@ import de.macbrayne.forge.inventorypause.utils.Reference;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.minecraft.client.gui.screens.Screen;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class ScreenHelper {
     private static final ModConfig config;
@@ -29,7 +28,7 @@ public class ScreenHelper {
         return screen != null && config.enabled && (modDictionary.handleScreen(screen.getClass()) || isCustomMenu(screen));
     }
 
-    private static boolean isCustomMenu(@Nonnull Screen screen) {
+    private static boolean isCustomMenu(@NotNull Screen screen) {
         for (String s : config.modCompat.customScreens) {
             if(screen.getClass().getName().equals(s)) {
                 return true;
