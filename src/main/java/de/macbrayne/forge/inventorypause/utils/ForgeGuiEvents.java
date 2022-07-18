@@ -19,14 +19,14 @@ public class ForgeGuiEvents {
     private static final Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onOpenGUI(ScreenEvent.DrawScreenEvent.InitScreenEvent.Pre event) {
+    public static void onOpenGUI(ScreenEvent.Opening event) {
         if (MOD_CONFIG.debug && !ScreenHelper.isConfiguredScreen(event.getScreen())) {
             LOGGER.info(event.getScreen().getClass().getName());
         }
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onGUIDrawPost(ScreenEvent.DrawScreenEvent.Post event) {
+    public static void onGUIDrawPost(ScreenEvent.Render.Post event) {
         if (MOD_CONFIG.debug) {
             Screen screen = event.getScreen();
 
