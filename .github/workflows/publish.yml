@@ -44,7 +44,7 @@ jobs:
 
       - name: 📢 Publish artifacts to Modrinth
         continue-on-error: true
-        run: gradle publishModrinth
+        run: gradle modrinth
 
       - name: 📢 Publish artifacts to CurseForge
         continue-on-error: true
