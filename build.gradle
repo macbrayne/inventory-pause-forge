@@ -8,12 +8,13 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-        classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.2.1'
+        classpath "com.modrinth.minotaur:Minotaur:2.4.3"
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
+apply plugin: "com.modrinth.minotaur"
 
 archivesBaseName = project.archives_base_name
 group = project.maven_group
@@ -238,6 +239,8 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8:processor'
 }
 
+jar.dependsOn(':compat:jar')
+
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
@@ -257,6 +260,8 @@ jar {
         configurations
                 .runtimeClasspath
                 .collect {
+                    // it.isDirectory() ? println ('Folder ' + it.name) : println ('File ' + it.name)
+
                     if(it.name.equalsIgnoreCase("compat-${version}.jar")) {
                         zipTree(it)
                     }
@@ -266,20 +271,22 @@ jar {
 
 jar.finalizedBy('reobfJar')
 
-import com.modrinth.minotaur.TaskModrinthUpload
+tasks.modrinth.onlyIf {
+    System.getenv("MODRINTH")
+}
 
-task publishModrinth (type: TaskModrinthUpload){ // Make sure it runs after build!
-    onlyIf {
-        System.getenv("MODRINTH") // Only attempt to run this task if the MODRINTH variable is set, otherwise SKIP it
-    }
-
+modrinth { // Make sure it runs after build!
     token = System.getenv("MODRINTH") // An environment property called MODRINTH that is your token, set via Gradle CLI, GitHub Actions, Idea Run Configuration, or other
     projectId = 'F39sgYmY'
+    versionName = "${archivesBaseName}-${version}" // The version of the mod to upload.
     versionNumber = "${project.mod_version}" // Will fail if Modrinth has this version already
+    changelog = System.getenv("CHANGELOG")
+    versionType = "RELEASE"
+
     // On fabric, use 'remapJar' instead of 'jar'
     uploadFile = jar // This is the java jar task. If it can't find the jar, try 'jar.outputs.getFiles().asPath' in place of 'jar'
-    addGameVersion('1.16.5') // Call this multiple times to add multiple game versions. There are tools that can help you generate the list of versions
-    addLoader('forge')
+    gameVersions = [project.minecraft_version] // Call this multiple times to add multiple game versions. There are tools that can help you generate the list of versions
+    loaders = ['forge']
 }
 
 tasks.withType(AbstractArchiveTask).configureEach {

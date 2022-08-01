@@ -15,17 +15,43 @@ jobs:
 
     env: # Or as an environment variable
       MODRINTH: ${{ secrets.MODRINTH }}
+      CHANGELOG: ${{ github.event.release.body }}
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 8
-      uses: actions/setup-java@v2
-      with:
-        java-version: '8'
-        distribution: 'adopt'
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew build
-    - name: Publish to Modrinth
-      run: ./gradlew publishModrinth
+      - name: ✨ Checkout repository
+        uses: actions/checkout@v2
+
+      - name: 🛂 Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: 🏗 Set up JDK 8
+        uses: actions/setup-java@v2
+        with:
+          java-version: 8
+          distribution: adopt
+
+      - name: 📷 Begin Gradle cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: 🔨 Build artifacts
+        run: gradle clean build
+
+      - name: 📢 Publish artifacts to Modrinth
+        run: gradle modrinth
+
+      - name: 📦 Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifacts
+          path: '**/build/libs/'
+
+      - name: 🧨 Cleanup Gradle cache
+        run: |
+          rm -f ~/.gradle/caches/modules-2/modules-2.lock
+          rm -f ~/.gradle/caches/modules-2/gc.properties
