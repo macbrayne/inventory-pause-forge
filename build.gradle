@@ -252,6 +252,16 @@ jar {
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
+
+    from {
+        configurations
+                .runtimeClasspath
+                .collect {
+                    if(it.name.equalsIgnoreCase("compat-${version}.jar")) {
+                        zipTree(it)
+                    }
+        }
+    }
 }
 
 jar.finalizedBy('reobfJar')
