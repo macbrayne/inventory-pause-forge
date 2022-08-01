@@ -36,7 +36,7 @@ All of these features can be disabled individually inside the config menu (acces
 This mod is __client-side only__ and won't be active in LAN worlds or on servers.
 
 Current versions:
-- 1.16.5: 0.8
+- 1.16.5: 0.8.1
 - 1.17: 0.9
 - 1.18: 1.0
 - 1.19: 1.1
