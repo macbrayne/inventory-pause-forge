@@ -142,6 +142,4 @@ public class MekanismConfig {
     public boolean guiThermalEvaporationController = true;
     @RegisterClass(GuiThermoelectricBoiler.class)
     public boolean guiThermoelectricBoiler = true;
-    @RegisterClass(GuiUpgradeManagement.class)
-    public boolean guiUpgradeManagement = true;
 }
