@@ -63,5 +63,11 @@ public class ModConfig implements ConfigData {
 
     public static class ModCompat {
         List<String> customScreens = new ArrayList<>();
+
+        @ConfigEntry.Gui.PrefixText
+        @ConfigEntry.BoundedDiscrete(min = 2, max = 200L)
+        public int timeBetweenCompatTicks = 20;
+
+        List<String> compatScreens = new ArrayList<>();
     }
 }

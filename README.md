@@ -47,6 +47,15 @@ This mod depends on [Cloth Config Forge](https://www.curseforge.com/minecraft/mc
 
 The mod is licensed under the [MIT License](LICENSE.md)
 
+## Tutorial: How to add custom screens
+
+To add custom screens to the config you need the internal name of the screen to add. If you don't know that you can try this:
+1. Open the settings and change "Enable Debug Mode" to true. This should make an overlay appear on the top left of the screen whenever you have a screen open.
+2. Navigate to the menu you want to add and note down the topmost text (e.g. `appeng.client.gui.implementations.IOPortScreen`). Alternatively copy it from the Minecraft log. That is the internal name of the screen.
+3. Add an entry to "Custom Mod class names" and paste the internal name.
+
+Now the screen should be paused. If it works disable "Enable Debug Mode" again.
+
 ## In-Game Config
 <details>
   <summary>Click to expand.</summary>
@@ -68,5 +77,6 @@ Enables / Disables the respective feature
 
 __Mod Compat__:
 - Custom mod class names: A custom list of GUI class names can be input here to force the screen to pause the game
-
+- Time between compat ticks: Frequency in ticks (20 ticks = every second) to unpause when in screens specified in "Compat mod class names"
+- Compat mod class names: A custom list of GUI class names can be input here to tick less often
 </details>
