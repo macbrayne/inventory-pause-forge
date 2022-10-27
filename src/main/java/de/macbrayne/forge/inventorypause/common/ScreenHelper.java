@@ -24,4 +24,13 @@ public class ScreenHelper {
         }
         return false;
     }
+
+    public static boolean isCompatScreen(@Nonnull Screen screen) {
+        for (String s : config.modCompat.compatScreens) {
+            if(screen.getClass().getName().equals(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -52,5 +52,8 @@
   "text.autoconfig.inventorypause.option.modCompat.aquaculture2Compat": "Aquaculture 2 Compat",
   "text.autoconfig.inventorypause.option.modCompat.pneumaticcraftCompat": "PneumaticCraft Compat ⚠",
   "text.autoconfig.inventorypause.option.modCompat.extendedCraftingCompat": "Extended Crafting Compat",
-  "text.autoconfig.inventorypause.option.modCompat.customScreens": "Custom mod class names"
+  "text.autoconfig.inventorypause.option.modCompat.customScreens": "Custom mod class names",
+  "text.autoconfig.inventorypause.option.modCompat.timeBetweenCompatTicks.@PrefixText": "Some mod GUIs may not work correctly without any ticking being done. Any classes listed in compat classes will still be ticked - no real pause - but far slower than normal. The default 'Time between compat ticks' value of 20 means that every 20 ticks (one second) screens listed will be ticked when displayed. Note that currently none of the compat profiles above use this feature.",
+  "text.autoconfig.inventorypause.option.modCompat.timeBetweenCompatTicks": "Time between compat ticks",
+  "text.autoconfig.inventorypause.option.modCompat.compatScreens": "Compat mod class names"
 }

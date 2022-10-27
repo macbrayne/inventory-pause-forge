@@ -84,6 +84,12 @@ public class ModConfig implements ConfigData {
 
         List<String> customScreens = new ArrayList<>();
 
+        @ConfigEntry.Gui.PrefixText
+        @ConfigEntry.BoundedDiscrete(min = 2, max = 200L)
+        public int timeBetweenCompatTicks = 20;
+
+        List<String> compatScreens = new ArrayList<>();
+
         public static class FineTuning {
             public WaystonesConfig waystonesConfig = new WaystonesConfig();
             public AppliedEnergistics2Config appliedEnergistics2Config = new AppliedEnergistics2Config();
