@@ -28,18 +28,19 @@
 
 ![](https://media.giphy.com/media/mCJQCNkacCMGpUDj3h/giphy.gif)
 
-This is an ongoing port of [umollu's inventory-pause mod](https://modrinth.com/mod/inventory-pause) to forge which is currently fabric only.
+A port of [umollu's inventory-pause mod](https://modrinth.com/mod/inventory-pause) to Forge.
 It supports pausing on opening the inventory, opening furnaces, crafting tables, shulker boxes and configurable basic support for other mods.
+In case of incompatibilities try adding the modded screen to the list of "Compat mod class names".
 
-All of these features can be disabled individually inside the config menu (accessible via the forge mod list).
+All features can be disabled individually inside the config menu (accessible via the forge mod list).
 
 This mod is __client-side only__ and won't be active in LAN worlds or on servers.
 
 Current versions:
-- 1.16.5: 0.8.1
+- 1.16.5: 0.8.2
 - 1.17: 0.9
 - 1.18: 1.0
-- 1.19: 1.1
+- 1.19: 1.2
 
 ## [Releases](https://github.com/macbrayne/inventory-pause-forge/releases)
 
