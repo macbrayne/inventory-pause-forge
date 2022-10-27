@@ -2,6 +2,7 @@ package de.macbrayne.forge.inventorypause.mixin;
 
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
+import de.macbrayne.forge.inventorypause.utils.CompatTick;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -17,25 +18,13 @@ public class ContainerScreenMixin {
     @Unique
     private static final ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
-    @Unique
-    private int timeUntilCompatTick = config.modCompat.timeBetweenCompatTicks;
-
     @Inject(method = "isPauseScreen", at = @At("HEAD"), cancellable = true)
     public void isPauseScreen(CallbackInfoReturnable<Boolean> cir) {
-        if (ScreenHelper.isCompatScreen((Screen) (Object) this) && this.timeUntilCompatTick == 1) {
+        if (ScreenHelper.isCompatScreen((Screen) (Object) this) && CompatTick.timeUntilCompatTick == 1) {
             return;
         }
         if(ScreenHelper.isConfiguredScreen((Screen) (Object) this)) {
             cir.setReturnValue(true);
-        }
-    }
-
-    @Inject(method = "tick", at = @At("HEAD"))
-    private void tick(CallbackInfo ci) {
-        if (ScreenHelper.isCompatScreen((Screen) (Object) this) && this.timeUntilCompatTick > 0 &&
-                --this.timeUntilCompatTick == 0) {
-            this.timeUntilCompatTick = config.modCompat.timeBetweenCompatTicks;
-            return;
         }
     }
 }
