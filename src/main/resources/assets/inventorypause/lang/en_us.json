@@ -55,5 +55,10 @@
   "text.autoconfig.inventorypause.option.modCompat.customScreens": "Custom mod class names",
   "text.autoconfig.inventorypause.option.modCompat.timeBetweenCompatTicks.@PrefixText": "Some mod GUIs may not work correctly without any ticking being done. Any classes listed in compat classes will still be ticked - no real pause - but far slower than normal. The default 'Time between compat ticks' value of 20 means that every 20 ticks (one second) screens listed will be ticked when displayed.",
   "text.autoconfig.inventorypause.option.modCompat.timeBetweenCompatTicks": "Time between compat ticks",
-  "text.autoconfig.inventorypause.option.modCompat.compatScreens": "Compat mod class names"
+  "text.autoconfig.inventorypause.option.modCompat.compatScreens": "Compat mod class names",
+
+  "chat.inventorypause.copyClassName.action": "Copied internal name of the current screen to clipboard: %s",
+
+  "key.categories.inventorypause.main": "Inventory Pause Helper",
+  "key.inventorypause.copyClassName": "Copy Class Name"
 }
