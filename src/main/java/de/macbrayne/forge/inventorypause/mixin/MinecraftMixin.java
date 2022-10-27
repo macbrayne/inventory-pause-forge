@@ -19,19 +19,19 @@ import javax.annotation.Nullable;
 
 @Mixin(Minecraft.class)
 public abstract class MinecraftMixin {
-    @Shadow public abstract SoundHandler getSoundHandler();
-    @Shadow public abstract boolean isIntegratedServerRunning();
-    @Shadow private @Nullable IntegratedServer integratedServer;
+    @Shadow public abstract SoundHandler getSoundManager();
+    @Shadow public abstract boolean isLocalServer();
+    @Shadow private @Nullable IntegratedServer singleplayerServer;
 
     @Unique private static ModConfig config = null;
 
-    @Inject(at = @At("TAIL"), method = "displayGuiScreen")
+    @Inject(at = @At("TAIL"), method = "setScreen")
     public void openScreen(@Nullable Screen screen, CallbackInfo ci) {
         if (ScreenHelper.isConfiguredScreen(screen))
         {
-            boolean canPauseGame = isIntegratedServerRunning() && !this.integratedServer.getPublic();
+            boolean canPauseGame = isLocalServer() && !this.singleplayerServer.isPublished();
             if(canPauseGame) {
-                this.getSoundHandler().pause();
+                this.getSoundManager().pause();
             }
         }
     }
@@ -44,7 +44,7 @@ public abstract class MinecraftMixin {
     }
 
 
-    @Inject(method = "lambda$runTick$20", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/Screen;tick()V"))
+    @Inject(method = "lambda$tick$20", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/Screen;tick()V", remap = true), remap = false)
     private void tickScreen(CallbackInfo ci) {
         if (CompatTick.timeUntilCompatTick > 0 &&
                 --CompatTick.timeUntilCompatTick == 0) {
