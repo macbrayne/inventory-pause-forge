@@ -63,6 +63,8 @@ If you experience any problems (e.g. modded UI elements not working) try adding 
 
 Note: This mod will not be able to work on all types of screens due to technical limitations
 
+Note: Vanilla screens are currently not supported
+
 ## In-Game Config
 <details>
   <summary>Click to expand.</summary>
