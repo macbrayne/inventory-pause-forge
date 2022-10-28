@@ -5,7 +5,7 @@
 <a href="https://github.com/macbrayne/inventory-pause-forge"><img src="https://img.shields.io/badge/side-client--only-5da545" alt="Side: Client-Only"></a>
 <a href="https://github.com/macbrayne/inventory-pause-forge/blob/master/LICENSE.md"><img src="https://img.shields.io/github/license/macbrayne/inventory-pause-forge?style=flat&color=0C8E8E" alt="License"></a>
 ---
-## Pause your single player game when you open your inventory.
+## Pause your single player game when you open your inventory and more.
 <table>
     <tr>
         <td>Forge</td>
