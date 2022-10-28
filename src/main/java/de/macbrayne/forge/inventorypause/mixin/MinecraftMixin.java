@@ -41,13 +41,4 @@ public abstract class MinecraftMixin {
         }
         return config;
     }
-
-
-    @Inject(method = "lambda$tick$36", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;tick()V", remap = true), remap = false)
-    private void tickScreen(CallbackInfo ci) {
-        if (CompatTick.timeUntilCompatTick > 0 &&
-                --CompatTick.timeUntilCompatTick == 0) {
-            CompatTick.timeUntilCompatTick = getConfig().modCompat.timeBetweenCompatTicks;
-        }
-    }
 }

@@ -1,12 +1,14 @@
 package de.macbrayne.forge.inventorypause;
 
 import de.macbrayne.forge.inventorypause.common.ModConfig;
+import de.macbrayne.forge.inventorypause.utils.CompatTick;
 import de.macbrayne.forge.inventorypause.utils.ForgeLifetimeEvents;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -29,11 +31,17 @@ public class InventoryPause {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onClientTick(TickEvent.ClientTickEvent event) {
-        while (ClientSetup.OPEN_SETTINGS.get().consumeClick()) {
-            var configScreen = AutoConfig.getConfigScreen(ModConfig.class, Minecraft.getInstance().screen).get();
-            Minecraft.getInstance().setScreen(configScreen);
+        if(event.phase == TickEvent.Phase.END) {
+            if (CompatTick.timeUntilCompatTick > 0 &&
+                    --CompatTick.timeUntilCompatTick == 0) {
+                CompatTick.timeUntilCompatTick = MOD_CONFIG.modCompat.timeBetweenCompatTicks;
+            }
+            while (ClientSetup.OPEN_SETTINGS.get().consumeClick()) {
+                var configScreen = AutoConfig.getConfigScreen(ModConfig.class, Minecraft.getInstance().screen).get();
+                Minecraft.getInstance().setScreen(configScreen);
+            }
         }
     }
 }
