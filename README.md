@@ -39,7 +39,7 @@ Current versions:
 - 1.16.5: 0.8.3
 - 1.17: 0.9
 - 1.18: 1.0
-- 1.19: 1.2
+- 1.19: 1.1.1
 
 ## [Releases](https://github.com/macbrayne/inventory-pause-forge/releases)
 
@@ -50,9 +50,12 @@ The mod is licensed under the [MIT License](LICENSE.md)
 ## Tutorial: How to add custom screens
 
 To add custom screens to the config you need the internal name of the screen to add. If you don't know that you can try this:
-1. Open the settings and change "Enable Debug Mode" to true. This should make an overlay appear on the top left of the screen whenever you have a screen open.
-2. Navigate to the menu you want to add and note down the topmost text (e.g. `appeng.client.gui.implementations.IOPortScreen`). Alternatively copy it from the Minecraft log. That is the internal name of the screen.
-3. Add an entry to "Custom Mod class names" and paste the internal name.
+1. Check the Minecraft Controls settings if you have assigned the keybinds for "Copy Class Name" and "Open Settings" (only available on versions released after October 2022)
+2. Open the settings and change "Enable Debug Mode" to true. This should make an overlay appear on the top left of the screen whenever you have a screen open.
+3. Navigate to the menu you want to add and depending on your mod version:
+   * (0.8.2, 0.9, 1.0 or 1.1): note down the topmost text (e.g. `appeng.client.gui.implementations.IOPortScreen`). Alternatively copy it from the Minecraft log. That is the internal name of the screen.
+   * (0.8.3 or 1.1.1): press the "Copy Class" key you assigned earlier. You should get a confirmation in chat when you do so.
+4. Add an entry to "Custom Mod class names" and paste the internal name.
 
 Now the screen should be paused. If it works disable "Enable Debug Mode" again.
 
