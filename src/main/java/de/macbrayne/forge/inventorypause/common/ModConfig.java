@@ -34,7 +34,7 @@ public class ModConfig implements ConfigData {
     public ModCompat modCompat = new ModCompat();
 
     public static class Abilities {
-	    public static class AdditionalGUIs {
+        public static class AdditionalGUIs {
             public boolean pauseAnvil = false;
             public boolean pauseBeacon = false;
             public boolean pauseDispenser = false;
