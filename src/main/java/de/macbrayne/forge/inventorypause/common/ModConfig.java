@@ -34,7 +34,7 @@ public class ModConfig implements ConfigData {
     public ModCompat modCompat = new ModCompat();
 
     public static class Abilities {
-        public static class AdditionalGUIs {
+	    public static class AdditionalGUIs {
             public boolean pauseAnvil = false;
             public boolean pauseBeacon = false;
             public boolean pauseDispenser = false;
@@ -55,6 +55,7 @@ public class ModConfig implements ConfigData {
         public boolean pauseFurnace = false;
         public boolean pauseShulkerBox = false;
         public boolean pauseChest = false;
+        public boolean pauseDeath = false;
         @ConfigEntry.Gui.CollapsibleObject
         public WorldGUIs worldGUIs = new WorldGUIs();
         @ConfigEntry.Gui.CollapsibleObject

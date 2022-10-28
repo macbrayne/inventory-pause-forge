@@ -1,5 +1,6 @@
 package de.macbrayne.forge.inventorypause.compat;
 
+import net.minecraft.client.gui.screens.DeathScreen;
 import net.minecraft.client.gui.screens.inventory.*;
 
 public class VanillaCompat implements CustomCompat {
@@ -12,6 +13,7 @@ public class VanillaCompat implements CustomCompat {
         SCREEN_DICTIONARY.register(CraftingScreen.class, () -> config.abilities.pauseCraftingTable);
         SCREEN_DICTIONARY.register(ShulkerBoxScreen.class, () -> config.abilities.pauseShulkerBox);
         SCREEN_DICTIONARY.register(ContainerScreen.class, () -> config.abilities.pauseChest);
+        SCREEN_DICTIONARY.register(DeathScreen.class, () -> config.abilities.pauseDeath);
 
         // Additional GUIs
         SCREEN_DICTIONARY.register(AnvilScreen.class, () -> config.abilities.additionalGUIs.pauseAnvil);
