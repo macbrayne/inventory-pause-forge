@@ -51,11 +51,11 @@ public class ModConfig implements ConfigData {
 
         public boolean pauseInventory = true;
         public boolean pauseCreativeInventory = true;
+        public boolean pauseDeath = false;
         public boolean pauseCraftingTable = false;
         public boolean pauseFurnace = false;
         public boolean pauseShulkerBox = false;
         public boolean pauseChest = false;
-        public boolean pauseDeath = false;
         @ConfigEntry.Gui.CollapsibleObject
         public WorldGUIs worldGUIs = new WorldGUIs();
         @ConfigEntry.Gui.CollapsibleObject

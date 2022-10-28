@@ -9,11 +9,11 @@ public class VanillaCompat implements CustomCompat {
         // Abilities Screen top layer
         SCREEN_DICTIONARY.register(InventoryScreen.class, () -> config.abilities.pauseInventory);
         SCREEN_DICTIONARY.register(CreativeModeInventoryScreen.class, () -> config.abilities.pauseCreativeInventory);
+        SCREEN_DICTIONARY.register(DeathScreen.class, () -> config.abilities.pauseDeath);
         SCREEN_DICTIONARY.register(AbstractFurnaceScreen.class, () -> config.abilities.pauseFurnace);
         SCREEN_DICTIONARY.register(CraftingScreen.class, () -> config.abilities.pauseCraftingTable);
         SCREEN_DICTIONARY.register(ShulkerBoxScreen.class, () -> config.abilities.pauseShulkerBox);
         SCREEN_DICTIONARY.register(ContainerScreen.class, () -> config.abilities.pauseChest);
-        SCREEN_DICTIONARY.register(DeathScreen.class, () -> config.abilities.pauseDeath);
 
         // Additional GUIs
         SCREEN_DICTIONARY.register(AnvilScreen.class, () -> config.abilities.additionalGUIs.pauseAnvil);
