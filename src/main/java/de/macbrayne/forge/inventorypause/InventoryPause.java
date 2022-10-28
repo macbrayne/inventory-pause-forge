@@ -1,11 +1,17 @@
 package de.macbrayne.forge.inventorypause;
 
 import de.macbrayne.forge.inventorypause.common.ModConfig;
+import de.macbrayne.forge.inventorypause.utils.CompatTick;
 import de.macbrayne.forge.inventorypause.utils.ForgeClientSetupGen;
 import de.macbrayne.forge.inventorypause.utils.ForgeLifetimeEvents;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -27,5 +33,19 @@ public class InventoryPause {
         ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
 
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onClientTick(TickEvent.ClientTickEvent event) {
+        if(event.phase == TickEvent.Phase.END) {
+            if (CompatTick.timeUntilCompatTick > 0 &&
+                    --CompatTick.timeUntilCompatTick == 0) {
+                CompatTick.timeUntilCompatTick = MOD_CONFIG.modCompat.timeBetweenCompatTicks;
+            }
+            while (ForgeLifetimeEvents.OPEN_SETTINGS.get().consumeClick()) {
+                Screen configScreen = AutoConfig.getConfigScreen(ModConfig.class, Minecraft.getInstance().screen).get();
+                Minecraft.getInstance().setScreen(configScreen);
+            }
+        }
     }
 }

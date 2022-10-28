@@ -28,11 +28,10 @@
 
 ![](https://media.giphy.com/media/mCJQCNkacCMGpUDj3h/giphy.gif)
 
-A port of [umollu's inventory-pause mod](https://modrinth.com/mod/inventory-pause) to Forge.
-It supports pausing on opening the inventory, opening furnaces, crafting tables, shulker boxes and configurable basic support for other mods.
+This small client-side mod supports pausing when opening the inventory, when dying, opening furnaces, crafting tables, shulker boxes and even has basic support for other mods.
 In case of incompatibilities try adding the modded screen to the list of "Compat mod class names".
 
-All features can be disabled individually inside the config menu (accessible via the forge mod list).
+All features can be disabled individually inside the config menu (accessible via the Forge mod list).
 
 This mod is __client-side only__ and won't be active in LAN worlds or on servers.
 
@@ -57,6 +56,10 @@ To add custom screens to the config you need the internal name of the screen to 
 
 Now the screen should be paused. If it works disable "Enable Debug Mode" again.
 
+If you experience any problems (e.g. modded UI elements not working) try adding the screen to the list of "Compat mod class names".
+
+Note: This mod will not be able to work on all types of screens due to technical limitations
+
 ## In-Game Config
 <details>
   <summary>Click to expand.</summary>
@@ -73,7 +76,7 @@ __General__:
   - Maximum Crawl Depth: Limit the number of items to display (useful for deep gui hierarchies)
 
 __Abilities__:
-- Pause on Inventory / Pause on Creative Inventory / Pause on Furnace / Pause on Crafting Table / Pause on Shulker Box:
+- Pause on Inventory / Pause on Creative Inventory / Pause on Death Screen / Pause on Furnace / Pause on Crafting Table / Pause on Shulker Box:
   Enables / Disables the respective feature
 
 __Mod Compat__:
