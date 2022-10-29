@@ -52,6 +52,7 @@ public class ModConfig implements ConfigData {
         public boolean pauseInventory = true;
         public boolean pauseCreativeInventory = true;
         public boolean pauseDeath = false;
+        public boolean pauseGameModeSwitcher = false;
         public boolean pauseCraftingTable = false;
         public boolean pauseFurnace = false;
         public boolean pauseShulkerBox = false;

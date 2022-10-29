@@ -39,7 +39,7 @@ Current versions:
 - 1.16.5: 0.8.3
 - 1.17: 0.9.1
 - 1.18: 1.0.2
-- 1.19: 1.1.1
+- 1.19: 1.1.2
 
 ## [Releases](https://github.com/macbrayne/inventory-pause-forge/releases)
 
