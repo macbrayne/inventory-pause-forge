@@ -26,11 +26,21 @@ public class ScreenHelper {
     private static final ScreenDictionary modDictionary = Reference.getScreenDictionary();
 
     public static boolean isConfiguredScreen(@Nullable Screen screen) {
-        return screen != null && config.enabled && (modDictionary.handleScreen(screen.getClass()) || isCustomMenu(screen));
+        return screen != null && config.enabled &&
+                (modDictionary.handleScreen(screen.getClass()) || isCustomMenu(screen) || isCompatScreen(screen));
     }
 
     private static boolean isCustomMenu(@Nonnull Screen screen) {
         for (String s : config.modCompat.customScreens) {
+            if(screen.getClass().getName().equals(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isCompatScreen(@Nonnull Screen screen) {
+        for (String s : config.modCompat.compatScreens) {
             if(screen.getClass().getName().equals(s)) {
                 return true;
             }

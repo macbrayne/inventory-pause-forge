@@ -51,6 +51,8 @@ public class ModConfig implements ConfigData {
 
         public boolean pauseInventory = true;
         public boolean pauseCreativeInventory = true;
+        public boolean pauseDeath = false;
+        public boolean pauseGameModeSwitcher = false;
         public boolean pauseCraftingTable = false;
         public boolean pauseFurnace = false;
         public boolean pauseShulkerBox = false;
@@ -63,5 +65,10 @@ public class ModConfig implements ConfigData {
 
     public static class ModCompat {
         List<String> customScreens = new ArrayList<>();
+        @ConfigEntry.Gui.PrefixText
+        @ConfigEntry.BoundedDiscrete(min = 2, max = 200L)
+        public int timeBetweenCompatTicks = 20;
+
+        List<String> compatScreens = new ArrayList<>();
     }
 }
