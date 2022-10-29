@@ -1,5 +1,7 @@
 package de.macbrayne.forge.inventorypause.compat;
 
+import net.minecraft.client.gui.screens.DeathScreen;
+import net.minecraft.client.gui.screens.debug.GameModeSwitcherScreen;
 import net.minecraft.client.gui.screens.inventory.*;
 
 public class VanillaCompat implements CustomCompat {
@@ -8,6 +10,8 @@ public class VanillaCompat implements CustomCompat {
         // Abilities Screen top layer
         SCREEN_DICTIONARY.register(InventoryScreen.class, () -> config.abilities.pauseInventory);
         SCREEN_DICTIONARY.register(CreativeModeInventoryScreen.class, () -> config.abilities.pauseCreativeInventory);
+        SCREEN_DICTIONARY.register(DeathScreen.class, () -> config.abilities.pauseDeath);
+        SCREEN_DICTIONARY.register(GameModeSwitcherScreen.class, () -> config.abilities.pauseGameModeSwitcher);
         SCREEN_DICTIONARY.register(AbstractFurnaceScreen.class, () -> config.abilities.pauseFurnace);
         SCREEN_DICTIONARY.register(CraftingScreen.class, () -> config.abilities.pauseCraftingTable);
         SCREEN_DICTIONARY.register(ShulkerBoxScreen.class, () -> config.abilities.pauseShulkerBox);
