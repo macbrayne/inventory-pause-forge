@@ -31,9 +31,6 @@ public class ConfigScreen extends Screen {
 
 		int k = 24;
 		int l = this.height / 4 + 48;
-		/*this.addRenderableWidget(new ImageButton(this.width / 2 - 124, l + 72 + 12, 20, 20, 0, 106, 20, Button.WIDGETS_LOCATION, 256, 256, (p_96791_) -> {
-			InventoryPause.MOD_CONFIG.abilities.pauseCreativeInventory = !InventoryPause.MOD_CONFIG.abilities.pauseCreativeInventory;
-		}, Component.translatable("narrator.button.language")));*/
 		this.addRenderableWidget(new Button(this.width / 2 - 100, l + 72 + 12, 98, 20, Component.translatable("menu.inventorypause.further_options"), (p_96788_) -> {
 			this.minecraft.setScreen(AutoConfig.getConfigScreen(ModConfig.class, this).get());
 		}));
