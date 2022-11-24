@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: EUPL-1.2
+
 package de.macbrayne.forge.inventorypause.gui.screens;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -60,13 +62,6 @@ public class ConfigScreen extends Screen {
 		int x0 = this.width / 2 - 4 * totalSize, y0 = this.height / 2 - totalSize;
 		for(int row = 0; row < numberOfRows; row++) {
 			for(int column = 0; column < numberOfColumns; column++) {
-				// 0 0 0 1 1 1 2 2 2 3 3 3
-				//       Spalte 0
-				// Reihe 0 Inhalt
-				// maxC = 3
-				// numR = 4
-				// numC = 3
-				//
 				int currentObject = numberOfColumns * row + column;
 				System.out.println(currentObject);
 				if(currentObject >= list.size()) {

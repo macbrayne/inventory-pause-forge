@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: EUPL-1.2
+
 package de.macbrayne.forge.inventorypause.gui.components;
 
 import com.mojang.blaze3d.systems.RenderSystem;

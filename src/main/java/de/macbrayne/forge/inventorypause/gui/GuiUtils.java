@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: EUPL-1.2
+
 package de.macbrayne.forge.inventorypause.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;

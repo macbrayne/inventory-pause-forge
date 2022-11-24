@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: EUPL-1.2 OR MIT
+
 package de.macbrayne.forge.inventorypause.mixin;
 
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
-import de.macbrayne.forge.inventorypause.utils.CompatTick;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
