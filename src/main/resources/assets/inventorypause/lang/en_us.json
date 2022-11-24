@@ -63,5 +63,6 @@
 
   "key.categories.inventorypause.main": "Inventory Pause Helpers",
   "key.inventorypause.openSettings": "Open Settings",
-  "key.inventorypause.copyClassName": "Copy Class Name"
+  "key.inventorypause.copyClassName": "Copy Class Name",
+  "menu.inventorypause.further_options": "Further Options"
 }

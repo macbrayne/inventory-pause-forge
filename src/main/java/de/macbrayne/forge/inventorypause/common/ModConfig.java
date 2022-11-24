@@ -26,8 +26,9 @@ public class ModConfig implements ConfigData {
         public int maxDepth = 3;
     }
 
-    @ConfigEntry.Category("abilities")
+    //@ConfigEntry.Category("abilities")
     @ConfigEntry.Gui.TransitiveObject
+    @ConfigEntry.Gui.Excluded
     public Abilities abilities = new Abilities();
 
     @ConfigEntry.Category("modCompat")

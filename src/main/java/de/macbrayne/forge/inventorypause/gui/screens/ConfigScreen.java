@@ -8,8 +8,8 @@ import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.gui.components.TexturedToggleButton;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -31,13 +31,13 @@ public class ConfigScreen extends Screen {
 
 		int k = 24;
 		int l = this.height / 4 + 48;
-		this.addRenderableWidget(new ImageButton(this.width / 2 - 124, l + 72 + 12, 20, 20, 0, 106, 20, Button.WIDGETS_LOCATION, 256, 256, (p_96791_) -> {
+		/*this.addRenderableWidget(new ImageButton(this.width / 2 - 124, l + 72 + 12, 20, 20, 0, 106, 20, Button.WIDGETS_LOCATION, 256, 256, (p_96791_) -> {
 			InventoryPause.MOD_CONFIG.abilities.pauseCreativeInventory = !InventoryPause.MOD_CONFIG.abilities.pauseCreativeInventory;
-		}, Component.translatable("narrator.button.language")));
-		this.addRenderableWidget(new Button(this.width / 2 - 100, l + 72 + 12, 98, 20, Component.translatable("menu.options"), (p_96788_) -> {
+		}, Component.translatable("narrator.button.language")));*/
+		this.addRenderableWidget(new Button(this.width / 2 - 100, l + 72 + 12, 98, 20, Component.translatable("menu.inventorypause.further_options"), (p_96788_) -> {
 			this.minecraft.setScreen(AutoConfig.getConfigScreen(ModConfig.class, this).get());
 		}));
-		this.addRenderableWidget(new Button(this.width / 2 + 2, l + 72 + 12, 98, 20, Component.translatable("menu.quit"), (p_96786_) -> {
+		this.addRenderableWidget(new Button(this.width / 2 + 2, l + 72 + 12, 98, 20, CommonComponents.GUI_DONE, (p_96786_) -> {
 			this.minecraft.setScreen(lastScreen);
 		}));
 		ButtonInfo furnaceButton = new ButtonInfo(new ResourceLocation("block/furnace_front_on"), Component.translatable("text.autoconfig.inventorypause.option.abilities.pauseFurnace"), button -> InventoryPause.MOD_CONFIG.abilities.pauseFurnace = !InventoryPause.MOD_CONFIG.abilities.pauseFurnace);
