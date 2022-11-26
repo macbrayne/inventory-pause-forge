@@ -7,9 +7,15 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class GuiUtils {
+	public static Button.OnPress getTogglePress(Supplier<Boolean> supplier, Consumer<Boolean> consumer) {
+		return button -> consumer.accept(!supplier.get());
+	}
+
 	public static Button.OnTooltip getTooltip(Screen screen, Component component) {
 		return new Button.OnTooltip() {
 			private final Component text = component;

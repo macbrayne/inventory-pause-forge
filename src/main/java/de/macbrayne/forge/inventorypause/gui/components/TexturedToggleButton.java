@@ -14,26 +14,26 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.function.Consumer;
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 public class TexturedToggleButton extends Button {
     private final ResourceLocation resourceLocation;
-    private final int textureWidth;
-    private final int textureHeight;
 
-    Supplier<Boolean> stateGetter;
-    Consumer<Boolean> stateSetter;
+    private final Supplier<Boolean> stateSupplier;
 
-    public TexturedToggleButton(int x, int y, int width, int height, ResourceLocation resourceLocation, int textureWidth, int textureHeight, Component tooltipComponent, Component narratedComponent, OnPress onPress, Screen screen) {
-        this(x, y, width, height, resourceLocation, textureWidth, textureHeight, narratedComponent, onPress, GuiUtils.getTooltip(screen, tooltipComponent));
+    public TexturedToggleButton(int x, int y, int width, int height, Component narratedComponent, Screen screen, ButtonInfo info) {
+        this(x, y, width, height, info.iconLocation(), narratedComponent, GuiUtils.getTogglePress(info.stateSupplier(), info.stateConsumer()), GuiUtils.getTooltip(screen, info.tooltipComponent()), info.stateSupplier());
     }
 
-    private TexturedToggleButton(int x, int y, int width, int height, ResourceLocation resourceLocation, int textureWidth, int textureHeight, Component narratedComponent, OnPress onPress, OnTooltip onTooltip) {
+    public TexturedToggleButton(int x, int y, int width, int height, ResourceLocation resourceLocation, Component tooltipComponent, Component narratedComponent, OnPress onPress, Screen screen, Supplier<Boolean> stateSupplier) {
+        this(x, y, width, height, resourceLocation, narratedComponent, onPress, GuiUtils.getTooltip(screen, tooltipComponent), stateSupplier);
+    }
+
+    private TexturedToggleButton(int x, int y, int width, int height, ResourceLocation resourceLocation, Component narratedComponent, OnPress onPress, OnTooltip onTooltip, Supplier<Boolean> stateSupplier) {
         super(x, y, width, height, narratedComponent, onPress, onTooltip);
         this.resourceLocation = resourceLocation;
-        this.textureWidth = textureWidth;
-        this.textureHeight = textureHeight;
+        this.stateSupplier = stateSupplier;
     }
 
     @Override
@@ -59,4 +59,5 @@ public class TexturedToggleButton extends Button {
         }
 
     }
+
 }

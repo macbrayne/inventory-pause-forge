@@ -3,26 +3,35 @@
 package de.macbrayne.forge.inventorypause.gui.screens;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import de.macbrayne.forge.inventorypause.AnnotationProcessor;
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
+import de.macbrayne.forge.inventorypause.gui.components.ButtonInfo;
 import de.macbrayne.forge.inventorypause.gui.components.TexturedToggleButton;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ConfigScreen extends Screen {
 	private final Screen lastScreen;
 	private final ModConfig config = InventoryPause.MOD_CONFIG;
+	private final List<ButtonInfo> buttonInfos = new ArrayList<>();
+
 	public ConfigScreen(Screen lastScreen) {
-		super(Component.literal("New Config"));
+		super(Component.literal("Inventory Pause Temp Config"));
 		this.lastScreen = lastScreen;
+		try {
+			buttonInfos.addAll(new AnnotationProcessor().run());
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
+		} catch (NoSuchFieldException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
@@ -37,22 +46,13 @@ public class ConfigScreen extends Screen {
 		this.addRenderableWidget(new Button(this.width / 2 + 2, l + 72 + 12, 98, 20, CommonComponents.GUI_DONE, (p_96786_) -> {
 			this.minecraft.setScreen(lastScreen);
 		}));
-		ButtonInfo furnaceButton = new ButtonInfo(new ResourceLocation("block/furnace_front_on"), Component.translatable("text.autoconfig.inventorypause.option.abilities.pauseFurnace"), button -> InventoryPause.MOD_CONFIG.abilities.pauseFurnace = !InventoryPause.MOD_CONFIG.abilities.pauseFurnace);
-		ButtonInfo shulkerBoxButton = new ButtonInfo(new ResourceLocation("block/shulker_box"), Component.translatable("text.autoconfig.inventorypause.option.abilities.pauseShulkerBox"), button -> InventoryPause.MOD_CONFIG.abilities.pauseShulkerBox = !InventoryPause.MOD_CONFIG.abilities.pauseShulkerBox);
-		ButtonInfo craftingTableButton = new ButtonInfo(new ResourceLocation("block/crafting_table_top"), Component.translatable("text.autoconfig.inventorypause.option.abilities.pauseCraftingTable"), button -> InventoryPause.MOD_CONFIG.abilities.pauseCraftingTable = !InventoryPause.MOD_CONFIG.abilities.pauseCraftingTable);
-		ButtonInfo cartographyTableButton = new ButtonInfo(new ResourceLocation("block/cartography_table_side1"), Component.translatable("text.autoconfig.inventorypause.option.abilities.additionalGUIs.pauseCartographyTable"), button -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseCartographyTable = !InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseCartographyTable);
-		var buttons = new ArrayList<ButtonInfo>();
-		buttons.add(furnaceButton);
-		buttons.add(cartographyTableButton);
-		buttons.add(shulkerBoxButton);
-		buttons.addAll(Collections.nCopies(10, craftingTableButton));
-		createImageGrid(buttons);
+
+		createImageGrid(buttonInfos);
 	}
 
 	public void createImageGrid(List<ButtonInfo> list) {
 		int numberOfColumns = 8;
 		int numberOfRows = list.size() / numberOfColumns + (list.size() % numberOfColumns > 0 ? 1 : 0);
-		System.out.println(list.size() + ", " + list.size() / numberOfColumns + ", " + (list.size() % numberOfColumns > 0 ? 1 : 0));
 		int buttonSize = 20;
 		int spacer = 4;
 		int totalSize = buttonSize + spacer;
@@ -60,12 +60,11 @@ public class ConfigScreen extends Screen {
 		for(int row = 0; row < numberOfRows; row++) {
 			for(int column = 0; column < numberOfColumns; column++) {
 				int currentObject = numberOfColumns * row + column;
-				System.out.println(currentObject);
 				if(currentObject >= list.size()) {
 					return;
 				}
 				ButtonInfo info = list.get(currentObject);
-				this.addRenderableWidget(new TexturedToggleButton(x0 + column * totalSize, y0 + row * totalSize, buttonSize, buttonSize, info.iconLocation(), 20, 20, info.hoverTranslation, Component.translatable("narrator.button.language"), info.onPress, this));
+				this.addRenderableWidget(new TexturedToggleButton(x0 + column * totalSize, y0 + row * totalSize, buttonSize, buttonSize, Component.translatable("narrator.button.language"), this, info));
 			}
 		}
 	}
@@ -74,13 +73,5 @@ public class ConfigScreen extends Screen {
 		this.renderBackground(poseStack);
 		drawCenteredString(poseStack, this.font, this.title, this.width / 2, 15, 16777215);
 		super.render(poseStack, p_96250_, p_96251_, p_96252_);
-	}
-
-
-
-	record ButtonInfo(ResourceLocation iconLocation, Component hoverTranslation, Button.OnPress onPress) {
-		ButtonInfo {
-
-		}
 	}
 }
