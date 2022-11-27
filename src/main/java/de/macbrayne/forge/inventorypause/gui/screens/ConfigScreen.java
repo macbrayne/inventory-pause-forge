@@ -23,7 +23,7 @@ public class ConfigScreen extends Screen {
 	private final List<ButtonInfo> buttonInfos = new ArrayList<>();
 
 	public ConfigScreen(Screen lastScreen) {
-		super(Component.literal("Inventory Pause Temp Config"));
+		super(Component.translatable("text.autoconfig.inventorypause.title"));
 		this.lastScreen = lastScreen;
 		buttonInfos.addAll(new ConfigButtonRegistration().run(config));
 	}
