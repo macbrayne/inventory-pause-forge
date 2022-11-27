@@ -2,7 +2,6 @@
 
 package de.macbrayne.forge.inventorypause;
 
-import de.macbrayne.forge.inventorypause.annotations.ConfigClass;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.utils.CompatTick;
 import de.macbrayne.forge.inventorypause.utils.ForgeLifetimeEvents;
@@ -22,23 +21,15 @@ import net.minecraftforge.network.NetworkConstants;
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("inventorypause")
 public class InventoryPause {
-    @ConfigClass
     public static ModConfig MOD_CONFIG = new ModConfig();
 
     public InventoryPause() {
         AutoConfig.register(ModConfig.class, Toml4jConfigSerializer::new);
         MOD_CONFIG = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
-
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ForgeLifetimeEvents::clientSetup);
         ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true));
 
         MinecraftForge.EVENT_BUS.register(this);
-
-        try {
-            new AnnotationProcessor().run();
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

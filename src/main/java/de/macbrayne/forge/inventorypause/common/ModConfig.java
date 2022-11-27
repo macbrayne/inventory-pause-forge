@@ -2,8 +2,6 @@
 
 package de.macbrayne.forge.inventorypause.common;
 
-import de.macbrayne.forge.inventorypause.annotations.ConfigClass;
-import de.macbrayne.forge.inventorypause.annotations.ConfigField;
 import de.macbrayne.forge.inventorypause.utils.Reference;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
@@ -31,7 +29,6 @@ public class ModConfig implements ConfigData {
     //@ConfigEntry.Category("abilities")
     @ConfigEntry.Gui.TransitiveObject
     @ConfigEntry.Gui.Excluded
-    @ConfigClass
     public Abilities abilities = new Abilities();
 
     @ConfigEntry.Category("modCompat")
@@ -43,12 +40,10 @@ public class ModConfig implements ConfigData {
         public static class AdditionalGUIs {
             public boolean pauseAnvil = false;
             public boolean pauseBeacon = false;
-            @ConfigField(iconLocation = "block/dispenser_front")
-            public Boolean pauseDispenser = false;
+            public boolean pauseDispenser = false;
             public boolean pauseBrewingStand = false;
             public boolean pauseHopper = false;
-            @ConfigField(iconLocation = "block/cartography_table_side1")
-            public Boolean pauseCartographyTable = false;
+            public boolean pauseCartographyTable = false;
             public boolean pauseStonecutter = false;
         }
 
@@ -61,17 +56,12 @@ public class ModConfig implements ConfigData {
         public boolean pauseCreativeInventory = true;
         public boolean pauseDeath = false;
         public boolean pauseGameModeSwitcher = false;
-        @ConfigField(iconLocation = "block/crafting_table_top")
-        public Boolean pauseCraftingTable = false;
-        @ConfigField(iconLocation = "block/furnace_front_on")
-        public Boolean pauseFurnace = false;
-        @ConfigField(iconLocation = "block/shulker_box")
-        public Boolean pauseShulkerBox = false;
+        public boolean pauseCraftingTable = false;
+        public boolean pauseFurnace = false;
+        public boolean pauseShulkerBox = false;
         public boolean pauseChest = false;
-        @ConfigClass
         @ConfigEntry.Gui.CollapsibleObject
         public WorldGUIs worldGUIs = new WorldGUIs();
-        @ConfigClass
         @ConfigEntry.Gui.CollapsibleObject
         public AdditionalGUIs additionalGUIs = new AdditionalGUIs();
     }

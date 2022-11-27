@@ -3,8 +3,8 @@
 package de.macbrayne.forge.inventorypause.gui.screens;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import de.macbrayne.forge.inventorypause.AnnotationProcessor;
 import de.macbrayne.forge.inventorypause.InventoryPause;
+import de.macbrayne.forge.inventorypause.common.ConfigButtonRegistration;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.gui.components.ButtonInfo;
 import de.macbrayne.forge.inventorypause.gui.components.TexturedToggleButton;
@@ -25,26 +25,23 @@ public class ConfigScreen extends Screen {
 	public ConfigScreen(Screen lastScreen) {
 		super(Component.literal("Inventory Pause Temp Config"));
 		this.lastScreen = lastScreen;
-		try {
-			buttonInfos.addAll(new AnnotationProcessor().run());
-		} catch (IllegalAccessException e) {
-			throw new RuntimeException(e);
-		} catch (NoSuchFieldException e) {
-			throw new RuntimeException(e);
-		}
+		buttonInfos.addAll(new ConfigButtonRegistration().run(config));
 	}
 
 	@Override
 	protected void init() {
 		super.init();
+		int PADDING = 6;
+		int y = this.height - 20 - PADDING;
+		int fullButtonHeight = PADDING + 20 + PADDING;
 
-		int k = 24;
 		int l = this.height / 4 + 48;
-		this.addRenderableWidget(new Button(this.width / 2 - 100, l + 72 + 12, 98, 20, Component.translatable("menu.inventorypause.further_options"), (p_96788_) -> {
+		this.addRenderableWidget(new Button(this.width / 2 - 100, this.height - 20 - PADDING, 98, 20, Component.translatable("menu.inventorypause.further_options"), (p_96788_) -> {
 			this.minecraft.setScreen(AutoConfig.getConfigScreen(ModConfig.class, this).get());
 		}));
-		this.addRenderableWidget(new Button(this.width / 2 + 2, l + 72 + 12, 98, 20, CommonComponents.GUI_DONE, (p_96786_) -> {
+		this.addRenderableWidget(new Button(this.width / 2 + 2, this.height - 20 - PADDING, 98, 20, CommonComponents.GUI_DONE, (p_96786_) -> {
 			this.minecraft.setScreen(lastScreen);
+			AutoConfig.getConfigHolder(ModConfig.class).save();
 		}));
 
 		createImageGrid(buttonInfos);
