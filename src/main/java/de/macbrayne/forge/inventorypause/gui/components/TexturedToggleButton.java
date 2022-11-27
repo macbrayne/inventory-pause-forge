@@ -40,18 +40,14 @@ public class TexturedToggleButton extends Button {
     public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float p_94285_) {
         this.setBlitOffset(0);
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, WIDGETS_LOCATION);
+        RenderSystem.setShaderTexture(0, new ResourceLocation("inventorypause", "textures/gui/config/widgets.png"));
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
         int imageOffset = this.getYImage(this.isHoveredOrFocused());
-        if (imageOffset != 2) {
-            imageOffset = stateSupplier.get() ? 1 : 0;
-        }
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
 
-        this.blit(poseStack, this.x, this.y, 0, 46 + imageOffset * 20, this.width / 2, this.height);
-        this.blit(poseStack, this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + imageOffset * 20, this.width / 2, this.height);
+        this.blit(poseStack, this.x, this.y, 0, imageOffset * 20, this.width, this.height);
 
         GuiUtils.renderButtonItem(icon, this.x, this.y, this.width);
 
@@ -61,4 +57,17 @@ public class TexturedToggleButton extends Button {
 
     }
 
+
+    @Override
+    protected int getYImage(boolean isHovered) {
+        int i = 0;
+        if (stateSupplier.get()) {
+            i += 2;
+        }
+        if (isHovered) {
+            i += 1;
+        }
+
+        return i;
+    }
 }
