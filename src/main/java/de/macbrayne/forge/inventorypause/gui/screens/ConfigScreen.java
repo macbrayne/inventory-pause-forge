@@ -8,6 +8,7 @@ import de.macbrayne.forge.inventorypause.common.ConfigButtonRegistration;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.gui.components.ButtonInfo;
 import de.macbrayne.forge.inventorypause.gui.components.TexturedToggleButton;
+import de.macbrayne.forge.inventorypause.gui.components.ToggleButton;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -18,9 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConfigScreen extends Screen {
+	private static final int PADDING = 6;
 	private final Screen lastScreen;
 	private final ModConfig config = InventoryPause.MOD_CONFIG;
 	private final List<ButtonInfo> buttonInfos = new ArrayList<>();
+	private static final int buttonSize = 20;
+	private static final int buttonPadding = 4;
+	private static final int totalSize = buttonSize + buttonPadding;
+	private static final int fullButtonHeight = PADDING + buttonSize + PADDING;
+	private static final int numberOfColumns = 8;
+	private static int xText, yText;
+
 
 	public ConfigScreen(Screen lastScreen) {
 		super(Component.translatable("text.autoconfig.inventorypause.title"));
@@ -31,44 +40,63 @@ public class ConfigScreen extends Screen {
 	@Override
 	protected void init() {
 		super.init();
-		int PADDING = 6;
-		int y = this.height - 20 - PADDING;
-		int fullButtonHeight = PADDING + 20 + PADDING;
+		int numberOfRows = buttonInfos.size() / numberOfColumns + (buttonInfos.size() % numberOfColumns > 0 ? 1 : 0);
+		int width = numberOfColumns * totalSize;
 
-		int l = this.height / 4 + 48;
-		this.addRenderableWidget(new Button(this.width / 2 - 100, this.height - 20 - PADDING, 98, 20, Component.translatable("menu.inventorypause.further_options"), (p_96788_) -> {
+		createSaveAndQuit(this.width / 2 - 100, this.height - 20 - PADDING, 200, 20);
+		createNonTexturedButtons(this.width / 2 - 100, this.height / 2 - 4 * totalSize, 200, 20);
+
+		int x0 = this.width / 2 - width / 2, y0 = this.height / 2 - totalSize;
+		int imageGridEndY = createImageGrid(x0, y0, width, numberOfColumns, numberOfRows, buttonInfos);
+		xText = this.width / 2 - width / 2 - PADDING;
+		yText = y0 - 2 * PADDING;
+	}
+
+	public int createImageGrid(int x0, int y0, int imageGridWidth, int numberOfColumns, int numberOfRows, List<ButtonInfo> list) {
+		for (int i = 0, buttonInfosSize = list.size(); i < buttonInfosSize; i++) {
+			ButtonInfo info = list.get(i);
+			int column = i % numberOfColumns;
+			int row = i / numberOfColumns;
+			this.addRenderableWidget(new TexturedToggleButton(x0 + column * totalSize, y0 + row * totalSize, buttonSize, buttonSize,
+					Component.translatable("narrator.button.language"), this, info));
+		}
+		return y0 + (numberOfRows + 1) * totalSize;
+	}
+
+	public void createNonTexturedButtons(int x0, int y, int width, int height) {
+		int buttonWidth = width / 2 - 2;
+		this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.inventory"), (button) -> {
+			InventoryPause.MOD_CONFIG.abilities.pauseInventory = !InventoryPause.MOD_CONFIG.abilities.pauseInventory;
+		}, () -> InventoryPause.MOD_CONFIG.abilities.pauseInventory));
+		this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.creativeInventory"), (button) -> {
+			InventoryPause.MOD_CONFIG.abilities.pauseCreativeInventory = !InventoryPause.MOD_CONFIG.abilities.pauseCreativeInventory;
+		}, () -> InventoryPause.MOD_CONFIG.abilities.pauseCreativeInventory));
+		y += totalSize;
+		this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.death"), (button) -> {
+			InventoryPause.MOD_CONFIG.abilities.pauseDeath = !InventoryPause.MOD_CONFIG.abilities.pauseDeath;
+		}, () -> InventoryPause.MOD_CONFIG.abilities.pauseDeath));
+		this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.gameModeSwitcher"), (button) -> {
+			InventoryPause.MOD_CONFIG.abilities.pauseGameModeSwitcher = !InventoryPause.MOD_CONFIG.abilities.pauseGameModeSwitcher;
+		}, () -> InventoryPause.MOD_CONFIG.abilities.pauseGameModeSwitcher));
+
+	}
+
+	public void createSaveAndQuit(int x0, int y, int width, int height) {
+		int buttonWidth = width / 2 - 2;
+		this.addRenderableWidget(new Button(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.further_options"), (p_96788_) -> {
 			this.minecraft.setScreen(AutoConfig.getConfigScreen(ModConfig.class, this).get());
 		}));
-		this.addRenderableWidget(new Button(this.width / 2 + 2, this.height - 20 - PADDING, 98, 20, CommonComponents.GUI_DONE, (p_96786_) -> {
+		this.addRenderableWidget(new Button(x0 + width / 2 + 2, y, buttonWidth, height, CommonComponents.GUI_DONE, (p_96786_) -> {
 			this.minecraft.setScreen(lastScreen);
 			AutoConfig.getConfigHolder(ModConfig.class).save();
 		}));
-
-		createImageGrid(buttonInfos);
-	}
-
-	public void createImageGrid(List<ButtonInfo> list) {
-		int numberOfColumns = 8;
-		int numberOfRows = list.size() / numberOfColumns + (list.size() % numberOfColumns > 0 ? 1 : 0);
-		int buttonSize = 20;
-		int spacer = 4;
-		int totalSize = buttonSize + spacer;
-		int x0 = this.width / 2 - 4 * totalSize, y0 = this.height / 2 - totalSize;
-		for(int row = 0; row < numberOfRows; row++) {
-			for(int column = 0; column < numberOfColumns; column++) {
-				int currentObject = numberOfColumns * row + column;
-				if(currentObject >= list.size()) {
-					return;
-				}
-				ButtonInfo info = list.get(currentObject);
-				this.addRenderableWidget(new TexturedToggleButton(x0 + column * totalSize, y0 + row * totalSize, buttonSize, buttonSize, Component.translatable("narrator.button.language"), this, info));
-			}
-		}
 	}
 
 	public void render(PoseStack poseStack, int p_96250_, int p_96251_, float p_96252_) {
 		this.renderBackground(poseStack);
 		drawCenteredString(poseStack, this.font, this.title, this.width / 2, 15, 16777215);
+
+		drawString(poseStack, this.font, Component.literal("Pause game..."), xText, yText, 16777215);
 		super.render(poseStack, p_96250_, p_96251_, p_96252_);
 	}
 }

@@ -14,11 +14,9 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Supplier;
 
-public class TexturedToggleButton extends Button {
+public class TexturedToggleButton extends ToggleButton {
     private static final ResourceLocation VILLAGER_LOCATION = new ResourceLocation("textures/gui/container/villager2.png");
     private final ItemStack icon;
-
-    private final Supplier<Boolean> stateSupplier;
 
     public TexturedToggleButton(int x, int y, int width, int height, Component narratedComponent, Screen screen, ButtonInfo info) {
         this(x, y, width, height, info.itemStack(), narratedComponent, GuiUtils.getTogglePress(info.stateSupplier(), info.stateConsumer()), GuiUtils.getTooltip(screen, info.tooltipComponent()), info.stateSupplier());
@@ -29,44 +27,13 @@ public class TexturedToggleButton extends Button {
     }
 
     private TexturedToggleButton(int x, int y, int width, int height, ItemStack icon, Component narratedComponent, OnPress onPress, OnTooltip onTooltip, Supplier<Boolean> stateSupplier) {
-        super(x, y, width, height, narratedComponent, onPress, onTooltip);
+        super(x, y, width, height, narratedComponent, onPress, onTooltip, stateSupplier);
         this.icon = icon;
-        this.stateSupplier = stateSupplier;
     }
 
 
     @Override
-    public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float p_94285_) {
-        this.setBlitOffset(0);
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, new ResourceLocation("inventorypause", "textures/gui/config/widgets.png"));
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
-        int imageOffset = this.getYImage(this.isHoveredOrFocused());
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.enableDepthTest();
-
-        this.blit(poseStack, this.x, this.y, 0, imageOffset * 20, this.width, this.height);
-
+    public void renderContent(PoseStack poseStack, int mouseX, int mouseY, float p_94285_) {
         GuiUtils.renderButtonItem(icon, this.x, this.y, this.width);
-
-        if (this.isHovered) {
-            this.renderToolTip(poseStack, mouseX, mouseY);
-        }
-
-    }
-
-
-    @Override
-    protected int getYImage(boolean isHovered) {
-        int i = 0;
-        if (stateSupplier.get()) {
-            i += 2;
-        }
-        if (isHovered) {
-            i += 1;
-        }
-
-        return i;
     }
 }
