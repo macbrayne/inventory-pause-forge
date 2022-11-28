@@ -10,6 +10,7 @@ import de.macbrayne.forge.inventorypause.gui.components.ButtonInfo;
 import de.macbrayne.forge.inventorypause.gui.components.TexturedToggleButton;
 import de.macbrayne.forge.inventorypause.gui.components.ToggleButton;
 import me.shedaniel.autoconfig.AutoConfig;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
@@ -27,7 +28,7 @@ public class ConfigScreen extends Screen {
 	private static final int buttonPadding = 4;
 	private static final int totalSize = buttonSize + buttonPadding;
 	private static final int fullButtonHeight = PADDING + buttonSize + PADDING;
-	private static final int numberOfColumns = 8;
+	private static final int numberOfColumns = 9;
 	private static int xText, yText;
 
 
@@ -42,14 +43,17 @@ public class ConfigScreen extends Screen {
 		super.init();
 		int numberOfRows = buttonInfos.size() / numberOfColumns + (buttonInfos.size() % numberOfColumns > 0 ? 1 : 0);
 		int width = numberOfColumns * totalSize;
+		int y = 30;
+		xText = this.width / 2 - 120;
+		yText = y;
+		y += PADDING + Minecraft.getInstance().font.lineHeight;
 
-		createSaveAndQuit(this.width / 2 - 100, this.height - 20 - PADDING, 200, 20);
-		createNonTexturedButtons(this.width / 2 - 100, this.height / 2 - 4 * totalSize, 200, 20);
-
-		int x0 = this.width / 2 - width / 2, y0 = this.height / 2 - totalSize;
+		createNonTexturedButtons(this.width / 2 - 120, y, 240, 20);
+		y += 2 * totalSize;
+		int x0 = this.width / 2 - width / 2, y0 = y;
 		int imageGridEndY = createImageGrid(x0, y0, width, numberOfColumns, numberOfRows, buttonInfos);
-		xText = this.width / 2 - width / 2 - PADDING;
-		yText = y0 - 2 * PADDING;
+		System.out.println(y0 - 2 * PADDING);
+		createSaveAndQuit(this.width / 2 - 120, this.height - 20 - PADDING, 240, 20);
 	}
 
 	public int createImageGrid(int x0, int y0, int imageGridWidth, int numberOfColumns, int numberOfRows, List<ButtonInfo> list) {
@@ -96,7 +100,7 @@ public class ConfigScreen extends Screen {
 		this.renderBackground(poseStack);
 		drawCenteredString(poseStack, this.font, this.title, this.width / 2, 15, 16777215);
 
-		drawString(poseStack, this.font, Component.literal("Pause game..."), xText, yText, 16777215);
+		drawString(poseStack, this.font, Component.literal("Pause..."), xText, yText, 16777215);
 		super.render(poseStack, p_96250_, p_96251_, p_96252_);
 	}
 }
