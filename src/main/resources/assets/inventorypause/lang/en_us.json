@@ -5,7 +5,7 @@
   "text.autoconfig.inventorypause.category.default": "General",
 
   "text.autoconfig.inventorypause.option.enabled": "Enable Mod",
-  "text.autoconfig.inventorypause.option.disableSaving": "Disable Save on Pause",
+  "text.autoconfig.inventorypause.option.disableSaving": "Save on Pause",
   "text.autoconfig.inventorypause.option.debug": "Enable Debug Mode",
   "text.autoconfig.inventorypause.option.debugText": "Debug Overlay Options",
   "text.autoconfig.inventorypause.option.debugText.x": "X-Coordinate",

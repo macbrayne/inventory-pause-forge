@@ -44,15 +44,16 @@ public class ConfigScreen extends Screen {
 		int numberOfRows = buttonInfos.size() / numberOfColumns + (buttonInfos.size() % numberOfColumns > 0 ? 1 : 0);
 		int width = numberOfColumns * totalSize;
 		int y = 30;
+
+		y = createGeneralButtons(this.width / 2 - 120, y, 240, 20);
+
 		xText = this.width / 2 - 120;
 		yText = y;
 		y += PADDING + Minecraft.getInstance().font.lineHeight;
 
-		createNonTexturedButtons(this.width / 2 - 120, y, 240, 20);
-		y += 2 * totalSize;
+		y = createNonTexturedButtons(this.width / 2 - 120, y, 240, 20);
 		int x0 = this.width / 2 - width / 2, y0 = y;
-		int imageGridEndY = createImageGrid(x0, y0, width, numberOfColumns, numberOfRows, buttonInfos);
-		System.out.println(y0 - 2 * PADDING);
+		y = createImageGrid(x0, y0, width, numberOfColumns, numberOfRows, buttonInfos);
 		createSaveAndQuit(this.width / 2 - 120, this.height - 20 - PADDING, 240, 20);
 	}
 
@@ -67,7 +68,7 @@ public class ConfigScreen extends Screen {
 		return y0 + (numberOfRows + 1) * totalSize;
 	}
 
-	public void createNonTexturedButtons(int x0, int y, int width, int height) {
+	public int createNonTexturedButtons(int x0, int y, int width, int height) {
 		int buttonWidth = width / 2 - 2;
 		this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.inventory"), (button) -> {
 			InventoryPause.MOD_CONFIG.abilities.pauseInventory = !InventoryPause.MOD_CONFIG.abilities.pauseInventory;
@@ -82,7 +83,18 @@ public class ConfigScreen extends Screen {
 		this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.gameModeSwitcher"), (button) -> {
 			InventoryPause.MOD_CONFIG.abilities.pauseGameModeSwitcher = !InventoryPause.MOD_CONFIG.abilities.pauseGameModeSwitcher;
 		}, () -> InventoryPause.MOD_CONFIG.abilities.pauseGameModeSwitcher));
+		y += totalSize;
+		return y;
+	}
 
+	public int createGeneralButtons(int x0, int y, int width, int height) {
+		int buttonWidth = width / 2 - 2;
+		this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height,
+				Component.translatable("text.autoconfig.inventorypause.option.enabled"),  button -> InventoryPause.MOD_CONFIG.enabled = !InventoryPause.MOD_CONFIG.enabled, () -> InventoryPause.MOD_CONFIG.enabled));
+		this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height,
+				Component.translatable("text.autoconfig.inventorypause.option.disableSaving"),  button -> InventoryPause.MOD_CONFIG.disableSaving = !InventoryPause.MOD_CONFIG.disableSaving, () -> !InventoryPause.MOD_CONFIG.disableSaving));
+		y += totalSize;
+		return y;
 	}
 
 	public void createSaveAndQuit(int x0, int y, int width, int height) {

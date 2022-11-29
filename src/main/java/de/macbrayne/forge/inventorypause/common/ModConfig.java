@@ -13,7 +13,9 @@ import java.util.List;
 @SuppressWarnings("CanBeFinal")
 @Config(name = Reference.MOD_ID)
 public class ModConfig implements ConfigData {
+    @ConfigEntry.Gui.Excluded
     public boolean enabled = true;
+    @ConfigEntry.Gui.Excluded
     public boolean disableSaving = false;
     public boolean debug = false;
 
