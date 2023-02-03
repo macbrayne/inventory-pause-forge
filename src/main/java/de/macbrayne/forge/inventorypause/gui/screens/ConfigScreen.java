@@ -54,6 +54,9 @@ public class ConfigScreen extends Screen {
 		y = createNonTexturedButtons(this.width / 2 - 120, y, 240, 20);
 		int x0 = this.width / 2 - width / 2, y0 = y;
 		y = createImageGrid(x0, y0, width, numberOfColumns, numberOfRows, buttonInfos);
+
+		this.addRenderableWidget(new Button.Builder(Component.literal("Mod Compat Options"), button -> this.minecraft.setScreen(new ModCompatScreen(this))).pos(this.width / 2 - 120, y).size(240, buttonSize).build());
+
 		createSaveAndQuit(this.width / 2 - 120, this.height - 20 - PADDING, 240, 20);
 	}
 
@@ -71,18 +74,18 @@ public class ConfigScreen extends Screen {
 	public int createNonTexturedButtons(int x0, int y, int width, int height) {
 		int buttonWidth = width / 2 - 2;
 		this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.inventory"), (button) -> {
-			InventoryPause.MOD_CONFIG.abilities.pauseInventory = !InventoryPause.MOD_CONFIG.abilities.pauseInventory;
-		}, () -> InventoryPause.MOD_CONFIG.abilities.pauseInventory));
+			config.abilities.pauseInventory = !config.abilities.pauseInventory;
+		}, () -> config.abilities.pauseInventory));
 		this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.creativeInventory"), (button) -> {
-			InventoryPause.MOD_CONFIG.abilities.pauseCreativeInventory = !InventoryPause.MOD_CONFIG.abilities.pauseCreativeInventory;
-		}, () -> InventoryPause.MOD_CONFIG.abilities.pauseCreativeInventory));
+			config.abilities.pauseCreativeInventory = !config.abilities.pauseCreativeInventory;
+		}, () -> config.abilities.pauseCreativeInventory));
 		y += totalSize;
 		this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.death"), (button) -> {
-			InventoryPause.MOD_CONFIG.abilities.pauseDeath = !InventoryPause.MOD_CONFIG.abilities.pauseDeath;
-		}, () -> InventoryPause.MOD_CONFIG.abilities.pauseDeath));
+			config.abilities.pauseDeath = !config.abilities.pauseDeath;
+		}, () -> config.abilities.pauseDeath));
 		this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.gameModeSwitcher"), (button) -> {
-			InventoryPause.MOD_CONFIG.abilities.pauseGameModeSwitcher = !InventoryPause.MOD_CONFIG.abilities.pauseGameModeSwitcher;
-		}, () -> InventoryPause.MOD_CONFIG.abilities.pauseGameModeSwitcher));
+			config.abilities.pauseGameModeSwitcher = !config.abilities.pauseGameModeSwitcher;
+		}, () -> config.abilities.pauseGameModeSwitcher));
 		y += totalSize;
 		return y;
 	}
@@ -90,22 +93,22 @@ public class ConfigScreen extends Screen {
 	public int createGeneralButtons(int x0, int y, int width, int height) {
 		int buttonWidth = width / 2 - 2;
 		this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height,
-				Component.translatable("text.autoconfig.inventorypause.option.enabled"),  button -> InventoryPause.MOD_CONFIG.enabled = !InventoryPause.MOD_CONFIG.enabled, () -> InventoryPause.MOD_CONFIG.enabled));
+				Component.translatable("text.autoconfig.inventorypause.option.enabled"),  button -> config.enabled = !config.enabled, () -> config.enabled));
 		this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height,
-				Component.translatable("text.autoconfig.inventorypause.option.disableSaving"),  button -> InventoryPause.MOD_CONFIG.disableSaving = !InventoryPause.MOD_CONFIG.disableSaving, () -> !InventoryPause.MOD_CONFIG.disableSaving));
+				Component.translatable("text.autoconfig.inventorypause.option.disableSaving"),  button -> config.disableSaving = !config.disableSaving, () -> !config.disableSaving));
 		y += totalSize;
 		return y;
 	}
 
 	public void createSaveAndQuit(int x0, int y, int width, int height) {
 		int buttonWidth = width / 2 - 2;
-		this.addRenderableWidget(new Button(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.further_options"), (p_96788_) -> {
+		this.addRenderableWidget(new Button.Builder(Component.translatable("menu.inventorypause.further_options"), (p_96788_) -> {
 			this.minecraft.setScreen(AutoConfig.getConfigScreen(ModConfig.class, this).get());
-		}));
-		this.addRenderableWidget(new Button(x0 + width / 2 + 2, y, buttonWidth, height, CommonComponents.GUI_DONE, (p_96786_) -> {
+		}).pos(x0, y).size(buttonWidth, height).build());
+		this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
 			this.minecraft.setScreen(lastScreen);
 			AutoConfig.getConfigHolder(ModConfig.class).save();
-		}));
+		}).pos(x0 + width / 2 + 2, y).size(buttonWidth,height).build());
 	}
 
 	public void render(PoseStack poseStack, int p_96250_, int p_96251_, float p_96252_) {

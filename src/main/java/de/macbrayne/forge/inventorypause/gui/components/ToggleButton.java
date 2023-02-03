@@ -4,13 +4,12 @@ package de.macbrayne.forge.inventorypause.gui.components;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import de.macbrayne.forge.inventorypause.gui.GuiUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
@@ -20,12 +19,12 @@ public class ToggleButton extends Button {
     final Supplier<Boolean> stateSupplier;
 
     public ToggleButton(int x, int y, int width, int height, Component text, OnPress onPress, Supplier<Boolean> stateSupplier) {
-        super(x, y, width, height, text, onPress);
+        super(new Button.Builder(text, onPress).pos(x, y).size(width, height));
         this.stateSupplier = stateSupplier;
     }
 
-    public ToggleButton(int x, int y, int width, int height, Component text, OnPress onPress, OnTooltip onTooltip, Supplier<Boolean> stateSupplier) {
-        super(x, y, width, height, text, onPress, onTooltip);
+    public ToggleButton(int x, int y, int width, int height, Component text, OnPress onPress, Tooltip tooltip, Supplier<Boolean> stateSupplier) {
+        super(new Button.Builder(text, onPress).pos(x, y).size(width, height).tooltip(tooltip));
         this.stateSupplier = stateSupplier;
     }
 
@@ -40,15 +39,10 @@ public class ToggleButton extends Button {
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
 
-        this.blit(poseStack, this.x, this.y, 0, imageOffset * 20, this.width / 2, this.height);
-        this.blit(poseStack, this.x + this.width / 2, this.y, 200 - this.width / 2, imageOffset * 20, this.width / 2, this.height);
+        this.blit(poseStack, this.getX(), this.getY(), 0, imageOffset * 20, this.width / 2, this.height);
+        this.blit(poseStack, this.getX() + this.width / 2, this.getY(), 200 - this.width / 2, imageOffset * 20, this.width / 2, this.height);
 
         renderContent(poseStack, mouseX, mouseY, p_94285_);
-
-        if (this.isHovered) {
-            this.renderToolTip(poseStack, mouseX, mouseY);
-        }
-
     }
 
     public void renderContent(PoseStack poseStack, int mouseX, int mouseY, float p_94285_) {
@@ -58,7 +52,7 @@ public class ToggleButton extends Button {
         Component yesComponent = Component.translatable("menu.inventorypause.toggle.on").withStyle(ChatFormatting.DARK_AQUA);
         Component noComponent = Component.translatable("menu.inventorypause.toggle.off").withStyle(ChatFormatting.RED);
         Component text = Component.translatable("menu.inventorypause.toggle", this.getMessage(), this.stateSupplier.get() ? yesComponent : noComponent);
-        drawCenteredString(poseStack, Minecraft.getInstance().font, text, this.x + this.width / 2, this.y + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
+        drawCenteredString(poseStack, Minecraft.getInstance().font, text, this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
     }
 
     @Override

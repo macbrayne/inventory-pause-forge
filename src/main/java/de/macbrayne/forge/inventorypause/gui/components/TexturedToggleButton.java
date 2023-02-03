@@ -2,12 +2,10 @@
 
 package de.macbrayne.forge.inventorypause.gui.components;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.macbrayne.forge.inventorypause.gui.GuiUtils;
-import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -26,7 +24,7 @@ public class TexturedToggleButton extends ToggleButton {
         this(x, y, width, height, icon, narratedComponent, onPress, GuiUtils.getTooltip(screen, tooltipComponent), stateSupplier);
     }
 
-    private TexturedToggleButton(int x, int y, int width, int height, ItemStack icon, Component narratedComponent, OnPress onPress, OnTooltip onTooltip, Supplier<Boolean> stateSupplier) {
+    private TexturedToggleButton(int x, int y, int width, int height, ItemStack icon, Component narratedComponent, OnPress onPress, Tooltip onTooltip, Supplier<Boolean> stateSupplier) {
         super(x, y, width, height, narratedComponent, onPress, onTooltip, stateSupplier);
         this.icon = icon;
     }
@@ -34,6 +32,6 @@ public class TexturedToggleButton extends ToggleButton {
 
     @Override
     public void renderContent(PoseStack poseStack, int mouseX, int mouseY, float p_94285_) {
-        GuiUtils.renderButtonItem(icon, this.x, this.y, this.width);
+        GuiUtils.renderButtonItem(icon, this.getX(), this.getY(), this.width);
     }
 }
