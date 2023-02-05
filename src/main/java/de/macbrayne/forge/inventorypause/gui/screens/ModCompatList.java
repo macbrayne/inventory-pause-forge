@@ -26,6 +26,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     private final ModCompatScreen modCompatScreen;
     private final Supplier<List<String>> modCompatSupplier;
     private final Supplier<List<String>> modCustomSupplier;
+    private final List<ItemEntry> removedEntries = new ArrayList<>();
     public ModCompatList(ModCompatScreen parent, Minecraft minecraft) {
         super(minecraft, parent.width, parent.height, 20, parent.height - 32, 25);
         this.modCompatScreen = parent;
@@ -45,7 +46,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         this.addEntry(new AddEntry(Component.literal("Add Compat Entry"), addEntry -> {
             return (button) -> {
                 int i = children().indexOf(addEntry);
-                children().add(i, new CompatEntry(i, "New Entry"));
+                children().add(i, new CompatEntry(modCompatSupplier.get().size(), "New Entry"));
                 modCustomSupplier.get().add("New Entry");
             };
         }));
@@ -58,7 +59,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         this.addEntry(new AddEntry(Component.literal("Add Custom Entry"), addEntry -> {
             return (button) -> {
                 int i = children().indexOf(addEntry);
-                children().add(i, new CustomEntry(i, "New Entry"));
+                children().add(i, new CustomEntry(modCustomSupplier.get().size(), "New Entry"));
                 modCustomSupplier.get().add("New Entry");
             };
         }));
@@ -144,7 +145,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
                 // remove
                 System.out.println(this.key);
                 ModCompatList.this.removeEntry(this);
-                supplier.get().remove(ItemEntry.this.key);
+                removedEntries.add(this);
                 unfocusEntry();
             }).size(20, 20).createNarration(p_253695_ -> Component.translatable("narrator.controls.reset", content)).build();
             this.editBox = new EditBox(ModCompatList.this.minecraft.font, 0, 0, 180, 20, Component.literal("Test"));
@@ -220,6 +221,9 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             if(item instanceof ItemEntry itemEntry) {
                 itemEntry.save();
             }
+        }
+        for(ItemEntry item : removedEntries) {
+            item.supplier.get().remove(item.key);
         }
     }
 }

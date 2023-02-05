@@ -3,6 +3,7 @@
 package de.macbrayne.forge.inventorypause;
 
 import de.macbrayne.forge.inventorypause.common.ModConfig;
+import de.macbrayne.forge.inventorypause.gui.screens.ConfigScreen;
 import de.macbrayne.forge.inventorypause.utils.CompatTick;
 import de.macbrayne.forge.inventorypause.utils.ForgeLifetimeEvents;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -40,8 +41,7 @@ public class InventoryPause {
                 CompatTick.timeUntilCompatTick = MOD_CONFIG.modCompat.timeBetweenCompatTicks;
             }
             while (ClientSetup.OPEN_SETTINGS.get().consumeClick()) {
-                var configScreen = AutoConfig.getConfigScreen(ModConfig.class, Minecraft.getInstance().screen).get();
-                Minecraft.getInstance().setScreen(configScreen);
+                Minecraft.getInstance().setScreen(new ConfigScreen(Minecraft.getInstance().screen));
             }
         }
     }
