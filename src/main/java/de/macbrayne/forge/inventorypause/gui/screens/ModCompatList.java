@@ -23,13 +23,6 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.Entry> {
-    private final Comparator<String> caseInsensitive = (str1, str2) -> {
-        int res = String.CASE_INSENSITIVE_ORDER.compare(str1, str2);
-        if (res == 0) {
-            res = str1.compareTo(str2);
-        }
-        return res;
-    };
     private final ModCompatScreen modCompatScreen;
     private final Supplier<List<String>> modCompatSupplier;
     private final Supplier<List<String>> modCustomSupplier;
@@ -45,26 +38,28 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     private void initEntries() {
         this.addEntry(new ModCompatList.SectionEntry(Component.literal("Compat")));
         ArrayList<String> modCompatClasses = new ArrayList<>(modCompatSupplier.get());
-        modCompatClasses.sort(caseInsensitive);
-        for(String aClass : modCompatClasses) {
-            Component component = Component.literal(aClass);
-            this.addEntry(new ModCompatList.CompatEntry(aClass, component));
+        for(int i = 0; i < modCompatClasses.size(); i++) {
+            String aClass = modCompatClasses.get(i);
+            this.addEntry(new ModCompatList.CompatEntry(i, aClass));
         }
         this.addEntry(new AddEntry(Component.literal("Add Compat Entry"), addEntry -> {
             return (button) -> {
-                children().add(children().indexOf(addEntry), new CompatEntry(Long.toString(System.nanoTime()), Component.literal("New Entry")));
+                int i = children().indexOf(addEntry);
+                children().add(i, new CompatEntry(i, "New Entry"));
+                modCustomSupplier.get().add("New Entry");
             };
         }));
         this.addEntry(new ModCompatList.SectionEntry(Component.literal("Custom")));
         ArrayList<String> modCustomClasses = new ArrayList<>(modCustomSupplier.get());
-        modCustomClasses.sort(caseInsensitive);
-        for(String aClass : modCustomClasses) {
-            Component component = Component.literal(aClass);
-            this.addEntry(new ModCompatList.CustomEntry(aClass, component));
+        for(int i = 0; i < modCustomClasses.size(); i++) {
+            String aClass = modCustomClasses.get(i);
+            this.addEntry(new ModCompatList.CustomEntry(i, aClass));
         }
         this.addEntry(new AddEntry(Component.literal("Add Custom Entry"), addEntry -> {
             return (button) -> {
-                children().add(children().indexOf(addEntry), new CustomEntry(Long.toString(System.nanoTime()), Component.literal("New Entry")));
+                int i = children().indexOf(addEntry);
+                children().add(i, new CustomEntry(i, "New Entry"));
+                modCustomSupplier.get().add("New Entry");
             };
         }));
     }
@@ -135,23 +130,27 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     }
 
     public class ItemEntry extends ModCompatList.Entry {
-        private final String item;
-        private final Component name;
+        private final int key;
+        private final String content;
         private final EditBox editBox;
         private final Button removeButton;
+        private final Supplier<List<String>> supplier;
 
-        public ItemEntry(String item, Component name, Supplier<List<String>> supplier) {
-            this.item = item;
-            this.name = name;
+        public ItemEntry(int key, String content, Supplier<List<String>> supplier) {
+            this.key = key;
+            this.content = content;
+            this.supplier = supplier;
             this.removeButton = new Button.Builder(Component.literal("X"), (button) -> {
                 // remove
-                System.out.println(this.item);
+                System.out.println(this.key);
                 ModCompatList.this.removeEntry(this);
-                supplier.get().remove(ItemEntry.this.item);
-            }).size(20, 20).createNarration(p_253695_ -> Component.translatable("narrator.controls.reset", name)).build();
-            this.editBox = new EditBox(ModCompatList.this.minecraft.font, 0, 0, 180, 20, this.name);
+                supplier.get().remove(ItemEntry.this.key);
+                unfocusEntry();
+            }).size(20, 20).createNarration(p_253695_ -> Component.translatable("narrator.controls.reset", content)).build();
+            this.editBox = new EditBox(ModCompatList.this.minecraft.font, 0, 0, 180, 20, Component.literal("Test"));
             editBox.setMaxLength(128);
-            editBox.setValue(this.item);
+            editBox.setValue(this.content);
+            editBox.setFilter(s -> !s.contains("-"));
         }
 
         @Override
@@ -161,30 +160,40 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
 
         public void render(PoseStack poseStack, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            this.removeButton.setX(x + 190 + 20);
+            this.removeButton.setX(x + 190 + 10);
             this.removeButton.setY(y);
+            this.removeButton.setWidth(20);
+            this.removeButton.setWidth(20);
             this.removeButton.render(poseStack, mouseX, mouseY, tickDelta);
             this.editBox.setX(width / 4);
             this.editBox.setY(y);
+            this.editBox.setWidth(entryWidth - 40);
             this.editBox.render(poseStack, mouseX, mouseY, tickDelta);
         }
 
         public List<? extends GuiEventListener> children() {
             return ImmutableList.of(this.editBox, this.removeButton);
         }
+
+        public void save() {
+            if(!content.equals(this.editBox.getValue())) {
+                supplier.get().set(key, this.editBox.getValue());
+            }
+        }
+
     }
 
     public class CompatEntry extends ItemEntry {
 
-        public CompatEntry(String item, Component name) {
-            super(item, name, modCompatSupplier);
+        public CompatEntry(int key, String content) {
+            super(key, content, modCompatSupplier);
         }
     }
 
     public class CustomEntry extends ItemEntry {
 
-        public CustomEntry(String item, Component name) {
-            super(item, name, modCompatSupplier);
+        public CustomEntry(int key, String content) {
+            super(key, content, modCustomSupplier);
         }
     }
 
@@ -192,7 +201,6 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (!this.isMouseOver(mouseX, mouseY)) {
             unfocusEntry();
-            return false;
         }
         if (this.getEntryAtPosition(mouseX, mouseY) != getFocused()) {
             unfocusEntry();
@@ -204,6 +212,14 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         if(getFocused() != null) {
             getFocused().changeFocus(false);
             setFocused(null);
+        }
+    }
+
+    public void saveChanges() {
+        for(Entry item : children()) {
+            if(item instanceof ItemEntry itemEntry) {
+                itemEntry.save();
+            }
         }
     }
 }

@@ -42,6 +42,7 @@ public class ModCompatScreen extends Screen {
         }).pos(x0, y).size(buttonWidth, height).build());
         this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
             this.minecraft.setScreen(lastScreen);
+            this.modCompatList.saveChanges();
             AutoConfig.getConfigHolder(ModConfig.class).save();
         }).pos (x0 + width / 2 + 2, y).size(buttonWidth, height).build());
     }
