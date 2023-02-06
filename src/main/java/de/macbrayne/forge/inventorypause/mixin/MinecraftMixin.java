@@ -4,7 +4,6 @@ package de.macbrayne.forge.inventorypause.mixin;
 
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.server.IntegratedServer;
@@ -23,7 +22,6 @@ public abstract class MinecraftMixin {
     @Shadow public abstract SoundManager getSoundManager();
     @Shadow public abstract boolean isLocalServer();
     @Shadow private @Nullable IntegratedServer singleplayerServer;
-    @Unique private static ModConfig config = null;
 
     @Inject(at = @At("TAIL"), method = "setScreen")
     public void openScreen(@Nullable Screen screen, CallbackInfo ci) {
@@ -33,13 +31,5 @@ public abstract class MinecraftMixin {
                 this.getSoundManager().pause();
             }
         }
-    }
-
-    @Unique
-    private static ModConfig getConfig() {
-        if(config == null) {
-            config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
-        }
-        return config;
     }
 }

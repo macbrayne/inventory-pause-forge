@@ -4,9 +4,8 @@ package de.macbrayne.forge.inventorypause.utils;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.macbrayne.forge.inventorypause.ClientSetup;
-import de.macbrayne.forge.inventorypause.common.ModConfig;
+import de.macbrayne.forge.inventorypause.common.ConfigHelper;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -38,7 +37,7 @@ public class ForgeGuiEvents {
             var name = screen.getClass().getName();
             if(!MOD_CONFIG.modCompat.customScreens.contains(name)) {
                 MOD_CONFIG.modCompat.customScreens.add(name);
-                AutoConfig.getConfigHolder(ModConfig.class).save();
+                ConfigHelper.serialize();
             }
             Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.action", name));
         }

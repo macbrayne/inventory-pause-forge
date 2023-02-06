@@ -2,12 +2,11 @@
 
 package de.macbrayne.forge.inventorypause;
 
+import de.macbrayne.forge.inventorypause.common.ConfigHelper;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.gui.screens.ConfigScreen;
 import de.macbrayne.forge.inventorypause.utils.CompatTick;
 import de.macbrayne.forge.inventorypause.utils.ForgeLifetimeEvents;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
@@ -25,8 +24,7 @@ public class InventoryPause {
     public static ModConfig MOD_CONFIG = new ModConfig();
 
     public InventoryPause() {
-        AutoConfig.register(ModConfig.class, Toml4jConfigSerializer::new);
-        MOD_CONFIG = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+        MOD_CONFIG = ConfigHelper.deserialize();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ForgeLifetimeEvents::clientSetup);
         ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true));
 

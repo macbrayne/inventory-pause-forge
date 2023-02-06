@@ -117,7 +117,9 @@ dependencies {
     compileOnly 'org.jetbrains:annotations:23.0.0'
 
     // Mod Dependencies
-    implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:${project.cloth_version}")
+    minecraftLibrary('com.moandjiezana.toml:toml4j:0.7.2') {
+        transitive(false)
+    }
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }

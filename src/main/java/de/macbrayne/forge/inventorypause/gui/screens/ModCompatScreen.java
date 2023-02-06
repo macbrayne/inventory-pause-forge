@@ -4,8 +4,8 @@ package de.macbrayne.forge.inventorypause.gui.screens;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.macbrayne.forge.inventorypause.InventoryPause;
+import de.macbrayne.forge.inventorypause.common.ConfigHelper;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
@@ -38,12 +38,12 @@ public class ModCompatScreen extends Screen {
         int buttonWidth = width / 2 - 2;
 
         this.addRenderableWidget(new Button.Builder(Component.translatable("menu.inventorypause.further_options"), (p_96788_) -> {
-            this.minecraft.setScreen(AutoConfig.getConfigScreen(ModConfig.class, this).get());
+            //this.minecraft.setScreen(AutoConfig.getConfigScreen(ModConfig.class, this).get());
         }).pos(x0, y).size(buttonWidth, height).build());
         this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
             this.minecraft.setScreen(lastScreen);
             this.modCompatList.saveChanges();
-            AutoConfig.getConfigHolder(ModConfig.class).save();
+            ConfigHelper.serialize();
         }).pos (x0 + width / 2 + 2, y).size(buttonWidth, height).build());
     }
 

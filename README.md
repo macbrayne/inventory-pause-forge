@@ -43,8 +43,6 @@ Current versions:
 
 ## [Releases](https://github.com/macbrayne/inventory-pause-forge/releases)
 
-This mod depends on [Cloth Config Forge](https://www.curseforge.com/minecraft/mc-mods/cloth-config-forge/).
-
 The mod is licensed under the [EUPL 1.2](LICENSE) apart from three files which are [MIT](LICENSE-MIT) licensed.
 
 
