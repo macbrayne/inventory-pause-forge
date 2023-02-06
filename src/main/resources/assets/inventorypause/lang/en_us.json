@@ -44,7 +44,7 @@
   "text.autoconfig.inventorypause.option.modCompat.timeBetweenCompatTicks": "Time between compat ticks",
   "text.autoconfig.inventorypause.option.modCompat.compatScreens": "Compat mod class names",
 
-  "chat.inventorypause.copyClassName.action": "Copied internal name of the current screen to clipboard: %s",
+  "chat.inventorypause.addToList.action": "Inventory Pause: Added current screen to the list of paused screens",
 
   "key.categories.inventorypause.main": "Inventory Pause Helpers",
   "key.inventorypause.openSettings": "Open Settings",
