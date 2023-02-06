@@ -28,7 +28,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     private final Supplier<List<String>> modCustomSupplier;
     private final List<ItemEntry> removedEntries = new ArrayList<>();
     public ModCompatList(ModCompatScreen parent, Minecraft minecraft) {
-        super(minecraft, parent.width, parent.height, 20, parent.height - 32, 25);
+        super(minecraft, parent.width + 45, parent.height, 20, parent.height - 32, 25);
         this.modCompatScreen = parent;
         modCompatSupplier = () -> InventoryPause.MOD_CONFIG.modCompat.compatScreens;
         modCustomSupplier = () -> InventoryPause.MOD_CONFIG.modCompat.customScreens;
@@ -119,8 +119,9 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
         @Override
         public void render(PoseStack poseStack, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            this.button.setX(width / 4);
+            this.button.setX(x);
             this.button.setY(y);
+            this.button.setWidth(entryWidth);
             this.button.render(poseStack, mouseX, mouseY, tickDelta);
         }
 
@@ -166,9 +167,9 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.removeButton.setWidth(20);
             this.removeButton.setWidth(20);
             this.removeButton.render(poseStack, mouseX, mouseY, tickDelta);
-            this.editBox.setX(width / 4);
+            this.editBox.setX(x);
             this.editBox.setY(y);
-            this.editBox.setWidth(entryWidth - 40);
+            this.editBox.setWidth(190 - 5);
             this.editBox.render(poseStack, mouseX, mouseY, tickDelta);
         }
 

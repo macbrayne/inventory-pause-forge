@@ -102,8 +102,9 @@ public class ConfigScreen extends Screen {
 
 	public void createSaveAndQuit(int x0, int y, int width, int height) {
 		int buttonWidth = width / 2 - 2;
-		this.addRenderableWidget(new Button.Builder(Component.translatable("menu.inventorypause.further_options"), (p_96788_) -> {
-			// this.minecraft.setScreen(AutoConfig.getConfigScreen(ModConfig.class, this).get());
+		this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_CANCEL, (p_96788_) -> {
+			this.minecraft.setScreen(lastScreen);
+			InventoryPause.MOD_CONFIG = ConfigHelper.deserialize();
 		}).pos(x0, y).size(buttonWidth, height).build());
 		this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
 			this.minecraft.setScreen(lastScreen);

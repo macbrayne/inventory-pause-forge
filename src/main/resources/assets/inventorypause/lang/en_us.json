@@ -56,5 +56,7 @@
   "menu.inventorypause.settings.inventory": "Inventory",
   "menu.inventorypause.settings.death": "Death Screen",
   "menu.inventorypause.settings.gameModeSwitcher": "F3+F4 Screen",
-  "menu.inventorypause.further_options": "Further Options"
+  "menu.inventorypause.further_options": "Further Options",
+  "menu.inventorypause.debug_mode": "Debug Mode",
+  "menu.inventorypause.cancel": "Cancel"
 }
