@@ -33,7 +33,7 @@ public class ConfigScreen extends Screen {
 
 
 	public ConfigScreen(Screen lastScreen) {
-		super(Component.translatable("text.autoconfig.inventorypause.title"));
+		super(Component.translatable("menu.inventorypause.settings.title"));
 		this.lastScreen = lastScreen;
 		buttonInfos.addAll(new ConfigButtonRegistration().run(config));
 	}
@@ -93,9 +93,9 @@ public class ConfigScreen extends Screen {
 	public int createGeneralButtons(int x0, int y, int width, int height) {
 		int buttonWidth = width / 2 - 2;
 		this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height,
-				Component.translatable("text.autoconfig.inventorypause.option.enabled"),  button -> config.enabled = !config.enabled, () -> config.enabled));
+				Component.translatable("menu.inventorypause.settings.enabled"),  button -> config.enabled = !config.enabled, () -> config.enabled));
 		this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height,
-				Component.translatable("text.autoconfig.inventorypause.option.disableSaving"),  button -> config.disableSaving = !config.disableSaving, () -> !config.disableSaving));
+				Component.translatable("menu.inventorypause.settings.disableSaving"),  button -> config.disableSaving = !config.disableSaving, () -> !config.disableSaving));
 		y += totalSize;
 		return y;
 	}
@@ -116,7 +116,7 @@ public class ConfigScreen extends Screen {
 		this.renderBackground(poseStack);
 		drawCenteredString(poseStack, this.font, this.title, this.width / 2, 15, 16777215);
 
-		drawString(poseStack, this.font, Component.literal("Pause..."), xText, yText, 16777215);
+		drawString(poseStack, this.font, Component.translatable("menu.inventorypause.settings.title.pause"), xText, yText, 16777215);
 		super.render(poseStack, p_96250_, p_96251_, p_96252_);
 	}
 }

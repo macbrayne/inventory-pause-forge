@@ -17,7 +17,6 @@ import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -37,26 +36,26 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     }
 
     private void initEntries() {
-        this.addEntry(new ModCompatList.SectionEntry(Component.literal("Compat")));
+        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens")));
         ArrayList<String> modCompatClasses = new ArrayList<>(modCompatSupplier.get());
         for(int i = 0; i < modCompatClasses.size(); i++) {
             String aClass = modCompatClasses.get(i);
             this.addEntry(new ModCompatList.CompatEntry(i, aClass));
         }
-        this.addEntry(new AddEntry(Component.literal("Add Compat Entry"), addEntry -> {
+        this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens.add"), addEntry -> {
             return (button) -> {
                 int i = children().indexOf(addEntry);
                 children().add(i, new CompatEntry(modCompatSupplier.get().size(), "New Entry"));
                 modCustomSupplier.get().add("New Entry");
             };
         }));
-        this.addEntry(new ModCompatList.SectionEntry(Component.literal("Custom")));
+        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.customScreens")));
         ArrayList<String> modCustomClasses = new ArrayList<>(modCustomSupplier.get());
         for(int i = 0; i < modCustomClasses.size(); i++) {
             String aClass = modCustomClasses.get(i);
             this.addEntry(new ModCompatList.CustomEntry(i, aClass));
         }
-        this.addEntry(new AddEntry(Component.literal("Add Custom Entry"), addEntry -> {
+        this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.customScreens.add"), addEntry -> {
             return (button) -> {
                 int i = children().indexOf(addEntry);
                 children().add(i, new CustomEntry(modCustomSupplier.get().size(), "New Entry"));
@@ -85,8 +84,8 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
                     return NarratableEntry.NarrationPriority.HOVERED;
                 }
 
-                public void updateNarration(NarrationElementOutput p_193906_) {
-                    p_193906_.add(NarratedElementType.TITLE, name);
+                public void updateNarration(NarrationElementOutput narrationElementOutput) {
+                    narrationElementOutput.add(NarratedElementType.TITLE, name);
                 }
             });
         }

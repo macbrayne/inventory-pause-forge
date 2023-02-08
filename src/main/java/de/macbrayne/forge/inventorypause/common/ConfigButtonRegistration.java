@@ -28,23 +28,23 @@ public class ConfigButtonRegistration {
         }
         {
             ModConfig.Abilities.AdditionalGUIs additionalGUIs = abilities.additionalGUIs;
-            list.add(buildInfo(Items.ANVIL, "additionalGUIs.pauseAnvil", () -> additionalGUIs.pauseAnvil, t -> additionalGUIs.pauseAnvil = t));
-            list.add(buildInfo(Items.BEACON, "additionalGUIs.pauseBeacon", () -> additionalGUIs.pauseBeacon, t -> additionalGUIs.pauseBeacon = t));
-            list.add(buildInfo(Items.DISPENSER, "additionalGUIs.pauseDispenser", () -> additionalGUIs.pauseDispenser, t -> additionalGUIs.pauseDispenser = t));
-            list.add(buildInfo(Items.BREWING_STAND, "additionalGUIs.pauseBrewingStand", () -> additionalGUIs.pauseBrewingStand, t -> additionalGUIs.pauseBrewingStand = t));
-            list.add(buildInfo(Items.HOPPER, "additionalGUIs.pauseHopper", () -> additionalGUIs.pauseHopper, t -> additionalGUIs.pauseHopper = t));
-            list.add(buildInfo(Items.CARTOGRAPHY_TABLE, "additionalGUIs.pauseCartographyTable", () -> additionalGUIs.pauseCartographyTable, t -> additionalGUIs.pauseCartographyTable = t));
-            list.add(buildInfo(Items.STONECUTTER, "additionalGUIs.pauseStonecutter", () -> additionalGUIs.pauseStonecutter, t -> additionalGUIs.pauseStonecutter = t));
+            list.add(buildInfo(Items.ANVIL, "pauseAnvil", () -> additionalGUIs.pauseAnvil, t -> additionalGUIs.pauseAnvil = t));
+            list.add(buildInfo(Items.BEACON, "pauseBeacon", () -> additionalGUIs.pauseBeacon, t -> additionalGUIs.pauseBeacon = t));
+            list.add(buildInfo(Items.DISPENSER, "pauseDispenser", () -> additionalGUIs.pauseDispenser, t -> additionalGUIs.pauseDispenser = t));
+            list.add(buildInfo(Items.BREWING_STAND, "pauseBrewingStand", () -> additionalGUIs.pauseBrewingStand, t -> additionalGUIs.pauseBrewingStand = t));
+            list.add(buildInfo(Items.HOPPER, "pauseHopper", () -> additionalGUIs.pauseHopper, t -> additionalGUIs.pauseHopper = t));
+            list.add(buildInfo(Items.CARTOGRAPHY_TABLE, "pauseCartographyTable", () -> additionalGUIs.pauseCartographyTable, t -> additionalGUIs.pauseCartographyTable = t));
+            list.add(buildInfo(Items.STONECUTTER, "pauseStonecutter", () -> additionalGUIs.pauseStonecutter, t -> additionalGUIs.pauseStonecutter = t));
         }
         {
             ModConfig.Abilities.WorldGUIs worldGUIs = abilities.worldGUIs;
-            list.add(buildInfo(Items.HORSE_SPAWN_EGG, "worldGUIs.pauseHorse", () -> worldGUIs.pauseHorse, t -> worldGUIs.pauseHorse = t));
-            list.add(buildInfo(Items.VILLAGER_SPAWN_EGG, "worldGUIs.pauseMerchant", () -> worldGUIs.pauseMerchant, t -> worldGUIs.pauseMerchant = t));
+            list.add(buildInfo(Items.HORSE_SPAWN_EGG, "pauseHorse", () -> worldGUIs.pauseHorse, t -> worldGUIs.pauseHorse = t));
+            list.add(buildInfo(Items.VILLAGER_SPAWN_EGG, "pauseMerchant", () -> worldGUIs.pauseMerchant, t -> worldGUIs.pauseMerchant = t));
         }
         return list;
     }
 
     private ButtonInfo buildInfo(Item item, String tooltip, Supplier<Boolean> supplier, Consumer<Boolean> consumer) {
-        return new ButtonInfo(new ItemStack(item), Component.translatable("text.autoconfig.inventorypause.option.abilities." + tooltip), supplier, consumer);
+        return new ButtonInfo(new ItemStack(item), Component.translatable("menu.inventorypause.settings.tooltip" + tooltip), supplier, consumer);
     }
 }

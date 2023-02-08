@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 public class ClientSetup {
 	// Key mapping is lazily initialized so it doesn't exist until it is registered
 	public static final Lazy<KeyMapping> COPY_CLASS_NAME = Lazy.of(() -> new KeyMapping(
-			"key.inventorypause.copyClassName", // Localisation
+			"key.inventorypause.addToList", // Localisation
 			KeyConflictContext.GUI, // Only open in-game
 			InputConstants.UNKNOWN, // No default mapping
 			"key.categories.inventorypause.main" // Category localisation
