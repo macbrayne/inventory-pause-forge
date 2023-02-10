@@ -14,11 +14,14 @@ import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.IntConsumer;
+import java.util.function.IntSupplier;
 import java.util.function.Supplier;
 
 public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.Entry> {
@@ -50,6 +53,9 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
                 modCustomSupplier.get().add("New Entry");
             };
         }));
+        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks")));
+        this.addEntry(new ModCompatList.NumEntry(() -> InventoryPause.MOD_CONFIG.modCompat.timeBetweenCompatTicks,
+                value -> InventoryPause.MOD_CONFIG.modCompat.timeBetweenCompatTicks = value, 20));
         this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.customScreens")));
         ArrayList<String> modCustomClasses = new ArrayList<>(modCustomSupplier.get());
         for(int i = 0; i < modCustomClasses.size(); i++) {
@@ -131,7 +137,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
     }
 
-    public class ItemEntry extends ModCompatList.Entry {
+    public class ItemEntry extends ModCompatList.Entry implements Saveable {
         private final int key;
         private final String content;
         private final EditBox editBox;
@@ -168,7 +174,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.removeButton.render(poseStack, mouseX, mouseY, tickDelta);
             this.editBox.setX(x);
             this.editBox.setY(y);
-            this.editBox.setWidth(190 - 5);
+            this.editBox.setWidth(195);
             this.editBox.render(poseStack, mouseX, mouseY, tickDelta);
         }
 
@@ -198,6 +204,61 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
     }
 
+    public class NumEntry extends Entry implements Saveable {
+        private final IntSupplier valueSupplier;
+        private final IntConsumer valueConsumer;
+        private final EditBox numBox;
+        private final Button resetButton;
+
+
+        public NumEntry(IntSupplier valueSupplier, IntConsumer valueConsumer, int defaultValue) {
+            this.valueSupplier = valueSupplier;
+            this.valueConsumer = valueConsumer;
+            this.numBox = new EditBox(ModCompatList.this.minecraft.font, 0, 0, 180, 20, Component.empty());
+            this.numBox.setMaxLength(3);
+            this.numBox.setValue(String.valueOf(valueSupplier.getAsInt()));
+            this.numBox.setFilter(s -> s.isEmpty() || (NumberUtils.isParsable(s) && !s.contains("-")));
+
+            this.resetButton = new Button.Builder(Component.literal("Reset"), (button) -> {
+                numBox.setValue(String.valueOf(defaultValue));
+            }).size(40, 20).createNarration(p_253695_ -> Component.translatable("narrator.controls.reset", defaultValue)).build();
+        }
+
+        @Override
+        public List<? extends NarratableEntry> narratables() {
+            return ImmutableList.of(numBox, resetButton);
+        }
+
+        @Override
+        public void render(PoseStack poseStack, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+            this.numBox.render(poseStack, mouseX, mouseY, tickDelta);
+            this.resetButton.render(poseStack, mouseX, mouseY, tickDelta);
+            this.resetButton.setX(x + 190 - 10);
+            this.resetButton.setY(y);
+            this.resetButton.render(poseStack, mouseX, mouseY, tickDelta);
+            this.numBox.setX(x);
+            this.numBox.setY(y);
+            this.numBox.setWidth(190 - 15);
+            this.numBox.render(poseStack, mouseX, mouseY, tickDelta);
+        }
+
+        @Override
+        public List<? extends GuiEventListener> children() {
+            return ImmutableList.of(numBox, resetButton);
+        }
+
+        @Override
+        public void save() {
+            if(numBox.getValue().isEmpty()) {
+                return;
+            }
+            int value = Math.abs(Integer.parseInt(this.numBox.getValue()));
+            if(value > 0) {
+                valueConsumer.accept(value);
+            }
+        }
+    }
+
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (!this.isMouseOver(mouseX, mouseY)) {
@@ -218,12 +279,16 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
     public void saveChanges() {
         for(Entry item : children()) {
-            if(item instanceof ItemEntry itemEntry) {
-                itemEntry.save();
+            if(item instanceof Saveable saveable) {
+                saveable.save();
             }
         }
         for(ItemEntry item : removedEntries) {
             item.supplier.get().remove(item.key);
         }
+    }
+
+    interface Saveable {
+        void save();
     }
 }
