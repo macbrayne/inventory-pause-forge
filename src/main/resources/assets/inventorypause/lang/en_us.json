@@ -37,6 +37,7 @@
   "menu.inventorypause.settings.modCompat.timeBetweenCompatTicks": "Time between compat ticks",
   "menu.inventorypause.settings.modCompat.compatScreens": "Compat mod class names",
   "menu.inventorypause.settings.modCompat.compatScreens.add": "Add Custom Entry",
+  "menu.inventorypause.settings.modCompat.reset": "Reset",
   "menu.inventorypause.settings.modCompat.delete": "X",
   "menu.inventorypause.settings.modCompat.new": "New Entry",
   "menu.inventorypause.settings.modCompat.debug_mode": "Debug Mode",
