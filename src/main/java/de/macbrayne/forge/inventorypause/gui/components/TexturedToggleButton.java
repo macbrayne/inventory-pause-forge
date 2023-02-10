@@ -5,7 +5,6 @@ package de.macbrayne.forge.inventorypause.gui.components;
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.macbrayne.forge.inventorypause.gui.GuiUtils;
 import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -16,12 +15,8 @@ public class TexturedToggleButton extends ToggleButton {
     private static final ResourceLocation VILLAGER_LOCATION = new ResourceLocation("textures/gui/container/villager2.png");
     private final ItemStack icon;
 
-    public TexturedToggleButton(int x, int y, int width, int height, Component narratedComponent, Screen screen, ButtonInfo info) {
-        this(x, y, width, height, info.itemStack(), narratedComponent, GuiUtils.getTogglePress(info.stateSupplier(), info.stateConsumer()), GuiUtils.getTooltip(screen, info.tooltipComponent()), info.stateSupplier());
-    }
-
-    public TexturedToggleButton(int x, int y, int width, int height, ItemStack icon, Component tooltipComponent, Component narratedComponent, OnPress onPress, Screen screen, Supplier<Boolean> stateSupplier) {
-        this(x, y, width, height, icon, narratedComponent, onPress, GuiUtils.getTooltip(screen, tooltipComponent), stateSupplier);
+    public TexturedToggleButton(int x, int y, int width, int height, Component narratedComponent, ButtonInfo info) {
+        this(x, y, width, height, info.itemStack(), narratedComponent, GuiUtils.getTogglePress(info.stateSupplier(), info.stateConsumer()), Tooltip.create(info.tooltipComponent()), info.stateSupplier());
     }
 
     private TexturedToggleButton(int x, int y, int width, int height, ItemStack icon, Component narratedComponent, OnPress onPress, Tooltip onTooltip, Supplier<Boolean> stateSupplier) {

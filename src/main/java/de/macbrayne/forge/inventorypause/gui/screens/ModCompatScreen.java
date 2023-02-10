@@ -4,10 +4,10 @@ package de.macbrayne.forge.inventorypause.gui.screens;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.macbrayne.forge.inventorypause.InventoryPause;
-import de.macbrayne.forge.inventorypause.common.ConfigHelper;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.gui.components.ToggleButton;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
@@ -24,7 +24,7 @@ public class ModCompatScreen extends Screen {
     private static final int totalSize = buttonSize + buttonPadding;
     private static final int fullButtonHeight = PADDING + buttonSize + PADDING;
     protected ModCompatScreen(Screen lastScreen) {
-        super(Component.literal("Mod Compat Screen"));
+        super(Component.translatable("menu.inventorypause.settings.mod_compat_options"));
         this.lastScreen = lastScreen;
     }
     @Override
@@ -36,23 +36,25 @@ public class ModCompatScreen extends Screen {
     }
 
     public void createSaveAndQuit(int x0, int y, int width, int height) {
-        int buttonWidth = width / 2 - 2;
-        this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.debug_mode"), p_93751_ -> {
-            InventoryPause.MOD_CONFIG.debug = !InventoryPause.MOD_CONFIG.debug;
-        }, () -> {
-            return InventoryPause.MOD_CONFIG.debug;
-        }));
+        int buttonWidth = width;
+        int xDone = x0;
+        if (!InventoryPause.MOD_CONFIG.configMenu.hideDebugButton) {
+            buttonWidth = width / 2 - 2;
+            xDone += width / 2 + 2;
+            this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.modCompat.debug_mode"), p_93751_ -> {
+                InventoryPause.MOD_CONFIG.debug = !InventoryPause.MOD_CONFIG.debug;
+            }, Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.debug_mode.tooltip")), () -> InventoryPause.MOD_CONFIG.debug));
+        }
         this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
             this.minecraft.setScreen(lastScreen);
             this.modCompatList.saveChanges();
-            ConfigHelper.serialize();
-        }).pos (x0 + width / 2 + 2, y).size(buttonWidth, height).build());
+        }).pos (xDone, y).size(buttonWidth, height).build());
     }
 
     public void render(PoseStack poseStack, int p_96250_, int p_96251_, float p_96252_) {
         this.renderBackground(poseStack);
-        drawCenteredString(poseStack, this.font, this.title, this.width / 2, 15, 16777215);
         this.modCompatList.render(poseStack, p_96250_, p_96251_, p_96252_);
+        drawCenteredString(poseStack, this.font, this.title, this.width / 2, 8, 16777215);
         super.render(poseStack, p_96250_, p_96251_, p_96252_);
     }
 

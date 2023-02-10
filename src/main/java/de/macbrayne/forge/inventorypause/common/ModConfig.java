@@ -10,6 +10,7 @@ public class ModConfig {
     public boolean disableSaving = false;
     public boolean debug = false;
     public DebugText debugText = new DebugText();
+    public Config configMenu = new Config();
 
     public static class DebugText {
         public float x = 4f;
@@ -53,5 +54,10 @@ public class ModConfig {
         public List<String> customScreens = new ArrayList<>();
         public int timeBetweenCompatTicks = 20;
         public List<String> compatScreens = new ArrayList<>();
+    }
+
+    public static class Config {
+        public boolean hideDebugButton = false;
+        public boolean hideModCompatButton = false;
     }
 }

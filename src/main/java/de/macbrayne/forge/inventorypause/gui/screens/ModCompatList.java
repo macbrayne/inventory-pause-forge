@@ -22,6 +22,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.Entry> {
+    private static final String newEntry = Component.translatable("menu.inventorypause.settings.modCompat.new").getString();
     private final ModCompatScreen modCompatScreen;
     private final Supplier<List<String>> modCompatSupplier;
     private final Supplier<List<String>> modCustomSupplier;
@@ -45,7 +46,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens.add"), addEntry -> {
             return (button) -> {
                 int i = children().indexOf(addEntry);
-                children().add(i, new CompatEntry(modCompatSupplier.get().size(), "New Entry"));
+                children().add(i, new CompatEntry(modCompatSupplier.get().size(), newEntry));
                 modCustomSupplier.get().add("New Entry");
             };
         }));
@@ -58,7 +59,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.customScreens.add"), addEntry -> {
             return (button) -> {
                 int i = children().indexOf(addEntry);
-                children().add(i, new CustomEntry(modCustomSupplier.get().size(), "New Entry"));
+                children().add(i, new CustomEntry(modCustomSupplier.get().size(), newEntry));
                 modCustomSupplier.get().add("New Entry");
             };
         }));
@@ -141,14 +142,13 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.key = key;
             this.content = content;
             this.supplier = supplier;
-            this.removeButton = new Button.Builder(Component.literal("X"), (button) -> {
-                // remove
+            this.removeButton = new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.delete"), (button) -> {
                 System.out.println(this.key);
                 ModCompatList.this.removeEntry(this);
                 removedEntries.add(this);
                 unfocusEntry();
             }).size(20, 20).createNarration(p_253695_ -> Component.translatable("narrator.controls.reset", content)).build();
-            this.editBox = new EditBox(ModCompatList.this.minecraft.font, 0, 0, 180, 20, Component.literal("Test"));
+            this.editBox = new EditBox(ModCompatList.this.minecraft.font, 0, 0, 180, 20, Component.empty());
             editBox.setMaxLength(128);
             editBox.setValue(this.content);
             editBox.setFilter(s -> !s.contains("-"));

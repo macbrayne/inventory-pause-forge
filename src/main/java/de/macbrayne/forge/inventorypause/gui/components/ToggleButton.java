@@ -12,18 +12,14 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
 public class ToggleButton extends Button {
-    final Supplier<Boolean> stateSupplier;
+    final @NotNull Supplier<Boolean> stateSupplier;
 
-    public ToggleButton(int x, int y, int width, int height, Component text, OnPress onPress, Supplier<Boolean> stateSupplier) {
-        super(new Button.Builder(text, onPress).pos(x, y).size(width, height));
-        this.stateSupplier = stateSupplier;
-    }
-
-    public ToggleButton(int x, int y, int width, int height, Component text, OnPress onPress, Tooltip tooltip, Supplier<Boolean> stateSupplier) {
+    public ToggleButton(int x, int y, int width, int height, Component text, OnPress onPress, Tooltip tooltip, @NotNull Supplier<Boolean> stateSupplier) {
         super(new Button.Builder(text, onPress).pos(x, y).size(width, height).tooltip(tooltip));
         this.stateSupplier = stateSupplier;
     }
