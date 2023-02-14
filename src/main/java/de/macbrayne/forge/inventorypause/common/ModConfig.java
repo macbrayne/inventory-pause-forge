@@ -59,5 +59,7 @@ public class ModConfig {
     public static class Config {
         public boolean hideDebugButton = false;
         public boolean hideModCompatButton = false;
+
+        public boolean registerKeybinds = true;
     }
 }

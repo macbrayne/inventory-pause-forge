@@ -3,6 +3,7 @@
 package de.macbrayne.forge.inventorypause;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import de.macbrayne.forge.inventorypause.utils.Reference;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
@@ -10,9 +11,12 @@ import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod.EventBusSubscriber(modid = "inventorypause", bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientSetup {
+	private static final Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
 	// Key mapping is lazily initialized so it doesn't exist until it is registered
 	public static final Lazy<KeyMapping> COPY_CLASS_NAME = Lazy.of(() -> new KeyMapping(
 			"key.inventorypause.addToList", // Localisation
@@ -30,7 +34,10 @@ public class ClientSetup {
 	// Event is on the mod event bus only on the physical client
 	@SubscribeEvent
 	public static void registerBindings(RegisterKeyMappingsEvent event) {
-		event.register(OPEN_SETTINGS.get());
-		event.register(COPY_CLASS_NAME.get());
+		if(InventoryPause.MOD_CONFIG.configMenu.registerKeybinds) {
+			LOGGER.info("Registering key mappings");
+			event.register(OPEN_SETTINGS.get());
+			event.register(COPY_CLASS_NAME.get());
+		}
 	}
 }

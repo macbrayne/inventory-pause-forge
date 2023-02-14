@@ -6,9 +6,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.ContainerObjectSelectionList;
-import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.narration.NarratedElementType;
@@ -40,23 +38,9 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     }
 
     private void initEntries() {
-        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens")));
-        ArrayList<String> modCompatClasses = new ArrayList<>(modCompatSupplier.get());
-        for(int i = 0; i < modCompatClasses.size(); i++) {
-            String aClass = modCompatClasses.get(i);
-            this.addEntry(new ModCompatList.CompatEntry(i, aClass));
-        }
-        this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens.add"), addEntry -> {
-            return (button) -> {
-                int i = children().indexOf(addEntry);
-                children().add(i, new CompatEntry(modCompatSupplier.get().size(), newEntry));
-                modCustomSupplier.get().add("New Entry");
-            };
-        }));
-        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks")));
-        this.addEntry(new ModCompatList.NumEntry(() -> InventoryPause.MOD_CONFIG.modCompat.timeBetweenCompatTicks,
-                value -> InventoryPause.MOD_CONFIG.modCompat.timeBetweenCompatTicks = value, 20));
-        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.customScreens")));
+        // Custom Screens
+        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.customScreens"),
+                Component.translatable("menu.inventorypause.settings.modCompat.customScreens.tooltip")));
         ArrayList<String> modCustomClasses = new ArrayList<>(modCustomSupplier.get());
         for(int i = 0; i < modCustomClasses.size(); i++) {
             String aClass = modCustomClasses.get(i);
@@ -69,6 +53,27 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
                 modCustomSupplier.get().add("New Entry");
             };
         }));
+
+        // Time Between Compat Ticks
+        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks"),
+                Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks.tooltip")));
+        this.addEntry(new ModCompatList.NumEntry(() -> InventoryPause.MOD_CONFIG.modCompat.timeBetweenCompatTicks,
+                value -> InventoryPause.MOD_CONFIG.modCompat.timeBetweenCompatTicks = value, 20));
+
+        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens"),
+                Component.translatable("menu.inventorypause.settings.modCompat.compatScreens.tooltip")));
+        ArrayList<String> modCompatClasses = new ArrayList<>(modCompatSupplier.get());
+        for(int i = 0; i < modCompatClasses.size(); i++) {
+            String aClass = modCompatClasses.get(i);
+            this.addEntry(new ModCompatList.CompatEntry(i, aClass));
+        }
+        this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens.add"), addEntry -> {
+            return (button) -> {
+                int i = children().indexOf(addEntry);
+                children().add(i, new CompatEntry(modCompatSupplier.get().size(), newEntry));
+                modCustomSupplier.get().add("New Entry");
+            };
+        }));
     }
 
 
@@ -76,25 +81,20 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     public abstract static class Entry extends ContainerObjectSelectionList.Entry<ModCompatList.Entry> {
     }
     public class SectionEntry extends ModCompatList.Entry {
+        final CenteredStringWidget title;
         final Component name;
         private final int width;
 
-        public SectionEntry(Component name) {
+        public SectionEntry(Component name, Component tooltip) {
             this.name = name;
             this.width = ModCompatList.this.minecraft.font.width(this.name);
+            title = new CenteredStringWidget(ModCompatList.this.width, ModCompatList.this.height, name, minecraft.font);
+            title.setTooltip(Tooltip.create(tooltip));
         }
 
         @Override
         public List<? extends NarratableEntry> narratables() {
-            return ImmutableList.of(new NarratableEntry() {
-                public NarratableEntry.NarrationPriority narrationPriority() {
-                    return NarratableEntry.NarrationPriority.HOVERED;
-                }
-
-                public void updateNarration(NarrationElementOutput narrationElementOutput) {
-                    narrationElementOutput.add(NarratedElementType.TITLE, name);
-                }
-            });
+            return ImmutableList.of(title);
         }
         /*public boolean changeFocus(boolean goForward) {
             return false;
@@ -102,12 +102,16 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
         @Override
         public void render(PoseStack poseStack, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            ModCompatList.this.minecraft.font.draw(poseStack, this.name, (float)(ModCompatList.this.minecraft.screen.width / 2 - this.width / 2), (float)(y + entryHeight - 9 - 1), 16777215);
+            title.setX(x);
+            title.setY(y);
+            title.setWidth(entryWidth);
+            title.setHeight(entryHeight);
+            title.render(poseStack, mouseX, mouseY, tickDelta);
         }
 
         @Override
         public List<? extends GuiEventListener> children() {
-            return Collections.emptyList();
+            return ImmutableList.of(title);
         }
     }
 
