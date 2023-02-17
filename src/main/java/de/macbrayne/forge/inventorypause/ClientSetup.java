@@ -34,7 +34,7 @@ public class ClientSetup {
 	// Event is on the mod event bus only on the physical client
 	@SubscribeEvent
 	public static void registerBindings(RegisterKeyMappingsEvent event) {
-		if(InventoryPause.MOD_CONFIG.configMenu.registerKeybinds) {
+		if(InventoryPause.MOD_CONFIG.settingsForModpacks.registerKeybinds) {
 			LOGGER.info("Registering key mappings");
 			event.register(OPEN_SETTINGS.get());
 			event.register(COPY_CLASS_NAME.get());

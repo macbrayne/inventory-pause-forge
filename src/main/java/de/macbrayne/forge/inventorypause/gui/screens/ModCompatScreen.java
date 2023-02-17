@@ -38,7 +38,7 @@ public class ModCompatScreen extends Screen {
     public void createSaveAndQuit(int x0, int y, int width, int height) {
         int buttonWidth = width;
         int xDone = x0;
-        if (!InventoryPause.MOD_CONFIG.configMenu.hideDebugButton) {
+        if (!InventoryPause.MOD_CONFIG.settingsForModpacks.hideDebugButton) {
             buttonWidth = width / 2 - 2;
             xDone += width / 2 + 2;
             this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.modCompat.debug_mode"), p_93751_ -> {

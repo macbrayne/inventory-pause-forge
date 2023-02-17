@@ -10,7 +10,7 @@ public class ModConfig {
     public boolean disableSaving = false;
     public boolean debug = false;
     public DebugText debugText = new DebugText();
-    public Config configMenu = new Config();
+    public Config settingsForModpacks = new Config();
 
     public static class DebugText {
         public float x = 4f;
@@ -59,7 +59,6 @@ public class ModConfig {
     public static class Config {
         public boolean hideDebugButton = false;
         public boolean hideModCompatButton = false;
-
         public boolean registerKeybinds = true;
     }
 }

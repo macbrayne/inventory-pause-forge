@@ -5,17 +5,16 @@ package de.macbrayne.forge.inventorypause.gui.screens;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.macbrayne.forge.inventorypause.InventoryPause;
+import de.macbrayne.forge.inventorypause.gui.components.HoverButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
-import net.minecraft.client.gui.narration.NarratedElementType;
-import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.IntConsumer;
@@ -29,7 +28,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     private final Supplier<List<String>> modCustomSupplier;
     private final List<ItemEntry> removedEntries = new ArrayList<>();
     public ModCompatList(ModCompatScreen parent, Minecraft minecraft) {
-        super(minecraft, parent.width + 45, parent.height, 20, parent.height - 32, 25);
+        super(minecraft, parent.width, parent.height, 20, parent.height - 32, 25);
         this.modCompatScreen = parent;
         modCompatSupplier = () -> InventoryPause.MOD_CONFIG.modCompat.compatScreens;
         modCustomSupplier = () -> InventoryPause.MOD_CONFIG.modCompat.customScreens;
@@ -152,12 +151,11 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.key = key;
             this.content = content;
             this.supplier = supplier;
-            this.removeButton = new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.delete"), (button) -> {
-                System.out.println(this.key);
+            this.removeButton = new HoverButton(new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.delete"), (button) -> {
                 ModCompatList.this.removeEntry(this);
                 removedEntries.add(this);
                 unfocusEntry();
-            }).size(20, 20).createNarration(p_253695_ -> Component.translatable("narrator.controls.reset", content)).build();
+            }).size(20, 20).createNarration(p_253695_ -> Component.translatable("narrator.controls.reset", content)));
             this.editBox = new EditBox(ModCompatList.this.minecraft.font, 0, 0, 180, 20, Component.empty());
             editBox.setMaxLength(128);
             editBox.setValue(this.content);
@@ -223,9 +221,9 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.numBox.setValue(String.valueOf(valueSupplier.getAsInt()));
             this.numBox.setFilter(s -> s.isEmpty() || (NumberUtils.isParsable(s) && !s.contains("-")));
 
-            this.resetButton = new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.reset"), (button) -> {
-                numBox.setValue(String.valueOf(defaultValue));
-            }).size(40, 20).createNarration(p_253695_ -> Component.translatable("narrator.controls.reset", defaultValue)).build();
+            this.resetButton = new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.reset"), (button) -> numBox.setValue(String.valueOf(defaultValue)))
+                    .size(40, 20).createNarration(p_253695_ -> Component.translatable("narrator.controls.reset", defaultValue))
+                    .tooltip(Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.reset.tooltip"))).build();
         }
 
         @Override
@@ -287,6 +285,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
                 saveable.save();
             }
         }
+        removedEntries.sort(Comparator.comparingInt((ItemEntry o) -> o.key).reversed());
         for(ItemEntry item : removedEntries) {
             item.supplier.get().remove(item.key);
         }

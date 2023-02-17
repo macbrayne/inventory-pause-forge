@@ -56,7 +56,7 @@ public class ConfigScreen extends Screen {
 		int x0 = this.width / 2 - width / 2, y0 = y;
 		y = createImageGrid(x0, y0, width, numberOfColumns, numberOfRows, buttonInfos);
 
-		if(!InventoryPause.MOD_CONFIG.configMenu.hideModCompatButton) {
+		if(!InventoryPause.MOD_CONFIG.settingsForModpacks.hideModCompatButton) {
 			this.addRenderableWidget(new Button.Builder(Component.translatable("menu.inventorypause.settings.mod_compat_options"), button -> this.minecraft.setScreen(new ModCompatScreen(this)))
 					.pos(this.width / 2 - 120, this.height - 40 - 2 * PADDING)
 					.size(240, buttonSize)
