@@ -51,11 +51,11 @@ jobs:
 
       - name: 📢 Publish artifacts to Modrinth
         continue-on-error: true
-        run: gradle modrinth
+        run: ./gradlew modrinth
 
       - name: 📢 Publish artifacts to CurseForge
         continue-on-error: true
-        run: gradle curseforge
+        run: ./gradlew curseforge
 
       - name: 📦 Upload artifacts
         uses: actions/upload-artifact@v3
