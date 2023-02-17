@@ -39,8 +39,15 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
+      - name: 🤗 Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: ❗ Grant execute permission for gradlew
+        run: chmod +x gradlew
+
       - name: 🔨 Build artifacts
-        run: gradle clean build
+        run: ./gradlew clean build
 
       - name: 📢 Publish artifacts to Modrinth
         continue-on-error: true
