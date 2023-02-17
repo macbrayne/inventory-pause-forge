@@ -45,12 +45,10 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             String aClass = modCustomClasses.get(i);
             this.addEntry(new ModCompatList.CustomEntry(i, aClass));
         }
-        this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.customScreens.add"), addEntry -> {
-            return (button) -> {
-                int i = children().indexOf(addEntry);
-                children().add(i, new CustomEntry(modCustomSupplier.get().size(), newEntry));
-                modCustomSupplier.get().add("New Entry");
-            };
+        this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.customScreens.add"), addEntry -> button -> {
+            int i = children().indexOf(addEntry);
+            children().add(i, new CustomEntry(modCustomSupplier.get().size(), newEntry));
+            modCustomSupplier.get().add("New Entry");
         }));
 
         // Time Between Compat Ticks
@@ -66,12 +64,10 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             String aClass = modCompatClasses.get(i);
             this.addEntry(new ModCompatList.CompatEntry(i, aClass));
         }
-        this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens.add"), addEntry -> {
-            return (button) -> {
-                int i = children().indexOf(addEntry);
-                children().add(i, new CompatEntry(modCompatSupplier.get().size(), newEntry));
-                modCustomSupplier.get().add("New Entry");
-            };
+        this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens.add"), addEntry -> (button) -> {
+            int i = children().indexOf(addEntry);
+            children().add(i, new CompatEntry(modCompatSupplier.get().size(), newEntry));
+            modCustomSupplier.get().add("New Entry");
         }));
     }
 
@@ -82,11 +78,9 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     public class SectionEntry extends ModCompatList.Entry {
         final CenteredStringWidget title;
         final Component name;
-        private final int width;
 
         public SectionEntry(Component name, Component tooltip) {
             this.name = name;
-            this.width = ModCompatList.this.minecraft.font.width(this.name);
             title = new CenteredStringWidget(ModCompatList.this.width, ModCompatList.this.height, name, minecraft.font);
             title.setTooltip(Tooltip.create(tooltip));
         }
@@ -114,7 +108,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
     }
 
-    public class AddEntry extends ModCompatList.Entry {
+    public static class AddEntry extends ModCompatList.Entry {
         final Button button;
 
         public AddEntry(Component text, Function<AddEntry, Button.OnPress> onPress) {

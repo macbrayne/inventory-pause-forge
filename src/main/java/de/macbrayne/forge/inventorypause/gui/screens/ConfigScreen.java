@@ -54,7 +54,7 @@ public class ConfigScreen extends Screen {
 
 		y = createNonTexturedButtons(this.width / 2 - 120, y, 240, 20);
 		int x0 = this.width / 2 - width / 2, y0 = y;
-		y = createImageGrid(x0, y0, width, numberOfColumns, numberOfRows, buttonInfos);
+		y = createImageGrid(x0, y0, numberOfColumns, numberOfRows, buttonInfos);
 
 		if(!InventoryPause.MOD_CONFIG.settingsForModpacks.hideModCompatButton) {
 			this.addRenderableWidget(new Button.Builder(Component.translatable("menu.inventorypause.settings.mod_compat_options"), button -> this.minecraft.setScreen(new ModCompatScreen(this)))
@@ -66,7 +66,7 @@ public class ConfigScreen extends Screen {
 		createSaveAndQuit(this.width / 2 - 120, this.height - 20 - PADDING, 240, 20);
 	}
 
-	public int createImageGrid(int x0, int y0, int imageGridWidth, int numberOfColumns, int numberOfRows, List<ButtonInfo> list) {
+	public int createImageGrid(int x0, int y0, int numberOfColumns, int numberOfRows, List<ButtonInfo> list) {
 		for (int i = 0, buttonInfosSize = list.size(); i < buttonInfosSize; i++) {
 			ButtonInfo info = list.get(i);
 			int column = i % numberOfColumns;

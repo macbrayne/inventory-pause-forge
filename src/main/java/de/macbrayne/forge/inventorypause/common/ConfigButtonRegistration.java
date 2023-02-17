@@ -4,11 +4,9 @@ package de.macbrayne.forge.inventorypause.common;
 
 import de.macbrayne.forge.inventorypause.gui.components.ButtonInfo;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.List;

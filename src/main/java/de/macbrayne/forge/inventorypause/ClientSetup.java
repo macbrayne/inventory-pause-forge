@@ -17,7 +17,7 @@ import org.apache.logging.log4j.Logger;
 @Mod.EventBusSubscriber(modid = "inventorypause", bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientSetup {
 	private static final Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
-	// Key mapping is lazily initialized so it doesn't exist until it is registered
+	// Key mapping is lazily initialized, so it doesn't exist until it is registered
 	public static final Lazy<KeyMapping> COPY_CLASS_NAME = Lazy.of(() -> new KeyMapping(
 			"key.inventorypause.addToList", // Localisation
 			KeyConflictContext.GUI, // Only open in-game
