@@ -3,23 +3,21 @@
 package de.macbrayne.forge.inventorypause.utils;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import de.macbrayne.forge.inventorypause.ClientSetup;
 import de.macbrayne.forge.inventorypause.common.ConfigHelper;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
+import de.macbrayne.forge.inventorypause.gui.screens.ConfigScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static de.macbrayne.forge.inventorypause.InventoryPause.MOD_CONFIG;
 
-@Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ForgeGuiEvents {
     private static final Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
 
@@ -33,7 +31,7 @@ public class ForgeGuiEvents {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onGUIDrawPost(ScreenEvent.Render.Post event) {
         Screen screen = event.getScreen();
-        while (ClientSetup.COPY_CLASS_NAME.get().consumeClick()) {
+        while (ForgeLifetimeEvents.COPY_CLASS_NAME.get().consumeClick()) {
             var name = screen.getClass().getName();
             if(!MOD_CONFIG.modCompat.customScreens.contains(name)) {
                 MOD_CONFIG.modCompat.customScreens.add(name);
@@ -46,6 +44,19 @@ public class ForgeGuiEvents {
             for (Class<?> cl = screen.getClass(); cl.getSuperclass() != null && line < MOD_CONFIG.debugText.maxDepth; cl = cl.getSuperclass()) {
                 Minecraft.getInstance().font.drawShadow(new PoseStack(), cl.getName(), MOD_CONFIG.debugText.x, MOD_CONFIG.debugText.y + 10 * line, 0xffffffff);
                 line++;
+            }
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onClientTick(TickEvent.ClientTickEvent event) {
+        if(event.phase == TickEvent.Phase.END) {
+            if (CompatTick.timeUntilCompatTick > 0 &&
+                    --CompatTick.timeUntilCompatTick == 0) {
+                CompatTick.timeUntilCompatTick = MOD_CONFIG.modCompat.timeBetweenCompatTicks;
+            }
+            while (ForgeLifetimeEvents.OPEN_SETTINGS.get().consumeClick()) {
+                Minecraft.getInstance().setScreen(new ConfigScreen(Minecraft.getInstance().screen));
             }
         }
     }

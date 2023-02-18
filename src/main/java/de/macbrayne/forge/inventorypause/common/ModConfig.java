@@ -8,7 +8,7 @@ import java.util.List;
 public class ModConfig {
     public boolean enabled = true;
     public boolean disableSaving = false;
-    public boolean pauseSounds = true;
+    public boolean pauseSounds = false;
     public boolean debug = false;
     public DebugText debugText = new DebugText();
     public Config settingsForModpacks = new Config();
