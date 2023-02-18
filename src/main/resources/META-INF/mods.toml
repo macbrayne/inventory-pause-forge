@@ -29,12 +29,12 @@ displayURL="https://github.com/macbrayne/inventory-pause-forge/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
 #logoFile="inventorypause.png" #optional
 # A text field displayed in the mod UI
-#credits="Thanks for this example mod goes to Java" #optional
+credits="Original Fabric mod by umollu" #optional
 # A text field displayed in the mod UI
-authors="umollu, macbrayne" #optional
+authors="macbrayne" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Pause your single player game when Inventory is open
+Pause your single player game when opening your inventory, opening chests, trading etc.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.inventorypause]] #optional
