@@ -2,6 +2,7 @@
 
 package de.macbrayne.forge.inventorypause.mixin;
 
+import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -23,7 +24,7 @@ public abstract class MinecraftMixin {
 
     @Inject(at = @At("TAIL"), method = "setScreen")
     public void openScreen(@Nullable Screen screen, CallbackInfo ci) {
-        if (ScreenHelper.isConfiguredScreen(screen)) {
+        if (InventoryPause.MOD_CONFIG.pauseSounds && ScreenHelper.isConfiguredScreen(screen)) {
             boolean canPauseGame = isLocalServer() && !this.singleplayerServer.isPublished();
             if(canPauseGame) {
                 this.getSoundManager().pause();

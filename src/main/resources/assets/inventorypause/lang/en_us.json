@@ -5,6 +5,8 @@
   "menu.inventorypause.settings.mod_compat_options.tooltip": "Configure mod compat options, e.g. the identifiers of the modded inventories to pause",
   "menu.inventorypause.settings.enabled": "Enable Mod",
   "menu.inventorypause.settings.enabled.tooltip": "Completely enables / disables all features",
+  "menu.inventorypause.settings.pauseSounds": "Pause Sounds",
+  "menu.inventorypause.settings.pauseSounds.tooltip": "Turn this off if you don't want sounds like music etc. to stop",
   "menu.inventorypause.settings.disableSaving": "Save on Pause",
   "menu.inventorypause.settings.disableSaving.tooltip": "Disable this if you experience lag spikes when quickly opening and closing inventories. Note: This option also prevents vanilla from automatically saving when pressing escape",
   "menu.inventorypause.settings.creativeInventory": "Creative Inv.",
