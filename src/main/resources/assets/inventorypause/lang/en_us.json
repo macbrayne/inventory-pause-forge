@@ -6,7 +6,7 @@
   "menu.inventorypause.settings.enabled": "Enable Mod",
   "menu.inventorypause.settings.enabled.tooltip": "Completely enables / disables all features",
   "menu.inventorypause.settings.disableSaving": "Save on Pause",
-  "menu.inventorypause.settings.disableSaving.tooltip": "Enable this if you think your game saves excessively often when using this mod. Note: This option also prevents vanilla from saving in the pause menu!",
+  "menu.inventorypause.settings.disableSaving.tooltip": "Disable this if you think your game saves excessively often when using this mod. Note: This option also prevents vanilla from automatically saving when pressing escape",
   "menu.inventorypause.settings.creativeInventory": "Creative Inv.",
   "menu.inventorypause.settings.inventory": "Inventory",
   "menu.inventorypause.settings.death": "Death Screen",
