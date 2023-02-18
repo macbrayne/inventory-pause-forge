@@ -40,15 +40,29 @@ Current versions:
 - 1.17: 0.9.1
 - 1.18: 1.0.2
 - 1.19: 1.1.2
+- 1.19.3: 1.2
 
 ## [Releases](https://github.com/macbrayne/inventory-pause-forge/releases)
+
+Releases prior to 1.2 depend on [Cloth Config Forge](https://www.curseforge.com/minecraft/mc-mods/cloth-config-forge/).
 
 The mod is licensed under the [EUPL 1.2](LICENSE) apart from three files which are [MIT](LICENSE-MIT) licensed.
 
 
 ## Tutorial: How to add custom screens
+<details>
+  <summary>1.2 (click to expand)</summary>
+    
+1. Check whether you have assigned the keybind for "Add to Custom Screens".
+2. Navigate to the menu you want to add and press the "Add to Custom Screens" key you assigned earlier. You should get a confirmation in chat when you do so.
+3. Verify it worked by checking if the screen is now paused.
 
-To add custom screens to the config you need the internal name of the screen to add. If you don't know that you can try this:
+If you experience any problems with modded screens (e.g. modded UI elements not working) try adding the screen to the list of "Compat mod class names".
+</details>
+<details>
+  <summary>0.1 - 1.1.2 (click to expand)</summary>
+
+To add custom screens to the config you need the internal name of the screen to add. If you don't know it you can try this:
 1. Check the Minecraft Controls settings if you have assigned the keybinds for "Copy Class Name" and "Open Settings" (only available on versions released after October 2022)
 2. Open the settings and change "Enable Debug Mode" to true. This should make an overlay appear on the top left of the screen whenever you have a screen open.
 3. Navigate to the menu you want to add and depending on your mod version:
@@ -59,14 +73,31 @@ To add custom screens to the config you need the internal name of the screen to 
 Now the screen should be paused. If it works disable "Enable Debug Mode" again.
 
 If you experience any problems (e.g. modded UI elements not working) try adding the screen to the list of "Compat mod class names".
-
+</details>
 Note: This mod will not be able to work on all types of screens due to technical limitations
 
 ## In-Game Config
 <details>
-  <summary>Click to expand.</summary>
+<summary>1.2 (click to expand)</summary>
 
-![image](https://user-images.githubusercontent.com/27809595/122673510-0c51f580-d1d1-11eb-8fef-8fb3c3c5bf22.png)
+ ### Main Config
+![Ingame Config Mod Version 1.2 and up](https://user-images.githubusercontent.com/27809595/219817600-558a8477-2bb6-4c73-887b-eef927f595e2.png)
+- Enable Mod: enables / disables every part of the mod apart from the debug overlay
+- Save on Pause: this can help if you experience lag spikes when quickly opening and closing inventories
+Enable / disable pausing of specific inventories by clicking on the corresponding button
+    
+### Mod Compat Options
+![Mod Compat Options Mod Version 1.2 and up](https://user-images.githubusercontent.com/27809595/219819318-6ca3852b-4e13-4fe0-957c-e27e556cc0fe.png)
+
+- Custom mod class names: List of custom screens which get paused
+- Compat mod class names: List of custom screens which don't get fully paused. They get ticked in regular intervals as specified in Time between compat ticks.
+- Time between compat ticks: Specifies how often (20 ticks = one second) screens listed in Compat mod class names are ticked
+- Enable Debug Mode: enables an overlay for easier mod compat configuration
+</details>
+<details>
+  <summary>0.1 - 1.1.2 (click to expand)</summary>
+
+![Ingame Config Mod Version 1.1.2 and down](https://user-images.githubusercontent.com/27809595/122673510-0c51f580-d1d1-11eb-8fef-8fb3c3c5bf22.png)
 
 __General__:
 - Enable Mod: enables / disables every part of the mod apart from the debug overlay
