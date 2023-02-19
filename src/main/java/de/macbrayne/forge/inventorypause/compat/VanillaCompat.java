@@ -7,35 +7,31 @@ import net.minecraft.client.gui.screens.DeathScreen;
 import net.minecraft.client.gui.screens.debug.GameModeSwitcherScreen;
 import net.minecraft.client.gui.screens.inventory.*;
 
-public class VanillaCompat implements CustomCompat {
-    @Override
+public class VanillaCompat {
+    public final ScreenDictionary dict = InventoryPause.getScreenDictionary();
+
     public void register() {
         // Abilities Screen top layer
-        SCREEN_DICTIONARY.register(InventoryScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseInventory);
-        SCREEN_DICTIONARY.register(CreativeModeInventoryScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseCreativeInventory);
-        SCREEN_DICTIONARY.register(DeathScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseDeath);
-        SCREEN_DICTIONARY.register(GameModeSwitcherScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseGameModeSwitcher);
-        SCREEN_DICTIONARY.register(AbstractFurnaceScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseFurnace);
-        SCREEN_DICTIONARY.register(CraftingScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseCraftingTable);
-        SCREEN_DICTIONARY.register(ShulkerBoxScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseShulkerBox);
-        SCREEN_DICTIONARY.register(ContainerScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseChest);
+        dict.register(InventoryScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseInventory);
+        dict.register(CreativeModeInventoryScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseCreativeInventory);
+        dict.register(DeathScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseDeath);
+        dict.register(GameModeSwitcherScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseGameModeSwitcher);
+        dict.register(AbstractFurnaceScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseFurnace);
+        dict.register(CraftingScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseCraftingTable);
+        dict.register(ShulkerBoxScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseShulkerBox);
+        dict.register(ContainerScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseChest);
 
         // Additional GUIs
-        SCREEN_DICTIONARY.register(AnvilScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseAnvil);
-        SCREEN_DICTIONARY.register(BeaconScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseBeacon);
-        SCREEN_DICTIONARY.register(DispenserScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseDispenser);
-        SCREEN_DICTIONARY.register(BrewingStandScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseBrewingStand);
-        SCREEN_DICTIONARY.register(HopperScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseHopper);
-        SCREEN_DICTIONARY.register(CartographyTableScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseCartographyTable);
-        SCREEN_DICTIONARY.register(StonecutterScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseStonecutter);
+        dict.register(AnvilScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseAnvil);
+        dict.register(BeaconScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseBeacon);
+        dict.register(DispenserScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseDispenser);
+        dict.register(BrewingStandScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseBrewingStand);
+        dict.register(HopperScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseHopper);
+        dict.register(CartographyTableScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseCartographyTable);
+        dict.register(StonecutterScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseStonecutter);
 
         // World GUIs
-        SCREEN_DICTIONARY.register(HorseInventoryScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.worldGUIs.pauseHorse);
-        SCREEN_DICTIONARY.register(MerchantScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.worldGUIs.pauseMerchant);
-    }
-
-    @Override
-    public boolean getConfigKey() {
-        throw new IllegalStateException("Unreachable Code");
+        dict.register(HorseInventoryScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.worldGUIs.pauseHorse);
+        dict.register(MerchantScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.worldGUIs.pauseMerchant);
     }
 }

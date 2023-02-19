@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: EUPL-1.2
 
-package de.macbrayne.forge.inventorypause.common;
+package de.macbrayne.forge.inventorypause.gui;
 
+import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.gui.components.ButtonInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;

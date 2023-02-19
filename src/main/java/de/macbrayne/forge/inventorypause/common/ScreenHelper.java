@@ -4,13 +4,12 @@ package de.macbrayne.forge.inventorypause.common;
 
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.compat.ScreenDictionary;
-import de.macbrayne.forge.inventorypause.utils.Reference;
 import net.minecraft.client.gui.screens.Screen;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ScreenHelper {
-    private static final ScreenDictionary modDictionary = Reference.getScreenDictionary();
+    private static final ScreenDictionary modDictionary = InventoryPause.getScreenDictionary();
 
     public static boolean isConfiguredScreen(@Nullable Screen screen) {
         return screen != null && InventoryPause.MOD_CONFIG.enabled &&

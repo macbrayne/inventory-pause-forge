@@ -215,9 +215,9 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.numBox.setValue(String.valueOf(valueSupplier.getAsInt()));
             this.numBox.setFilter(s -> s.isEmpty() || (NumberUtils.isParsable(s) && !s.contains("-")));
 
-            this.resetButton = new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.reset"), (button) -> numBox.setValue(String.valueOf(defaultValue)))
+            this.resetButton = new HoverButton(new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.reset"), (button) -> numBox.setValue(String.valueOf(defaultValue)))
                     .size(40, 20).createNarration(p_253695_ -> Component.translatable("narrator.controls.reset", defaultValue))
-                    .tooltip(Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.reset.tooltip"))).build();
+                    .tooltip(Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.reset.tooltip"))));
         }
 
         @Override

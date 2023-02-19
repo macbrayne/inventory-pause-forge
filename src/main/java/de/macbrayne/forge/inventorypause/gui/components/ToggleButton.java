@@ -4,6 +4,7 @@ package de.macbrayne.forge.inventorypause.gui.components;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import de.macbrayne.forge.inventorypause.InventoryPause;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
@@ -28,7 +29,7 @@ public class ToggleButton extends Button {
     public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float p_94285_) {
         this.setBlitOffset(0);
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, new ResourceLocation("inventorypause", "textures/gui/config/widgets.png"));
+        RenderSystem.setShaderTexture(0, new ResourceLocation(InventoryPause.MOD_ID, "textures/gui/config/widgets.png"));
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
         int imageOffset = this.getYImage(this.isHoveredOrFocused());
         RenderSystem.enableBlend();

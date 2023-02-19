@@ -5,23 +5,26 @@ package de.macbrayne.forge.inventorypause.common;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Contains the mod config. All fields not configurable in-game are set to final
+ */
 public class ModConfig {
     public boolean enabled = true;
     public boolean disableSaving = false;
     public boolean pauseSounds = false;
     public boolean debug = false;
-    public DebugText debugText = new DebugText();
-    public Config settingsForModpacks = new Config();
+    public final DebugText debugText = new DebugText();
+    public final Config settingsForModpacks = new Config();
 
     public static class DebugText {
-        public float x = 4f;
-        public float y = 4f;
-        public int maxDepth = 3;
+        public final float x = 4f;
+        public final float y = 4f;
+        public final int maxDepth = 3;
     }
 
-    public Abilities abilities = new Abilities();
+    public final Abilities abilities = new Abilities();
 
-    public ModCompat modCompat = new ModCompat();
+    public final ModCompat modCompat = new ModCompat();
 
     public static class Abilities {
         public static class AdditionalGUIs {
@@ -47,19 +50,19 @@ public class ModConfig {
         public boolean pauseFurnace = false;
         public boolean pauseShulkerBox = false;
         public boolean pauseChest = false;
-        public WorldGUIs worldGUIs = new WorldGUIs();
-        public AdditionalGUIs additionalGUIs = new AdditionalGUIs();
+        public final WorldGUIs worldGUIs = new WorldGUIs();
+        public final AdditionalGUIs additionalGUIs = new AdditionalGUIs();
     }
 
     public static class ModCompat {
-        public List<String> customScreens = new ArrayList<>();
+        public final List<String> customScreens = new ArrayList<>();
         public int timeBetweenCompatTicks = 20;
-        public List<String> compatScreens = new ArrayList<>();
+        public final List<String> compatScreens = new ArrayList<>();
     }
 
     public static class Config {
-        public boolean hideDebugButton = false;
-        public boolean hideModCompatButton = false;
-        public boolean registerKeybinds = true;
+        public final boolean hideDebugButton = false;
+        public final boolean hideModCompatButton = false;
+        public final boolean registerKeybinds = true;
     }
 }

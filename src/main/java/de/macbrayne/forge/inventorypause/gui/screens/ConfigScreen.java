@@ -4,7 +4,7 @@ package de.macbrayne.forge.inventorypause.gui.screens;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.macbrayne.forge.inventorypause.InventoryPause;
-import de.macbrayne.forge.inventorypause.common.ConfigButtonRegistration;
+import de.macbrayne.forge.inventorypause.gui.ConfigButtonRegistration;
 import de.macbrayne.forge.inventorypause.common.ConfigHelper;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.gui.components.ButtonInfo;
@@ -28,7 +28,6 @@ public class ConfigScreen extends Screen {
 	private static final int buttonSize = 20;
 	private static final int buttonPadding = 4;
 	private static final int totalSize = buttonSize + buttonPadding;
-	private static final int fullButtonHeight = PADDING + buttonSize + PADDING;
 	private static final int numberOfColumns = 9;
 	private static int xText, yText;
 
@@ -58,7 +57,7 @@ public class ConfigScreen extends Screen {
 
 		if(!InventoryPause.MOD_CONFIG.settingsForModpacks.hideModCompatButton) {
 			this.addRenderableWidget(new Button.Builder(Component.translatable("menu.inventorypause.settings.mod_compat_options"), button -> this.minecraft.setScreen(new ModCompatScreen(this)))
-					.pos(this.width / 2 - 120, this.height - 40 - 2 * PADDING)
+					.pos(this.width / 2 - 120, this.height - 20 - PADDING - totalSize)
 					.size(240, buttonSize)
 					.tooltip(Tooltip.create(Component.translatable("menu.inventorypause.settings.mod_compat_options.tooltip"))).build());
 		}

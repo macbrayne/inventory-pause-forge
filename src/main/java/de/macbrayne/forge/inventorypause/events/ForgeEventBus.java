@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: EUPL-1.2
 
-package de.macbrayne.forge.inventorypause.utils;
+package de.macbrayne.forge.inventorypause.events;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.common.ConfigHelper;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
 import de.macbrayne.forge.inventorypause.gui.screens.ConfigScreen;
@@ -18,8 +19,9 @@ import org.apache.logging.log4j.Logger;
 
 import static de.macbrayne.forge.inventorypause.InventoryPause.MOD_CONFIG;
 
-public class ForgeGuiEvents {
-    private static final Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
+public class ForgeEventBus {
+    private static final Logger LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
+    public static int timeUntilCompatTick = MOD_CONFIG.modCompat.timeBetweenCompatTicks;
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onOpenGUI(ScreenEvent.Opening event) {
@@ -31,7 +33,7 @@ public class ForgeGuiEvents {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onGUIDrawPost(ScreenEvent.Render.Post event) {
         Screen screen = event.getScreen();
-        while (ForgeLifetimeEvents.COPY_CLASS_NAME.get().consumeClick()) {
+        while (ModEventBus.COPY_CLASS_NAME.get().consumeClick()) {
             var name = screen.getClass().getName();
             if(!MOD_CONFIG.modCompat.customScreens.contains(name)) {
                 MOD_CONFIG.modCompat.customScreens.add(name);
@@ -51,11 +53,11 @@ public class ForgeGuiEvents {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if(event.phase == TickEvent.Phase.END) {
-            if (CompatTick.timeUntilCompatTick > 0 &&
-                    --CompatTick.timeUntilCompatTick == 0) {
-                CompatTick.timeUntilCompatTick = MOD_CONFIG.modCompat.timeBetweenCompatTicks;
+            if (timeUntilCompatTick > 0 &&
+                    --timeUntilCompatTick == 0) {
+                timeUntilCompatTick = MOD_CONFIG.modCompat.timeBetweenCompatTicks;
             }
-            while (ForgeLifetimeEvents.OPEN_SETTINGS.get().consumeClick()) {
+            while (ModEventBus.OPEN_SETTINGS.get().consumeClick()) {
                 Minecraft.getInstance().setScreen(new ConfigScreen(Minecraft.getInstance().screen));
             }
         }

@@ -21,11 +21,11 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class GuiUtils {
-	static float blitOffset = 0f;
+	static final float blitOffset = 0f;
 	public static void renderButtonItem(ItemStack itemStack, int x, int y, int buttonSize) {
 		renderButtonItem(itemStack, x, y, Minecraft.getInstance().getItemRenderer().getModel(itemStack, (Level)null, (LivingEntity)null, 0), buttonSize);
 	}
-	protected static void renderButtonItem(ItemStack itemStack, int x, int y, BakedModel p_115131_, int buttonSize) {
+	protected static void renderButtonItem(ItemStack itemStack, int x, int y, BakedModel bakedModel, int buttonSize) {
 		Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
 		RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
 		RenderSystem.enableBlend();
@@ -35,18 +35,18 @@ public class GuiUtils {
 		posestack.pushPose();
 
 		posestack.translate((double)x, (double)y, (double)(100.0F + blitOffset));
-		posestack.translate(buttonSize / 2, buttonSize / 2, 0.0D);
+		posestack.translate(buttonSize / 2, buttonSize / 2, 0.0D); // Delta Vanilla code
 		posestack.scale(1.0F, -1.0F, 1.0F);
-		posestack.scale(14.0F, 14.0F, 14.0F);
+		posestack.scale(14.0F, 14.0F, 14.0F); // Delta Vanilla code
 		RenderSystem.applyModelViewMatrix();
 		PoseStack posestack1 = new PoseStack();
 		MultiBufferSource.BufferSource multibuffersource$buffersource = Minecraft.getInstance().renderBuffers().bufferSource();
-		boolean flag = !p_115131_.usesBlockLight();
+		boolean flag = !bakedModel.usesBlockLight();
 		if (flag) {
 			Lighting.setupForFlatItems();
 		}
 
-		Minecraft.getInstance().getItemRenderer().render(itemStack, ItemTransforms.TransformType.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
+		Minecraft.getInstance().getItemRenderer().render(itemStack, ItemTransforms.TransformType.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, bakedModel);
 		multibuffersource$buffersource.endBatch();
 		RenderSystem.enableDepthTest();
 		if (flag) {
@@ -60,5 +60,4 @@ public class GuiUtils {
 	public static Button.OnPress getTogglePress(Supplier<Boolean> supplier, Consumer<Boolean> consumer) {
 		return button -> consumer.accept(!supplier.get());
 	}
-
 }

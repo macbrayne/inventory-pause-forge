@@ -42,7 +42,7 @@
   "menu.inventorypause.settings.modCompat.compatScreens.tooltip": "Some mod GUIs may not work correctly without any ticking being done. Any classes listed in compat classes will still be ticked - no real pause - but far slower than normal. The speed can be adjusted above",
   "menu.inventorypause.settings.modCompat.compatScreens.add": "Add Compat Entry",
   "menu.inventorypause.settings.modCompat.reset": "Reset",
-  "menu.inventorypause.settings.modCompat.reset.tooltip": "Resets the time between compat ticks to the default value",
+  "menu.inventorypause.settings.modCompat.reset.tooltip": "Resets the time between compat ticks to the default value (20 ticks)",
   "menu.inventorypause.settings.modCompat.delete": "X",
   "menu.inventorypause.settings.modCompat.new": "New Entry",
   "menu.inventorypause.settings.modCompat.debug_mode": "Debug Mode",
