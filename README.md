@@ -81,7 +81,7 @@ Note: This mod will not be able to work on all types of screens due to technical
 <summary>1.2 (click to expand)</summary>
 
  ### Main Config
-![Ingame Config Mod Version 1.2 and up](https://user-images.githubusercontent.com/27809595/219817600-558a8477-2bb6-4c73-887b-eef927f595e2.png)
+ ![Ingame Config Mod Version 1.2 and up](https://user-images.githubusercontent.com/27809595/219973047-b3745ffa-a01b-4570-880b-886a27ecb72b.png)
 - Enable Mod: enables / disables every part of the mod apart from the debug overlay
 - Save on Pause: this can help if you experience lag spikes when quickly opening and closing inventories
 Enable / disable pausing of specific inventories by clicking on the corresponding button
