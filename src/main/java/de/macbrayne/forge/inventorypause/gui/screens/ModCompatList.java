@@ -3,15 +3,16 @@
 package de.macbrayne.forge.inventorypause.gui.screens;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.gui.components.HoverButton;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.network.chat.Component;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -71,17 +72,23 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }));
     }
 
-
+    @Override
+    public void setFocused(@Nullable GuiEventListener guiEventListener) {
+        if(getFocused() != null) {
+            getFocused().setFocused(false);
+        }
+        super.setFocused(guiEventListener);
+    }
 
     public abstract static class Entry extends ContainerObjectSelectionList.Entry<ModCompatList.Entry> {
     }
     public class SectionEntry extends ModCompatList.Entry {
-        final CenteredStringWidget title;
+        final StringWidget title;
         final Component name;
 
         public SectionEntry(Component name, Component tooltip) {
             this.name = name;
-            title = new CenteredStringWidget(ModCompatList.this.width, ModCompatList.this.height, name, minecraft.font);
+            title = new StringWidget(ModCompatList.this.width, ModCompatList.this.height, name, minecraft.font).alignCenter();
             title.setTooltip(Tooltip.create(tooltip));
         }
 
@@ -89,17 +96,14 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         public List<? extends NarratableEntry> narratables() {
             return ImmutableList.of(title);
         }
-        /*public boolean changeFocus(boolean goForward) {
-            return false;
-        }*/
 
         @Override
-        public void render(PoseStack poseStack, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+        public void render(GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
             title.setX(x);
             title.setY(y);
             title.setWidth(entryWidth);
             title.setHeight(entryHeight);
-            title.render(poseStack, mouseX, mouseY, tickDelta);
+            title.render(guiGraphics, mouseX, mouseY, tickDelta);
         }
 
         @Override
@@ -121,11 +125,17 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
 
         @Override
-        public void render(PoseStack poseStack, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+        public void render(GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
             this.button.setX(x);
             this.button.setY(y);
             this.button.setWidth(entryWidth);
-            this.button.render(poseStack, mouseX, mouseY, tickDelta);
+            this.button.render(guiGraphics, mouseX, mouseY, tickDelta);
+        }
+
+        @Override
+        public void setFocused(boolean state) {
+            super.setFocused(state);
+            button.setFocused(state);
         }
 
         @Override
@@ -161,17 +171,26 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             return ImmutableList.of(this.editBox, this.removeButton);
         }
 
+        @Override
+        public void setFocused(boolean state) {
+            super.setFocused(state);
+            if(getFocused() == editBox) {
+                editBox.setFocused(state);
+            }
+        }
 
-        public void render(PoseStack poseStack, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+
+
+        public void render(GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
             this.removeButton.setX(x + 190 + 10);
             this.removeButton.setY(y);
             this.removeButton.setWidth(20);
             this.removeButton.setWidth(20);
-            this.removeButton.render(poseStack, mouseX, mouseY, tickDelta);
+            this.removeButton.render(guiGraphics, mouseX, mouseY, tickDelta);
             this.editBox.setX(x);
             this.editBox.setY(y);
             this.editBox.setWidth(195);
-            this.editBox.render(poseStack, mouseX, mouseY, tickDelta);
+            this.editBox.render(guiGraphics, mouseX, mouseY, tickDelta);
         }
 
         public List<? extends GuiEventListener> children() {
@@ -226,16 +245,24 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
 
         @Override
-        public void render(PoseStack poseStack, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            this.numBox.render(poseStack, mouseX, mouseY, tickDelta);
-            this.resetButton.render(poseStack, mouseX, mouseY, tickDelta);
+        public void render(GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+            this.numBox.render(guiGraphics, mouseX, mouseY, tickDelta);
+            this.resetButton.render(guiGraphics, mouseX, mouseY, tickDelta);
             this.resetButton.setX(x + 190 - 10);
             this.resetButton.setY(y);
-            this.resetButton.render(poseStack, mouseX, mouseY, tickDelta);
+            this.resetButton.render(guiGraphics, mouseX, mouseY, tickDelta);
             this.numBox.setX(x);
             this.numBox.setY(y);
             this.numBox.setWidth(190 - 15);
-            this.numBox.render(poseStack, mouseX, mouseY, tickDelta);
+            this.numBox.render(guiGraphics, mouseX, mouseY, tickDelta);
+        }
+
+        @Override
+        public void setFocused(boolean state) {
+            super.setFocused(state);
+            if(getFocused() == numBox) {
+                numBox.setFocused(state);
+            }
         }
 
         @Override
@@ -268,7 +295,8 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
     private void unfocusEntry() {
         if(getFocused() != null) {
-            getFocused().changeFocus(false);
+            // getFocused().setFocused(false);
+            getFocused().setFocused(false);
             setFocused(null);
         }
     }

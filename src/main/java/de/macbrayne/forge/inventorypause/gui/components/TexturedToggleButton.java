@@ -2,8 +2,8 @@
 
 package de.macbrayne.forge.inventorypause.gui.components;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.macbrayne.forge.inventorypause.gui.GuiUtils;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -26,7 +26,7 @@ public class TexturedToggleButton extends ToggleButton {
 
 
     @Override
-    public void renderContent(PoseStack poseStack, int mouseX, int mouseY, float p_94285_) {
+    public void renderContent(GuiGraphics guiGraphics, int mouseX, int mouseY, float p_94285_) {
         GuiUtils.renderButtonItem(icon, this.getX(), this.getY(), this.width);
     }
 }

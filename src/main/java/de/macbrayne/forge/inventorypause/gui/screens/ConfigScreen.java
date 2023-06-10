@@ -2,7 +2,6 @@
 
 package de.macbrayne.forge.inventorypause.gui.screens;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.gui.ConfigButtonRegistration;
 import de.macbrayne.forge.inventorypause.common.ConfigHelper;
@@ -11,6 +10,7 @@ import de.macbrayne.forge.inventorypause.gui.components.ButtonInfo;
 import de.macbrayne.forge.inventorypause.gui.components.TexturedToggleButton;
 import de.macbrayne.forge.inventorypause.gui.components.ToggleButton;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
@@ -121,11 +121,11 @@ public class ConfigScreen extends Screen {
 		}).pos(x0 + width / 2 + 2, y).size(buttonWidth,height).build());
 	}
 
-	public void render(PoseStack poseStack, int p_96250_, int p_96251_, float p_96252_) {
-		this.renderBackground(poseStack);
-		drawCenteredString(poseStack, this.font, this.title, this.width / 2, 15, 16777215);
+	public void render(GuiGraphics guiGraphics, int p_96250_, int p_96251_, float p_96252_) {
+		this.renderBackground(guiGraphics);
+		guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 15, 16777215);
 
-		drawString(poseStack, this.font, Component.translatable("menu.inventorypause.settings.title.pause"), xText, yText, 16777215);
-		super.render(poseStack, p_96250_, p_96251_, p_96252_);
+		guiGraphics.drawString(this.font, Component.translatable("menu.inventorypause.settings.title.pause"), xText, yText, 16777215);
+		super.render(guiGraphics, p_96250_, p_96251_, p_96252_);
 	}
 }

@@ -2,7 +2,6 @@
 
 package de.macbrayne.forge.inventorypause.events;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.common.ConfigHelper;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
@@ -44,7 +43,7 @@ public class ForgeEventBus {
         if (MOD_CONFIG.debug) {
             int line = 0;
             for (Class<?> cl = screen.getClass(); cl.getSuperclass() != null && line < MOD_CONFIG.debugText.maxDepth; cl = cl.getSuperclass()) {
-                Minecraft.getInstance().font.drawShadow(new PoseStack(), cl.getName(), MOD_CONFIG.debugText.x, MOD_CONFIG.debugText.y + 10 * line, 0xffffffff);
+                event.getGuiGraphics().drawString(event.getScreen().getMinecraft().font, cl.getName(), (int) MOD_CONFIG.debugText.x, (int) (MOD_CONFIG.debugText.y + 10 * line), 0xffffffff);
                 line++;
             }
         }

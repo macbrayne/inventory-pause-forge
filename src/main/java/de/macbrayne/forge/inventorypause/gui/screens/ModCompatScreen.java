@@ -2,10 +2,10 @@
 
 package de.macbrayne.forge.inventorypause.gui.screens;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.gui.components.ToggleButton;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -51,11 +51,11 @@ public class ModCompatScreen extends Screen {
         }).pos (xDone, y).size(buttonWidth, height).build());
     }
 
-    public void render(PoseStack poseStack, int p_96250_, int p_96251_, float p_96252_) {
-        this.renderBackground(poseStack);
-        this.modCompatList.render(poseStack, p_96250_, p_96251_, p_96252_);
-        drawCenteredString(poseStack, this.font, this.title, this.width / 2, 8, 16777215);
-        super.render(poseStack, p_96250_, p_96251_, p_96252_);
+    public void render(GuiGraphics guiGraphics, int p_96250_, int p_96251_, float p_96252_) {
+        this.renderBackground(guiGraphics);
+        this.modCompatList.render(guiGraphics, p_96250_, p_96251_, p_96252_);
+        guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 8, 16777215);
+        super.render(guiGraphics, p_96250_, p_96251_, p_96252_);
     }
 
     @Override
