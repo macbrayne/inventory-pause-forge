@@ -7,14 +7,14 @@ import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.compat.ScreenDictionary;
 import de.macbrayne.forge.inventorypause.events.ForgeEventBus;
 import de.macbrayne.forge.inventorypause.events.ModEventBus;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.IExtensionPoint;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkConstants;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.IExtensionPoint;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.network.NetworkConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,9 +31,10 @@ public class InventoryPause {
             MOD_CONFIG = ConfigHelper.deserialize();
             FMLJavaModLoadingContext.get().getModEventBus().addListener(ModEventBus::clientSetup);
             FMLJavaModLoadingContext.get().getModEventBus().addListener(ModEventBus::registerBindings);
-            MinecraftForge.EVENT_BUS.addListener(ForgeEventBus::onOpenGUI);
-            MinecraftForge.EVENT_BUS.addListener(ForgeEventBus::onGUIDrawPost);
-            MinecraftForge.EVENT_BUS.addListener(ForgeEventBus::onClientTick);
+            FMLJavaModLoadingContext.get().getModEventBus().addListener(ModEventBus::clientReload);
+            NeoForge.EVENT_BUS.addListener(ForgeEventBus::onOpenGUI);
+            NeoForge.EVENT_BUS.addListener(ForgeEventBus::onGUIDrawPost);
+            NeoForge.EVENT_BUS.addListener(ForgeEventBus::onClientTick);
         } else {
             LOGGER.error("Not on client, disabling mod");
         }

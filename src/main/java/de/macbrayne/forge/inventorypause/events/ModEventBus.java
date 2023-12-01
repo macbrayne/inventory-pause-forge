@@ -5,14 +5,17 @@ package de.macbrayne.forge.inventorypause.events;
 import com.mojang.blaze3d.platform.InputConstants;
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.compat.VanillaCompat;
+import de.macbrayne.forge.inventorypause.gui.CustomGuiSpriteManager;
 import de.macbrayne.forge.inventorypause.gui.screens.ConfigScreen;
 import net.minecraft.client.KeyMapping;
-import net.minecraftforge.client.ConfigScreenHandler;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.settings.KeyConflictContext;
-import net.minecraftforge.common.util.Lazy;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraft.client.Minecraft;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.ConfigScreenHandler;
+import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.settings.KeyConflictContext;
+import net.neoforged.neoforge.common.util.Lazy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,6 +37,10 @@ public class ModEventBus {
     public static void clientSetup(@SuppressWarnings("unused") FMLClientSetupEvent event) {
         ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, screen) -> new ConfigScreen(screen)));
         new VanillaCompat().register();
+    }
+
+    public static void clientReload(RegisterClientReloadListenersEvent event) {
+        event.registerReloadListener(new CustomGuiSpriteManager(Minecraft.getInstance().textureManager));
     }
 
 

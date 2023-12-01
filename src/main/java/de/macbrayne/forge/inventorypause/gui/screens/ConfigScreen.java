@@ -121,11 +121,11 @@ public class ConfigScreen extends Screen {
 		}).pos(x0 + width / 2 + 2, y).size(buttonWidth,height).build());
 	}
 
-	public void render(GuiGraphics guiGraphics, int p_96250_, int p_96251_, float p_96252_) {
-		this.renderBackground(guiGraphics);
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+		this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
 		guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 15, 16777215);
 
 		guiGraphics.drawString(this.font, Component.translatable("menu.inventorypause.settings.title.pause"), xText, yText, 16777215);
-		super.render(guiGraphics, p_96250_, p_96251_, p_96252_);
+		super.render(guiGraphics, mouseX, mouseY, partialTick);
 	}
 }

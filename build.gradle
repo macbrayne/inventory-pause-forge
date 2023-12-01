@@ -1,136 +1,97 @@
-buildscript {
+/*buildscript {
     repositories {
-        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         maven { url = 'https://maven.explodingcreeper.me/releases' }
         mavenCentral()
     }
     dependencies {
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
         classpath "me.hypherionmc:CurseGradle:2.0.6"
     }
-}
+}*/
 
 plugins {
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
-    id "com.modrinth.minotaur" version "2.+"
+    id 'java-library'
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.neoforged.gradle.userdev' version '7.0.48'
+    id 'net.neoforged.gradle.mixin' version '[7.0.48,)'
+    // id "com.modrinth.minotaur" version "2.+"
 }
-apply plugin: 'org.spongepowered.mixin'
-apply plugin: "me.hypherionmc.cursegradle"
+// apply plugin: "me.hypherionmc.cursegradle"
 
 group = project.maven_group
 version = "mc${project.minecraft_version}_v${project.mod_version}"
 
-java {
-    archivesBaseName = project.archives_base_name
-    toolchain.languageVersion = JavaLanguageVersion.of(17) // Mojang ships Java 17 to end users, so your mod should target Java 17.
-}
-
 repositories {
-    maven { url "https://maven.shedaniel.me/" }
-    maven {
-        url 'https://repo.maven.apache.org/maven2'
-        name 'Maven Central'
-    }
-    maven { url 'https://maven.wispforest.io' }
+    mavenLocal()
 }
 
-println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+base {
+    archivesName = project.mod_id
+}
+java.toolchain.languageVersion = JavaLanguageVersion.of(17) // Mojang ships Java 17 to end users, so your mod should target Java 17.
 
-minecraft {
-    // The mappings can be changed at any time and must be in the following format.
-    // Channel:   Version:
-    // official   MCVersion             Official field/method names from Mojang mapping files
-    // parchment  YYYY.MM.DD-MCVersion  Open community-sourced parameter names and javadocs layered on top of official
-    //
-    // You must be aware of the Mojang license when using the 'official' or 'parchment' mappings.
-    // See more information here: https://github.com/MinecraftForge/MCPConfig/blob/master/Mojang.md
-    //
-    // Parchment is an unofficial project maintained by ParchmentMC, separate from MinecraftForge
-    // Additional setup is needed to use their mappings: https://github.com/ParchmentMC/Parchment/wiki/Getting-Started
-    //
-    // Use non-default mappings at your own risk. They may not always work.
-    // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'official', version: '1.20'
-    copyIdeResources = true
+// Default run configurations.
+// These can be tweaked, removed, or duplicated as needed.
+runs {
+    // applies to all the run configs below
+    configureEach {
+        // Recommended logging data for a userdev environment
+        // The markers can be added/remove as needed separated by commas.
+        // "SCAN": For mods scan.
+        // "REGISTRIES": For firing of registry events.
+        // "REGISTRYDUMP": For getting the contents of all registries.
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
 
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
+        // Recommended logging level for the console
+        // You can set various levels here.
+        // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
+        systemProperty 'forge.logging.console.level', 'debug'
 
-    // Default run configurations.
-    // These can be tweaked, removed, or duplicated as needed.
-    runs {
-        client {
-            workingDirectory project.file('run')
-
-            // Recommended logging data for a userdev environment
-            // The markers can be added/remove as needed separated by commas.
-            // "SCAN": For mods scan.
-            // "REGISTRIES": For firing of registry events.
-            // "REGISTRYDUMP": For getting the contents of all registries.
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            // Recommended logging level for the console
-            // You can set various levels here.
-            // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
-            property 'forge.logging.console.level', 'debug'
-
-            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', 'inventorypause'
-
-            mods {
-                inventorypause {
-                    source sourceSets.main
-                }
+        dependencies {
+            runtime('com.moandjiezana.toml:toml4j:0.7.2') {
+                transitive(false)
             }
         }
 
-        server {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            property 'forge.logging.console.level', 'debug'
-
-            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', 'inventorypause'
-
-            mods {
-                inventorypause {
-                    source sourceSets.main
-                }
-            }
-        }
+        modSource project.sourceSets.main
     }
-}
 
-mixin {
-    add sourceSets.main, "inventorypause.refmap.json"
-    config 'inventorypause.mixins.json'
+    client {
+        // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+    }
+
+    server {
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+        programArgument '--nogui'
+    }
 }
 
 // Include resources generated by data generators.
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 jarJar.enable()
+
 dependencies {
-    // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
-    // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
-    // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+    // Specify the version of Minecraft to use.
+    // Depending on the plugin applied there are several options. We will assume you applied the userdev plugin as shown above.
+    // The group for userdev is net.neoforged, the module name is neoforge, and the version is the same as the neoforge version.
+    // You can however also use the vanilla plugin (net.neoforged.gradle.vanilla) to use a version of Minecraft without the neoforge loader.
+    // And its provides the option to then use net.minecraft as the group, and one of; client, server or joined as the module name, plus the game version as version.
+    // For all intends and purposes: You can treat this dependency as if it is a normal library you would use.
+    implementation "net.neoforged:neoforge:${neoforge_version}"
+
     compileOnly 'org.jetbrains:annotations:23.0.0'
 
     // Mod Dependencies
-    minecraftLibrary('com.moandjiezana.toml:toml4j:0.7.2') {
+    implementation('com.moandjiezana.toml:toml4j:0.7.2') {
         transitive(false)
     }
     jarJar('com.moandjiezana.toml:toml4j:[0.7.2]') {
         transitive(false)
     }
-
-
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
-
-reobf { jarJar { } }
 
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
@@ -148,19 +109,17 @@ jar {
     }
 }
 
-jar.finalizedBy('reobfJar')
-
-tasks.modrinth.onlyIf {
+/* tasks.modrinth.onlyIf {
     System.getenv("MODRINTH")
-}
+} */
 
-tasks.curseforge.onlyIf {
+/* tasks.curseforge.onlyIf {
     System.getenv("CURSEFORGE")
-}
+} */
 
-tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
+// tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
 
-modrinth { // Make sure it runs after build!
+/*modrinth { // Make sure it runs after build!
     token = System.getenv("MODRINTH") // An environment property called MODRINTH that is your token, set via Gradle CLI, GitHub Actions, Idea Run Configuration, or other
     projectId = 'F39sgYmY'
     versionName = "${archivesBaseName}-${version}" // The version of the mod to upload.
@@ -171,10 +130,10 @@ modrinth { // Make sure it runs after build!
     // On fabric, use 'remapJar' instead of 'jar'
     uploadFile = jar // This is the java jar task. If it can't find the jar, try 'jar.outputs.getFiles().asPath' in place of 'jar'
     gameVersions = [project.minecraft_version] // Call this multiple times to add multiple game versions. There are tools that can help you generate the list of versions
-    loaders = ['forge']
-}
+    loaders = ['neoforge']
+}*/
 
-curseforge {
+/*curseforge {
     project {
         id = "495153"
         apiKey = System.getenv("CURSEFORGE")
@@ -188,7 +147,7 @@ curseforge {
             displayName = "${archivesBaseName}-${version}"
         }
     }
-}
+}*/
 
 tasks.withType(AbstractArchiveTask).configureEach {
     preserveFileTimestamps = false

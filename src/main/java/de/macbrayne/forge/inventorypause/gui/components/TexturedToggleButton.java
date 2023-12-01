@@ -12,7 +12,6 @@ import net.minecraft.world.item.ItemStack;
 import java.util.function.Supplier;
 
 public class TexturedToggleButton extends ToggleButton {
-    private static final ResourceLocation VILLAGER_LOCATION = new ResourceLocation("textures/gui/container/villager2.png");
     private final ItemStack icon;
 
     public TexturedToggleButton(int x, int y, int width, int height, Component narratedComponent, ButtonInfo info) {

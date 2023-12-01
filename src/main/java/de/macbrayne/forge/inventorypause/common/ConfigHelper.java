@@ -5,11 +5,10 @@ package de.macbrayne.forge.inventorypause.common;
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import de.macbrayne.forge.inventorypause.InventoryPause;
-import net.minecraftforge.fml.loading.FMLPaths;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import net.neoforged.fml.loading.FMLPaths;
 
 public class ConfigHelper {
     private static final TomlWriter writer = new TomlWriter();
