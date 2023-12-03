@@ -40,32 +40,13 @@ jobs:
           java-version: 17
           distribution: adopt
 
-      - name: 📷 Begin Gradle cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: 🤗 Setup Gradle
+      - name: 🤗 Setup Gradle and build artifacts
         uses: gradle/gradle-build-action@v2
-
-      - name: ❗ Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: 🔨 Build artifacts
-        run: ./gradlew clean build
+        with:
+          arguments: build
 
       - name: 📦 Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: artifacts
           path: '**/build/libs/'
-
-      - name: 🧨 Cleanup Gradle cache
-        run: |
-          rm -f ~/.gradle/caches/modules-2/modules-2.lock
-          rm -f ~/.gradle/caches/modules-2/gc.properties
