@@ -185,7 +185,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.removeButton.setX(x + 190 + 10);
             this.removeButton.setY(y);
             this.removeButton.setWidth(20);
-            this.removeButton.setWidth(20);
+            this.removeButton.setHeight(20);
             this.removeButton.render(guiGraphics, mouseX, mouseY, tickDelta);
             this.editBox.setX(x);
             this.editBox.setY(y);
