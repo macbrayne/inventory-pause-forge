@@ -56,3 +56,6 @@ Pause your single player game when opening your inventory, opening chests, tradi
    versionRange="[1.20,1.21)"
    ordering="NONE"
    side="BOTH"
+
+[[mixins]]
+config = "inventorypause.mixins.json"
