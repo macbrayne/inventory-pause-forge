@@ -8,7 +8,7 @@
 ## Pause your single player game when you open your inventory and more.
 <table>
     <tr>
-        <td>Forge</td>
+        <td>(Neo)Forge</td>
         <td><a href="https://github.com/macbrayne/inventory-pause-forge/">GitHub</a></td>
         <td><a href="https://modrinth.com/mod/inventory-pause-forge">Modrinth</a></td>
         <td><a href="https://www.curseforge.com/minecraft/mc-mods/inventory-pause-forge">CurseForge</a></td>
@@ -40,8 +40,9 @@ Current versions:
 - 1.17: 0.9.1
 - 1.18: 1.0.2
 - 1.19: 1.1.2
-- 1.19.3: 1.2
-- 1.20: 1.3
+- 1.19.3-1.19.4: 1.2
+- 1.20-1.20.1: 1.3
+- 1.20.2: 1.4
 
 ## [Releases](https://github.com/macbrayne/inventory-pause-forge/releases)
 
@@ -52,7 +53,7 @@ The mod is licensed under the [EUPL 1.2](LICENSE) apart from three files which a
 
 ## Tutorial: How to add custom screens
 <details>
-  <summary>1.2 (click to expand)</summary>
+  <summary>1.2+ (click to expand)</summary>
     
 1. Check whether you have assigned the keybind for "Add to Custom Screens".
 2. Navigate to the menu you want to add and press the "Add to Custom Screens" key you assigned earlier. You should get a confirmation in chat when you do so.
@@ -79,7 +80,7 @@ Note: This mod will not be able to work on all types of screens due to technical
 
 ## In-Game Config
 <details>
-<summary>1.2 (click to expand)</summary>
+<summary>1.2+ (click to expand)</summary>
 
  ### Main Config
  ![Ingame Config Mod Version 1.2 and up](https://user-images.githubusercontent.com/27809595/219973047-b3745ffa-a01b-4570-880b-886a27ecb72b.png)
