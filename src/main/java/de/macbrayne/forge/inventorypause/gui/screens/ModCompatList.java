@@ -29,7 +29,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     private final Supplier<List<String>> modCustomSupplier;
     private final List<ItemEntry> removedEntries = new ArrayList<>();
     public ModCompatList(ModCompatScreen parent, Minecraft minecraft) {
-        super(minecraft, parent.width, parent.height, 20, parent.height - 32, 25);
+        super(minecraft, parent.width, parent.height - 52, 20, 25);
         this.modCompatScreen = parent;
         modCompatSupplier = () -> InventoryPause.MOD_CONFIG.modCompat.compatScreens;
         modCustomSupplier = () -> InventoryPause.MOD_CONFIG.modCompat.customScreens;
