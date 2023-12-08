@@ -136,7 +136,7 @@ tasks.register('curseforge', TaskPublishCurseForge) {
     // Tells CurseForgeGradle to publish the output of the jar task. This will
     // return a UploadArtifact object that can be used to further configure the
     // file.
-    def mainFile = upload("495153", jarJar)
+    def mainFile = upload("495153", jar.outputs.getFiles().asPath.replace(".jar", "-all.jar"))
     mainFile.changelog = System.getenv("CHANGELOG")
     mainFile.changelogType = "markdown"
     mainFile.displayName = "${archivesBaseName}-${version}"
