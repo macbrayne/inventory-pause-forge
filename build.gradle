@@ -1,12 +1,10 @@
 buildscript {
     repositories {
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        maven { url = 'https://maven.explodingcreeper.me/releases' }
         mavenCentral()
     }
     dependencies {
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-        classpath "me.hypherionmc:CurseGradle:2.0.6"
     }
 }
 
@@ -15,7 +13,6 @@ plugins {
     id "com.modrinth.minotaur" version "2.+"
 }
 apply plugin: 'org.spongepowered.mixin'
-apply plugin: "me.hypherionmc.cursegradle"
 
 group = project.maven_group
 version = "mc${project.minecraft_version}_v${project.mod_version}"
@@ -153,10 +150,6 @@ tasks.modrinth.onlyIf {
     System.getenv("MODRINTH")
 }
 
-tasks.curseforge.onlyIf {
-    System.getenv("CURSEFORGE")
-}
-
 tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
 
 modrinth { // Make sure it runs after build!
@@ -171,22 +164,6 @@ modrinth { // Make sure it runs after build!
     uploadFile = jar // This is the java jar task. If it can't find the jar, try 'jar.outputs.getFiles().asPath' in place of 'jar'
     gameVersions = [project.minecraft_version] // Call this multiple times to add multiple game versions. There are tools that can help you generate the list of versions
     loaders = ['forge']
-}
-
-curseforge {
-    project {
-        id = "495153"
-        apiKey = System.getenv("CURSEFORGE")
-        changelog = System.getenv("CHANGELOG") != null ? System.getenv("CHANGELOG") : ""
-        changelogType = "markdown"
-        releaseType = "release"
-        addGameVersion("Forge")
-        addGameVersion(project.minecraft_version)
-
-        mainArtifact(jar) {
-            displayName = "${archivesBaseName}-${version}"
-        }
-    }
 }
 
 tasks.withType(AbstractArchiveTask).configureEach {
