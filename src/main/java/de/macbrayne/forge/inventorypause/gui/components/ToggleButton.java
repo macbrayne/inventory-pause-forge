@@ -26,8 +26,7 @@ public class ToggleButton extends Button {
     }
 
     @Override
-    public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float p_94285_) {
-        this.setBlitOffset(0);
+    public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float p_94285_) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, new ResourceLocation(InventoryPause.MOD_ID, "textures/gui/config/widgets.png"));
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
@@ -44,7 +43,6 @@ public class ToggleButton extends Button {
 
     public void renderContent(PoseStack poseStack, int mouseX, int mouseY, float p_94285_) {
         int imageOffset = this.getYImage(this.isHoveredOrFocused());
-        this.renderBg(poseStack, Minecraft.getInstance(), mouseX, mouseY);
         int j = getFGColor();
         Component yesComponent = Component.translatable("menu.inventorypause.toggle.on").withStyle(ChatFormatting.DARK_AQUA);
         Component noComponent = Component.translatable("menu.inventorypause.toggle.off").withStyle(ChatFormatting.RED);
@@ -52,7 +50,6 @@ public class ToggleButton extends Button {
         drawCenteredString(poseStack, Minecraft.getInstance().font, text, this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
     }
 
-    @Override
     protected int getYImage(boolean isHovered) {
         int i = 0;
         if (stateSupplier.get()) {

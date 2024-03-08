@@ -76,12 +76,12 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     public abstract static class Entry extends ContainerObjectSelectionList.Entry<ModCompatList.Entry> {
     }
     public class SectionEntry extends ModCompatList.Entry {
-        final CenteredStringWidget title;
+        final StringWidget title;
         final Component name;
 
         public SectionEntry(Component name, Component tooltip) {
             this.name = name;
-            title = new CenteredStringWidget(ModCompatList.this.width, ModCompatList.this.height, name, minecraft.font);
+            title = new StringWidget(ModCompatList.this.width, ModCompatList.this.height, name, minecraft.font).alignCenter();
             title.setTooltip(Tooltip.create(tooltip));
         }
 
@@ -89,9 +89,6 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         public List<? extends NarratableEntry> narratables() {
             return ImmutableList.of(title);
         }
-        /*public boolean changeFocus(boolean goForward) {
-            return false;
-        }*/
 
         @Override
         public void render(PoseStack poseStack, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
@@ -129,6 +126,12 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
 
         @Override
+        public void setFocused(boolean state) {
+            super.setFocused(state);
+            button.setFocused(state);
+        }
+
+        @Override
         public List<? extends GuiEventListener> children() {
             return ImmutableList.of(button);
         }
@@ -159,6 +162,14 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         @Override
         public List<? extends NarratableEntry> narratables() {
             return ImmutableList.of(this.editBox, this.removeButton);
+        }
+
+        @Override
+        public void setFocused(boolean state) {
+            super.setFocused(state);
+            if(getFocused() == editBox) {
+                editBox.setFocused(state);
+            }
         }
 
 
@@ -239,6 +250,14 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
 
         @Override
+        public void setFocused(boolean state) {
+            super.setFocused(state);
+            if(getFocused() == numBox) {
+                numBox.setFocused(state);
+            }
+        }
+
+        @Override
         public List<? extends GuiEventListener> children() {
             return ImmutableList.of(numBox, resetButton);
         }
@@ -268,7 +287,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
     private void unfocusEntry() {
         if(getFocused() != null) {
-            getFocused().changeFocus(false);
+            getFocused().setFocused(false);
             setFocused(null);
         }
     }
