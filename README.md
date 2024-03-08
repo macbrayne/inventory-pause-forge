@@ -8,7 +8,7 @@
 ## Pause your single player game when you open your inventory and more.
 <table>
     <tr>
-        <td>Forge</td>
+        <td>(Neo)Forge</td>
         <td><a href="https://github.com/macbrayne/inventory-pause-forge/">GitHub</a></td>
         <td><a href="https://modrinth.com/mod/inventory-pause-forge">Modrinth</a></td>
         <td><a href="https://www.curseforge.com/minecraft/mc-mods/inventory-pause-forge">CurseForge</a></td>
@@ -41,6 +41,9 @@ Current versions:
 - 1.18: 1.0.2
 - 1.19: 1.1.2
 - 1.19.3: 1.2
+- 1.19.4: 1.2.1
+- 1.20-1.20.1: 1.3
+- 1.20.2-1.20.3: 1.4
 
 ## [Releases](https://github.com/macbrayne/inventory-pause-forge/releases)
 
@@ -51,8 +54,8 @@ The mod is licensed under the [EUPL 1.2](LICENSE) apart from three files which a
 
 ## Tutorial: How to add custom screens
 <details>
-  <summary>1.2 (click to expand)</summary>
-    
+  <summary>1.2+ (click to expand)</summary>
+
 1. Check whether you have assigned the keybind for "Add to Custom Screens".
 2. Navigate to the menu you want to add and press the "Add to Custom Screens" key you assigned earlier. You should get a confirmation in chat when you do so.
 3. Verify it worked by checking if the screen is now paused.
@@ -66,8 +69,8 @@ To add custom screens to the config you need the internal name of the screen to 
 1. Check the Minecraft Controls settings if you have assigned the keybinds for "Copy Class Name" and "Open Settings" (only available on versions released after October 2022)
 2. Open the settings and change "Enable Debug Mode" to true. This should make an overlay appear on the top left of the screen whenever you have a screen open.
 3. Navigate to the menu you want to add and depending on your mod version:
-  * (0.8.2, 0.9, 1.0 or 1.1): note down the topmost text (e.g. `appeng.client.gui.implementations.IOPortScreen`). Alternatively copy it from the Minecraft log. That is the internal name of the screen.
-  * (0.8.3, 0.9.1, 1.0.1, 1.1.1 or later): press the "Copy Class" key you assigned earlier. You should get a confirmation in chat when you do so.
+* (0.8.2, 0.9, 1.0 or 1.1): note down the topmost text (e.g. `appeng.client.gui.implementations.IOPortScreen`). Alternatively copy it from the Minecraft log. That is the internal name of the screen.
+* (0.8.3, 0.9.1, 1.0.1, 1.1.1 or later): press the "Copy Class" key you assigned earlier. You should get a confirmation in chat when you do so.
 4. Add an entry to "Custom Mod class names" and paste the internal name.
 
 Now the screen should be paused. If it works disable "Enable Debug Mode" again.
@@ -78,14 +81,14 @@ Note: This mod will not be able to work on all types of screens due to technical
 
 ## In-Game Config
 <details>
-<summary>1.2 (click to expand)</summary>
+<summary>1.2+ (click to expand)</summary>
 
- ### Main Config
- ![Ingame Config Mod Version 1.2 and up](https://user-images.githubusercontent.com/27809595/219973047-b3745ffa-a01b-4570-880b-886a27ecb72b.png)
+### Main Config
+![Ingame Config Mod Version 1.2 and up](https://user-images.githubusercontent.com/27809595/219973047-b3745ffa-a01b-4570-880b-886a27ecb72b.png)
 - Enable Mod: enables / disables every part of the mod apart from the debug overlay
 - Save on Pause: this can help if you experience lag spikes when quickly opening and closing inventories
-Enable / disable pausing of specific inventories by clicking on the corresponding button
-    
+  Enable / disable pausing of specific inventories by clicking on the corresponding button
+
 ### Mod Compat Options
 ![Mod Compat Options Mod Version 1.2 and up](https://user-images.githubusercontent.com/27809595/219819318-6ca3852b-4e13-4fe0-957c-e27e556cc0fe.png)
 
