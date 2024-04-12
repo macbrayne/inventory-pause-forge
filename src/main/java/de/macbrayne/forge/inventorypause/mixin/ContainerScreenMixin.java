@@ -3,7 +3,6 @@
 package de.macbrayne.forge.inventorypause.mixin;
 
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
-import de.macbrayne.forge.inventorypause.events.ForgeEventBus;
 import net.minecraft.client.gui.screens.DeathScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.debug.GameModeSwitcherScreen;
@@ -17,11 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ContainerScreenMixin {
     @Inject(method = "isPauseScreen", at = @At("HEAD"), cancellable = true)
     public void isPauseScreen(CallbackInfoReturnable<Boolean> cir) {
-        if (ScreenHelper.isCompatScreen((Screen) (Object) this) && ForgeEventBus.timeUntilCompatTick == 1) {
-            return;
-        }
-        if(ScreenHelper.isConfiguredScreen((Screen) (Object) this)) {
-            cir.setReturnValue(true);
-        }
+        ScreenHelper.isPauseScreen((Screen) (Object) this, cir);
     }
 }

@@ -48,7 +48,10 @@
   "menu.inventorypause.settings.modCompat.debug_mode": "Debug Mode",
   "menu.inventorypause.settings.modCompat.debug_mode.tooltip": "Debug Mode adds a overlay displaying the class name of the currently displayed menu",
 
-  "chat.inventorypause.addToList.action": "Inventory Pause: Added current screen to the list of paused screens",
+  "chat.inventorypause.addToList.action": "Inventory Pause: Added current screen to the list of custom paused screens",
+  "chat.inventorypause.addToList.error.duplicate": "Inventory Pause: Current screen is already in the the list of custom paused screens",
+  "chat.inventorypause.addToList.error.alreadyCovered": "Inventory Pause: Current screen is already covered by the config. To add this screen first disable that config option.",
+  "chat.inventorypause.addToList.error.notCovered": "Inventory Pause: This screen needs explicit support. Please create an issue at https://github.com/macbrayne/inventory-pause-forge/issues",
 
   "key.categories.inventorypause.main": "Inventory Pause Helpers",
   "key.inventorypause.openSettings": "Open Settings",

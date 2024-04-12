@@ -4,9 +4,11 @@ package de.macbrayne.forge.inventorypause.common;
 
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.compat.ScreenDictionary;
+import de.macbrayne.forge.inventorypause.events.ForgeEventBus;
 import net.minecraft.client.gui.screens.Screen;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 public class ScreenHelper {
     private static final ScreenDictionary modDictionary = InventoryPause.getScreenDictionary();
@@ -14,6 +16,16 @@ public class ScreenHelper {
     public static boolean isConfiguredScreen(@Nullable Screen screen) {
         return screen != null && InventoryPause.MOD_CONFIG.enabled &&
                 (modDictionary.handleScreen(screen.getClass()) || isCustomMenu(screen) || isCompatScreen(screen));
+    }
+
+
+    public static void isPauseScreen(Screen caller, CallbackInfoReturnable<Boolean> cir) {
+        if (ScreenHelper.isCompatScreen(caller) && ForgeEventBus.timeUntilCompatTick == 1) {
+            return;
+        }
+        if(ScreenHelper.isConfiguredScreen(caller)) {
+            cir.setReturnValue(true);
+        }
     }
 
     private static boolean isCustomMenu(@NotNull Screen screen) {
@@ -25,7 +37,7 @@ public class ScreenHelper {
         return false;
     }
 
-	public static boolean isCompatScreen(@NotNull Screen screen) {
+	private static boolean isCompatScreen(@NotNull Screen screen) {
         for (String s : InventoryPause.MOD_CONFIG.modCompat.compatScreens) {
             if(screen.getClass().getName().equals(s)) {
                 return true;

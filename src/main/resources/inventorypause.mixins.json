@@ -9,7 +9,8 @@
   "client": [
     "ContainerScreenMixin",
     "IntegratedServerMixin",
-    "MinecraftMixin"
+    "MinecraftMixin",
+    "compat.CitadelCompatMixin"
   ],
   "injectors": {
     "defaultRequire": 1
