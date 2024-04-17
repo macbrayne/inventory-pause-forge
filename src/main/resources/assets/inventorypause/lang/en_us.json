@@ -59,5 +59,9 @@
   "menu.inventorypause.toggle": "%s: %s",
   "menu.inventorypause.toggle.on": "Yes",
   "menu.inventorypause.toggle.off": "No",
-  "menu.inventorypause.settings.title.pause": "Pause..."
+  "menu.inventorypause.settings.title.pause": "Pause...",
+  "menu.inventorypause.settings.modCompat.moveDown": "↓",
+  "menu.inventorypause.settings.modCompat.moveUp": "↑",
+  "narrator.inventorypause.settings.modCompat.moveUp": "Convert to Compat Entry button",
+  "narrator.inventorypause.settings.modCompat.moveDown": "Convert to Custom Entry button"
 }
