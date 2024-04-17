@@ -183,7 +183,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
     }
 
-    public abstract class ItemEntry extends ModCompatList.Entry implements Saveable, Moveable {
+    public abstract class ItemEntry extends ModCompatList.Entry implements Saveable {
         private final String configValue;
         private final EditBox editBox;
         private final Button removeButton, moveButton;
@@ -209,6 +209,9 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         public List<? extends NarratableEntry> narratables() {
             return ImmutableList.of(this.editBox, this.removeButton, this.moveButton);
         }
+
+
+        public abstract void moveItem();
 
         @Override
         public void setFocused(boolean state) {
@@ -399,9 +402,5 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
     interface Saveable {
         void save();
-    }
-
-    interface Moveable {
-        void moveItem();
     }
 }
