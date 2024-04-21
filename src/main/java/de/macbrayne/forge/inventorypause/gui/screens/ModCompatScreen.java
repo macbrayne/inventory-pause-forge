@@ -33,6 +33,7 @@ public class ModCompatScreen extends Screen {
         modCompatList = new ModCompatList(this, minecraft);
         addWidget(modCompatList);
         createSaveAndQuit(this.width / 2 - 120, this.height - 20 - PADDING, 240, 20);
+        magicalSpecialHackyFocus(modCompatList);
     }
 
     public void createSaveAndQuit(int x0, int y, int width, int height) {
@@ -46,20 +47,20 @@ public class ModCompatScreen extends Screen {
             }, Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.debug_mode.tooltip")), () -> InventoryPause.MOD_CONFIG.debug));
         }
         this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
-            this.minecraft.setScreen(lastScreen);
+            onClose();
             this.modCompatList.saveChanges();
         }).pos (xDone, y).size(buttonWidth, height).build());
     }
 
-    public void render(GuiGraphics guiGraphics, int p_96250_, int p_96251_, float p_96252_) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
         this.renderBackground(guiGraphics);
-        this.modCompatList.render(guiGraphics, p_96250_, p_96251_, p_96252_);
+        this.modCompatList.render(guiGraphics, mouseX, mouseY, tickDelta);
         guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 8, 16777215);
-        super.render(guiGraphics, p_96250_, p_96251_, p_96252_);
+        super.render(guiGraphics, mouseX, mouseY, tickDelta);
     }
 
     @Override
-    public void magicalSpecialHackyFocus(@Nullable GuiEventListener guiEventListener) {
-        modCompatList.setFocused(guiEventListener);
+    public void onClose() {
+        this.minecraft.setScreen(lastScreen);
     }
 }

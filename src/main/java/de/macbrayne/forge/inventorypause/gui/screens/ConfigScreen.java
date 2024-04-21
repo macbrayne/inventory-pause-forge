@@ -13,6 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -112,20 +113,37 @@ public class ConfigScreen extends Screen {
 	public void createSaveAndQuit(int x0, int y, int width, int height) {
 		int buttonWidth = width / 2 - 2;
 		this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_CANCEL, (p_96788_) -> {
-			this.minecraft.setScreen(lastScreen);
 			InventoryPause.MOD_CONFIG = ConfigHelper.deserialize();
+			onClose();
 		}).pos(x0, y).size(buttonWidth, height).build());
 		this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
-			this.minecraft.setScreen(lastScreen);
 			ConfigHelper.serialize();
+			onClose();
 		}).pos(x0 + width / 2 + 2, y).size(buttonWidth,height).build());
 	}
 
-	public void render(GuiGraphics guiGraphics, int p_96250_, int p_96251_, float p_96252_) {
+	@Override
+	public void onClose() {
+		if(!ConfigHelper.deserialize().equals(InventoryPause.MOD_CONFIG)) {
+			this.minecraft.pushGuiLayer(new ConfirmScreen(userAccepted -> {
+				if (userAccepted) {
+					ConfigHelper.serialize();
+				} else {
+					InventoryPause.MOD_CONFIG = ConfigHelper.deserialize();
+				}
+				this.minecraft.popGuiLayer();
+				this.minecraft.setScreen(lastScreen);
+			}, Component.literal("You have unsaved changes"), Component.literal("Do you want to keep them?")));
+		} else {
+			this.minecraft.setScreen(lastScreen);
+		}
+	}
+
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
 		this.renderBackground(guiGraphics);
 		guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 15, 16777215);
 
 		guiGraphics.drawString(this.font, Component.translatable("menu.inventorypause.settings.title.pause"), xText, yText, 16777215);
-		super.render(guiGraphics, p_96250_, p_96251_, p_96252_);
+		super.render(guiGraphics, mouseX, mouseY, tickDelta);
 	}
 }
