@@ -62,6 +62,8 @@
   "menu.inventorypause.settings.title.pause": "Pause...",
   "menu.inventorypause.settings.modCompat.moveDown": "↓",
   "menu.inventorypause.settings.modCompat.moveUp": "↑",
+  "menu.inventorypause.settings.confirmation.title": "You have unsaved changes",
+  "menu.inventorypause.settings.confirmation.description": "Do you want to keep them?",
   "narrator.inventorypause.settings.modCompat.moveUp": "Convert to Compat Entry button",
   "narrator.inventorypause.settings.modCompat.moveDown": "Convert to Custom Entry button"
 }

@@ -133,7 +133,7 @@ public class ConfigScreen extends Screen {
 				}
 				this.minecraft.popGuiLayer();
 				this.minecraft.setScreen(lastScreen);
-			}, Component.literal("You have unsaved changes"), Component.literal("Do you want to keep them?")));
+			}, Component.translatable("menu.inventorypause.settings.confirmation.title"), Component.translatable("menu.inventorypause.settings.confirmation.description")));
 		} else {
 			this.minecraft.setScreen(lastScreen);
 		}
