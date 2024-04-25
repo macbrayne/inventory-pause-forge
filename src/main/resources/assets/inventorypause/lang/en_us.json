@@ -57,13 +57,12 @@
   "key.inventorypause.openSettings": "Open Settings",
   "key.inventorypause.addToList": "Add to Custom Screens",
   "menu.inventorypause.toggle": "%s: %s",
-  "menu.inventorypause.toggle.on": "Yes",
-  "menu.inventorypause.toggle.off": "No",
   "menu.inventorypause.settings.title.pause": "Pause...",
   "menu.inventorypause.settings.modCompat.moveDown": "↓",
   "menu.inventorypause.settings.modCompat.moveUp": "↑",
   "menu.inventorypause.settings.confirmation.title": "You have unsaved changes",
   "menu.inventorypause.settings.confirmation.description": "Do you want to keep them?",
   "narrator.inventorypause.settings.modCompat.moveUp": "Convert to Compat Entry button",
-  "narrator.inventorypause.settings.modCompat.moveDown": "Convert to Custom Entry button"
+  "narrator.inventorypause.settings.modCompat.moveDown": "Convert to Custom Entry button",
+  "narrator.inventorypause.settings.modCompat.delete": "Delete %s button"
 }

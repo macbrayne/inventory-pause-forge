@@ -72,7 +72,7 @@ public class ConfigScreen extends Screen {
 			int column = i % numberOfColumns;
 			int row = i / numberOfColumns;
 			this.addRenderableWidget(new TexturedToggleButton(x0 + column * totalSize, y0 + row * totalSize, buttonSize, buttonSize,
-					Component.translatable("narrator.button.language"), info));
+					Component.empty(), info));
 		}
 		return y0 + (numberOfRows + 1) * totalSize;
 	}

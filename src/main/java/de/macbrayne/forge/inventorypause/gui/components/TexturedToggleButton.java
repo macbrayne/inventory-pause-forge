@@ -26,7 +26,7 @@ public class TexturedToggleButton extends ToggleButton {
 
 
     @Override
-    public void renderContent(GuiGraphics guiGraphics, int mouseX, int mouseY, float p_94285_) {
+    public void renderContent(GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
         GuiUtils.renderButtonItem(icon, this.getX(), this.getY(), this.width);
     }
 }

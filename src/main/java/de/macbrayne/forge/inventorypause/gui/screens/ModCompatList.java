@@ -14,11 +14,7 @@ import net.minecraft.network.chat.Component;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Optional;
-import java.util.OptionalInt;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
@@ -189,16 +185,16 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         private final Button removeButton, moveButton;
         private final Supplier<List<String>> supplier;
 
-        public ItemEntry(String configValue, Supplier<List<String>> supplier) {
+        public ItemEntry(String configValue, Supplier<List<String>> supplier, Button.CreateNarration moveButtonNarrationSupplier) {
             this.configValue = configValue;
             this.supplier = supplier;
             this.removeButton = new HoverButton(new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.delete"), (button) -> {
                 ModCompatList.this.removeEntry(this);
                 removedEntries.add(this);
                 unfocusEntry();
-            }).size(20, 20).createNarration(p_253695_ -> Component.translatable("narrator.controls.reset", configValue)));
+            }).size(20, 20).createNarration(p_253695_ -> Component.translatable("narrator.inventorypause.settings.modCompat.delete", configValue)));
             this.moveButton = new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.moveUp"), button -> moveItem()).size(20, 20)
-                    .createNarration(p_253695_ -> Component.translatable("narrator.inventorypause.settings.modCompat.move", configValue)).build();
+                    .createNarration(moveButtonNarrationSupplier).build();
             this.editBox = new EditBox(ModCompatList.this.minecraft.font, 0, 0, 180, 20, Component.empty());
             editBox.setMaxLength(128);
             editBox.setValue(this.configValue);
@@ -207,7 +203,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
         @Override
         public List<? extends NarratableEntry> narratables() {
-            return ImmutableList.of(this.editBox, this.removeButton, this.moveButton);
+            return ImmutableList.of(this.editBox, this.moveButton, this.removeButton);
         }
 
 
@@ -242,7 +238,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
 
         public List<? extends GuiEventListener> children() {
-            return ImmutableList.of(this.editBox, this.removeButton, this.moveButton);
+            return ImmutableList.of(this.editBox, this.moveButton, this.removeButton);
         }
 
         public String getConfigValue() {
@@ -268,7 +264,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     public class CompatEntry extends ItemEntry {
 
         public CompatEntry(String content) {
-            super(content, modCompatSupplier);
+            super(content, modCompatSupplier, p_253695_ -> Component.translatable("narrator.inventorypause.settings.modCompat.moveUp"));
         }
 
         @Override
@@ -288,7 +284,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
     public class CustomEntry extends ItemEntry {
         public CustomEntry(String content) {
-            super(content, modCustomSupplier);
+            super(content, modCustomSupplier, p_253695_ -> Component.translatable("narrator.inventorypause.settings.modCompat.moveDown"));
             getMoveButton().setMessage(Component.translatable("menu.inventorypause.settings.modCompat.moveDown"));
         }
 
