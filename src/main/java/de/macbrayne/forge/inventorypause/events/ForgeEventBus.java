@@ -4,7 +4,6 @@ package de.macbrayne.forge.inventorypause.events;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import de.macbrayne.forge.inventorypause.InventoryPause;
-import de.macbrayne.forge.inventorypause.api.Api;
 import de.macbrayne.forge.inventorypause.common.ConfigHelper;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
 import de.macbrayne.forge.inventorypause.gui.screens.ConfigScreen;
@@ -45,10 +44,6 @@ public class ForgeEventBus {
             Screen screen = event.getScreen();
             var name = screen.getClass().getName();
 
-            if(!Api.canScreenBePausedByMod(screen)) {
-                Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.notCovered", name));
-                return;
-            }
             if(getScreenDictionary().handleScreen(screen.getClass())) {
                 Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.alreadyCovered"));
                 return;

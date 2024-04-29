@@ -47,7 +47,7 @@ Current versions:
 
 Releases prior to 1.2 depend on [Cloth Config Forge](https://www.curseforge.com/minecraft/mc-mods/cloth-config-forge/).
 
-The mod is licensed under the [EUPL 1.2](LICENSE) apart from three files which are [MIT](LICENSE-MIT) licensed.
+The mod is licensed under the [EUPL 1.2](LICENSE).
 
 
 ## Tutorial: How to add custom screens

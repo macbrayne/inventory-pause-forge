@@ -2,15 +2,13 @@
   "required": true,
   "minVersion": "0.8",
   "package": "de.macbrayne.forge.inventorypause.mixin",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_17",
   "refmap": "inventorypause.refmap.json",
   "mixins": [
   ],
   "client": [
-    "ContainerScreenMixin",
     "IntegratedServerMixin",
-    "MinecraftMixin",
-    "compat.CitadelCompatMixin"
+    "MinecraftMixin"
   ],
   "injectors": {
     "defaultRequire": 1

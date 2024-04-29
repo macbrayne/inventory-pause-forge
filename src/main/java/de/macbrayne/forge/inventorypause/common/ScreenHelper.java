@@ -19,13 +19,14 @@ public class ScreenHelper {
     }
 
 
-    public static void isPauseScreen(Screen caller, CallbackInfoReturnable<Boolean> cir) {
+    public static boolean isPauseScreen(Screen caller) {
         if (ScreenHelper.isCompatScreen(caller) && ForgeEventBus.timeUntilCompatTick == 1) {
-            return;
+            return false;
         }
         if(ScreenHelper.isConfiguredScreen(caller)) {
-            cir.setReturnValue(true);
+            return true;
         }
+        return false;
     }
 
     private static boolean isCustomMenu(@NotNull Screen screen) {

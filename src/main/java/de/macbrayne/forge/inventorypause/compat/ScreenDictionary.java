@@ -36,6 +36,6 @@ public class ScreenDictionary {
     }
 
     private Optional<Class<?>> getRegisteredParentClass(@NotNull Class<?> screenClass) {
-        return Arrays.stream(cachedClasses).parallel().filter((aClass -> aClass.isAssignableFrom(screenClass))).findFirst();
+        return Arrays.stream(cachedClasses).filter((aClass -> aClass.isAssignableFrom(screenClass))).findFirst();
     }
 }
