@@ -15,6 +15,9 @@ public class ScreenDictionary {
     private final Map<Class<?>, BooleanSupplier> configProviderMap = new HashMap<>();
     private boolean dirty;
 
+    private Class lastScreen = null;
+    private boolean lastResult = false;
+
     public void register(@NotNull Class<?> aClass, @NotNull BooleanSupplier configProvider) {
         configProviderMap.put(aClass, configProvider);
         dirty = true;
@@ -29,10 +32,21 @@ public class ScreenDictionary {
         if(dirty || cachedClasses == null) {
             cachedClasses = configProviderMap.keySet().toArray(new Class[0]);
         }
-
         dirty = false;
+
+        // Cache last screen & result to avoid the stream operation
+        if(screenClass == lastScreen) {
+            return lastResult;
+        }
+
         Optional<Class<?>> registeredParentClass = getRegisteredParentClass(screenClass);
-        return registeredParentClass.filter(aClass -> configProviderMap.get(aClass).getAsBoolean()).isPresent();
+        lastScreen = screenClass;
+        lastResult = registeredParentClass.filter(aClass -> configProviderMap.get(aClass).getAsBoolean()).isPresent();
+        return lastResult;
+    }
+
+    public void setLastScreenDirty() {
+        lastScreen = null;
     }
 
     private Optional<Class<?>> getRegisteredParentClass(@NotNull Class<?> screenClass) {
