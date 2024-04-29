@@ -8,7 +8,6 @@ import de.macbrayne.forge.inventorypause.events.ForgeEventBus;
 import net.minecraft.client.gui.screens.Screen;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 public class ScreenHelper {
     private static final ScreenDictionary modDictionary = InventoryPause.getScreenDictionary();
