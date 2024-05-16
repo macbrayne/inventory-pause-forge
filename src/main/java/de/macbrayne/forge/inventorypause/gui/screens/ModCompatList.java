@@ -50,10 +50,10 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }));
 
         // Time Between Compat Ticks
-        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks"),
-                Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks.tooltip")));
-        this.addEntry(new ModCompatList.NumEntry(() -> InventoryPause.MOD_CONFIG.modCompat.timeBetweenCompatTicks,
-                value -> InventoryPause.MOD_CONFIG.modCompat.timeBetweenCompatTicks = value, 20));
+        NumEntry numEntry = new ModCompatList.NumEntry(() -> InventoryPause.MOD_CONFIG.modCompat.timeBetweenCompatTicks,
+                value -> InventoryPause.MOD_CONFIG.modCompat.timeBetweenCompatTicks = value, 20);
+        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks"), numEntry::getTooltip));
+        this.addEntry(numEntry);
 
         this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens"),
                 Component.translatable("menu.inventorypause.settings.modCompat.compatScreens.tooltip")));
@@ -120,11 +120,16 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     public class SectionEntry extends ModCompatList.Entry {
         final StringWidget title;
         final Component name;
+        private final Supplier<Tooltip> tooltipSupplier;
 
         public SectionEntry(Component name, Component tooltip) {
+            this(name, () -> Tooltip.create(tooltip));
+        }
+
+        public SectionEntry(Component name, Supplier<Tooltip> tooltipSupplier) {
             this.name = name;
             title = new StringWidget(ModCompatList.this.width, ModCompatList.this.height, name, minecraft.font).alignCenter();
-            title.setTooltip(Tooltip.create(tooltip));
+            this.tooltipSupplier = tooltipSupplier;
         }
 
         @Override
@@ -138,6 +143,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             title.setY(y);
             title.setWidth(entryWidth);
             title.setHeight(entryHeight);
+            title.setTooltip(tooltipSupplier.get());
             title.render(guiGraphics, mouseX, mouseY, tickDelta);
         }
 
@@ -330,7 +336,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
         @Override
         public void render(GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            this.numBox.render(guiGraphics, mouseX, mouseY, tickDelta);
+            this.numBox.setTooltip(getTooltip());
             this.resetButton.render(guiGraphics, mouseX, mouseY, tickDelta);
             this.resetButton.setX(x + 190 - 10);
             this.resetButton.setY(y);
@@ -363,6 +369,17 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             if(value > 0) {
                 valueConsumer.accept(value);
             }
+        }
+
+        public Tooltip getTooltip() {
+            Locale locale = Minecraft.getInstance().getLanguageManager().getJavaLocale();
+            float valueInHertz = 0.00f;
+            if(!numBox.getValue().isEmpty()) {
+                valueInHertz = Integer.parseInt(numBox.getValue()) / 20f;
+            }
+            return Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks.tooltip",
+                    String.format(locale, "%.2f", valueInHertz),
+                    String.format(locale, "%.2f", 0.05)));
         }
     }
 
