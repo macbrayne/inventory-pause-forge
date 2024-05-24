@@ -46,7 +46,7 @@
   "menu.inventorypause.settings.modCompat.delete": "X",
   "menu.inventorypause.settings.modCompat.new": "New Entry",
   "menu.inventorypause.settings.modCompat.debug_mode": "Debug Mode",
-  "menu.inventorypause.settings.modCompat.debug_mode.tooltip": "Debug Mode adds a overlay displaying the class name of the currently displayed menu",
+  "menu.inventorypause.settings.modCompat.debug_mode.tooltip": "Debug Mode adds a overlay displaying the class name of the currently displayed menu and its parent classes",
 
   "chat.inventorypause.addToList.action": "Inventory Pause: Added current screen to the list of custom paused screens",
   "chat.inventorypause.addToList.error.duplicate": "Inventory Pause: Current screen is already in the the list of custom paused screens",

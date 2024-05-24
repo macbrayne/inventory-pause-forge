@@ -15,7 +15,7 @@ public class ScreenDictionary {
     private final Map<Class<?>, BooleanSupplier> configProviderMap = new HashMap<>();
     private boolean dirty;
 
-    private Class lastScreen = null;
+    private Class<?> lastScreen = null;
     private boolean lastResult = false;
 
     public void register(@NotNull Class<?> aClass, @NotNull BooleanSupplier configProvider) {

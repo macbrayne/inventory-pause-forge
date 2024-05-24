@@ -49,12 +49,12 @@ public class ForgeEventBus {
                 return;
             }
             if(MOD_CONFIG.modCompat.customScreens.contains(name)) {
-                Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.duplicate", name));
+                Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.duplicate"));
                 return;
             }
             MOD_CONFIG.modCompat.customScreens.add(name);
             ConfigHelper.serialize();
-            Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.action", name));
+            Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.action"));
         }
     }
 
