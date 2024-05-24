@@ -14,6 +14,7 @@ import java.nio.file.Path;
 public class ConfigHelper {
     private static final TomlWriter writer = new TomlWriter();
     public static void serialize() {
+        InventoryPause.getScreenDictionary().setLastScreenDirty();
         try {
             writer.write(InventoryPause.MOD_CONFIG, FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml").toFile());
         } catch (IOException e) {

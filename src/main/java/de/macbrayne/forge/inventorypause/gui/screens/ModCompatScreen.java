@@ -8,11 +8,9 @@ import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.gui.components.ToggleButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import org.jetbrains.annotations.Nullable;
 
 public class ModCompatScreen extends Screen {
     private static final int PADDING = 6;
@@ -33,6 +31,7 @@ public class ModCompatScreen extends Screen {
         modCompatList = new ModCompatList(this, minecraft);
         addWidget(modCompatList);
         createSaveAndQuit(this.width / 2 - 120, this.height - 20 - PADDING, 240, 20);
+        magicalSpecialHackyFocus(modCompatList);
     }
 
     public void createSaveAndQuit(int x0, int y, int width, int height) {
@@ -59,7 +58,7 @@ public class ModCompatScreen extends Screen {
     }
 
     @Override
-    public void magicalSpecialHackyFocus(@Nullable GuiEventListener guiEventListener) {
-        modCompatList.setFocused(guiEventListener);
+    public void onClose() {
+        this.minecraft.setScreen(lastScreen);
     }
 }
