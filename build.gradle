@@ -125,6 +125,10 @@ dependencies {
         transitive(false)
     }
 
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.5"))
+    implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.3.5")) {
+        jarJar.ranged(it, "[0.3.5,)")
+    }
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
@@ -158,7 +162,7 @@ tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
 modrinth { // Make sure it runs after build!
     token = System.getenv("MODRINTH") // An environment property called MODRINTH that is your token, set via Gradle CLI, GitHub Actions, Idea Run Configuration, or other
     projectId = 'F39sgYmY'
-    versionName = "${archivesBaseName}-${version}" // The version of the mod to upload.
+    versionName = "Inventory Pause v${project.mod_version} (${project.minecraft_version})" // The version of the mod to upload.
     versionNumber = "${project.mod_version}" // Will fail if Modrinth has this version already
     changelog = System.getenv("CHANGELOG")
     versionType = "RELEASE"
@@ -183,8 +187,8 @@ tasks.register('curseforge', TaskPublishCurseForge) {
     def mainFile = upload("495153", jar.outputs.getFiles().asPath.replace(".jar", "-all.jar"))
     mainFile.changelog = System.getenv("CHANGELOG")
     mainFile.changelogType = "markdown"
-    mainFile.displayName = "${archivesBaseName}-${version}"
-    mainFile.releaseType = "RELEASE"
+    mainFile.displayName = "Inventory Pause v${project.mod_version} (${project.minecraft_version})"
+    mainFile.releaseType = "release"
 }
 
 tasks.withType(AbstractArchiveTask).configureEach {

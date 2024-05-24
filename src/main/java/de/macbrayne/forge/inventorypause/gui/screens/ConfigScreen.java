@@ -4,15 +4,16 @@ package de.macbrayne.forge.inventorypause.gui.screens;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.macbrayne.forge.inventorypause.InventoryPause;
-import de.macbrayne.forge.inventorypause.gui.ConfigButtonRegistration;
 import de.macbrayne.forge.inventorypause.common.ConfigHelper;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
+import de.macbrayne.forge.inventorypause.gui.ConfigButtonRegistration;
 import de.macbrayne.forge.inventorypause.gui.components.ButtonInfo;
 import de.macbrayne.forge.inventorypause.gui.components.TexturedToggleButton;
 import de.macbrayne.forge.inventorypause.gui.components.ToggleButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -71,7 +72,7 @@ public class ConfigScreen extends Screen {
 			int column = i % numberOfColumns;
 			int row = i / numberOfColumns;
 			this.addRenderableWidget(new TexturedToggleButton(x0 + column * totalSize, y0 + row * totalSize, buttonSize, buttonSize,
-					Component.translatable("narrator.button.language"), info));
+					Component.empty(), info));
 		}
 		return y0 + (numberOfRows + 1) * totalSize;
 	}
@@ -112,13 +113,30 @@ public class ConfigScreen extends Screen {
 	public void createSaveAndQuit(int x0, int y, int width, int height) {
 		int buttonWidth = width / 2 - 2;
 		this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_CANCEL, (p_96788_) -> {
-			this.minecraft.setScreen(lastScreen);
 			InventoryPause.MOD_CONFIG = ConfigHelper.deserialize();
+			onClose();
 		}).pos(x0, y).size(buttonWidth, height).build());
 		this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
-			this.minecraft.setScreen(lastScreen);
 			ConfigHelper.serialize();
+			onClose();
 		}).pos(x0 + width / 2 + 2, y).size(buttonWidth,height).build());
+	}
+
+	@Override
+	public void onClose() {
+		if(!ConfigHelper.deserialize().equals(InventoryPause.MOD_CONFIG)) {
+			this.minecraft.pushGuiLayer(new ConfirmScreen(userAccepted -> {
+				if (userAccepted) {
+					ConfigHelper.serialize();
+				} else {
+					InventoryPause.MOD_CONFIG = ConfigHelper.deserialize();
+				}
+				this.minecraft.popGuiLayer();
+				this.minecraft.setScreen(lastScreen);
+			}, Component.translatable("menu.inventorypause.settings.confirmation.title"), Component.translatable("menu.inventorypause.settings.confirmation.description")));
+		} else {
+			this.minecraft.setScreen(lastScreen);
+		}
 	}
 
 	public void render(PoseStack poseStack, int p_96250_, int p_96251_, float p_96252_) {

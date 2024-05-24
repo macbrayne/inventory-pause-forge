@@ -9,6 +9,7 @@ import de.macbrayne.forge.inventorypause.events.ForgeEventBus;
 import de.macbrayne.forge.inventorypause.events.ModEventBus;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -29,11 +30,12 @@ public class InventoryPause {
     public InventoryPause() {
         if (FMLEnvironment.dist == Dist.CLIENT) {
             MOD_CONFIG = ConfigHelper.deserialize();
-            FMLJavaModLoadingContext.get().getModEventBus().addListener(ModEventBus::clientSetup);
-            FMLJavaModLoadingContext.get().getModEventBus().addListener(ModEventBus::registerBindings);
-            MinecraftForge.EVENT_BUS.addListener(ForgeEventBus::onOpenGUI);
-            MinecraftForge.EVENT_BUS.addListener(ForgeEventBus::onGUIDrawPost);
-            MinecraftForge.EVENT_BUS.addListener(ForgeEventBus::onClientTick);
+            FMLJavaModLoadingContext.get().getModEventBus().addListener(EventPriority.LOWEST, ModEventBus::clientSetup);
+            FMLJavaModLoadingContext.get().getModEventBus().addListener(EventPriority.LOWEST, ModEventBus::registerBindings);
+            MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, ForgeEventBus::onOpenGUI);
+            MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, ForgeEventBus::onGUIDrawPost);
+            MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, ForgeEventBus::onClientTick);
+            MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, ForgeEventBus::onScreenEvent);
         } else {
             LOGGER.error("Not on client, disabling mod");
         }
