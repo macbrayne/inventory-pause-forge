@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 public class ToggleButton extends Button {
     private static final Component TEXT_YES = CommonComponents.OPTION_ON.plainCopy().withStyle(ChatFormatting.DARK_AQUA);
     private static final Component TEXT_NO = CommonComponents.OPTION_OFF.plainCopy().withStyle(ChatFormatting.RED);
-    final @NotNull Supplier<Boolean> stateSupplier;
+    private final @NotNull Supplier<Boolean> stateSupplier;
 
     public ToggleButton(int x, int y, int width, int height, Component text, OnPress onPress, Tooltip tooltip, @NotNull Supplier<Boolean> stateSupplier) {
         super(new Button.Builder(text, onPress).pos(x, y).size(width, height).tooltip(tooltip));
