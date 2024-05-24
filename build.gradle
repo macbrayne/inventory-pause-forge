@@ -157,8 +157,6 @@ tasks.modrinth.onlyIf {
     System.getenv("MODRINTH")
 }
 
-tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
-
 modrinth { // Make sure it runs after build!
     token = System.getenv("MODRINTH") // An environment property called MODRINTH that is your token, set via Gradle CLI, GitHub Actions, Idea Run Configuration, or other
     projectId = 'F39sgYmY'
