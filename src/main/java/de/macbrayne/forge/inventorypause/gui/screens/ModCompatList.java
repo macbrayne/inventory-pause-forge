@@ -45,7 +45,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
         this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.customScreens.add"), addEntry -> button -> {
             int i = children().indexOf(addEntry);
-            children().add(new CustomEntry(newEntry));
+            children().add(i, new CustomEntry(newEntry));
         }));
 
         // Time Between Compat Ticks
@@ -63,7 +63,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
         this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens.add"), addEntry -> (button) -> {
             int i = children().indexOf(addEntry);
-            children().add(new CompatEntry(newEntry));
+            children().add(i, new CompatEntry(newEntry));
             modCustomSupplier.get().add("New Entry");
         }));
     }
