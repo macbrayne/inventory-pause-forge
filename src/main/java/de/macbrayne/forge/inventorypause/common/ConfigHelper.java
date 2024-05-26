@@ -5,15 +5,22 @@ package de.macbrayne.forge.inventorypause.common;
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import de.macbrayne.forge.inventorypause.InventoryPause;
+import de.macbrayne.forge.inventorypause.common.old.ModConfigV1;
 import net.minecraftforge.fml.loading.FMLPaths;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 public class ConfigHelper {
+    private static final Logger LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
     private static final TomlWriter writer = new TomlWriter();
     public static void serialize() {
+        LOGGER.info("Writing config to file");
         InventoryPause.getScreenDictionary().setLastScreenDirty();
         try {
             writer.write(InventoryPause.MOD_CONFIG, FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml").toFile());
@@ -23,12 +30,24 @@ public class ConfigHelper {
     }
 
     public static ModConfig deserialize() {
+        LOGGER.info("Trying to load config from file");
         Path path = FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml");
         if(Files.exists(path)) {
             try {
-                return new Toml().read(path.toFile()).to(ModConfig.class);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+                ModConfig config = new Toml().read(path.toFile()).to(ModConfig.class);
+                LOGGER.info("Successfully loaded config from file");
+                return config;
+            } catch (Exception ignored) {
+                try {
+                    ModConfig migratedConfig = ModConfigV1.toV2(new Toml().read(path.toFile()).to(ModConfigV1.class));
+                    LOGGER.warn("V1 config detected, migrating to V2 and moving old config to inventorypause.toml.old");
+                    Files.copy(FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml"), FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml.old"), StandardCopyOption.COPY_ATTRIBUTES);
+                    writer.write(migratedConfig, FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml").toFile());
+                    LOGGER.warn("Migration complete");
+                    return migratedConfig;
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         } else {
             return new ModConfig();

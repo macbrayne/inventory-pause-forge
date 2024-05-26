@@ -4,6 +4,7 @@ package de.macbrayne.forge.inventorypause.gui.components;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.macbrayne.forge.inventorypause.InventoryPause;
+import de.macbrayne.forge.inventorypause.common.PauseMode;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -21,9 +22,10 @@ import java.util.function.Supplier;
 public class ToggleButton extends Button {
     private static final Component TEXT_YES = CommonComponents.OPTION_ON.plainCopy().withStyle(ChatFormatting.DARK_AQUA);
     private static final Component TEXT_NO = CommonComponents.OPTION_OFF.plainCopy().withStyle(ChatFormatting.RED);
-    private final @NotNull Supplier<Boolean> stateSupplier;
+    private static final Component TEXT_SLOWMO = CommonComponents.OPTION_ON.plainCopy().withStyle(ChatFormatting.YELLOW);
+    private final @NotNull Supplier<PauseMode> stateSupplier;
 
-    public ToggleButton(int x, int y, int width, int height, Component text, OnPress onPress, Tooltip tooltip, @NotNull Supplier<Boolean> stateSupplier) {
+    public ToggleButton(int x, int y, int width, int height, Component text, OnPress onPress, Tooltip tooltip, @NotNull Supplier<PauseMode> stateSupplier) {
         super(new Button.Builder(text, onPress).pos(x, y).size(width, height).tooltip(tooltip));
         this.stateSupplier = stateSupplier;
     }
@@ -47,7 +49,11 @@ public class ToggleButton extends Button {
     }
 
     private Component getText() {
-        return Component.translatable("menu.inventorypause.toggle", this.getMessage(), this.stateSupplier.get() ? TEXT_YES : TEXT_NO);
+        return switch (this.stateSupplier.get()) {
+            case OFF -> Component.translatable("menu.inventorypause.toggle", this.getMessage(), TEXT_NO);
+            case SLOWMO -> Component.translatable("menu.inventorypause.toggle", this.getMessage(), TEXT_SLOWMO);
+            case ON -> Component.translatable("menu.inventorypause.toggle", this.getMessage(), TEXT_YES);
+        };
     }
 
     @Override
@@ -57,7 +63,7 @@ public class ToggleButton extends Button {
 
     protected int getYImage(boolean isHovered) {
         int i = 0;
-        if (stateSupplier.get()) {
+        if (stateSupplier.get() == PauseMode.ON) {
             i += 2;
         }
         if (isHovered) {
