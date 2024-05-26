@@ -2,6 +2,7 @@
 
 package de.macbrayne.forge.inventorypause.gui.components;
 
+import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.gui.GuiUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Tooltip;
@@ -19,7 +20,7 @@ public class TexturedToggleButton extends ToggleButton {
         this(x, y, width, height, info.itemStack(), narratedComponent, GuiUtils.getTogglePress(info.stateSupplier(), info.stateConsumer()), Tooltip.create(info.tooltipComponent()), info.stateSupplier());
     }
 
-    private TexturedToggleButton(int x, int y, int width, int height, ItemStack icon, Component narratedComponent, OnPress onPress, Tooltip onTooltip, Supplier<Boolean> stateSupplier) {
+    private TexturedToggleButton(int x, int y, int width, int height, ItemStack icon, Component narratedComponent, OnPress onPress, Tooltip onTooltip, Supplier<PauseMode> stateSupplier) {
         super(x, y, width, height, narratedComponent, onPress, onTooltip, stateSupplier);
         this.icon = icon;
     }
