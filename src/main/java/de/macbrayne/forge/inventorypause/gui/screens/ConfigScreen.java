@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.common.ConfigHelper;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
+import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.gui.ConfigButtonRegistration;
 import de.macbrayne.forge.inventorypause.gui.components.ButtonInfo;
 import de.macbrayne.forge.inventorypause.gui.components.TexturedToggleButton;
@@ -80,18 +81,18 @@ public class ConfigScreen extends Screen {
 	public int createNonTexturedButtons(int x0, int y, int width, int height) {
 		int buttonWidth = width / 2 - 2;
 		this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.inventory"), (button) -> {
-			config.abilities.pauseInventory = !config.abilities.pauseInventory;
-		}, Tooltip.create(Component.empty()), () -> config.abilities.pauseInventory));
+			config.abilities.pauseInventory = PauseMode.getNext(config.abilities.pauseInventory);
+		}, (button) -> button.appendTooltipTo(Component.empty()), () -> config.abilities.pauseInventory));
 		this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.creativeInventory"), (button) -> {
-			config.abilities.pauseCreativeInventory = !config.abilities.pauseCreativeInventory;
-		}, Tooltip.create(Component.empty()), () -> config.abilities.pauseCreativeInventory));
+			config.abilities.pauseCreativeInventory = PauseMode.getNext(config.abilities.pauseCreativeInventory);
+		}, (button) -> button.appendTooltipTo(Component.empty()), () -> config.abilities.pauseCreativeInventory));
 		y += totalSize;
 		this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.death"), (button) -> {
-			config.abilities.pauseDeath = !config.abilities.pauseDeath;
-		}, Tooltip.create(Component.empty()), () -> config.abilities.pauseDeath));
+			config.abilities.pauseDeath = PauseMode.getNext(config.abilities.pauseDeath);
+		}, (button) -> button.appendTooltipTo(Component.empty()), () -> config.abilities.pauseDeath));
 		this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.gameModeSwitcher"), (button) -> {
-			config.abilities.pauseGameModeSwitcher = !config.abilities.pauseGameModeSwitcher;
-		}, Tooltip.create(Component.empty()), () -> config.abilities.pauseGameModeSwitcher));
+			config.abilities.pauseGameModeSwitcher = PauseMode.getNext(config.abilities.pauseGameModeSwitcher);
+		}, (button) -> button.appendTooltipTo(Component.empty()), () -> config.abilities.pauseGameModeSwitcher));
 		y += totalSize;
 		return y;
 	}
@@ -99,13 +100,13 @@ public class ConfigScreen extends Screen {
 	public int createGeneralButtons(int x0, int y, int width, int height) {
 		int buttonWidth = width / 2 - 2;
 		this.addRenderableWidget(new ToggleButton(x0, y, width, height,
-				Component.translatable("menu.inventorypause.settings.enabled"),  button -> config.enabled = !config.enabled, Tooltip.create(Component.translatable("menu.inventorypause.settings.enabled.tooltip")), () -> config.enabled));
+				Component.translatable("menu.inventorypause.settings.enabled"),  button -> config.enabled = !config.enabled, Tooltip.create(Component.translatable("menu.inventorypause.settings.enabled.tooltip")), () -> PauseMode.fromBoolean(config.enabled)));
 		y += totalSize;
 		this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height,
-				Component.translatable("menu.inventorypause.settings.disableSaving"),  button -> config.disableSaving = !config.disableSaving, Tooltip.create(Component.translatable("menu.inventorypause.settings.disableSaving.tooltip")), () -> !config.disableSaving));
+				Component.translatable("menu.inventorypause.settings.disableSaving"),  button -> config.disableSaving = !config.disableSaving, Tooltip.create(Component.translatable("menu.inventorypause.settings.disableSaving.tooltip")), () -> PauseMode.fromBoolean(!config.disableSaving)));
 		this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.pauseSounds"), (button) -> {
 			config.pauseSounds = !config.pauseSounds;
-		}, Tooltip.create(Component.translatable("menu.inventorypause.settings.pauseSounds.tooltip")), () -> config.pauseSounds));
+		}, Tooltip.create(Component.translatable("menu.inventorypause.settings.pauseSounds.tooltip")), () -> PauseMode.fromBoolean(config.pauseSounds)));
 		y += totalSize;
 		return y;
 	}

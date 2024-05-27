@@ -6,6 +6,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.common.ConfigHelper;
+import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
 import de.macbrayne.forge.inventorypause.gui.screens.ConfigScreen;
 import net.minecraft.client.Minecraft;
@@ -45,12 +46,16 @@ public class ForgeEventBus {
             Screen screen = event.getScreen();
             var name = screen.getClass().getName();
 
-            if(getScreenDictionary().handleScreen(screen.getClass())) {
+            if(getScreenDictionary().handleScreen(screen.getClass()) != PauseMode.OFF) {
                 Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.alreadyCovered"));
                 return;
             }
             if(MOD_CONFIG.modCompat.customScreens.contains(name)) {
                 Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.duplicate"));
+                return;
+            }
+            if(screen.isPauseScreen()) {
+                Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.pausedScreen"));
                 return;
             }
             MOD_CONFIG.modCompat.customScreens.add(name);

@@ -6,6 +6,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import de.macbrayne.forge.inventorypause.common.PauseMode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -57,7 +58,7 @@ public class GuiUtils {
 		RenderSystem.applyModelViewMatrix();
 	}
 
-	public static Button.OnPress getTogglePress(Supplier<Boolean> supplier, Consumer<Boolean> consumer) {
-		return button -> consumer.accept(!supplier.get());
+	public static Button.OnPress getTogglePress(Supplier<PauseMode> supplier, Consumer<PauseMode> consumer) {
+		return button -> consumer.accept(PauseMode.getNext(supplier.get()));
 	}
 }

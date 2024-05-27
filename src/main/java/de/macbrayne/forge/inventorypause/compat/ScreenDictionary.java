@@ -2,37 +2,34 @@
 
 package de.macbrayne.forge.inventorypause.compat;
 
+import de.macbrayne.forge.inventorypause.common.PauseMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
 
 public class ScreenDictionary {
     private Class<?>[] cachedClasses = new Class[0];
-    private final Map<Class<?>, BooleanSupplier> configProviderMap = new HashMap<>();
+    private final Map<Class<?>, Supplier<PauseMode>> configProviderMap = new HashMap<>();
     private boolean dirty;
 
     private Class<?> lastScreen = null;
-    private boolean lastResult = false;
+    private PauseMode lastResult = PauseMode.OFF;
 
-    public void register(@NotNull Class<?> aClass, @NotNull BooleanSupplier configProvider) {
+    public void register(@NotNull Class<?> aClass, @NotNull Supplier<PauseMode> configProvider) {
         configProviderMap.put(aClass, configProvider);
         dirty = true;
     }
 
-    public void register(Class<?> aClass, @NotNull BooleanSupplier configProvider, @NotNull BooleanSupplier customConfigProvider) {
-        register(aClass, () -> configProvider.getAsBoolean() && customConfigProvider.getAsBoolean());
-    }
-
-    public boolean handleScreen(@NotNull Class<?> screenClass) {
+    public PauseMode handleScreen(@NotNull Class<?> screenClass) {
         // Cache keySet to improve performance
         if(dirty || cachedClasses == null) {
             cachedClasses = configProviderMap.keySet().toArray(new Class[0]);
+            dirty = false;
         }
-        dirty = false;
 
         // Cache last screen & result to avoid the stream operation
         if(screenClass == lastScreen) {
@@ -41,7 +38,7 @@ public class ScreenDictionary {
 
         Optional<Class<?>> registeredParentClass = getRegisteredParentClass(screenClass);
         lastScreen = screenClass;
-        lastResult = registeredParentClass.filter(aClass -> configProviderMap.get(aClass).getAsBoolean()).isPresent();
+        lastResult = registeredParentClass.map(aClass -> configProviderMap.get(aClass).get()).orElse(PauseMode.OFF);
         return lastResult;
     }
 

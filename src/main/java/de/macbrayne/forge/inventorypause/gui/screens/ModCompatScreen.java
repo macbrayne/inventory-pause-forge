@@ -5,6 +5,7 @@ package de.macbrayne.forge.inventorypause.gui.screens;
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
+import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.gui.components.ToggleButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
@@ -42,10 +43,10 @@ public class ModCompatScreen extends Screen {
             xDone += width / 2 + 2;
             this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.modCompat.debug_mode"), p_93751_ -> {
                 InventoryPause.MOD_CONFIG.debug = !InventoryPause.MOD_CONFIG.debug;
-            }, Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.debug_mode.tooltip")), () -> InventoryPause.MOD_CONFIG.debug));
+            }, Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.debug_mode.tooltip")), () -> PauseMode.fromBoolean(InventoryPause.MOD_CONFIG.debug)));
         }
         this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
-            this.minecraft.setScreen(lastScreen);
+            onClose();
             this.modCompatList.saveChanges();
         }).pos (xDone, y).size(buttonWidth, height).build());
     }

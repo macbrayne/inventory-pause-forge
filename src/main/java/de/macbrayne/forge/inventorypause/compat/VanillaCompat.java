@@ -22,16 +22,16 @@ public class VanillaCompat {
         dict.register(ContainerScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseChest);
 
         // Additional GUIs
-        dict.register(AnvilScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseAnvil);
-        dict.register(BeaconScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseBeacon);
-        dict.register(DispenserScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseDispenser);
-        dict.register(BrewingStandScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseBrewingStand);
-        dict.register(HopperScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseHopper);
-        dict.register(CartographyTableScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseCartographyTable);
-        dict.register(StonecutterScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.additionalGUIs.pauseStonecutter);
+        dict.register(AnvilScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseAnvil);
+        dict.register(BeaconScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseBeacon);
+        dict.register(DispenserScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseDispenser);
+        dict.register(BrewingStandScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseBrewingStand);
+        dict.register(HopperScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseHopper);
+        dict.register(CartographyTableScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseCartographyTable);
+        dict.register(StonecutterScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseStonecutter);
 
         // World GUIs
-        dict.register(HorseInventoryScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.worldGUIs.pauseHorse);
-        dict.register(MerchantScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.worldGUIs.pauseMerchant);
+        dict.register(HorseInventoryScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseHorse);
+        dict.register(MerchantScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseMerchant);
     }
 }
