@@ -344,7 +344,15 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.numBox.setX(x);
             this.numBox.setY(y);
             this.numBox.setWidth(190 - 15);
-            this.numBox.render(guiGraphics, mouseX, mouseY, tickDelta);
+            this.numBox.render(guiGraphics, mouseX, mouseY, tickDelta);onEdit(this.numBox.getValue());
+        }
+
+        private void onEdit(String currentValue) {
+            if(currentValue.equals("20")) {
+                this.resetButton.active = false;
+            } else {
+                this.resetButton.active = true;
+            }
         }
 
         @Override
