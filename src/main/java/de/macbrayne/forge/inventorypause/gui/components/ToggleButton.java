@@ -17,21 +17,29 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ToggleButton extends Button {
-    private static final Component TEXT_YES = CommonComponents.OPTION_ON.plainCopy().withStyle(ChatFormatting.DARK_AQUA);
+    private static final Component TEXT_YES = CommonComponents.OPTION_ON.plainCopy().withStyle(ChatFormatting.DARK_GREEN);
     private static final Component TEXT_NO = CommonComponents.OPTION_OFF.plainCopy().withStyle(ChatFormatting.RED);
-    private static final Component TEXT_SLOWMO = CommonComponents.OPTION_ON.plainCopy().withStyle(ChatFormatting.YELLOW);
-    private final @NotNull Supplier<PauseMode> stateSupplier;
+    private static final Component TEXT_SLOWMO = Component.translatable("menu.inventorypause.slowmo").withStyle(ChatFormatting.YELLOW);
+    public final @NotNull Supplier<PauseMode> stateSupplier;
+    private final Function<ToggleButton, Tooltip> tooltip;
 
     public ToggleButton(int x, int y, int width, int height, Component text, OnPress onPress, Tooltip tooltip, @NotNull Supplier<PauseMode> stateSupplier) {
-        super(new Button.Builder(text, onPress).pos(x, y).size(width, height).tooltip(tooltip));
+        this(x, y, width, height, text, onPress, button -> tooltip, stateSupplier);
+    }
+
+    public ToggleButton(int x, int y, int width, int height, Component text, OnPress onPress, Function<ToggleButton, Tooltip> tooltip, @NotNull Supplier<PauseMode> stateSupplier) {
+        super(new Button.Builder(text, onPress).pos(x, y).size(width, height));
         this.stateSupplier = stateSupplier;
+        this.tooltip = tooltip;
     }
 
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
+        setTooltip(tooltip.apply(this));
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, this.alpha);
         RenderSystem.enableBlend();
         RenderSystem.enableDepthTest();
@@ -62,14 +70,29 @@ public class ToggleButton extends Button {
     }
 
     protected int getYImage(boolean isHovered) {
-        int i = 0;
-        if (stateSupplier.get() == PauseMode.ON) {
-            i += 2;
+        if (!this.active) {
+            return 0;
         }
         if (isHovered) {
-            i += 1;
+            return 4;
         }
+        return switch (stateSupplier.get()) {
+            case OFF -> 1;
+            case ON -> 2;
+            case SLOWMO -> 3;
+        };
+    }
 
-        return i;
+    public Tooltip appendTooltipTo(Component text) {
+        String key = "menu.inventorypause.currentState." + stateSupplier.get().getSerialisation();
+        Component addendum = switch (stateSupplier.get()) {
+            case OFF -> Component.translatable(key, TEXT_NO);
+            case SLOWMO -> Component.translatable(key, TEXT_SLOWMO);
+            case ON -> Component.translatable(key, TEXT_YES);
+        };
+        if(text.getString().isEmpty()) {
+            return Tooltip.create(text.plainCopy().append(addendum));
+        }
+        return Tooltip.create(text.plainCopy().append("\n\n").append(addendum));
     }
 }
