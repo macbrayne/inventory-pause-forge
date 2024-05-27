@@ -29,12 +29,12 @@ public class ConfigHelper {
     }
 
     public static ModConfig deserialize() {
-        LOGGER.info("Trying to load config from file");
+        LOGGER.debug("Trying to load config from file");
         Path path = FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml");
         if(Files.exists(path)) {
             try {
                 ModConfig config = new Toml().read(path.toFile()).to(ModConfig.class);
-                LOGGER.info("Successfully loaded config from file");
+                LOGGER.debug("Successfully loaded config from file");
                 return config;
             } catch (Exception ignored) {
                 try {
@@ -49,7 +49,14 @@ public class ConfigHelper {
                 }
             }
         } else {
-            return new ModConfig();
+            LOGGER.warn("No config file found, creating new one");
+            ModConfig config = new ModConfig();
+            try {
+                writer.write(config, FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml").toFile());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return config;
         }
     }
 }
