@@ -14,12 +14,12 @@ public class ScreenHelper {
 
     public static boolean isConfiguredScreen(@Nullable Screen screen) {
         return screen != null && InventoryPause.MOD_CONFIG.enabled &&
-                (modDictionary.handleScreen(screen.getClass()) || isCustomMenu(screen) || isCompatScreen(screen));
+                (modDictionary.handleScreen(screen.getClass()) != PauseMode.OFF || isCustomMenu(screen) || isCompatScreen(screen));
     }
 
 
     public static boolean isPauseScreen(Screen caller) {
-        if (ScreenHelper.isCompatScreen(caller) && ForgeEventBus.timeUntilCompatTick == 1) {
+        if ((ScreenHelper.isCompatScreen(caller) || modDictionary.handleScreen(caller.getClass()) == PauseMode.SLOWMO) && ForgeEventBus.timeUntilCompatTick == 1) {
             return false;
         }
         if(ScreenHelper.isConfiguredScreen(caller)) {

@@ -18,19 +18,19 @@ public class ScreenDictionary {
     private boolean dirty;
 
     private Class<?> lastScreen = null;
-    private boolean lastResult = false;
+    private PauseMode lastResult = PauseMode.OFF;
 
     public void register(@NotNull Class<?> aClass, @NotNull Supplier<PauseMode> configProvider) {
         configProviderMap.put(aClass, configProvider);
         dirty = true;
     }
 
-    public boolean handleScreen(@NotNull Class<?> screenClass) {
+    public PauseMode handleScreen(@NotNull Class<?> screenClass) {
         // Cache keySet to improve performance
         if(dirty || cachedClasses == null) {
             cachedClasses = configProviderMap.keySet().toArray(new Class[0]);
+            dirty = false;
         }
-        dirty = false;
 
         // Cache last screen & result to avoid the stream operation
         if(screenClass == lastScreen) {
@@ -39,7 +39,7 @@ public class ScreenDictionary {
 
         Optional<Class<?>> registeredParentClass = getRegisteredParentClass(screenClass);
         lastScreen = screenClass;
-        lastResult = registeredParentClass.filter(aClass -> configProviderMap.get(aClass).get().isActive()).isPresent();
+        lastResult = registeredParentClass.map(aClass -> configProviderMap.get(aClass).get()).orElse(PauseMode.OFF);
         return lastResult;
     }
 

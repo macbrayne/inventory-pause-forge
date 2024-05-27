@@ -1,5 +1,9 @@
 {
   "menu.inventorypause.settings.title": "Inventory Pause Config",
+  "menu.inventorypause.slowmo": "SLOW",
+  "menu.inventorypause.currentState.false": "%s: Don't pause the game",
+  "menu.inventorypause.currentState.slowmo": "%s: Slow the game down",
+  "menu.inventorypause.currentState.true": "%s: Pause the game",
 
   "menu.inventorypause.settings.mod_compat_options": "Mod Compat Options",
   "menu.inventorypause.settings.mod_compat_options.tooltip": "Configure mod compat options, e.g. the identifiers of the modded inventories to pause",
@@ -51,6 +55,7 @@
   "chat.inventorypause.addToList.action": "Inventory Pause: Added current screen to the list of custom paused screens",
   "chat.inventorypause.addToList.error.duplicate": "Inventory Pause: Current screen is already in the the list of custom paused screens",
   "chat.inventorypause.addToList.error.alreadyCovered": "Inventory Pause: Current screen is already covered by the config. To add this screen first disable that config option.",
+  "chat.inventorypause.addToList.error.pausedScreen": "Inventory Pause: Current screen is already pausing the game",
 
   "key.categories.inventorypause.main": "Inventory Pause Helpers",
   "key.inventorypause.openSettings": "Open Settings",
