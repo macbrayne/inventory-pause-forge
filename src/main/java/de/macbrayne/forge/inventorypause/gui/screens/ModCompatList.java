@@ -323,11 +323,22 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.numBox.setMaxLength(3);
             this.numBox.setValue(String.valueOf(valueSupplier.getAsInt()));
             this.numBox.setFilter(s -> s.isEmpty() || (NumberUtils.isParsable(s) && !s.contains("-")));
+            this.numBox.setResponder(this::onEdit);
 
             this.resetButton = new HoverButton(new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.reset"), (button) -> numBox.setValue(String.valueOf(defaultValue)))
                     .size(40, 20).createNarration(p_253695_ -> Component.translatable("narrator.controls.reset", defaultValue))
                     .tooltip(Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.reset.tooltip"))));
+            onEdit(this.numBox.getValue());
         }
+
+        private void onEdit(String currentValue) {
+            if(currentValue.equals("20")) {
+                this.resetButton.active = false;
+            } else {
+                this.resetButton.active = true;
+            }
+        }
+
 
         @Override
         public List<? extends NarratableEntry> narratables() {
@@ -346,15 +357,6 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.numBox.setWidth(190 - 15);
             this.numBox.render(guiGraphics, mouseX, mouseY, tickDelta);onEdit(this.numBox.getValue());
         }
-
-        private void onEdit(String currentValue) {
-            if(currentValue.equals("20")) {
-                this.resetButton.active = false;
-            } else {
-                this.resetButton.active = true;
-            }
-        }
-
         @Override
         public void setFocused(boolean state) {
             super.setFocused(state);
