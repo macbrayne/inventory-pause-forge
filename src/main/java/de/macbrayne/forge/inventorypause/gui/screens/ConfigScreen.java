@@ -140,8 +140,8 @@ public class ConfigScreen extends Screen {
 		}
 	}
 
-	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-		super.render(guiGraphics, mouseX, mouseY, partialTick);
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
+		super.render(guiGraphics, mouseX, mouseY, tickDelta);
 		guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 15, 16777215);
 
 		guiGraphics.drawString(this.font, Component.translatable("menu.inventorypause.settings.title.pause"), xText, yText, 16777215);

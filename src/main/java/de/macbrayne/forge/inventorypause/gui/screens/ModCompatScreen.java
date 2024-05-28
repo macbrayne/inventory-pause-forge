@@ -53,9 +53,9 @@ public class ModCompatScreen extends Screen {
         }).pos (xDone, y).size(buttonWidth, height).build());
     }
 
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        super.render(guiGraphics, mouseX, mouseY, partialTick);
-        this.modCompatList.render(guiGraphics, mouseX, mouseY, partialTick);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
+        super.render(guiGraphics, mouseX, mouseY, tickDelta);
+        this.modCompatList.render(guiGraphics, mouseX, mouseY, tickDelta);
         guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 8, 16777215);
     }
 

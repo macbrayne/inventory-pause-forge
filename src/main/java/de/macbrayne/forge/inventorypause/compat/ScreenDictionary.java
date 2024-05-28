@@ -16,6 +16,7 @@ public class ScreenDictionary {
     private Class<?>[] cachedClasses = new Class[0];
     private final Map<Class<?>, Supplier<PauseMode>> configProviderMap = new HashMap<>();
     private boolean dirty;
+
     private Class<?> lastScreen = null;
     private PauseMode lastResult = PauseMode.OFF;
 
@@ -29,6 +30,11 @@ public class ScreenDictionary {
         if(dirty || cachedClasses == null) {
             cachedClasses = configProviderMap.keySet().toArray(new Class[0]);
             dirty = false;
+        }
+
+        // Cache last screen & result to avoid the stream operation
+        if(screenClass == lastScreen) {
+            return lastResult;
         }
 
         Optional<Class<?>> registeredParentClass = getRegisteredParentClass(screenClass);
