@@ -4,7 +4,6 @@ package de.macbrayne.forge.inventorypause.common;
 
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.compat.ScreenDictionary;
-import de.macbrayne.forge.inventorypause.events.ForgeEventBus;
 import net.minecraft.client.gui.screens.Screen;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
