@@ -3,6 +3,7 @@
 package de.macbrayne.forge.inventorypause.gui;
 
 import de.macbrayne.forge.inventorypause.common.ModConfig;
+import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.gui.components.ButtonInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -26,24 +27,22 @@ public class ConfigButtonRegistration {
             list.add(buildInfo(Items.CHEST, "pauseChest", () -> abilities.pauseChest, t -> abilities.pauseChest = t));
         }
         {
-            ModConfig.Abilities.AdditionalGUIs additionalGUIs = abilities.additionalGUIs;
-            list.add(buildInfo(Items.ANVIL, "pauseAnvil", () -> additionalGUIs.pauseAnvil, t -> additionalGUIs.pauseAnvil = t));
-            list.add(buildInfo(Items.BEACON, "pauseBeacon", () -> additionalGUIs.pauseBeacon, t -> additionalGUIs.pauseBeacon = t));
-            list.add(buildInfo(Items.DISPENSER, "pauseDispenser", () -> additionalGUIs.pauseDispenser, t -> additionalGUIs.pauseDispenser = t));
-            list.add(buildInfo(Items.BREWING_STAND, "pauseBrewingStand", () -> additionalGUIs.pauseBrewingStand, t -> additionalGUIs.pauseBrewingStand = t));
-            list.add(buildInfo(Items.HOPPER, "pauseHopper", () -> additionalGUIs.pauseHopper, t -> additionalGUIs.pauseHopper = t));
-            list.add(buildInfo(Items.CARTOGRAPHY_TABLE, "pauseCartographyTable", () -> additionalGUIs.pauseCartographyTable, t -> additionalGUIs.pauseCartographyTable = t));
-            list.add(buildInfo(Items.STONECUTTER, "pauseStonecutter", () -> additionalGUIs.pauseStonecutter, t -> additionalGUIs.pauseStonecutter = t));
+            list.add(buildInfo(Items.ANVIL, "pauseAnvil", () -> abilities.pauseAnvil, t -> abilities.pauseAnvil = t));
+            list.add(buildInfo(Items.BEACON, "pauseBeacon", () -> abilities.pauseBeacon, t -> abilities.pauseBeacon = t));
+            list.add(buildInfo(Items.DISPENSER, "pauseDispenser", () -> abilities.pauseDispenser, t -> abilities.pauseDispenser = t));
+            list.add(buildInfo(Items.BREWING_STAND, "pauseBrewingStand", () -> abilities.pauseBrewingStand, t -> abilities.pauseBrewingStand = t));
+            list.add(buildInfo(Items.HOPPER, "pauseHopper", () -> abilities.pauseHopper, t -> abilities.pauseHopper = t));
+            list.add(buildInfo(Items.CARTOGRAPHY_TABLE, "pauseCartographyTable", () -> abilities.pauseCartographyTable, t -> abilities.pauseCartographyTable = t));
+            list.add(buildInfo(Items.STONECUTTER, "pauseStonecutter", () -> abilities.pauseStonecutter, t -> abilities.pauseStonecutter = t));
         }
         {
-            ModConfig.Abilities.WorldGUIs worldGUIs = abilities.worldGUIs;
-            list.add(buildInfo(Items.HORSE_SPAWN_EGG, "pauseHorse", () -> worldGUIs.pauseHorse, t -> worldGUIs.pauseHorse = t));
-            list.add(buildInfo(Items.VILLAGER_SPAWN_EGG, "pauseMerchant", () -> worldGUIs.pauseMerchant, t -> worldGUIs.pauseMerchant = t));
+            list.add(buildInfo(Items.HORSE_SPAWN_EGG, "pauseHorse", () -> abilities.pauseHorse, t -> abilities.pauseHorse = t));
+            list.add(buildInfo(Items.VILLAGER_SPAWN_EGG, "pauseMerchant", () -> abilities.pauseMerchant, t -> abilities.pauseMerchant = t));
         }
         return list;
     }
 
-    private ButtonInfo buildInfo(Item item, String tooltip, Supplier<Boolean> supplier, Consumer<Boolean> consumer) {
+    private ButtonInfo buildInfo(Item item, String tooltip, Supplier<PauseMode> supplier, Consumer<PauseMode> consumer) {
         return new ButtonInfo(new ItemStack(item), Component.translatable("menu.inventorypause.settings.tooltip." + tooltip), supplier, consumer);
     }
 }
