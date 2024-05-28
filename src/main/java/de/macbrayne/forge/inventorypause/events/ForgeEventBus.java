@@ -7,14 +7,11 @@ import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.common.ConfigHelper;
 import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
-import de.macbrayne.forge.inventorypause.gui.screens.ConfigScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.SubscribeEvent;
+import net.minecraft.server.ServerTickRateManager;
 import net.neoforged.neoforge.client.event.ScreenEvent;
-import net.neoforged.neoforge.event.TickEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,11 +20,28 @@ import static de.macbrayne.forge.inventorypause.InventoryPause.getScreenDictiona
 
 public class ForgeEventBus {
     private static final Logger LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
-    public static int timeUntilCompatTick = MOD_CONFIG.modCompat.timeBetweenCompatTicks;
+    public static boolean slowmo = false;
+    public static float originalTickRate;
 
     public static void onOpenGUI(ScreenEvent.Opening event) {
+        if(Minecraft.getInstance().isSingleplayer()) {
+            if(InventoryPause.getScreenDictionary().handleScreen(event.getNewScreen().getClass()) == PauseMode.SLOWMO) {
+                ServerTickRateManager servertickratemanager = Minecraft.getInstance().getSingleplayerServer().tickRateManager();
+                originalTickRate = servertickratemanager.tickrate();
+                servertickratemanager.setTickRate(20f / MOD_CONFIG.modCompat.timeBetweenCompatTicks);
+                LOGGER.error("Setting tickrate to " + 20f / MOD_CONFIG.modCompat.timeBetweenCompatTicks);
+                slowmo = true;
+            }
+        }
         if (MOD_CONFIG.debug && !ScreenHelper.isConfiguredScreen(event.getScreen())) {
             LOGGER.info(event.getScreen().getClass().getName());
+        }
+    }
+
+    public static void onCloseGUI(ScreenEvent.Closing event) {
+        if(slowmo) {
+            Minecraft.getInstance().getSingleplayerServer().tickRateManager().setTickRate(originalTickRate);
+            slowmo = false;
         }
     }
 
@@ -62,18 +76,6 @@ public class ForgeEventBus {
             MOD_CONFIG.modCompat.customScreens.add(name);
             ConfigHelper.serialize();
             Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.action"));
-        }
-    }
-
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if(event.phase == TickEvent.Phase.END) {
-            if (timeUntilCompatTick > 0 &&
-                    --timeUntilCompatTick == 0) {
-                timeUntilCompatTick = MOD_CONFIG.modCompat.timeBetweenCompatTicks;
-            }
-            while (ModEventBus.OPEN_SETTINGS.get().consumeClick()) {
-                Minecraft.getInstance().setScreen(new ConfigScreen(Minecraft.getInstance().screen));
-            }
         }
     }
 }

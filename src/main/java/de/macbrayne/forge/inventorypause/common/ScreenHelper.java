@@ -19,7 +19,7 @@ public class ScreenHelper {
 
 
     public static boolean isPauseScreen(Screen caller) {
-        if ((ScreenHelper.isCompatScreen(caller) || modDictionary.handleScreen(caller.getClass()) == PauseMode.SLOWMO) && ForgeEventBus.timeUntilCompatTick == 1) {
+        if ((ScreenHelper.isCompatScreen(caller) || modDictionary.handleScreen(caller.getClass()) == PauseMode.SLOWMO)) {
             return false;
         }
         if(ScreenHelper.isConfiguredScreen(caller)) {
