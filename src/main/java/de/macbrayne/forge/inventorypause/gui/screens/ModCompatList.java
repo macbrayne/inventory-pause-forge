@@ -386,16 +386,17 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
                 valueConsumer.accept(value);
             }
         }
-    }
-    public Tooltip getTooltip() {
-        Locale locale = Minecraft.getInstance().getLanguageManager().getJavaLocale();
-        float valueInHertz = 0.00f;
-        if(!numBox.getValue().isEmpty()) {
-            valueInHertz = Integer.parseInt(numBox.getValue()) / 20f;
+
+        public Tooltip getTooltip() {
+            Locale locale = Minecraft.getInstance().getLanguageManager().getJavaLocale();
+            float valueInHertz = 0.00f;
+            if(!numBox.getValue().isEmpty()) {
+                valueInHertz = Integer.parseInt(numBox.getValue()) / 20f;
+            }
+            return Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks.tooltip",
+                    String.format(locale, "%.2f", valueInHertz),
+                    String.format(locale, "%.2f", 0.05)));
         }
-        return Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks.tooltip",
-                String.format(locale, "%.2f", valueInHertz),
-                String.format(locale, "%.2f", 0.05)));
     }
 
     @Override
