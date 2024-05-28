@@ -391,13 +391,13 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
         public Component getTooltip() {
             Locale locale = Minecraft.getInstance().getLanguageManager().getJavaLocale();
-            float valueInHertz = 0.00f;
+            float valueInHertz = 20f;
             if(!numBox.getValue().isEmpty()) {
-                valueInHertz = Integer.parseInt(numBox.getValue()) / 20f;
+                valueInHertz = 20f / Integer.parseInt(numBox.getValue());
             }
             return Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks.tooltip",
                     String.format(locale, "%.2f", valueInHertz),
-                    String.format(locale, "%.2f", 0.05));
+                    String.format(locale, "%.2f", (1 - 1 / (20f / valueInHertz))  * 100));
         }
     }
 

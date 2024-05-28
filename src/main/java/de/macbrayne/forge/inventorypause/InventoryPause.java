@@ -8,6 +8,7 @@ import de.macbrayne.forge.inventorypause.compat.ScreenDictionary;
 import de.macbrayne.forge.inventorypause.events.ForgeEventBus;
 import de.macbrayne.forge.inventorypause.events.ModEventBus;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.fml.IExtensionPoint;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
@@ -32,9 +33,9 @@ public class InventoryPause {
             FMLJavaModLoadingContext.get().getModEventBus().addListener(ModEventBus::clientSetup);
             FMLJavaModLoadingContext.get().getModEventBus().addListener(ModEventBus::registerBindings);
             FMLJavaModLoadingContext.get().getModEventBus().addListener(ModEventBus::clientReload);
-            NeoForge.EVENT_BUS.addListener(ForgeEventBus::onOpenGUI);
+            NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, ForgeEventBus::onOpenGUI);
+            NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, ForgeEventBus::onCloseGUI);
             NeoForge.EVENT_BUS.addListener(ForgeEventBus::onGUIDrawPost);
-            NeoForge.EVENT_BUS.addListener(ForgeEventBus::onClientTick);
             NeoForge.EVENT_BUS.addListener(ForgeEventBus::onScreenEvent);
         } else {
             LOGGER.error("Not on client, disabling mod");
