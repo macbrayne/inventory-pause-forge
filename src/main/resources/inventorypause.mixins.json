@@ -8,7 +8,8 @@
   ],
   "client": [
     "IntegratedServerMixin",
-    "MinecraftMixin"
+    "MinecraftMixin",
+    "mojank.TooltipMixin"
   ],
   "injectors": {
     "defaultRequire": 1

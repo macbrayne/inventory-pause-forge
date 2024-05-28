@@ -3,7 +3,6 @@
 package de.macbrayne.forge.inventorypause.gui.components;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.gui.TriStateSprites;
 import net.minecraft.ChatFormatting;
@@ -11,15 +10,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ToggleButton extends Button {
@@ -27,21 +23,21 @@ public class ToggleButton extends Button {
     private static final Component TEXT_NO = CommonComponents.OPTION_OFF.plainCopy().withStyle(ChatFormatting.RED);
     private static final Component TEXT_SLOWMO = Component.translatable("menu.inventorypause.slowmo").withStyle(ChatFormatting.YELLOW);
     public final @NotNull Supplier<PauseMode> stateSupplier;
-    private final Function<ToggleButton, Tooltip> tooltip;
+    private final TriStateTooltip tooltip;
 
     public ToggleButton(int x, int y, int width, int height, Component text, OnPress onPress, Tooltip tooltip, @NotNull Supplier<PauseMode> stateSupplier) {
-        this(x, y, width, height, text, onPress, button -> tooltip, stateSupplier);
+        this(x, y, width, height, text, onPress, new TriStateTooltip(tooltip, tooltip, tooltip), stateSupplier);
     }
 
-    public ToggleButton(int x, int y, int width, int height, Component text, OnPress onPress, Function<ToggleButton, Tooltip> tooltip, @NotNull Supplier<PauseMode> stateSupplier) {
+    public ToggleButton(int x, int y, int width, int height, Component text, OnPress onPress, TriStateTooltip tooltip, @NotNull Supplier<PauseMode> stateSupplier) {
         super(new Button.Builder(text, onPress).pos(x, y).size(width, height));
         this.stateSupplier = stateSupplier;
         this.tooltip = tooltip;
-        setTooltip(tooltip.apply(this));
     }
 
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
+        setTooltip(tooltip.get(stateSupplier.get()));
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, this.alpha);
         RenderSystem.enableBlend();
         RenderSystem.enableDepthTest();
@@ -69,9 +65,9 @@ public class ToggleButton extends Button {
         return wrapDefaultNarrationMessage(getText());
     }
 
-    public Tooltip appendTooltipTo(Component text) {
-        String key = "menu.inventorypause.currentState." + stateSupplier.get().getSerialisation();
-        Component addendum = switch (stateSupplier.get()) {
+    public static Tooltip appendTooltipTo(Component text, PauseMode mode) {
+        String key = "menu.inventorypause.currentState." + mode.getSerialisation();
+        Component addendum = switch (mode) {
             case OFF -> Component.translatable(key, TEXT_NO);
             case SLOWMO -> Component.translatable(key, TEXT_SLOWMO);
             case ON -> Component.translatable(key, TEXT_YES);
@@ -80,5 +76,21 @@ public class ToggleButton extends Button {
             return Tooltip.create(text.plainCopy().append(addendum));
         }
         return Tooltip.create(text.plainCopy().append("\n\n").append(addendum));
+    }
+
+    public record TriStateTooltip(Tooltip tooltipOn, Tooltip tooltipSlowmo, Tooltip tooltipOff) {
+        public static TriStateTooltip withState(Component tooltipComponent) {
+            return new TriStateTooltip(appendTooltipTo(tooltipComponent, PauseMode.ON),
+                    appendTooltipTo(tooltipComponent, PauseMode.SLOWMO),
+                    appendTooltipTo(tooltipComponent, PauseMode.OFF));
+        }
+
+        public Tooltip get(PauseMode mode) {
+            return switch(mode) {
+                case ON -> tooltipOn;
+                case SLOWMO -> tooltipSlowmo;
+                case OFF -> tooltipOff;
+            };
+        }
     }
 }
