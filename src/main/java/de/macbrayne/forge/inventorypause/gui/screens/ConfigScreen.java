@@ -3,6 +3,7 @@
 package de.macbrayne.forge.inventorypause.gui.screens;
 
 import de.macbrayne.forge.inventorypause.InventoryPause;
+import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.gui.ConfigButtonRegistration;
 import de.macbrayne.forge.inventorypause.common.ConfigHelper;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
@@ -13,6 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -71,7 +73,7 @@ public class ConfigScreen extends Screen {
 			int column = i % numberOfColumns;
 			int row = i / numberOfColumns;
 			this.addRenderableWidget(new TexturedToggleButton(x0 + column * totalSize, y0 + row * totalSize, buttonSize, buttonSize,
-					Component.translatable("narrator.button.language"), info));
+					Component.empty(), info));
 		}
 		return y0 + (numberOfRows + 1) * totalSize;
 	}
@@ -79,18 +81,18 @@ public class ConfigScreen extends Screen {
 	public int createNonTexturedButtons(int x0, int y, int width, int height) {
 		int buttonWidth = width / 2 - 2;
 		this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.inventory"), (button) -> {
-			config.abilities.pauseInventory = !config.abilities.pauseInventory;
-		}, Tooltip.create(Component.empty()), () -> config.abilities.pauseInventory));
+			config.abilities.pauseInventory = PauseMode.getNext(config.abilities.pauseInventory);
+		}, (button) -> button.appendTooltipTo(Component.empty()), () -> config.abilities.pauseInventory));
 		this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.creativeInventory"), (button) -> {
-			config.abilities.pauseCreativeInventory = !config.abilities.pauseCreativeInventory;
-		}, Tooltip.create(Component.empty()), () -> config.abilities.pauseCreativeInventory));
+			config.abilities.pauseCreativeInventory = PauseMode.getNext(config.abilities.pauseCreativeInventory);
+		}, (button) -> button.appendTooltipTo(Component.empty()), () -> config.abilities.pauseCreativeInventory));
 		y += totalSize;
 		this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.death"), (button) -> {
-			config.abilities.pauseDeath = !config.abilities.pauseDeath;
-		}, Tooltip.create(Component.empty()), () -> config.abilities.pauseDeath));
+			config.abilities.pauseDeath = PauseMode.getNext(config.abilities.pauseDeath);
+		}, (button) -> button.appendTooltipTo(Component.empty()), () -> config.abilities.pauseDeath));
 		this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.gameModeSwitcher"), (button) -> {
-			config.abilities.pauseGameModeSwitcher = !config.abilities.pauseGameModeSwitcher;
-		}, Tooltip.create(Component.empty()), () -> config.abilities.pauseGameModeSwitcher));
+			config.abilities.pauseGameModeSwitcher = PauseMode.getNext(config.abilities.pauseGameModeSwitcher);
+		}, (button) -> button.appendTooltipTo(Component.empty()), () -> config.abilities.pauseGameModeSwitcher));
 		y += totalSize;
 		return y;
 	}
@@ -98,13 +100,13 @@ public class ConfigScreen extends Screen {
 	public int createGeneralButtons(int x0, int y, int width, int height) {
 		int buttonWidth = width / 2 - 2;
 		this.addRenderableWidget(new ToggleButton(x0, y, width, height,
-				Component.translatable("menu.inventorypause.settings.enabled"),  button -> config.enabled = !config.enabled, Tooltip.create(Component.translatable("menu.inventorypause.settings.enabled.tooltip")), () -> config.enabled));
+				Component.translatable("menu.inventorypause.settings.enabled"),  button -> config.enabled = !config.enabled, Tooltip.create(Component.translatable("menu.inventorypause.settings.enabled.tooltip")), () -> PauseMode.fromBoolean(config.enabled)));
 		y += totalSize;
 		this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height,
-				Component.translatable("menu.inventorypause.settings.disableSaving"),  button -> config.disableSaving = !config.disableSaving, Tooltip.create(Component.translatable("menu.inventorypause.settings.disableSaving.tooltip")), () -> !config.disableSaving));
+				Component.translatable("menu.inventorypause.settings.disableSaving"),  button -> config.disableSaving = !config.disableSaving, Tooltip.create(Component.translatable("menu.inventorypause.settings.disableSaving.tooltip")), () -> PauseMode.fromBoolean(!config.disableSaving)));
 		this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.pauseSounds"), (button) -> {
 			config.pauseSounds = !config.pauseSounds;
-		}, Tooltip.create(Component.translatable("menu.inventorypause.settings.pauseSounds.tooltip")), () -> config.pauseSounds));
+		}, Tooltip.create(Component.translatable("menu.inventorypause.settings.pauseSounds.tooltip")), () -> PauseMode.fromBoolean(config.pauseSounds)));
 		y += totalSize;
 		return y;
 	}
@@ -112,13 +114,30 @@ public class ConfigScreen extends Screen {
 	public void createSaveAndQuit(int x0, int y, int width, int height) {
 		int buttonWidth = width / 2 - 2;
 		this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_CANCEL, (p_96788_) -> {
-			this.minecraft.setScreen(lastScreen);
 			InventoryPause.MOD_CONFIG = ConfigHelper.deserialize();
+			onClose();
 		}).pos(x0, y).size(buttonWidth, height).build());
 		this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
-			this.minecraft.setScreen(lastScreen);
 			ConfigHelper.serialize();
+			onClose();
 		}).pos(x0 + width / 2 + 2, y).size(buttonWidth,height).build());
+	}
+
+	@Override
+	public void onClose() {
+		if(!ConfigHelper.deserialize().equals(InventoryPause.MOD_CONFIG)) {
+			this.minecraft.pushGuiLayer(new ConfirmScreen(userAccepted -> {
+				if (userAccepted) {
+					ConfigHelper.serialize();
+				} else {
+					InventoryPause.MOD_CONFIG = ConfigHelper.deserialize();
+				}
+				this.minecraft.popGuiLayer();
+				this.minecraft.setScreen(lastScreen);
+			}, Component.translatable("menu.inventorypause.settings.confirmation.title"), Component.translatable("menu.inventorypause.settings.confirmation.description")));
+		} else {
+			this.minecraft.setScreen(lastScreen);
+		}
 	}
 
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {

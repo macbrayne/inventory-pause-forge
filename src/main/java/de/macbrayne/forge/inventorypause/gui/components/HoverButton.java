@@ -19,7 +19,7 @@ public class HoverButton extends Button {
 
     @Override
     public Component getMessage() {
-        if(isHoveredOrFocused() && isActive()) {
+        if(isHoveredOrFocused()) {
             return hoverComponent;
         }
         return super.getMessage();

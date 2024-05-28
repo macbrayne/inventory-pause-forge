@@ -2,8 +2,10 @@
 
 package de.macbrayne.forge.inventorypause.events;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.common.ConfigHelper;
+import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
 import de.macbrayne.forge.inventorypause.gui.screens.ConfigScreen;
 import net.minecraft.client.Minecraft;
@@ -17,19 +19,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static de.macbrayne.forge.inventorypause.InventoryPause.MOD_CONFIG;
+import static de.macbrayne.forge.inventorypause.InventoryPause.getScreenDictionary;
 
 public class ForgeEventBus {
     private static final Logger LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
     public static int timeUntilCompatTick = MOD_CONFIG.modCompat.timeBetweenCompatTicks;
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onOpenGUI(ScreenEvent.Opening event) {
         if (MOD_CONFIG.debug && !ScreenHelper.isConfiguredScreen(event.getScreen())) {
             LOGGER.info(event.getScreen().getClass().getName());
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onGUIDrawPost(ScreenEvent.Render.Post event) {
         Screen screen = event.getScreen();
         while (ModEventBus.COPY_CLASS_NAME.get().consumeClick()) {
@@ -49,7 +50,29 @@ public class ForgeEventBus {
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onScreenEvent(ScreenEvent.KeyReleased.Post event) {
+        if(ModEventBus.COPY_CLASS_NAME.get().isActiveAndMatches(InputConstants.getKey(event.getKeyCode(), event.getScanCode()))) {
+            Screen screen = event.getScreen();
+            var name = screen.getClass().getName();
+
+            if(getScreenDictionary().handleScreen(screen.getClass()) != PauseMode.OFF) {
+                Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.alreadyCovered"));
+                return;
+            }
+            if(MOD_CONFIG.modCompat.customScreens.contains(name)) {
+                Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.duplicate"));
+                return;
+            }
+            if(screen.isPauseScreen()) {
+                Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.pausedScreen"));
+                return;
+            }
+            MOD_CONFIG.modCompat.customScreens.add(name);
+            ConfigHelper.serialize();
+            Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.action"));
+        }
+    }
+
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if(event.phase == TickEvent.Phase.END) {
             if (timeUntilCompatTick > 0 &&

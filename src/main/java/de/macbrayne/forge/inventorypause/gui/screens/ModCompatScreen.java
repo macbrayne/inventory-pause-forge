@@ -4,6 +4,7 @@ package de.macbrayne.forge.inventorypause.gui.screens;
 
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
+import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.gui.components.ToggleButton;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -33,6 +34,7 @@ public class ModCompatScreen extends Screen {
         modCompatList = new ModCompatList(this, minecraft);
         addWidget(modCompatList);
         createSaveAndQuit(this.width / 2 - 120, this.height - 20 - PADDING, 240, 20);
+        magicalSpecialHackyFocus(modCompatList);
     }
 
     public void createSaveAndQuit(int x0, int y, int width, int height) {
@@ -43,10 +45,10 @@ public class ModCompatScreen extends Screen {
             xDone += width / 2 + 2;
             this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.modCompat.debug_mode"), p_93751_ -> {
                 InventoryPause.MOD_CONFIG.debug = !InventoryPause.MOD_CONFIG.debug;
-            }, Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.debug_mode.tooltip")), () -> InventoryPause.MOD_CONFIG.debug));
+            }, Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.debug_mode.tooltip")), () -> PauseMode.fromBoolean(InventoryPause.MOD_CONFIG.debug)));
         }
         this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
-            this.minecraft.setScreen(lastScreen);
+            onClose();
             this.modCompatList.saveChanges();
         }).pos (xDone, y).size(buttonWidth, height).build());
     }
@@ -58,7 +60,7 @@ public class ModCompatScreen extends Screen {
     }
 
     @Override
-    public void magicalSpecialHackyFocus(@Nullable GuiEventListener guiEventListener) {
-        modCompatList.setFocused(guiEventListener);
+    public void onClose() {
+        this.minecraft.setScreen(lastScreen);
     }
 }

@@ -14,9 +14,7 @@ import net.minecraft.network.chat.Component;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
@@ -44,11 +42,11 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         ArrayList<String> modCustomClasses = new ArrayList<>(modCustomSupplier.get());
         for(int i = 0; i < modCustomClasses.size(); i++) {
             String aClass = modCustomClasses.get(i);
-            this.addEntry(new ModCompatList.CustomEntry(i, aClass));
+            this.addEntry(new ModCompatList.CustomEntry(aClass));
         }
         this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.customScreens.add"), addEntry -> button -> {
             int i = children().indexOf(addEntry);
-            children().add(i, new CustomEntry(modCustomSupplier.get().size(), newEntry));
+            children().add(i, new CustomEntry(newEntry));
             modCustomSupplier.get().add("New Entry");
         }));
 
@@ -63,13 +61,51 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         ArrayList<String> modCompatClasses = new ArrayList<>(modCompatSupplier.get());
         for(int i = 0; i < modCompatClasses.size(); i++) {
             String aClass = modCompatClasses.get(i);
-            this.addEntry(new ModCompatList.CompatEntry(i, aClass));
+            this.addEntry(new ModCompatList.CompatEntry(aClass));
         }
         this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens.add"), addEntry -> (button) -> {
             int i = children().indexOf(addEntry);
-            children().add(i, new CompatEntry(modCompatSupplier.get().size(), newEntry));
+            children().add(i, new CompatEntry(newEntry));
             modCustomSupplier.get().add("New Entry");
         }));
+    }
+
+    private <T extends Entry> Optional<T> getLastTypedEntry(Class<T> clazz) {
+        ListIterator<? extends Entry> iterator = children().listIterator(children().size());
+        while(iterator.hasPrevious()) {
+            var entry = iterator.previous();
+            if(clazz.isInstance(entry)) {
+                return Optional.of((T) entry);
+            }
+        }
+        return Optional.empty();
+    }
+
+    private <T extends Entry> OptionalInt getLocationOfLastTypedEntry(Class<T> clazz) {
+        Optional<T> lastTypedEntry = getLastTypedEntry(clazz);
+        if (lastTypedEntry.isEmpty()) {
+            return OptionalInt.empty();
+        }
+        return OptionalInt.of(ModCompatList.this.children().lastIndexOf(lastTypedEntry.get()));
+    }
+
+    private <T extends Entry> Optional<T> getFirstTypedEntry(Class<T> clazz) {
+        ListIterator<? extends Entry> iterator = children().listIterator();
+        while(iterator.hasNext()) {
+            var entry = iterator.next();
+            if(clazz.isInstance(entry)) {
+                return Optional.of((T) entry);
+            }
+        }
+        return Optional.empty();
+    }
+
+    private <T extends Entry> OptionalInt getLocationOfFirstTypedEntry(Class<T> clazz) {
+        Optional<T> firstTypedEntry = getFirstTypedEntry(clazz);
+        if (firstTypedEntry.isEmpty()) {
+            return OptionalInt.empty();
+        }
+        return OptionalInt.of(ModCompatList.this.children().indexOf(firstTypedEntry.get()));
     }
 
     @Override
@@ -85,11 +121,16 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     public class SectionEntry extends ModCompatList.Entry {
         final StringWidget title;
         final Component name;
+        private final Supplier<Tooltip> tooltipSupplier;
 
         public SectionEntry(Component name, Component tooltip) {
+            this(name, () -> Tooltip.create(tooltip));
+        }
+
+        public SectionEntry(Component name, Supplier<Tooltip> tooltipSupplier) {
             this.name = name;
             title = new StringWidget(ModCompatList.this.width, ModCompatList.this.height, name, minecraft.font).alignCenter();
-            title.setTooltip(Tooltip.create(tooltip));
+            this.tooltipSupplier = tooltipSupplier;
         }
 
         @Override
@@ -103,6 +144,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             title.setY(y);
             title.setWidth(entryWidth);
             title.setHeight(entryHeight);
+            title.setTooltip(tooltipSupplier.get());
             title.render(guiGraphics, mouseX, mouseY, tickDelta);
         }
 
@@ -144,32 +186,34 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
     }
 
-    public class ItemEntry extends ModCompatList.Entry implements Saveable {
-        private final int key;
-        private final String content;
+    public abstract class ItemEntry extends ModCompatList.Entry implements Saveable {
+        private final String configValue;
         private final EditBox editBox;
-        private final Button removeButton;
+        private final Button removeButton, moveButton;
         private final Supplier<List<String>> supplier;
 
-        public ItemEntry(int key, String content, Supplier<List<String>> supplier) {
-            this.key = key;
-            this.content = content;
+        public ItemEntry(String configValue, Supplier<List<String>> supplier, Button.CreateNarration moveButtonNarrationSupplier) {
+            this.configValue = configValue;
             this.supplier = supplier;
             this.removeButton = new HoverButton(new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.delete"), (button) -> {
                 ModCompatList.this.removeEntry(this);
                 removedEntries.add(this);
                 unfocusEntry();
-            }).size(20, 20).createNarration(p_253695_ -> Component.translatable("narrator.controls.reset", content)));
+            }).size(20, 20).createNarration(p_253695_ -> Component.translatable("narrator.inventorypause.settings.modCompat.delete", configValue)));
+            this.moveButton = new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.moveUp"), button -> moveItem()).size(20, 20)
+                    .createNarration(moveButtonNarrationSupplier).build();
             this.editBox = new EditBox(ModCompatList.this.minecraft.font, 0, 0, 180, 20, Component.empty());
             editBox.setMaxLength(128);
-            editBox.setValue(this.content);
+            editBox.setValue(this.configValue);
             editBox.setFilter(s -> !s.contains("-"));
         }
 
         @Override
         public List<? extends NarratableEntry> narratables() {
-            return ImmutableList.of(this.editBox, this.removeButton);
+            return ImmutableList.of(this.editBox, this.moveButton, this.removeButton);
         }
+
+        public abstract void moveItem();
 
         @Override
         public void setFocused(boolean state) {
@@ -179,7 +223,9 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             }
         }
 
-
+        protected Button getMoveButton() {
+            return moveButton;
+        }
 
         public void render(GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
             this.removeButton.setX(x + 190 + 10);
@@ -187,19 +233,35 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.removeButton.setWidth(20);
             this.removeButton.setHeight(20);
             this.removeButton.render(guiGraphics, mouseX, mouseY, tickDelta);
+            this.moveButton.setX(x + 190 - 10);
+            this.moveButton.setY(y);
+            this.moveButton.render(guiGraphics, mouseX, mouseY, tickDelta);
             this.editBox.setX(x);
             this.editBox.setY(y);
-            this.editBox.setWidth(195);
+            this.editBox.setWidth(195 - 20);
             this.editBox.render(guiGraphics, mouseX, mouseY, tickDelta);
         }
 
         public List<? extends GuiEventListener> children() {
-            return ImmutableList.of(this.editBox, this.removeButton);
+            return ImmutableList.of(this.editBox, this.moveButton, this.removeButton);
+        }
+
+        public String getConfigValue() {
+            return configValue;
+        }
+
+        public String getValue() {
+            return editBox.getValue();
         }
 
         public void save() {
-            if(!content.equals(this.editBox.getValue())) {
-                supplier.get().set(key, this.editBox.getValue());
+            if(!configValue.equals(this.editBox.getValue())) {
+                int index = supplier.get().indexOf(configValue);
+                if(index == -1) {
+                    supplier.get().add(this.editBox.getValue());
+                    return;
+                }
+                supplier.get().set(index, this.editBox.getValue());
             }
         }
 
@@ -207,15 +269,43 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
     public class CompatEntry extends ItemEntry {
 
-        public CompatEntry(int key, String content) {
-            super(key, content, modCompatSupplier);
+        public CompatEntry(String content) {
+            super(content, modCompatSupplier, p_253695_ -> Component.translatable("narrator.inventorypause.settings.modCompat.moveUp"));
+        }
+
+        @Override
+        public void moveItem() {
+            // If there is a custom entry, move the compat entry after the last compat entry, otherwise move it before the location of the first add entry
+            int newLocation = getLocationOfLastTypedEntry(CustomEntry.class).orElseGet(() -> getLocationOfFirstTypedEntry(AddEntry.class).orElseThrow() - 1) + 1;
+            // Add the converted entry to the backing config
+            modCustomSupplier.get().add(getValue());
+            // ...and remove the current entry from the backing config
+            modCompatSupplier.get().remove(getConfigValue());
+            // Add the entry to the new location
+            ModCompatList.this.children().add(newLocation, new ModCompatList.CustomEntry(getValue()));
+            // Finally remove this entry from the list
+            ModCompatList.this.children().remove(this);
         }
     }
 
     public class CustomEntry extends ItemEntry {
+        public CustomEntry(String content) {
+            super(content, modCustomSupplier, p_253695_ -> Component.translatable("narrator.inventorypause.settings.modCompat.moveDown"));
+            getMoveButton().setMessage(Component.translatable("menu.inventorypause.settings.modCompat.moveDown"));
+        }
 
-        public CustomEntry(int key, String content) {
-            super(key, content, modCustomSupplier);
+        @Override
+        public void moveItem() {
+            // If there is a compat entry, move the custom entry after the last compat entry, otherwise move it after the location of the last add entry
+            int newLocation = getLocationOfLastTypedEntry(CompatEntry.class).orElseGet(() -> getLocationOfLastTypedEntry(AddEntry.class).getAsInt() - 1) + 1;
+            // Add the converted entry to the backing config
+            modCompatSupplier.get().add(getValue());
+            // ...and remove the current entry from the backing config
+            modCustomSupplier.get().remove(getConfigValue());
+            // Add the entry to the new location
+            ModCompatList.this.children().add(newLocation, new ModCompatList.CompatEntry(getValue()));
+            // Finally remove this entry from the list
+            ModCompatList.this.children().remove(this);
         }
     }
 
@@ -259,6 +349,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
         @Override
         public void render(GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+            this.numBox.setTooltip(getTooltip());
             this.numBox.render(guiGraphics, mouseX, mouseY, tickDelta);
             this.resetButton.render(guiGraphics, mouseX, mouseY, tickDelta);
             this.resetButton.setX(x + 190 - 10);
@@ -268,6 +359,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.numBox.setY(y);
             this.numBox.setWidth(190 - 15);
             this.numBox.render(guiGraphics, mouseX, mouseY, tickDelta);
+
         }
 
         @Override
@@ -276,6 +368,17 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             if(getFocused() == numBox) {
                 numBox.setFocused(state);
             }
+        }
+
+        public Tooltip getTooltip() {
+            Locale locale = Minecraft.getInstance().getLanguageManager().getJavaLocale();
+            float valueInHertz = 0.00f;
+            if(!numBox.getValue().isEmpty()) {
+                valueInHertz = Integer.parseInt(numBox.getValue()) / 20f;
+            }
+            return Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks.tooltip",
+                    String.format(locale, "%.2f", valueInHertz),
+                    String.format(locale, "%.2f", 0.05)));
         }
 
         @Override
@@ -320,9 +423,8 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
                 saveable.save();
             }
         }
-        removedEntries.sort(Comparator.comparingInt((ItemEntry o) -> o.key).reversed());
         for(ItemEntry item : removedEntries) {
-            item.supplier.get().remove(item.key);
+            item.supplier.get().remove(item.getConfigValue());
         }
     }
 

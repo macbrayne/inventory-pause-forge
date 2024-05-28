@@ -28,29 +28,23 @@
 
 ![](https://media.giphy.com/media/mCJQCNkacCMGpUDj3h/giphy.gif)
 
-This small client-side mod supports pausing when opening the inventory, when dying, opening furnaces, crafting tables, shulker boxes and even has basic support for other mods.
+This small client-side mod supports pausing when opening the inventory, when dying, opening furnaces, crafting tables, shulker boxes and even has support for other mods.
 In case of incompatibilities try adding the modded screen to the list of "Compat mod class names".
 
 All features can be disabled individually inside the config menu (accessible via the Forge mod list).
 
 This mod is __client-side only__ and won't be active in LAN worlds or on servers.
 
-Current versions:
-- 1.16.5: 0.8.3
-- 1.17: 0.9.1
-- 1.18: 1.0.2
-- 1.19: 1.1.2
-- 1.19.3: 1.2
-- 1.19.4: 1.2.1
-- 1.20-1.20.1: 1.3
-- 1.20.2: 1.4
+Supported versions:
+- 1.19.4: 2.0.0
+- 1.20-1.20.1: 1.3.1
 - 1.20.3-1.20.4: 1.5.1
 
 ## [Releases](https://github.com/macbrayne/inventory-pause-forge/releases)
 
 Releases prior to 1.2 depend on [Cloth Config Forge](https://www.curseforge.com/minecraft/mc-mods/cloth-config-forge/).
 
-The mod is licensed under the [EUPL 1.2](LICENSE) apart from three files which are [MIT](LICENSE-MIT) licensed.
+The mod is licensed under the [EUPL 1.2](LICENSE).
 
 
 ## Tutorial: How to add custom screens
@@ -81,6 +75,23 @@ If you experience any problems (e.g. modded UI elements not working) try adding 
 Note: This mod will not be able to work on all types of screens due to technical limitations
 
 ## In-Game Config
+<details>
+<summary>2.0+ (click to expand)</summary>
+
+### Main Config
+![Ingame Config Mod Version 2.0.0 and up](https://user-images.githubusercontent.com/27809595/219973047-b3745ffa-a01b-4570-880b-886a27ecb72b.png)
+- Enable Mod: enables / disables every part of the mod apart from the debug overlay
+- Save on Pause: this can help if you experience lag spikes when quickly opening and closing inventories
+  Enable / disable pausing of specific inventories by clicking on the corresponding button
+
+### Mod Compat Options
+![Mod Compat Options Mod Version 2.0.0 and up](https://user-images.githubusercontent.com/27809595/219819318-6ca3852b-4e13-4fe0-957c-e27e556cc0fe.png)
+
+- Custom mod class names: List of custom screens which get paused
+- Compat mod class names: List of custom screens which don't get fully paused. They get ticked in regular intervals as specified in Time between compat ticks.
+- Time between compat ticks: Specifies how often (20 ticks = one second) screens listed in Compat mod class names are ticked
+- Enable Debug Mode: enables an overlay for easier mod compat configuration
+</details>
 <details>
 <summary>1.2+ (click to expand)</summary>
 
