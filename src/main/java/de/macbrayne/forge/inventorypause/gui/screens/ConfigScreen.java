@@ -82,17 +82,17 @@ public class ConfigScreen extends Screen {
 		int buttonWidth = width / 2 - 2;
 		this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.inventory"), (button) -> {
 			config.abilities.pauseInventory = PauseMode.getNext(config.abilities.pauseInventory);
-		}, (button) -> button.appendTooltipTo(Component.empty()), () -> config.abilities.pauseInventory));
+		}, ToggleButton.TriStateTooltip.withState(Component.empty()), () -> config.abilities.pauseInventory));
 		this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.creativeInventory"), (button) -> {
 			config.abilities.pauseCreativeInventory = PauseMode.getNext(config.abilities.pauseCreativeInventory);
-		}, (button) -> button.appendTooltipTo(Component.empty()), () -> config.abilities.pauseCreativeInventory));
+		}, ToggleButton.TriStateTooltip.withState(Component.empty()), () -> config.abilities.pauseCreativeInventory));
 		y += totalSize;
 		this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.death"), (button) -> {
 			config.abilities.pauseDeath = PauseMode.getNext(config.abilities.pauseDeath);
-		}, (button) -> button.appendTooltipTo(Component.empty()), () -> config.abilities.pauseDeath));
+		}, ToggleButton.TriStateTooltip.withState(Component.empty()), () -> config.abilities.pauseDeath));
 		this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.gameModeSwitcher"), (button) -> {
 			config.abilities.pauseGameModeSwitcher = PauseMode.getNext(config.abilities.pauseGameModeSwitcher);
-		}, (button) -> button.appendTooltipTo(Component.empty()), () -> config.abilities.pauseGameModeSwitcher));
+		}, ToggleButton.TriStateTooltip.withState(Component.empty()), () -> config.abilities.pauseGameModeSwitcher));
 		y += totalSize;
 		return y;
 	}

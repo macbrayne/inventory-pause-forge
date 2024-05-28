@@ -5,6 +5,7 @@ package de.macbrayne.forge.inventorypause.gui.screens;
 import com.google.common.collect.ImmutableList;
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.gui.components.HoverButton;
+import de.macbrayne.forge.inventorypause.gui.mojank.MutableTooltip;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.*;
@@ -121,15 +122,16 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     public class SectionEntry extends ModCompatList.Entry {
         final StringWidget title;
         final Component name;
-        private final Supplier<Tooltip> tooltipSupplier;
+        private final Supplier<Component> tooltipSupplier;
 
         public SectionEntry(Component name, Component tooltip) {
-            this(name, () -> Tooltip.create(tooltip));
+            this(name, () -> tooltip);
         }
 
-        public SectionEntry(Component name, Supplier<Tooltip> tooltipSupplier) {
+        public SectionEntry(Component name, Supplier<Component> tooltipSupplier) {
             this.name = name;
             title = new StringWidget(ModCompatList.this.width, ModCompatList.this.height, name, minecraft.font).alignCenter();
+            title.setTooltip(Tooltip.create(tooltipSupplier.get()));
             this.tooltipSupplier = tooltipSupplier;
         }
 
@@ -144,7 +146,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             title.setY(y);
             title.setWidth(entryWidth);
             title.setHeight(entryHeight);
-            title.setTooltip(tooltipSupplier.get());
+            ((MutableTooltip)title.getTooltip()).inventorypause$updateMessage(minecraft, tooltipSupplier.get());
             title.render(guiGraphics, mouseX, mouseY, tickDelta);
         }
 
@@ -324,6 +326,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.numBox.setValue(String.valueOf(valueSupplier.getAsInt()));
             this.numBox.setFilter(s -> s.isEmpty() || (NumberUtils.isParsable(s) && !s.contains("-")));
             this.numBox.setResponder(this::onEdit);
+            this.numBox.setTooltip(Tooltip.create(getTooltip()));
 
             this.resetButton = new HoverButton(new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.reset"), (button) -> {
                 this.numBox.setValue(String.valueOf(defaultValue));
@@ -335,6 +338,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
 
         private void onEdit(String currentValue) {
+            ((MutableTooltip)numBox.getTooltip()).inventorypause$updateMessage(minecraft, getTooltip());
             if(currentValue.equals("20")) {
                 this.resetButton.active = false;
             } else {
@@ -350,7 +354,6 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
         @Override
         public void render(GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            this.numBox.setTooltip(getTooltip());
             this.numBox.render(guiGraphics, mouseX, mouseY, tickDelta);
             this.resetButton.render(guiGraphics, mouseX, mouseY, tickDelta);
             this.resetButton.setX(x + 190 - 10);
@@ -360,7 +363,6 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.numBox.setY(y);
             this.numBox.setWidth(190 - 15);
             this.numBox.render(guiGraphics, mouseX, mouseY, tickDelta);
-
         }
 
         @Override
@@ -387,15 +389,15 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             }
         }
 
-        public Tooltip getTooltip() {
+        public Component getTooltip() {
             Locale locale = Minecraft.getInstance().getLanguageManager().getJavaLocale();
             float valueInHertz = 0.00f;
             if(!numBox.getValue().isEmpty()) {
                 valueInHertz = Integer.parseInt(numBox.getValue()) / 20f;
             }
-            return Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks.tooltip",
+            return Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks.tooltip",
                     String.format(locale, "%.2f", valueInHertz),
-                    String.format(locale, "%.2f", 0.05)));
+                    String.format(locale, "%.2f", 0.05));
         }
     }
 
