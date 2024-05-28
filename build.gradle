@@ -26,12 +26,10 @@ java {
 }
 
 repositories {
-    maven { url "https://maven.shedaniel.me/" }
     maven {
         url 'https://repo.maven.apache.org/maven2'
         name 'Maven Central'
     }
-    maven { url 'https://maven.wispforest.io' }
 }
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
