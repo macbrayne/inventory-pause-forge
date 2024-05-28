@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: EUPL-1.2 OR MIT
+// SPDX-License-Identifier: EUPL-1.2
 
 package de.macbrayne.forge.inventorypause.mixin;
 

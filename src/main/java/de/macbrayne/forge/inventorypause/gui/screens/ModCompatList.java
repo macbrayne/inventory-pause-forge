@@ -51,10 +51,10 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }));
 
         // Time Between Compat Ticks
-        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks"),
-                Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks.tooltip")));
-        this.addEntry(new ModCompatList.NumEntry(() -> InventoryPause.MOD_CONFIG.modCompat.timeBetweenCompatTicks,
-                value -> InventoryPause.MOD_CONFIG.modCompat.timeBetweenCompatTicks = value, 20));
+        NumEntry numEntry = new ModCompatList.NumEntry(() -> InventoryPause.MOD_CONFIG.modCompat.timeBetweenCompatTicks,
+                value -> InventoryPause.MOD_CONFIG.modCompat.timeBetweenCompatTicks = value, 20);
+        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks"), numEntry::getTooltip));
+        this.addEntry(numEntry);
 
         this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens"),
                 Component.translatable("menu.inventorypause.settings.modCompat.compatScreens.tooltip")));
@@ -342,6 +342,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             }
         }
 
+
         @Override
         public List<? extends NarratableEntry> narratables() {
             return ImmutableList.of(numBox, resetButton);
@@ -370,17 +371,6 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             }
         }
 
-        public Tooltip getTooltip() {
-            Locale locale = Minecraft.getInstance().getLanguageManager().getJavaLocale();
-            float valueInHertz = 0.00f;
-            if(!numBox.getValue().isEmpty()) {
-                valueInHertz = Integer.parseInt(numBox.getValue()) / 20f;
-            }
-            return Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks.tooltip",
-                    String.format(locale, "%.2f", valueInHertz),
-                    String.format(locale, "%.2f", 0.05)));
-        }
-
         @Override
         public List<? extends GuiEventListener> children() {
             return ImmutableList.of(numBox, resetButton);
@@ -396,6 +386,16 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
                 valueConsumer.accept(value);
             }
         }
+    }
+    public Tooltip getTooltip() {
+        Locale locale = Minecraft.getInstance().getLanguageManager().getJavaLocale();
+        float valueInHertz = 0.00f;
+        if(!numBox.getValue().isEmpty()) {
+            valueInHertz = Integer.parseInt(numBox.getValue()) / 20f;
+        }
+        return Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks.tooltip",
+                String.format(locale, "%.2f", valueInHertz),
+                String.format(locale, "%.2f", 0.05)));
     }
 
     @Override

@@ -33,14 +33,6 @@ public class ForgeEventBus {
 
     public static void onGUIDrawPost(ScreenEvent.Render.Post event) {
         Screen screen = event.getScreen();
-        while (ModEventBus.COPY_CLASS_NAME.get().consumeClick()) {
-            var name = screen.getClass().getName();
-            if(!MOD_CONFIG.modCompat.customScreens.contains(name)) {
-                MOD_CONFIG.modCompat.customScreens.add(name);
-                ConfigHelper.serialize();
-            }
-            Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.action", name));
-        }
         if (MOD_CONFIG.debug) {
             int line = 0;
             for (Class<?> cl = screen.getClass(); cl.getSuperclass() != null && line < MOD_CONFIG.debugText.maxDepth; cl = cl.getSuperclass()) {
