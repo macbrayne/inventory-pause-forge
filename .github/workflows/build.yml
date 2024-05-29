@@ -43,6 +43,7 @@ jobs:
       - name: 🤗 Setup Gradle and build artifacts
         uses: gradle/actions/setup-gradle@v3
         with:
+          cache-read-only: false
           arguments: build
 
       - name: 📦 Upload artifacts
