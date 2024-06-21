@@ -4,6 +4,7 @@ package de.macbrayne.forge.inventorypause.gui.components;
 
 import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.gui.GuiUtils;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -24,7 +25,7 @@ public class TexturedToggleButton extends ToggleButton {
 
 
     @Override
-    public void renderContent(GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
+    public void renderString(GuiGraphics guiGraphics, Font font, int color) {
         GuiUtils.renderButtonItem(icon, this.getX(), this.getY(), this.width);
     }
 }

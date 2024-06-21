@@ -18,7 +18,7 @@ public class IntegratedServerMixin {
     @Shadow @Final private Minecraft minecraft;
 
     @WrapOperation(method = "tickServer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/server/IntegratedServer;saveEverything(ZZZ)Z"))
-    public boolean slowMotionPausing(IntegratedServer instance, boolean suppressLogs, boolean flush, boolean force, Operation<Boolean> original) {
+    public boolean disableSaving(IntegratedServer instance, boolean suppressLogs, boolean flush, boolean force, Operation<Boolean> original) {
         if(InventoryPause.MOD_CONFIG.disableSaving && !(this.minecraft.screen instanceof PauseScreen)) {
             return false;
         }

@@ -45,11 +45,7 @@ public class ToggleButton extends Button {
         guiGraphics.blitSprite(TriStateSprites.DEFAULT.get(this.active, this.isHoveredOrFocused(), stateSupplier.get()), this.getX(), this.getY(), this.getWidth(), this.getHeight());
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        renderContent(guiGraphics, mouseX, mouseY, tickDelta);
-    }
-
-    public void renderContent(GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
-        guiGraphics.drawCenteredString(Minecraft.getInstance().font, getText(), this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, getFGColor() | Mth.ceil(this.alpha * 255.0F) << 24);
+        renderString(guiGraphics, Minecraft.getInstance().font, getFGColor() | Mth.ceil(this.alpha * 255.0F) << 24);
     }
 
     private Component getText() {
