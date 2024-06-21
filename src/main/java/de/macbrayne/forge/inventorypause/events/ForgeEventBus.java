@@ -7,11 +7,13 @@ import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.common.ConfigHelper;
 import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
+import de.macbrayne.forge.inventorypause.gui.screens.ConfigScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.ServerTickRateManager;
 import net.neoforged.neoforge.client.event.ScreenEvent;
+import net.neoforged.neoforge.event.TickEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -79,6 +81,14 @@ public class ForgeEventBus {
             MOD_CONFIG.modCompat.customScreens.add(name);
             ConfigHelper.serialize();
             Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.action"));
+        }
+    }
+
+    public static void onClientTick(TickEvent.ClientTickEvent event) {
+        if(event.phase == TickEvent.Phase.END) {
+            while (ModEventBus.OPEN_SETTINGS.get().consumeClick()) {
+                Minecraft.getInstance().setScreen(new ConfigScreen(Minecraft.getInstance().screen));
+            }
         }
     }
 }

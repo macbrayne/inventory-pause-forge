@@ -37,6 +37,7 @@ public class InventoryPause {
             NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, ForgeEventBus::onCloseGUI);
             NeoForge.EVENT_BUS.addListener(ForgeEventBus::onGUIDrawPost);
             NeoForge.EVENT_BUS.addListener(ForgeEventBus::onScreenEvent);
+            NeoForge.EVENT_BUS.addListener(ForgeEventBus::onClientTick);
         } else {
             LOGGER.error("Not on client, disabling mod");
         }
