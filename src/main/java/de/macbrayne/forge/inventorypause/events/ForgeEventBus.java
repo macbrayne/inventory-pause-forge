@@ -50,6 +50,9 @@ public class ForgeEventBus {
         if (MOD_CONFIG.debug) {
             int line = 0;
             for (Class<?> cl = screen.getClass(); cl.getSuperclass() != null && line < MOD_CONFIG.debugText.maxDepth; cl = cl.getSuperclass()) {
+                if(!Screen.class.isAssignableFrom(cl) || cl == Screen.class) {
+                    continue;
+                }
                 event.getGuiGraphics().drawString(event.getScreen().getMinecraft().font, cl.getName(), (int) MOD_CONFIG.debugText.x, (int) (MOD_CONFIG.debugText.y + 10 * line), 0xffffffff);
                 line++;
             }
