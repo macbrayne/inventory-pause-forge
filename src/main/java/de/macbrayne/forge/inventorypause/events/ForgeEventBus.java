@@ -31,7 +31,7 @@ public class ForgeEventBus {
                 ServerTickRateManager servertickratemanager = Minecraft.getInstance().getSingleplayerServer().tickRateManager();
                 originalTickRate = servertickratemanager.tickrate();
                 servertickratemanager.setTickRate(20f / MOD_CONFIG.modCompat.timeBetweenCompatTicks);
-                LOGGER.error("Setting tickrate to " + 20f / MOD_CONFIG.modCompat.timeBetweenCompatTicks);
+                LOGGER.debug("Setting tickrate to " + 20f / MOD_CONFIG.modCompat.timeBetweenCompatTicks);
                 slowmo = true;
             }
         }
