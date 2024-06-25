@@ -27,6 +27,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     private final Supplier<List<String>> modCompatSupplier;
     private final Supplier<List<String>> modCustomSupplier;
     private final List<ItemEntry> removedEntries = new ArrayList<>();
+
     public ModCompatList(ModCompatScreen parent, Minecraft minecraft) {
         super(minecraft, parent.width, parent.height - 52, 20, 25);
         modCompatSupplier = () -> InventoryPause.MOD_CONFIG.modCompat.compatScreens;
@@ -71,9 +72,9 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     @SuppressWarnings("ALL")
     private <T extends Entry> Optional<T> getLastTypedEntry(Class<T> clazz) {
         ListIterator<? extends Entry> iterator = children().listIterator(children().size());
-        while(iterator.hasPrevious()) {
+        while (iterator.hasPrevious()) {
             var entry = iterator.previous();
-            if(clazz.isInstance(entry)) {
+            if (clazz.isInstance(entry)) {
                 return Optional.of((T) entry);
             }
         }
@@ -92,9 +93,9 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     @SuppressWarnings("ALL")
     private <T extends Entry> Optional<T> getFirstTypedEntry(Class<T> clazz) {
         ListIterator<? extends Entry> iterator = children().listIterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             var entry = iterator.next();
-            if(clazz.isInstance(entry)) {
+            if (clazz.isInstance(entry)) {
                 return Optional.of((T) entry);
             }
         }
@@ -112,7 +113,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
     @Override
     public void setFocused(@Nullable GuiEventListener guiEventListener) {
-        if(getFocused() != null) {
+        if (getFocused() != null) {
             getFocused().setFocused(false);
         }
         super.setFocused(guiEventListener);
@@ -120,6 +121,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
     public abstract static class Entry extends ContainerObjectSelectionList.Entry<ModCompatList.Entry> {
     }
+
     public class SectionEntry extends ModCompatList.Entry {
         final StringWidget title;
         private final Supplier<Component> tooltipSupplier;
@@ -145,7 +147,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             title.setY(y);
             title.setWidth(entryWidth);
             title.setHeight(entryHeight);
-            ((MutableTooltip)title.getTooltip()).inventorypause$updateMessage(minecraft, tooltipSupplier.get());
+            ((MutableTooltip) title.getTooltip()).inventorypause$updateMessage(minecraft, tooltipSupplier.get());
             title.render(guiGraphics, mouseX, mouseY, tickDelta);
         }
 
@@ -219,7 +221,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         @Override
         public void setFocused(boolean state) {
             super.setFocused(state);
-            if(getFocused() == editBox) {
+            if (getFocused() == editBox) {
                 editBox.setFocused(state);
             }
         }
@@ -256,9 +258,9 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
 
         public void save() {
-            if(!configValue.equals(this.editBox.getValue())) {
+            if (!configValue.equals(this.editBox.getValue())) {
                 int index = supplier.get().indexOf(configValue);
-                if(index == -1) {
+                if (index == -1) {
                     supplier.get().add(this.editBox.getValue());
                     return;
                 }
@@ -335,7 +337,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
 
         private void onEdit(String currentValue) {
-            ((MutableTooltip)numBox.getTooltip()).inventorypause$updateMessage(minecraft, getTooltip());
+            ((MutableTooltip) numBox.getTooltip()).inventorypause$updateMessage(minecraft, getTooltip());
             this.resetButton.active = !currentValue.equals("20");
         }
 
@@ -361,7 +363,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         @Override
         public void setFocused(boolean state) {
             super.setFocused(state);
-            if(getFocused() == numBox) {
+            if (getFocused() == numBox) {
                 numBox.setFocused(state);
             }
         }
@@ -373,11 +375,11 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
         @Override
         public void save() {
-            if(numBox.getValue().isEmpty()) {
+            if (numBox.getValue().isEmpty()) {
                 return;
             }
             int value = Math.abs(Integer.parseInt(this.numBox.getValue()));
-            if(value > 0) {
+            if (value > 0) {
                 valueConsumer.accept(value);
             }
         }
@@ -385,12 +387,12 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         public Component getTooltip() {
             Locale locale = Minecraft.getInstance().getLanguageManager().getJavaLocale();
             float valueInHertz = 20f;
-            if(!numBox.getValue().isEmpty()) {
+            if (!numBox.getValue().isEmpty()) {
                 valueInHertz = 20f / Integer.parseInt(numBox.getValue());
             }
             return Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks.tooltip",
                     String.format(locale, "%.2f", valueInHertz),
-                    String.format(locale, "%.2f", (1 - 1 / (20f / valueInHertz))  * 100));
+                    String.format(locale, "%.2f", (1 - 1 / (20f / valueInHertz)) * 100));
         }
     }
 
@@ -406,7 +408,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     }
 
     private void unfocusEntry() {
-        if(getFocused() != null) {
+        if (getFocused() != null) {
             // getFocused().setFocused(false);
             getFocused().setFocused(false);
             setFocused(null);
@@ -414,12 +416,12 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     }
 
     public void saveChanges() {
-        for(Entry item : children()) {
-            if(item instanceof Saveable saveable) {
+        for (Entry item : children()) {
+            if (item instanceof Saveable saveable) {
                 saveable.save();
             }
         }
-        for(ItemEntry item : removedEntries) {
+        for (ItemEntry item : removedEntries) {
             item.supplier.get().remove(item.getConfigValue());
         }
     }

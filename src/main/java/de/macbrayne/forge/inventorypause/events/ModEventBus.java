@@ -40,7 +40,7 @@ public class ModEventBus {
 
 
     public static void registerBindings(RegisterKeyMappingsEvent event) {
-        if(InventoryPause.MOD_CONFIG.settingsForModpacks.registerKeybinds) {
+        if (InventoryPause.MOD_CONFIG.settingsForModpacks.registerKeybinds) {
             LOGGER.info("Registering key mappings");
             event.register(OPEN_SETTINGS.get());
             event.register(COPY_CLASS_NAME.get());

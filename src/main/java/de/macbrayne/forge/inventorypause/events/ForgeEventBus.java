@@ -26,8 +26,8 @@ public class ForgeEventBus {
     public static float originalTickRate;
 
     public static void onOpenGUI(ScreenEvent.Opening event) {
-        if(Minecraft.getInstance().isSingleplayer()) {
-            if(InventoryPause.getScreenDictionary().handleScreen(event.getNewScreen().getClass()) == PauseMode.SLOWMO) {
+        if (Minecraft.getInstance().isSingleplayer()) {
+            if (InventoryPause.getScreenDictionary().handleScreen(event.getNewScreen().getClass()) == PauseMode.SLOWMO) {
                 ServerTickRateManager servertickratemanager = Minecraft.getInstance().getSingleplayerServer().tickRateManager();
                 originalTickRate = servertickratemanager.tickrate();
                 servertickratemanager.setTickRate(20f / MOD_CONFIG.modCompat.timeBetweenCompatTicks);
@@ -41,7 +41,7 @@ public class ForgeEventBus {
     }
 
     public static void onCloseGUI(ScreenEvent.Closing ignoredEvent) {
-        if(slowmo) {
+        if (slowmo) {
             Minecraft.getInstance().getSingleplayerServer().tickRateManager().setTickRate(originalTickRate);
             slowmo = false;
         }
@@ -52,7 +52,7 @@ public class ForgeEventBus {
         if (MOD_CONFIG.debug) {
             int line = 0;
             for (Class<?> cl = screen.getClass(); cl.getSuperclass() != null && line < MOD_CONFIG.debugText.maxDepth; cl = cl.getSuperclass()) {
-                if(!Screen.class.isAssignableFrom(cl) || cl == Screen.class) {
+                if (!Screen.class.isAssignableFrom(cl) || cl == Screen.class) {
                     continue;
                 }
                 event.getGuiGraphics().drawString(event.getScreen().getMinecraft().font, cl.getName(), (int) MOD_CONFIG.debugText.x, (int) (MOD_CONFIG.debugText.y + 10 * line), 0xffffffff);
@@ -62,19 +62,19 @@ public class ForgeEventBus {
     }
 
     public static void onScreenEvent(ScreenEvent.KeyReleased.Post event) {
-        if(ModEventBus.COPY_CLASS_NAME.get().isActiveAndMatches(InputConstants.getKey(event.getKeyCode(), event.getScanCode()))) {
+        if (ModEventBus.COPY_CLASS_NAME.get().isActiveAndMatches(InputConstants.getKey(event.getKeyCode(), event.getScanCode()))) {
             Screen screen = event.getScreen();
             var name = screen.getClass().getName();
 
-            if(getScreenDictionary().handleScreen(screen.getClass()) != PauseMode.OFF) {
+            if (getScreenDictionary().handleScreen(screen.getClass()) != PauseMode.OFF) {
                 Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.alreadyCovered"));
                 return;
             }
-            if(MOD_CONFIG.modCompat.customScreens.contains(name)) {
+            if (MOD_CONFIG.modCompat.customScreens.contains(name)) {
                 Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.duplicate"));
                 return;
             }
-            if(screen.isPauseScreen()) {
+            if (screen.isPauseScreen()) {
                 Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.pausedScreen"));
                 return;
             }
@@ -85,7 +85,7 @@ public class ForgeEventBus {
     }
 
     public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if(event.phase == TickEvent.Phase.END) {
+        if (event.phase == TickEvent.Phase.END) {
             while (ModEventBus.OPEN_SETTINGS.get().consumeClick()) {
                 Minecraft.getInstance().setScreen(new ConfigScreen(Minecraft.getInstance().screen));
             }

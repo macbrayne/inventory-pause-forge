@@ -17,16 +17,15 @@ import org.jetbrains.annotations.NotNull;
 public class ModCompatScreen extends Screen {
     private static final int PADDING = 6;
     private final Screen lastScreen;
-    private final ModConfig config = InventoryPause.MOD_CONFIG;
     public ModCompatList modCompatList;
     private static final int buttonSize = 20;
     private static final int buttonPadding = 4;
-    private static final int totalSize = buttonSize + buttonPadding;
-    private static final int fullButtonHeight = PADDING + buttonSize + PADDING;
+
     protected ModCompatScreen(Screen lastScreen) {
         super(Component.translatable("menu.inventorypause.settings.mod_compat_options"));
         this.lastScreen = lastScreen;
     }
+
     @Override
     protected void init() {
         super.init();
@@ -49,7 +48,7 @@ public class ModCompatScreen extends Screen {
         this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
             onClose();
             this.modCompatList.saveChanges();
-        }).pos (xDone, y).size(buttonWidth, height).build());
+        }).pos(xDone, y).size(buttonWidth, height).build());
     }
 
     public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {

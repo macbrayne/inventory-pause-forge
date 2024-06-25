@@ -5,6 +5,7 @@ package de.macbrayne.forge.inventorypause.common;
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import de.macbrayne.forge.inventorypause.InventoryPause;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 public class ConfigHelper {
     private static final Logger LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
     private static final TomlWriter writer = new TomlWriter();
+
     public static void serialize() {
         LOGGER.info("Writing config to file");
         InventoryPause.getScreenDictionary().setLastScreenDirty();
@@ -32,7 +34,7 @@ public class ConfigHelper {
     public static ModConfig deserialize() {
         LOGGER.debug("Trying to load config from file");
         Path path = FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml");
-        if(Files.exists(path)) {
+        if (Files.exists(path)) {
             try {
                 ModConfig config = new Toml().read(path.toFile()).to(ModConfig.class);
                 LOGGER.debug("Successfully loaded config from file");

@@ -68,7 +68,7 @@ public class ToggleButton extends Button {
             case SLOWMO -> Component.translatable(key, TEXT_SLOWMO);
             case ON -> Component.translatable(key, TEXT_YES);
         };
-        if(text.getString().isEmpty()) {
+        if (text.getString().isEmpty()) {
             return Tooltip.create(text.plainCopy().append(addendum));
         }
         return Tooltip.create(text.plainCopy().append("\n\n").append(addendum));
@@ -82,7 +82,7 @@ public class ToggleButton extends Button {
         }
 
         public Tooltip get(PauseMode mode) {
-            return switch(mode) {
+            return switch (mode) {
                 case ON -> tooltipOn;
                 case SLOWMO -> tooltipSlowmo;
                 case OFF -> tooltipOff;

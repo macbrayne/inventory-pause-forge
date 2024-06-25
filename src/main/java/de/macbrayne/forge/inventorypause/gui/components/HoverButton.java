@@ -13,6 +13,7 @@ public class HoverButton extends Button {
     public HoverButton(Builder builder) {
         this(builder, builder.build().getMessage().copy().withStyle(ChatFormatting.RED));
     }
+
     public HoverButton(Builder builder, Component hoverComponent) {
         super(builder);
         this.hoverComponent = hoverComponent;
@@ -20,7 +21,7 @@ public class HoverButton extends Button {
 
     @Override
     public @NotNull Component getMessage() {
-        if(isHoveredOrFocused()) {
+        if (isHoveredOrFocused()) {
             return hoverComponent;
         }
         return super.getMessage();

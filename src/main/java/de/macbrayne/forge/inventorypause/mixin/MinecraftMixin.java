@@ -20,15 +20,19 @@ import javax.annotation.Nullable;
 
 @Mixin(Minecraft.class)
 public abstract class MinecraftMixin {
-    @Shadow public abstract SoundManager getSoundManager();
-    @Shadow public abstract boolean isLocalServer();
+    @Shadow
+    public abstract SoundManager getSoundManager();
+
+    @Shadow
+    public abstract boolean isLocalServer();
+
     @Shadow private @Nullable IntegratedServer singleplayerServer;
 
     @Inject(at = @At("TAIL"), method = "setScreen")
     public void openScreen(@Nullable Screen screen, CallbackInfo ci) {
         if (InventoryPause.MOD_CONFIG.enabled && InventoryPause.MOD_CONFIG.pauseSounds && ScreenHelper.isConfiguredScreen(screen)) {
             boolean canPauseGame = isLocalServer() && !this.singleplayerServer.isPublished();
-            if(canPauseGame) {
+            if (canPauseGame) {
                 this.getSoundManager().pause();
             }
         }
@@ -36,7 +40,7 @@ public abstract class MinecraftMixin {
 
     @WrapOperation(method = "runTick(Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;isPauseScreen()Z"))
     private boolean pauseGame(Screen instance, Operation<Boolean> original) {
-        if(InventoryPause.MOD_CONFIG.enabled && ScreenHelper.isPauseScreen(instance)) {
+        if (InventoryPause.MOD_CONFIG.enabled && ScreenHelper.isPauseScreen(instance)) {
             return true;
         }
         return original.call(instance);

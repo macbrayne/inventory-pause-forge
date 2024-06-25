@@ -19,7 +19,7 @@ public class IntegratedServerMixin {
 
     @WrapOperation(method = "tickServer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/server/IntegratedServer;saveEverything(ZZZ)Z"))
     public boolean disableSaving(IntegratedServer instance, boolean suppressLogs, boolean flush, boolean force, Operation<Boolean> original) {
-        if(InventoryPause.MOD_CONFIG.disableSaving && !(this.minecraft.screen instanceof PauseScreen)) {
+        if (InventoryPause.MOD_CONFIG.disableSaving && !(this.minecraft.screen instanceof PauseScreen)) {
             return false;
         }
         return original.call(instance, suppressLogs, flush, force);

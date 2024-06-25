@@ -26,13 +26,13 @@ public class ScreenDictionary {
 
     public PauseMode handleScreen(@NotNull Class<?> screenClass) {
         // Cache keySet to improve performance
-        if(dirty || cachedClasses == null) {
+        if (dirty || cachedClasses == null) {
             cachedClasses = configProviderMap.keySet().toArray(new Class[0]);
             dirty = false;
         }
 
         // Cache last screen & result to avoid the stream operation
-        if(screenClass == lastScreen) {
+        if (screenClass == lastScreen) {
             return lastResult;
         }
 

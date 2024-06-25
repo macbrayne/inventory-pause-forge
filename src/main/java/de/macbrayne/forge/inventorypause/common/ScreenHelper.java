@@ -26,7 +26,7 @@ public class ScreenHelper {
 
     private static boolean isCustomMenu(@NotNull Screen screen) {
         for (String s : InventoryPause.MOD_CONFIG.modCompat.customScreens) {
-            if(screen.getClass().getName().equals(s)) {
+            if (screen.getClass().getName().equals(s)) {
                 return true;
             }
         }
@@ -35,10 +35,10 @@ public class ScreenHelper {
 
     private static boolean isCompatScreen(@NotNull Screen screen) {
         for (String s : InventoryPause.MOD_CONFIG.modCompat.compatScreens) {
-            if(screen.getClass().getName().equals(s)) {
+            if (screen.getClass().getName().equals(s)) {
                 return true;
             }
         }
         return false;
-	}
+    }
 }
