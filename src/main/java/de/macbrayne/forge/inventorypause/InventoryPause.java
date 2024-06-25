@@ -32,7 +32,6 @@ public class InventoryPause {
             MOD_CONFIG = ConfigHelper.deserialize();
             FMLJavaModLoadingContext.get().getModEventBus().addListener(ModEventBus::clientSetup);
             FMLJavaModLoadingContext.get().getModEventBus().addListener(ModEventBus::registerBindings);
-            FMLJavaModLoadingContext.get().getModEventBus().addListener(ModEventBus::clientReload);
             NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, ForgeEventBus::onOpenGUI);
             NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, ForgeEventBus::onCloseGUI);
             NeoForge.EVENT_BUS.addListener(ForgeEventBus::onGUIDrawPost);

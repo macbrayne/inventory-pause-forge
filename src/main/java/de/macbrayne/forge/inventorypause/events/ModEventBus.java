@@ -5,10 +5,8 @@ package de.macbrayne.forge.inventorypause.events;
 import com.mojang.blaze3d.platform.InputConstants;
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.compat.VanillaCompat;
-import de.macbrayne.forge.inventorypause.gui.CustomGuiSpriteManager;
 import de.macbrayne.forge.inventorypause.gui.screens.ConfigScreen;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.ConfigScreenHandler;
@@ -37,10 +35,6 @@ public class ModEventBus {
     public static void clientSetup(@SuppressWarnings("unused") FMLClientSetupEvent event) {
         ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, screen) -> new ConfigScreen(screen)));
         new VanillaCompat().register();
-    }
-
-    public static void clientReload(RegisterClientReloadListenersEvent event) {
-        event.registerReloadListener(new CustomGuiSpriteManager(Minecraft.getInstance().textureManager));
     }
 
 
