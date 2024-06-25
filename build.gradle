@@ -75,7 +75,7 @@ dependencies {
     // For all intends and purposes: You can treat this dependency as if it is a normal library you would use.
     implementation "net.neoforged:neoforge:${neoforge_version}"
 
-    compileOnly 'org.jetbrains:annotations:23.0.0'
+    compileOnly 'org.jetbrains:annotations:24.1.0'
 
     // Mod Dependencies
     implementation('com.moandjiezana.toml:toml4j:0.7.2') {
