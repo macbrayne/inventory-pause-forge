@@ -7,6 +7,7 @@ import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.gui.TriStateSprites;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
@@ -46,6 +47,13 @@ public class ToggleButton extends Button {
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
 
         renderString(guiGraphics, Minecraft.getInstance().font, getFGColor() | Mth.ceil(this.alpha * 255.0F) << 24);
+    }
+
+    @Override
+    protected void renderScrollingString(GuiGraphics guiGraphics, Font font, int margin, int colour) {
+        int start = this.getX() + margin;
+        int end = this.getX() + this.getWidth() - margin;
+        renderScrollingString(guiGraphics, font, this.getText(), start, this.getY(), end, this.getY() + this.getHeight(), colour);
     }
 
     private Component getText() {
