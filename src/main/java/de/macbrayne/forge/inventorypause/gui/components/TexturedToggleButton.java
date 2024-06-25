@@ -8,6 +8,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -25,7 +26,7 @@ public class TexturedToggleButton extends ToggleButton {
 
 
     @Override
-    public void renderString(GuiGraphics guiGraphics, Font font, int color) {
+    public void renderString(@NotNull GuiGraphics guiGraphics, @NotNull Font font, int color) {
         GuiUtils.renderButtonItem(icon, this.getX(), this.getY(), this.width);
     }
 }

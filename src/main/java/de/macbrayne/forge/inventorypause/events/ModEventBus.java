@@ -10,7 +10,6 @@ import net.minecraft.client.KeyMapping;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.ConfigScreenHandler;
-import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.common.util.Lazy;
@@ -26,12 +25,14 @@ public class ModEventBus {
             InputConstants.UNKNOWN, // No default mapping
             "key.categories.inventorypause.main" // Category localisation
     ));
+
     public static final Lazy<KeyMapping> OPEN_SETTINGS = Lazy.of(() -> new KeyMapping(
             "key.inventorypause.openSettings", // Localisation
             KeyConflictContext.IN_GAME, // Only open in-game
             InputConstants.UNKNOWN, // No default mapping
             "key.categories.inventorypause.main" // Category localisation
     ));
+
     public static void clientSetup(@SuppressWarnings("unused") FMLClientSetupEvent event) {
         ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, screen) -> new ConfigScreen(screen)));
         new VanillaCompat().register();

@@ -12,6 +12,7 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import org.jetbrains.annotations.NotNull;
 
 public class ModCompatScreen extends Screen {
     private static final int PADDING = 6;
@@ -51,7 +52,7 @@ public class ModCompatScreen extends Screen {
         }).pos (xDone, y).size(buttonWidth, height).build());
     }
 
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
         super.render(guiGraphics, mouseX, mouseY, tickDelta);
         this.modCompatList.render(guiGraphics, mouseX, mouseY, tickDelta);
         guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 8, 16777215);

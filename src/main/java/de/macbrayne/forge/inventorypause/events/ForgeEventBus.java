@@ -40,7 +40,7 @@ public class ForgeEventBus {
         }
     }
 
-    public static void onCloseGUI(ScreenEvent.Closing event) {
+    public static void onCloseGUI(ScreenEvent.Closing ignoredEvent) {
         if(slowmo) {
             Minecraft.getInstance().getSingleplayerServer().tickRateManager().setTickRate(originalTickRate);
             slowmo = false;

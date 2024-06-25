@@ -9,5 +9,5 @@ import net.minecraft.network.chat.Component;
  * See {@link de.macbrayne.forge.inventorypause.mixin.mojank.TooltipMixin} for more information
  */
 public interface MutableTooltip {
-    public void inventorypause$updateMessage(Minecraft minecraft, Component message);
+    void inventorypause$updateMessage(Minecraft minecraft, Component message);
 }

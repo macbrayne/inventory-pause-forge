@@ -18,6 +18,7 @@ import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,9 +56,9 @@ public class ConfigScreen extends Screen {
 
 		y = createNonTexturedButtons(this.width / 2 - 120, y, 240, 20);
 		int x0 = this.width / 2 - width / 2, y0 = y;
-		y = createImageGrid(x0, y0, numberOfColumns, numberOfRows, buttonInfos);
+        createImageGrid(x0, y0, numberOfColumns, numberOfRows, buttonInfos);
 
-		if(!InventoryPause.MOD_CONFIG.settingsForModpacks.hideModCompatButton) {
+        if(!InventoryPause.MOD_CONFIG.settingsForModpacks.hideModCompatButton) {
 			this.addRenderableWidget(new Button.Builder(Component.translatable("menu.inventorypause.settings.mod_compat_options"), button -> this.minecraft.setScreen(new ModCompatScreen(this)))
 					.pos(this.width / 2 - 120, this.height - 20 - PADDING - totalSize)
 					.size(240, buttonSize)
@@ -140,7 +141,7 @@ public class ConfigScreen extends Screen {
 		}
 	}
 
-	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
+	public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
 		super.render(guiGraphics, mouseX, mouseY, tickDelta);
 		guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 15, 16777215);
 

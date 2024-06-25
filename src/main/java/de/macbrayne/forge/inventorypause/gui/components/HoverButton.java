@@ -5,6 +5,7 @@ package de.macbrayne.forge.inventorypause.gui.components;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
+import org.jetbrains.annotations.NotNull;
 
 public class HoverButton extends Button {
     final Component hoverComponent;
@@ -18,7 +19,7 @@ public class HoverButton extends Button {
     }
 
     @Override
-    public Component getMessage() {
+    public @NotNull Component getMessage() {
         if(isHoveredOrFocused()) {
             return hoverComponent;
         }

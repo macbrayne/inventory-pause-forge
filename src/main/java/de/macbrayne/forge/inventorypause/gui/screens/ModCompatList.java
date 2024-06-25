@@ -13,6 +13,7 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.network.chat.Component;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -23,13 +24,11 @@ import java.util.function.Supplier;
 
 public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.Entry> {
     private static final String newEntry = Component.translatable("menu.inventorypause.settings.modCompat.new").getString();
-    private final ModCompatScreen modCompatScreen;
     private final Supplier<List<String>> modCompatSupplier;
     private final Supplier<List<String>> modCustomSupplier;
     private final List<ItemEntry> removedEntries = new ArrayList<>();
     public ModCompatList(ModCompatScreen parent, Minecraft minecraft) {
         super(minecraft, parent.width, parent.height - 52, 20, 25);
-        this.modCompatScreen = parent;
         modCompatSupplier = () -> InventoryPause.MOD_CONFIG.modCompat.compatScreens;
         modCustomSupplier = () -> InventoryPause.MOD_CONFIG.modCompat.customScreens;
 
@@ -41,9 +40,8 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.customScreens"),
                 Component.translatable("menu.inventorypause.settings.modCompat.customScreens.tooltip")));
         ArrayList<String> modCustomClasses = new ArrayList<>(modCustomSupplier.get());
-        for(int i = 0; i < modCustomClasses.size(); i++) {
-            String aClass = modCustomClasses.get(i);
-            this.addEntry(new ModCompatList.CustomEntry(aClass));
+        for (String aClass : modCustomClasses) {
+            this.addEntry(new CustomEntry(aClass));
         }
         this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.customScreens.add"), addEntry -> button -> {
             int i = children().indexOf(addEntry);
@@ -60,9 +58,8 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens"),
                 Component.translatable("menu.inventorypause.settings.modCompat.compatScreens.tooltip")));
         ArrayList<String> modCompatClasses = new ArrayList<>(modCompatSupplier.get());
-        for(int i = 0; i < modCompatClasses.size(); i++) {
-            String aClass = modCompatClasses.get(i);
-            this.addEntry(new ModCompatList.CompatEntry(aClass));
+        for (String aClass : modCompatClasses) {
+            this.addEntry(new CompatEntry(aClass));
         }
         this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens.add"), addEntry -> (button) -> {
             int i = children().indexOf(addEntry);
@@ -71,6 +68,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }));
     }
 
+    @SuppressWarnings("ALL")
     private <T extends Entry> Optional<T> getLastTypedEntry(Class<T> clazz) {
         ListIterator<? extends Entry> iterator = children().listIterator(children().size());
         while(iterator.hasPrevious()) {
@@ -82,6 +80,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         return Optional.empty();
     }
 
+    @SuppressWarnings("ALL")
     private <T extends Entry> OptionalInt getLocationOfLastTypedEntry(Class<T> clazz) {
         Optional<T> lastTypedEntry = getLastTypedEntry(clazz);
         if (lastTypedEntry.isEmpty()) {
@@ -90,6 +89,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         return OptionalInt.of(ModCompatList.this.children().lastIndexOf(lastTypedEntry.get()));
     }
 
+    @SuppressWarnings("ALL")
     private <T extends Entry> Optional<T> getFirstTypedEntry(Class<T> clazz) {
         ListIterator<? extends Entry> iterator = children().listIterator();
         while(iterator.hasNext()) {
@@ -101,6 +101,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         return Optional.empty();
     }
 
+    @SuppressWarnings("ALL")
     private <T extends Entry> OptionalInt getLocationOfFirstTypedEntry(Class<T> clazz) {
         Optional<T> firstTypedEntry = getFirstTypedEntry(clazz);
         if (firstTypedEntry.isEmpty()) {
@@ -121,7 +122,6 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     }
     public class SectionEntry extends ModCompatList.Entry {
         final StringWidget title;
-        final Component name;
         private final Supplier<Component> tooltipSupplier;
 
         public SectionEntry(Component name, Component tooltip) {
@@ -129,19 +129,18 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
 
         public SectionEntry(Component name, Supplier<Component> tooltipSupplier) {
-            this.name = name;
             title = new StringWidget(ModCompatList.this.width, ModCompatList.this.height, name, minecraft.font).alignCenter();
             title.setTooltip(Tooltip.create(tooltipSupplier.get()));
             this.tooltipSupplier = tooltipSupplier;
         }
 
         @Override
-        public List<? extends NarratableEntry> narratables() {
+        public @NotNull List<? extends NarratableEntry> narratables() {
             return ImmutableList.of(title);
         }
 
         @Override
-        public void render(GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+        public void render(@NotNull GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
             title.setX(x);
             title.setY(y);
             title.setWidth(entryWidth);
@@ -151,7 +150,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
 
         @Override
-        public List<? extends GuiEventListener> children() {
+        public @NotNull List<? extends GuiEventListener> children() {
             return ImmutableList.of(title);
         }
     }
@@ -164,12 +163,12 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
 
         @Override
-        public List<? extends NarratableEntry> narratables() {
+        public @NotNull List<? extends NarratableEntry> narratables() {
             return ImmutableList.of(button);
         }
 
         @Override
-        public void render(GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+        public void render(@NotNull GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
             this.button.setX(x);
             this.button.setY(y);
             this.button.setWidth(entryWidth);
@@ -183,7 +182,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
 
         @Override
-        public List<? extends GuiEventListener> children() {
+        public @NotNull List<? extends GuiEventListener> children() {
             return ImmutableList.of(button);
         }
     }
@@ -211,7 +210,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
 
         @Override
-        public List<? extends NarratableEntry> narratables() {
+        public @NotNull List<? extends NarratableEntry> narratables() {
             return ImmutableList.of(this.editBox, this.moveButton, this.removeButton);
         }
 
@@ -229,7 +228,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             return moveButton;
         }
 
-        public void render(GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+        public void render(@NotNull GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
             this.removeButton.setX(x + 190 + 10);
             this.removeButton.setY(y);
             this.removeButton.setWidth(20);
@@ -244,7 +243,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.editBox.render(guiGraphics, mouseX, mouseY, tickDelta);
         }
 
-        public List<? extends GuiEventListener> children() {
+        public @NotNull List<? extends GuiEventListener> children() {
             return ImmutableList.of(this.editBox, this.moveButton, this.removeButton);
         }
 
@@ -299,7 +298,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         @Override
         public void moveItem() {
             // If there is a compat entry, move the custom entry after the last compat entry, otherwise move it after the location of the last add entry
-            int newLocation = getLocationOfLastTypedEntry(CompatEntry.class).orElseGet(() -> getLocationOfLastTypedEntry(AddEntry.class).getAsInt() - 1) + 1;
+            @SuppressWarnings("OptionalGetWithoutIsPresent") int newLocation = getLocationOfLastTypedEntry(CompatEntry.class).orElseGet(() -> getLocationOfLastTypedEntry(AddEntry.class).getAsInt() - 1) + 1;
             // Add the converted entry to the backing config
             modCompatSupplier.get().add(getValue());
             // ...and remove the current entry from the backing config
@@ -312,14 +311,12 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     }
 
     public class NumEntry extends Entry implements Saveable {
-        private final IntSupplier valueSupplier;
         private final IntConsumer valueConsumer;
         private final EditBox numBox;
         private final Button resetButton;
 
 
         public NumEntry(IntSupplier valueSupplier, IntConsumer valueConsumer, int defaultValue) {
-            this.valueSupplier = valueSupplier;
             this.valueConsumer = valueConsumer;
             this.numBox = new EditBox(ModCompatList.this.minecraft.font, 0, 0, 180, 20, Component.empty());
             this.numBox.setMaxLength(3);
@@ -339,21 +336,17 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
         private void onEdit(String currentValue) {
             ((MutableTooltip)numBox.getTooltip()).inventorypause$updateMessage(minecraft, getTooltip());
-            if(currentValue.equals("20")) {
-                this.resetButton.active = false;
-            } else {
-                this.resetButton.active = true;
-            }
+            this.resetButton.active = !currentValue.equals("20");
         }
 
 
         @Override
-        public List<? extends NarratableEntry> narratables() {
+        public @NotNull List<? extends NarratableEntry> narratables() {
             return ImmutableList.of(numBox, resetButton);
         }
 
         @Override
-        public void render(GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+        public void render(@NotNull GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
             this.numBox.render(guiGraphics, mouseX, mouseY, tickDelta);
             this.resetButton.render(guiGraphics, mouseX, mouseY, tickDelta);
             this.resetButton.setX(x + 190 - 10);
@@ -374,7 +367,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
 
         @Override
-        public List<? extends GuiEventListener> children() {
+        public @NotNull List<? extends GuiEventListener> children() {
             return ImmutableList.of(numBox, resetButton);
         }
 

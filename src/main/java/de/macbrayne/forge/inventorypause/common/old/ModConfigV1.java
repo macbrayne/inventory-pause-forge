@@ -12,6 +12,7 @@ import java.util.Objects;
 /**
  * Contains the mod config. All fields not configurable in-game are set to final
  */
+@SuppressWarnings("ALL")
 public class ModConfigV1 {
     public boolean enabled = true;
     public boolean disableSaving = false;

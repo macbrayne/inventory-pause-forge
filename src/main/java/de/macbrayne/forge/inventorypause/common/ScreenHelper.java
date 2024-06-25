@@ -21,10 +21,7 @@ public class ScreenHelper {
         if ((ScreenHelper.isCompatScreen(caller) || modDictionary.handleScreen(caller.getClass()) == PauseMode.SLOWMO)) {
             return false;
         }
-        if(ScreenHelper.isConfiguredScreen(caller)) {
-            return true;
-        }
-        return false;
+        return ScreenHelper.isConfiguredScreen(caller);
     }
 
     private static boolean isCustomMenu(@NotNull Screen screen) {

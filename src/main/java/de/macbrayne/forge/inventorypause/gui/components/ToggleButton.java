@@ -57,7 +57,7 @@ public class ToggleButton extends Button {
     }
 
     @Override
-    protected MutableComponent createNarrationMessage() {
+    protected @NotNull MutableComponent createNarrationMessage() {
         return wrapDefaultNarrationMessage(getText());
     }
 
