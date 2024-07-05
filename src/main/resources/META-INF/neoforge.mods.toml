@@ -1,4 +1,4 @@
-# This is an example mods.toml file. It contains the data relating to the loading mods.
+# This is an example neoforge.mods.toml file. It contains the data relating to the loading mods.
 # There are several mandatory fields (#mandatory), and many more that are optional (#optional).
 # The overall format is standard TOML format, v0.5.0.
 # Note that there are a couple of TOML lists in this file.
@@ -32,6 +32,14 @@ displayURL="https://github.com/macbrayne/inventory-pause-forge/" #optional
 credits="Original Fabric mod by umollu" #optional
 # A text field displayed in the mod UI
 authors="macbrayne" #optional
+
+# Display Test controls the display for your mod in the server connection screen
+# MATCH_VERSION means that your mod will cause a red X if the versions on client and server differ. This is the default behaviour and should be what you choose if you have server and client elements to your mod.
+# IGNORE_SERVER_VERSION means that your mod will not cause a red X if it's present on the server but not on the client. This is what you should use if you're a server only mod.
+# IGNORE_ALL_VERSION means that your mod will not cause a red X if it's present on the client or the server. This is a special case and should only be used if your mod has no server component.
+# NONE means that no display test is set on your mod. You need to do this yourself, see IExtensionPoint.DisplayTest for more information. You can define any scheme you wish with this value.
+# IMPORTANT NOTE: this is NOT an instruction as to which environments (CLIENT or DEDICATED SERVER) your mod loads on. Your mod should load (and maybe do nothing!) whereever it finds itself.
+displayTest="IGNORE_ALL_VERSION"
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 Pause your single player game when opening your inventory, opening chests, trading etc.
@@ -53,7 +61,7 @@ Pause your single player game when opening your inventory, opening chests, tradi
    modId="minecraft"
    mandatory=true
    # This version range declares a minimum of the current minecraft version up to but not including the next major version
-   versionRange="[1.20.3,1.21)"
+   versionRange="[1.20.6,1.21)"
    ordering="NONE"
    side="BOTH"
 

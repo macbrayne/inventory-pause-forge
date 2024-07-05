@@ -9,8 +9,8 @@ import de.macbrayne.forge.inventorypause.gui.screens.ConfigScreen;
 import net.minecraft.client.KeyMapping;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.ConfigScreenHandler;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.common.util.Lazy;
 import org.apache.logging.log4j.LogManager;
@@ -34,7 +34,7 @@ public class ModEventBus {
     ));
 
     public static void clientSetup(@SuppressWarnings("unused") FMLClientSetupEvent event) {
-        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, screen) -> new ConfigScreen(screen)));
+        ModLoadingContext.get().registerExtensionPoint(IConfigScreenFactory.class, () -> (mc, screen) -> new ConfigScreen(screen));
         new VanillaCompat().register();
     }
 

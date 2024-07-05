@@ -32,7 +32,6 @@ public class ModCompatScreen extends Screen {
         modCompatList = new ModCompatList(this, minecraft);
         addWidget(modCompatList);
         createSaveAndQuit(this.width / 2 - 120, this.height - 20 - PADDING, 240, 20);
-        magicalSpecialHackyFocus(modCompatList);
     }
 
     public void createSaveAndQuit(int x0, int y, int width, int height) {
