@@ -9,6 +9,7 @@
   "client": [
     "IntegratedServerMixin",
     "MinecraftMixin",
+    "KeyboardHandlerMixin",
     "mojank.TooltipMixin"
   ],
   "injectors": {

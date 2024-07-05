@@ -8,8 +8,10 @@ import de.macbrayne.forge.inventorypause.common.ConfigHelper;
 import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
 import de.macbrayne.forge.inventorypause.gui.screens.ConfigScreen;
+import de.macbrayne.forge.inventorypause.gui.screens.DummyPauseScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.controls.KeyBindsScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.ServerTickRateManager;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
@@ -82,11 +84,24 @@ public class ForgeEventBus {
             ConfigHelper.serialize();
             Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.action"));
         }
+        if (ModEventBus.PAUSE_GAME.get().isActiveAndMatches(InputConstants.getKey(event.getKeyCode(), event.getScanCode()))) {
+            Minecraft minecraft = Minecraft.getInstance();
+            if (minecraft.isSingleplayer() && !(minecraft.screen instanceof DummyPauseScreen) && !(minecraft.screen instanceof KeyBindsScreen)) {
+                minecraft.pushGuiLayer(new DummyPauseScreen());
+            }
+        }
     }
 
     public static void onClientTick(ClientTickEvent.Post event) {
+        Minecraft minecraft = Minecraft.getInstance();
         while (ModEventBus.OPEN_SETTINGS.get().consumeClick()) {
-            Minecraft.getInstance().setScreen(new ConfigScreen(Minecraft.getInstance().screen));
+            minecraft.setScreen(new ConfigScreen(minecraft.screen));
+        }
+
+        while (ModEventBus.PAUSE_GAME.get().consumeClick()) {
+            if (!(minecraft.screen instanceof DummyPauseScreen)) {
+                minecraft.setScreen(new DummyPauseScreen());
+            }
         }
     }
 }

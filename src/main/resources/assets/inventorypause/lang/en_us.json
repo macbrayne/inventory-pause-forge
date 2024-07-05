@@ -52,6 +52,8 @@
   "menu.inventorypause.settings.modCompat.debug_mode": "Debug Mode",
   "menu.inventorypause.settings.modCompat.debug_mode.tooltip": "Debug Mode adds a overlay displaying the class name of the currently displayed menu and its parent classes",
 
+  "menu.inventorypause.pauseGameAnywhere.title": "Game paused. Press ESC to unpause.",
+
   "chat.inventorypause.addToList.action": "Inventory Pause: Added current screen to the list of custom paused screens",
   "chat.inventorypause.addToList.error.duplicate": "Inventory Pause: Current screen is already in the the list of custom paused screens",
   "chat.inventorypause.addToList.error.alreadyCovered": "Inventory Pause: Current screen is already covered by the config. To add this screen first disable that config option.",
@@ -59,6 +61,7 @@
 
   "key.categories.inventorypause.main": "Inventory Pause Helpers",
   "key.inventorypause.openSettings": "Open Settings",
+  "key.inventorypause.pauseGame": "Pause Game anywhere",
   "key.inventorypause.addToList": "Add to Custom Screens",
   "menu.inventorypause.toggle": "%s: %s",
   "menu.inventorypause.settings.title.pause": "Pause...",
