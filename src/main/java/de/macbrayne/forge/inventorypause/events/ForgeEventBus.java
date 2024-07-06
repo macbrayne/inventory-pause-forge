@@ -28,7 +28,7 @@ public class ForgeEventBus {
     public static float originalTickRate;
 
     public static void onOpenGUI(ScreenEvent.Opening event) {
-        if (Minecraft.getInstance().isSingleplayer()) {
+        if (MOD_CONFIG.enabled && Minecraft.getInstance().isSingleplayer()) {
             if (InventoryPause.getScreenDictionary().handleScreen(event.getNewScreen().getClass()) == PauseMode.SLOWMO) {
                 ServerTickRateManager servertickratemanager = Minecraft.getInstance().getSingleplayerServer().tickRateManager();
                 originalTickRate = servertickratemanager.tickrate();
@@ -64,6 +64,9 @@ public class ForgeEventBus {
     }
 
     public static void onScreenEvent(ScreenEvent.KeyReleased.Post event) {
+        if(!MOD_CONFIG.enabled) {
+            return;
+        }
         if (ModEventBus.COPY_CLASS_NAME.get().isActiveAndMatches(InputConstants.getKey(event.getKeyCode(), event.getScanCode()))) {
             Screen screen = event.getScreen();
             var name = screen.getClass().getName();
@@ -86,7 +89,8 @@ public class ForgeEventBus {
         }
         if (ModEventBus.PAUSE_GAME.get().isActiveAndMatches(InputConstants.getKey(event.getKeyCode(), event.getScanCode()))) {
             Minecraft minecraft = Minecraft.getInstance();
-            if (minecraft.isSingleplayer() && !(minecraft.screen instanceof DummyPauseScreen) && !(minecraft.screen instanceof KeyBindsScreen)) {
+            if (minecraft.isSingleplayer() && !ScreenHelper.isPauseScreen(minecraft.screen) && !minecraft.screen.isPauseScreen() &&
+                    !(minecraft.screen instanceof DummyPauseScreen) && !(minecraft.screen instanceof KeyBindsScreen)) {
                 minecraft.pushGuiLayer(new DummyPauseScreen());
             }
         }
@@ -98,6 +102,9 @@ public class ForgeEventBus {
             minecraft.setScreen(new ConfigScreen(minecraft.screen));
         }
 
+        if(!MOD_CONFIG.enabled) {
+            return;
+        }
         while (ModEventBus.PAUSE_GAME.get().consumeClick()) {
             if (!(minecraft.screen instanceof DummyPauseScreen)) {
                 minecraft.setScreen(new DummyPauseScreen());
