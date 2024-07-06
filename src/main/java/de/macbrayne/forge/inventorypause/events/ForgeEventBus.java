@@ -98,6 +98,9 @@ public class ForgeEventBus {
 
     public static void onClientTick(ClientTickEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
+        if(!minecraft.isSingleplayer()) {
+            return;
+        }
         while (ModEventBus.OPEN_SETTINGS.get().consumeClick()) {
             minecraft.setScreen(new ConfigScreen(minecraft.screen));
         }
