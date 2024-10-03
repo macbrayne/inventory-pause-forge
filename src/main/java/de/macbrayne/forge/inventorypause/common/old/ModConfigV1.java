@@ -165,7 +165,7 @@ public class ModConfigV1 {
 
     public static ModConfig toV2(ModConfigV1 modConfigV1) {
         ModConfig modConfig = new ModConfig();
-        modConfig.enabled = modConfigV1.enabled;
+        modConfig.setEnabled(modConfigV1.enabled);
         modConfig.disableSaving = modConfigV1.disableSaving;
         modConfig.pauseSounds = modConfigV1.pauseSounds;
         modConfig.debug = modConfigV1.debug;

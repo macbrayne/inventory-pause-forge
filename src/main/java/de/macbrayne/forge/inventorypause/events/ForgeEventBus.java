@@ -28,7 +28,7 @@ public class ForgeEventBus {
     public static float originalTickRate;
 
     public static void onOpenGUI(ScreenEvent.Opening event) {
-        if (MOD_CONFIG.enabled && Minecraft.getInstance().isSingleplayer()) {
+        if (MOD_CONFIG.isEnabled() && Minecraft.getInstance().isSingleplayer()) {
             if (InventoryPause.getScreenDictionary().handleScreen(event.getNewScreen().getClass()) == PauseMode.SLOWMO) {
                 ServerTickRateManager servertickratemanager = Minecraft.getInstance().getSingleplayerServer().tickRateManager();
                 originalTickRate = servertickratemanager.tickrate();
@@ -64,7 +64,7 @@ public class ForgeEventBus {
     }
 
     public static void onScreenEvent(ScreenEvent.KeyReleased.Post event) {
-        if(!MOD_CONFIG.enabled) {
+        if(!MOD_CONFIG.isEnabled()) {
             return;
         }
         if (ModEventBus.COPY_CLASS_NAME.get().isActiveAndMatches(InputConstants.getKey(event.getKeyCode(), event.getScanCode()))) {
@@ -105,7 +105,7 @@ public class ForgeEventBus {
             minecraft.setScreen(new ConfigScreen(minecraft.screen));
         }
 
-        if(!MOD_CONFIG.enabled) {
+        if(!MOD_CONFIG.isEnabled()) {
             return;
         }
         while (ModEventBus.PAUSE_GAME.get().consumeClick()) {

@@ -8,7 +8,7 @@
   "menu.inventorypause.settings.mod_compat_options": "Mod Compat Options",
   "menu.inventorypause.settings.mod_compat_options.tooltip": "Configure mod compat options, e.g. the identifiers of the modded inventories to pause",
   "menu.inventorypause.settings.enabled": "Enable Mod",
-  "menu.inventorypause.settings.enabled.tooltip": "When set to off disables all features the mod provides",
+  "menu.inventorypause.settings.enabled.tooltip": "When set to off temporarily disables all features the mod provides. THIS SETTING IS TEMPORARY AND WILL RESET THE NEXT TIME YOU START THE GAME",
   "menu.inventorypause.settings.pauseSounds": "Pause Sounds",
   "menu.inventorypause.settings.pauseSounds.tooltip": "Turn this on if you want sounds like music etc. to stop",
   "menu.inventorypause.settings.disableSaving": "Save on Pause",

@@ -11,13 +11,22 @@ import java.util.Objects;
  */
 public class ModConfig {
     public static final int VERSION = 2;
+    public static boolean tempDisabled = false; // This doesn't get saved!
     public int CONFIG_VERSION_DO_NOT_TOUCH = VERSION;
-    public boolean enabled = true;
+    private final boolean enabled = true;
     public boolean disableSaving = false;
     public boolean pauseSounds = false;
     public boolean debug = false;
     public final DebugText debugText = new DebugText();
     public final Config settingsForModpacks = new Config();
+
+    public boolean isEnabled() {
+        return enabled && !tempDisabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        tempDisabled = !enabled;
+    }
 
     public static class DebugText {
         public float x = 4f;

@@ -12,7 +12,7 @@ public class ScreenHelper {
     private static final ScreenDictionary modDictionary = InventoryPause.getScreenDictionary();
 
     public static boolean isConfiguredScreen(@Nullable Screen screen) {
-        return screen != null && InventoryPause.MOD_CONFIG.enabled &&
+        return screen != null && InventoryPause.MOD_CONFIG.isEnabled() &&
                 (modDictionary.handleScreen(screen.getClass()) != PauseMode.OFF || isCustomMenu(screen) || isCompatScreen(screen));
     }
 
