@@ -5,6 +5,7 @@ package de.macbrayne.forge.inventorypause.gui.screens;
 import com.google.common.collect.ImmutableList;
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.gui.components.HoverButton;
+import de.macbrayne.forge.inventorypause.gui.components.IndicatingEditBox;
 import de.macbrayne.forge.inventorypause.gui.mojank.MutableTooltip;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -191,7 +192,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
     public abstract class ItemEntry extends ModCompatList.Entry implements Saveable {
         private final String configValue;
-        private final EditBox editBox;
+        private final IndicatingEditBox editBox;
         private final Button removeButton, moveButton;
         private final Supplier<List<String>> supplier;
 
@@ -205,7 +206,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             }).size(20, 20).createNarration(p_253695_ -> Component.translatable("narrator.inventorypause.settings.modCompat.delete", configValue)));
             this.moveButton = new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.moveUp"), button -> moveItem()).size(20, 20)
                     .createNarration(moveButtonNarrationSupplier).build();
-            this.editBox = new EditBox(ModCompatList.this.minecraft.font, 0, 0, 180, 20, Component.empty());
+            this.editBox = new IndicatingEditBox(ModCompatList.this.minecraft.font, 180, 20);
             editBox.setMaxLength(128);
             editBox.setValue(this.configValue);
             editBox.setFilter(s -> !s.contains("-"));
