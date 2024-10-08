@@ -23,43 +23,6 @@ import static de.macbrayne.forge.inventorypause.InventoryPause.MOD_CONFIG;
 import static de.macbrayne.forge.inventorypause.InventoryPause.getScreenDictionary;
 
 public class ForgeEventBus {
-    private static final Logger LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
-    public static boolean slowmo = false;
-    public static float originalTickRate;
-
-    private static Screen currentScreen = null;
-
-    public static void onOpenGUI(ScreenEvent.Opening event) {
-        LOGGER.debug("New {} ({})", event.getScreen().getTitle().getString(), event.getScreen());
-        LOGGER.debug("Current {}", event.getCurrentScreen());
-        if (MOD_CONFIG.isEnabled() && Minecraft.getInstance().isSingleplayer()) {
-            if (InventoryPause.getScreenDictionary().handleScreen(event.getNewScreen().getClass()) == PauseMode.SLOWMO) {
-                if(!slowmo) {
-                    ServerTickRateManager servertickratemanager = Minecraft.getInstance().getSingleplayerServer().tickRateManager();
-                    float newTickRate = 20f / MOD_CONFIG.modCompat.timeBetweenCompatTicks;
-                    originalTickRate = servertickratemanager.tickrate();
-                    servertickratemanager.setTickRate(newTickRate);
-                    LOGGER.info("Setting tickrate to {}", newTickRate);
-                    slowmo = true;
-                }
-            }
-        }
-        currentScreen = event.getCurrentScreen();
-        if (MOD_CONFIG.debug && !ScreenHelper.isConfiguredScreen(event.getScreen())) {
-            LOGGER.info(event.getScreen().getClass().getName());
-        }
-    }
-
-    public static void onCloseGUI(ScreenEvent.Closing event) {
-        LOGGER.debug("Closing {} ({})", event.getScreen().getTitle().getString(), event.getScreen());
-        LOGGER.debug("CurrentScreen {}", currentScreen);
-        if (slowmo && currentScreen != event.getScreen() && InventoryPause.getScreenDictionary().handleScreen(event.getScreen().getClass()) == PauseMode.SLOWMO) {
-            Minecraft.getInstance().getSingleplayerServer().tickRateManager().setTickRate(originalTickRate);
-            LOGGER.info("Resetting tickrate to {}", originalTickRate);
-            slowmo = false;
-        }
-    }
-
     public static void onGUIDrawPost(ScreenEvent.Render.Post event) {
         Screen screen = event.getScreen();
         if (MOD_CONFIG.debug) {

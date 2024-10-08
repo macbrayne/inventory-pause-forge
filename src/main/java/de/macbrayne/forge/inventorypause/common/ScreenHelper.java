@@ -24,6 +24,13 @@ public class ScreenHelper {
         return ScreenHelper.isConfiguredScreen(caller);
     }
 
+    public static boolean isSlowmoScreen(Screen caller) {
+        if ((ScreenHelper.isCustomMenu(caller) || modDictionary.handleScreen(caller.getClass()) == PauseMode.ON)) {
+            return false;
+        }
+        return ScreenHelper.isConfiguredScreen(caller);
+    }
+
     private static boolean isCustomMenu(@NotNull Screen screen) {
         for (String s : InventoryPause.MOD_CONFIG.modCompat.customScreens) {
             if (screen.getClass().getName().equals(s)) {

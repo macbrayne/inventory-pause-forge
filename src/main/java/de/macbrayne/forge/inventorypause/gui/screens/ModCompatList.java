@@ -210,7 +210,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.moveButton = new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.moveUp"), button -> moveItem()).size(20, 20)
                     .createNarration(moveButtonNarrationSupplier).build();
             this.editBox = new IndicatingEditBox(ModCompatList.this.minecraft.font, 180, 20);
-            editBox.setMaxLength(128);
+            editBox.setMaxLength(512);
             editBox.setValue(this.configValue);
             editBox.setFilter(s -> !s.contains("-"));
         }

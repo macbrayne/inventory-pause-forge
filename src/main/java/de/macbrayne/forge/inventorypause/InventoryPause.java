@@ -20,7 +20,7 @@ import org.apache.logging.log4j.Logger;
 @Mod("inventorypause")
 public class InventoryPause {
     public static final String MOD_ID = "inventorypause";
-    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+    private static final Logger LOGGER = LogManager.getLogger(MOD_ID);
     private static final ScreenDictionary SCREEN_DICTIONARY = new ScreenDictionary();
     public static ModConfig MOD_CONFIG = new ModConfig();
 
@@ -29,8 +29,6 @@ public class InventoryPause {
             MOD_CONFIG = ConfigHelper.deserialize();
             modEventBus.addListener(ModEventBus::clientSetup);
             modEventBus.addListener(ModEventBus::registerBindings);
-            NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, ForgeEventBus::onOpenGUI);
-            NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, ForgeEventBus::onCloseGUI);
             NeoForge.EVENT_BUS.addListener(ForgeEventBus::onGUIDrawPost);
             NeoForge.EVENT_BUS.addListener(ForgeEventBus::onScreenEvent);
             NeoForge.EVENT_BUS.addListener(ForgeEventBus::onClientTick);
