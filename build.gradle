@@ -122,6 +122,7 @@ modrinth { // Make sure it runs after build!
     // On fabric, use 'remapJar' instead of 'jar'
     uploadFile = jar.outputs.getFiles().asPath.replace(".jar", "-all.jar") // This is the java jar task. If it can't find the jar, try 'jar.outputs.getFiles().asPath' in place of 'jar'
     gameVersions = [project.minecraft_version] // Call this multiple times to add multiple game versions. There are tools that can help you generate the list of versions
+    gameVersions = [project.additional_supported_version]
     loaders = ['neoforge']
 }
 
@@ -136,11 +137,13 @@ tasks.register('curseforge', TaskPublishCurseForge) {
     // Tells CurseForgeGradle to publish the output of the jar task. This will
     // return a UploadArtifact object that can be used to further configure the
     // file.
+
     def mainFile = upload("495153", jar.outputs.getFiles().asPath.replace(".jar", "-all.jar"))
     mainFile.changelog = System.getenv("CHANGELOG")
     mainFile.changelogType = "markdown"
     mainFile.displayName = "Inventory Pause v${project.mod_version} (${project.minecraft_version})"
     mainFile.releaseType = "release"
+    mainFile.addGameVersion(project.additional_supported_version)
 }
 
 tasks.withType(AbstractArchiveTask).configureEach {
