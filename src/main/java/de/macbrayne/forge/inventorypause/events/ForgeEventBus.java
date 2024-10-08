@@ -8,10 +8,11 @@ import de.macbrayne.forge.inventorypause.common.ConfigHelper;
 import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
 import de.macbrayne.forge.inventorypause.gui.screens.ConfigScreen;
+import de.macbrayne.forge.inventorypause.gui.screens.DummyPauseScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.controls.KeyBindsScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.ServerTickRateManager;
 import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.event.TickEvent;
 import org.apache.logging.log4j.LogManager;
@@ -22,30 +23,6 @@ import static de.macbrayne.forge.inventorypause.InventoryPause.getScreenDictiona
 
 public class ForgeEventBus {
     private static final Logger LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
-    public static boolean slowmo = false;
-    public static float originalTickRate;
-
-    public static void onOpenGUI(ScreenEvent.Opening event) {
-        if (Minecraft.getInstance().isSingleplayer()) {
-            if (InventoryPause.getScreenDictionary().handleScreen(event.getNewScreen().getClass()) == PauseMode.SLOWMO) {
-                ServerTickRateManager servertickratemanager = Minecraft.getInstance().getSingleplayerServer().tickRateManager();
-                originalTickRate = servertickratemanager.tickrate();
-                servertickratemanager.setTickRate(20f / MOD_CONFIG.modCompat.timeBetweenCompatTicks);
-                LOGGER.debug("Setting tickrate to " + 20f / MOD_CONFIG.modCompat.timeBetweenCompatTicks);
-                slowmo = true;
-            }
-        }
-        if (MOD_CONFIG.debug && !ScreenHelper.isConfiguredScreen(event.getScreen())) {
-            LOGGER.info(event.getScreen().getClass().getName());
-        }
-    }
-
-    public static void onCloseGUI(ScreenEvent.Closing ignoredEvent) {
-        if (slowmo) {
-            Minecraft.getInstance().getSingleplayerServer().tickRateManager().setTickRate(originalTickRate);
-            slowmo = false;
-        }
-    }
 
     public static void onGUIDrawPost(ScreenEvent.Render.Post event) {
         Screen screen = event.getScreen();
@@ -62,6 +39,9 @@ public class ForgeEventBus {
     }
 
     public static void onScreenEvent(ScreenEvent.KeyReleased.Post event) {
+        if(!MOD_CONFIG.isEnabled()) {
+            return;
+        }
         if (ModEventBus.COPY_CLASS_NAME.get().isActiveAndMatches(InputConstants.getKey(event.getKeyCode(), event.getScanCode()))) {
             Screen screen = event.getScreen();
             var name = screen.getClass().getName();
@@ -82,12 +62,32 @@ public class ForgeEventBus {
             ConfigHelper.serialize();
             Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.action"));
         }
+        if (ModEventBus.PAUSE_GAME.get().isActiveAndMatches(InputConstants.getKey(event.getKeyCode(), event.getScanCode()))) {
+            Minecraft minecraft = Minecraft.getInstance();
+            if (minecraft.isSingleplayer() && !ScreenHelper.isPauseScreen(minecraft.screen) && !minecraft.screen.isPauseScreen() &&
+                    !(minecraft.screen instanceof DummyPauseScreen) && !(minecraft.screen instanceof KeyBindsScreen)) {
+                minecraft.pushGuiLayer(new DummyPauseScreen());
+            }
+        }
     }
 
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
+            Minecraft minecraft = Minecraft.getInstance();
+            if(!minecraft.isSingleplayer()) {
+                return;
+            }
             while (ModEventBus.OPEN_SETTINGS.get().consumeClick()) {
-                Minecraft.getInstance().setScreen(new ConfigScreen(Minecraft.getInstance().screen));
+                minecraft.setScreen(new ConfigScreen(minecraft.screen));
+            }
+
+            if(!MOD_CONFIG.isEnabled()) {
+                return;
+            }
+            while (ModEventBus.PAUSE_GAME.get().consumeClick()) {
+                if (!(minecraft.screen instanceof DummyPauseScreen)) {
+                    minecraft.setScreen(new DummyPauseScreen());
+                }
             }
         }
     }

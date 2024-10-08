@@ -12,13 +12,20 @@ public class ScreenHelper {
     private static final ScreenDictionary modDictionary = InventoryPause.getScreenDictionary();
 
     public static boolean isConfiguredScreen(@Nullable Screen screen) {
-        return screen != null && InventoryPause.MOD_CONFIG.enabled &&
+        return screen != null && InventoryPause.MOD_CONFIG.isEnabled() &&
                 (modDictionary.handleScreen(screen.getClass()) != PauseMode.OFF || isCustomMenu(screen) || isCompatScreen(screen));
     }
 
 
     public static boolean isPauseScreen(Screen caller) {
         if ((ScreenHelper.isCompatScreen(caller) || modDictionary.handleScreen(caller.getClass()) == PauseMode.SLOWMO)) {
+            return false;
+        }
+        return ScreenHelper.isConfiguredScreen(caller);
+    }
+
+    public static boolean isSlowmoScreen(Screen caller) {
+        if ((ScreenHelper.isCustomMenu(caller) || modDictionary.handleScreen(caller.getClass()) == PauseMode.ON)) {
             return false;
         }
         return ScreenHelper.isConfiguredScreen(caller);

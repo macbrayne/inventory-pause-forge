@@ -5,6 +5,7 @@ package de.macbrayne.forge.inventorypause.gui.screens;
 import com.google.common.collect.ImmutableList;
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.gui.components.HoverButton;
+import de.macbrayne.forge.inventorypause.gui.components.IndicatingEditBox;
 import de.macbrayne.forge.inventorypause.gui.mojank.MutableTooltip;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -13,6 +14,8 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.network.chat.Component;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,6 +26,7 @@ import java.util.function.IntSupplier;
 import java.util.function.Supplier;
 
 public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.Entry> {
+    private static final Logger LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
     private static final String newEntry = Component.translatable("menu.inventorypause.settings.modCompat.new").getString();
     private final Supplier<List<String>> modCompatSupplier;
     private final Supplier<List<String>> modCustomSupplier;
@@ -191,7 +195,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
     public abstract class ItemEntry extends ModCompatList.Entry implements Saveable {
         private final String configValue;
-        private final EditBox editBox;
+        private final IndicatingEditBox editBox;
         private final Button removeButton, moveButton;
         private final Supplier<List<String>> supplier;
 
@@ -205,8 +209,8 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             }).size(20, 20).createNarration(p_253695_ -> Component.translatable("narrator.inventorypause.settings.modCompat.delete", configValue)));
             this.moveButton = new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.moveUp"), button -> moveItem()).size(20, 20)
                     .createNarration(moveButtonNarrationSupplier).build();
-            this.editBox = new EditBox(ModCompatList.this.minecraft.font, 0, 0, 180, 20, Component.empty());
-            editBox.setMaxLength(128);
+            this.editBox = new IndicatingEditBox(ModCompatList.this.minecraft.font, 180, 20);
+            editBox.setMaxLength(512);
             editBox.setValue(this.configValue);
             editBox.setFilter(s -> !s.contains("-"));
         }
@@ -321,7 +325,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         public NumEntry(IntSupplier valueSupplier, IntConsumer valueConsumer, int defaultValue) {
             this.valueConsumer = valueConsumer;
             this.numBox = new EditBox(ModCompatList.this.minecraft.font, 0, 0, 180, 20, Component.empty());
-            this.numBox.setMaxLength(3);
+            this.numBox.setMaxLength(2);
             this.numBox.setValue(String.valueOf(valueSupplier.getAsInt()));
             this.numBox.setFilter(s -> s.isEmpty() || (NumberUtils.isParsable(s) && !s.contains("-")));
             this.numBox.setResponder(this::onEdit);
@@ -365,6 +369,10 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             super.setFocused(state);
             if (getFocused() == numBox) {
                 numBox.setFocused(state);
+            }
+            if(Integer.parseInt(numBox.getValue()) > 20) {
+                numBox.setValue("20");
+                LOGGER.info("Tick rate cannot be lower than 20");
             }
         }
 

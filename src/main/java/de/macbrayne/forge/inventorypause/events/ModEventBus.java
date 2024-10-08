@@ -19,6 +19,13 @@ import org.apache.logging.log4j.Logger;
 public class ModEventBus {
     private static final Logger LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
     // Key mapping is lazily initialized, so it doesn't exist until it is registered
+    public static final Lazy<KeyMapping> PAUSE_GAME = Lazy.of(() -> new KeyMapping(
+            "key.inventorypause.pauseGame", // Localisation
+            KeyConflictContext.UNIVERSAL, // Only open in-game
+            InputConstants.UNKNOWN, // No default mapping
+            "key.categories.inventorypause.main" // Category localisation
+    ));
+
     public static final Lazy<KeyMapping> COPY_CLASS_NAME = Lazy.of(() -> new KeyMapping(
             "key.inventorypause.addToList", // Localisation
             KeyConflictContext.GUI, // Only open in-game
@@ -42,6 +49,7 @@ public class ModEventBus {
     public static void registerBindings(RegisterKeyMappingsEvent event) {
         if (InventoryPause.MOD_CONFIG.settingsForModpacks.registerKeybinds) {
             LOGGER.info("Registering key mappings");
+            event.register(PAUSE_GAME.get());
             event.register(OPEN_SETTINGS.get());
             event.register(COPY_CLASS_NAME.get());
         }

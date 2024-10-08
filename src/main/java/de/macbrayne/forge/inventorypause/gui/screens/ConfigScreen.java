@@ -101,7 +101,7 @@ public class ConfigScreen extends Screen {
     public int createGeneralButtons(int x0, int y, int width, int height) {
         int buttonWidth = width / 2 - 2;
         this.addRenderableWidget(new ToggleButton(x0, y, width, height,
-                Component.translatable("menu.inventorypause.settings.enabled"), button -> config.enabled = !config.enabled, Tooltip.create(Component.translatable("menu.inventorypause.settings.enabled.tooltip")), () -> PauseMode.fromBoolean(config.enabled)));
+                Component.translatable("menu.inventorypause.settings.enabled"), button -> config.setEnabled(!config.isEnabled()), Tooltip.create(Component.translatable("menu.inventorypause.settings.enabled.tooltip")), () -> PauseMode.fromBoolean(config.isEnabled())));
         y += totalSize;
         this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height,
                 Component.translatable("menu.inventorypause.settings.disableSaving"), button -> config.disableSaving = !config.disableSaving, Tooltip.create(Component.translatable("menu.inventorypause.settings.disableSaving.tooltip")), () -> PauseMode.fromBoolean(!config.disableSaving)));
