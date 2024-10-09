@@ -2,6 +2,8 @@
 
 package de.macbrayne.forge.inventorypause.common;
 
+import net.minecraft.client.gui.screens.Screen;
+
 public enum PauseMode {
     OFF("false"), SLOWMO("slowmo"), ON("true");
 
@@ -20,10 +22,18 @@ public enum PauseMode {
     }
 
     public static PauseMode getNext(PauseMode current) {
-        return switch (current) {
-            case OFF -> SLOWMO;
-            case SLOWMO -> ON;
-            case ON -> OFF;
-        };
+        if(Screen.hasShiftDown()) {
+            return switch (current) {
+                case OFF -> SLOWMO;
+                case SLOWMO -> ON;
+                case ON -> OFF;
+            };
+        } else {
+            return switch (current) {
+                case OFF -> ON;
+                case SLOWMO -> OFF;
+                case ON -> SLOWMO;
+            };
+        }
     }
 }

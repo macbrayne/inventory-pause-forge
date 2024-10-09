@@ -45,6 +45,9 @@ public class ForgeEventBus {
         if (ModEventBus.COPY_CLASS_NAME.get().isActiveAndMatches(InputConstants.getKey(event.getKeyCode(), event.getScanCode()))) {
             Screen screen = event.getScreen();
             var name = screen.getClass().getName();
+            if(!Minecraft.getInstance().isSingleplayer()) {
+                return;
+            }
 
             if (getScreenDictionary().handleScreen(screen.getClass()) != PauseMode.OFF) {
                 Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.alreadyCovered"));
