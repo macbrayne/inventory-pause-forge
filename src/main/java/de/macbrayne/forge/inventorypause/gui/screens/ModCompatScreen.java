@@ -3,11 +3,11 @@
 package de.macbrayne.forge.inventorypause.gui.screens;
 
 import de.macbrayne.forge.inventorypause.InventoryPause;
-import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.common.PauseMode;
-import de.macbrayne.forge.inventorypause.gui.components.ToggleButton;
+import de.macbrayne.forge.inventorypause.gui.components.BorderedCycleButton;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
@@ -41,14 +41,18 @@ public class ModCompatScreen extends Screen {
         if (!InventoryPause.MOD_CONFIG.settingsForModpacks.hideDebugButton) {
             buttonWidth = width / 2 - 2;
             xDone += width / 2 + 2;
-            this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.modCompat.debug_mode"), p_93751_ -> {
-                InventoryPause.MOD_CONFIG.debug = !InventoryPause.MOD_CONFIG.debug;
-            }, Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.debug_mode.tooltip")), () -> PauseMode.fromBoolean(InventoryPause.MOD_CONFIG.debug)));
+            this.addRenderableWidget(new BorderedCycleButton(CycleButton.<PauseMode>builder(PauseMode::getDisplayName)
+                    .withValues(PauseMode.OFF, PauseMode.ON)
+                    .withInitialValue(PauseMode.fromBoolean(InventoryPause.MOD_CONFIG.debug))
+                    .withTooltip(value -> Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.debug_mode.tooltip")))
+                    .create(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.modCompat.debug_mode"), (button, value) -> {
+                        InventoryPause.MOD_CONFIG.debug = value == PauseMode.ON;
+                    })));
+            this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
+                onClose();
+                this.modCompatList.saveChanges();
+            }).pos(xDone, y).size(buttonWidth, height).build());
         }
-        this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
-            onClose();
-            this.modCompatList.saveChanges();
-        }).pos(xDone, y).size(buttonWidth, height).build());
     }
 
     public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
