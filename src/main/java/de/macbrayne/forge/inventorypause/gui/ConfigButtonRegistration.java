@@ -43,6 +43,6 @@ public class ConfigButtonRegistration {
     }
 
     private ButtonInfo buildInfo(Item item, String tooltip, Supplier<PauseMode> supplier, Consumer<PauseMode> consumer) {
-        return new ButtonInfo(new ItemStack(item), Component.translatable("menu.inventorypause.settings.tooltip." + tooltip), supplier, consumer);
+        return new ButtonInfo(new ItemStack(item), tooltip, supplier, consumer);
     }
 }

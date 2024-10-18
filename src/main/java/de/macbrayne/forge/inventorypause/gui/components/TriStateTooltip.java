@@ -27,9 +27,9 @@ public record TriStateTooltip(Tooltip tooltipOn, Tooltip tooltipSlowmo, Tooltip 
             case ON -> Component.translatable(key, TEXT_YES);
         };
         if (text.getString().isEmpty()) {
-            return Tooltip.create(text.plainCopy().append(addendum));
+            return Tooltip.create(text.plainCopy().append(addendum), addendum);
         }
-        return Tooltip.create(text.plainCopy().append("\n\n").append(addendum));
+        return Tooltip.create(text.plainCopy().append("\n\n").append(addendum), addendum);
     }
 
     public Tooltip get(PauseMode mode) {

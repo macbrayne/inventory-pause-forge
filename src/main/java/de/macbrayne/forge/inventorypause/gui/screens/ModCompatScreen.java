@@ -35,6 +35,15 @@ public class ModCompatScreen extends Screen {
         magicalSpecialHackyFocus(modCompatList);
     }
 
+    @Override
+    protected void repositionElements() {
+        clearWidgets();
+        modCompatList.setWidth(width);
+        modCompatList.setHeight(height - 52);
+        addRenderableWidget(modCompatList);
+        createSaveAndQuit(this.width / 2 - 120, this.height - 20 - PADDING, 240, 20);
+    }
+
     public void createSaveAndQuit(int x0, int y, int width, int height) {
         int buttonWidth = width;
         int xDone = x0;

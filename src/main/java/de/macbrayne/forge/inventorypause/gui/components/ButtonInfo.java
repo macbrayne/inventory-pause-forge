@@ -9,6 +9,6 @@ import net.minecraft.world.item.ItemStack;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public record ButtonInfo(ItemStack itemStack, Component tooltipComponent, Supplier<PauseMode> stateSupplier,
+public record ButtonInfo(ItemStack itemStack, String id, Supplier<PauseMode> stateSupplier,
                          Consumer<PauseMode> stateConsumer) {
 }

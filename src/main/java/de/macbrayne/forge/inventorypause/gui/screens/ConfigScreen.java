@@ -72,8 +72,7 @@ public class ConfigScreen extends Screen {
             ButtonInfo info = list.get(i);
             int column = i % numberOfColumns;
             int row = i / numberOfColumns;
-            this.addRenderableWidget(TexturedCycleButton.fromButtonInfo(x0 + column * totalSize, y0 + row * totalSize, buttonSize, buttonSize,
-                    Component.translatable("menu.inventorypause.settings.title.pause"), info));
+            this.addRenderableWidget(TexturedCycleButton.fromButtonInfo(x0 + column * totalSize, y0 + row * totalSize, buttonSize, buttonSize, info));
         }
         return y0 + (numberOfRows + 1) * totalSize;
     }

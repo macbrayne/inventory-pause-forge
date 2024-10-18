@@ -19,12 +19,15 @@ public class TexturedCycleButton extends BorderedCycleButton {
         this.icon = icon;
     }
 
-    public static TexturedCycleButton fromButtonInfo(int x, int y, int width, int height, Component narratedComponent, ButtonInfo info) {
+    public static TexturedCycleButton fromButtonInfo(int x, int y, int width, int height, ButtonInfo info) {
+        Component buttonInfoComponent = Component.translatable("menu.inventorypause.settings.tooltip." + info.id());
+        Component narration = Component.translatable("menu.inventorypause.settings.tooltip.pause", buttonInfoComponent);
+        TriStateTooltip tooltip = TriStateTooltip.withState(Component.translatable("menu.inventorypause.settings.tooltip.ellipsis", buttonInfoComponent));
         return new TexturedCycleButton(CycleButton.<PauseMode>builder(PauseMode::getDisplayName)
                 .withValues(PauseMode.OFF, PauseMode.SLOWMO, PauseMode.ON)
-                .withTooltip(value -> TriStateTooltip.withState(info.tooltipComponent()).get(value))
+                .withTooltip(tooltip::get)
                 .withInitialValue(info.stateSupplier().get())
-                .create(x, y, width, height, narratedComponent, (button, value) -> info.stateConsumer().accept(value)), info.itemStack());
+                .create(x, y, width, height, narration, (button, value) -> info.stateConsumer().accept(value)), info.itemStack());
     }
 
     @Override
