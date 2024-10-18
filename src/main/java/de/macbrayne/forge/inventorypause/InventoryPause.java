@@ -8,7 +8,6 @@ import de.macbrayne.forge.inventorypause.compat.ScreenDictionary;
 import de.macbrayne.forge.inventorypause.events.ForgeEventBus;
 import de.macbrayne.forge.inventorypause.events.ModEventBus;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.EventPriority;
 import net.neoforged.fml.IExtensionPoint;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;

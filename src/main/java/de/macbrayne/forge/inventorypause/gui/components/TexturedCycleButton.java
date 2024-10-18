@@ -23,7 +23,7 @@ public class TexturedCycleButton extends BorderedCycleButton {
         Component buttonInfoComponent = Component.translatable("menu.inventorypause.settings.tooltip." + info.id());
         Component narration = Component.translatable("menu.inventorypause.settings.tooltip.pause", buttonInfoComponent);
         TriStateTooltip tooltip = TriStateTooltip.withState(Component.translatable("menu.inventorypause.settings.tooltip.ellipsis", buttonInfoComponent));
-        return new TexturedCycleButton(CycleButton.<PauseMode>builder(PauseMode::getDisplayName)
+        return new TexturedCycleButton(CycleButton.builder(PauseMode::getDisplayName)
                 .withValues(PauseMode.OFF, PauseMode.SLOWMO, PauseMode.ON)
                 .withTooltip(tooltip::get)
                 .withInitialValue(info.stateSupplier().get())

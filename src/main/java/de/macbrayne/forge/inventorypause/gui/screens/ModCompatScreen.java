@@ -50,7 +50,7 @@ public class ModCompatScreen extends Screen {
         if (!InventoryPause.MOD_CONFIG.settingsForModpacks.hideDebugButton) {
             buttonWidth = width / 2 - 2;
             xDone += width / 2 + 2;
-            this.addRenderableWidget(new BorderedCycleButton(CycleButton.<PauseMode>builder(PauseMode::getDisplayName)
+            this.addRenderableWidget(new BorderedCycleButton(CycleButton.builder(PauseMode::getDisplayName)
                     .withValues(PauseMode.OFF, PauseMode.ON)
                     .withInitialValue(PauseMode.fromBoolean(InventoryPause.MOD_CONFIG.debug))
                     .withTooltip(value -> Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.debug_mode.tooltip")))

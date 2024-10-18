@@ -81,7 +81,7 @@ public class ConfigScreen extends Screen {
         int buttonWidth = width / 2 - 2;
         int rightX = x0 + width / 2 + 2;
 
-        CycleButton.Builder<PauseMode> builder = CycleButton.<PauseMode>builder(PauseMode::getDisplayName)
+        CycleButton.Builder<PauseMode> builder = CycleButton.builder(PauseMode::getDisplayName)
                 .withValues(PauseMode.OFF, PauseMode.SLOWMO, PauseMode.ON)
                 .withTooltip(t -> TriStateTooltip.withState(Component.empty()).get(t));
         this.addRenderableWidget(new BorderedCycleButton(builder.withInitialValue(config.abilities.pauseInventory)
@@ -108,7 +108,7 @@ public class ConfigScreen extends Screen {
 
     public int createGeneralButtons(int x0, int y, int width, int height) {
         int buttonWidth = width / 2 - 2;
-        CycleButton.Builder<PauseMode> builder = CycleButton.<PauseMode>builder(PauseMode::getDisplayName)
+        CycleButton.Builder<PauseMode> builder = CycleButton.builder(PauseMode::getDisplayName)
                 .withValues(PauseMode.OFF, PauseMode.ON);
         Tooltip enabled = Tooltip.create(Component.translatable("menu.inventorypause.settings.enabled.tooltip"));
         this.addRenderableWidget(new BorderedCycleButton(builder.withInitialValue(config.isEnabled() ? PauseMode.ON : PauseMode.OFF)
