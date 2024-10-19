@@ -18,8 +18,6 @@ public class ModCompatScreen extends Screen {
     private static final int PADDING = 6;
     private final Screen lastScreen;
     public ModCompatList modCompatList;
-    private static final int buttonSize = 20;
-    private static final int buttonPadding = 4;
 
     protected ModCompatScreen(Screen lastScreen) {
         super(Component.translatable("menu.inventorypause.settings.mod_compat_options"));
@@ -57,11 +55,11 @@ public class ModCompatScreen extends Screen {
                     .create(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.modCompat.debug_mode"), (button, value) -> {
                         InventoryPause.MOD_CONFIG.debug = value == PauseMode.ON;
                     })));
-            this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
-                onClose();
-                this.modCompatList.saveChanges();
-            }).pos(xDone, y).size(buttonWidth, height).build());
         }
+        this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
+            onClose();
+            this.modCompatList.saveChanges();
+        }).pos(xDone, y).size(buttonWidth, height).build());
     }
 
     public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
