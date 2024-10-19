@@ -3,7 +3,6 @@
 package de.macbrayne.forge.inventorypause.common;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
@@ -26,22 +25,6 @@ public enum PauseMode {
 
     public static PauseMode fromBoolean(boolean value) {
         return value ? ON : OFF;
-    }
-
-    public static PauseMode getNext(PauseMode current) {
-        if(Screen.hasShiftDown()) {
-            return switch (current) {
-                case OFF -> SLOWMO;
-                case SLOWMO -> ON;
-                case ON -> OFF;
-            };
-        } else {
-            return switch (current) {
-                case OFF -> ON;
-                case SLOWMO -> OFF;
-                case ON -> SLOWMO;
-            };
-        }
     }
 
     public Component getDisplayName() {
