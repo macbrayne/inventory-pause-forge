@@ -38,7 +38,7 @@ public class ConfigHelper {
             try {
                 ModConfig config = new Toml().read(path.toFile()).to(ModConfig.class);
                 LOGGER.debug("Successfully loaded config from file");
-                LOGGER.info("Current config version is V" + config.CONFIG_VERSION_DO_NOT_TOUCH);
+                LOGGER.info("Current config version is V{}", config.CONFIG_VERSION_DO_NOT_TOUCH);
                 return config;
             } catch (Exception ignored) {
                 try {

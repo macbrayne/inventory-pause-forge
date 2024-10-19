@@ -7,12 +7,11 @@ import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.gui.ConfigButtonRegistration;
 import de.macbrayne.forge.inventorypause.common.ConfigHelper;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
-import de.macbrayne.forge.inventorypause.gui.components.ButtonInfo;
-import de.macbrayne.forge.inventorypause.gui.components.TexturedToggleButton;
-import de.macbrayne.forge.inventorypause.gui.components.ToggleButton;
+import de.macbrayne.forge.inventorypause.gui.components.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -73,41 +72,65 @@ public class ConfigScreen extends Screen {
             ButtonInfo info = list.get(i);
             int column = i % numberOfColumns;
             int row = i / numberOfColumns;
-            this.addRenderableWidget(new TexturedToggleButton(x0 + column * totalSize, y0 + row * totalSize, buttonSize, buttonSize,
-                    Component.empty(), info));
+            this.addRenderableWidget(TexturedCycleButton.fromButtonInfo(x0 + column * totalSize, y0 + row * totalSize, buttonSize, buttonSize, info));
         }
         return y0 + (numberOfRows + 1) * totalSize;
     }
 
     public int createNonTexturedButtons(int x0, int y, int width, int height) {
         int buttonWidth = width / 2 - 2;
-        this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.inventory"), (button) -> {
-            config.abilities.pauseInventory = PauseMode.getNext(config.abilities.pauseInventory);
-        }, ToggleButton.TriStateTooltip.withState(Component.empty()), () -> config.abilities.pauseInventory));
-        this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.creativeInventory"), (button) -> {
-            config.abilities.pauseCreativeInventory = PauseMode.getNext(config.abilities.pauseCreativeInventory);
-        }, ToggleButton.TriStateTooltip.withState(Component.empty()), () -> config.abilities.pauseCreativeInventory));
+        int rightX = x0 + width / 2 + 2;
+
+        CycleButton.Builder<PauseMode> builder = CycleButton.builder(PauseMode::getDisplayName)
+                .withValues(PauseMode.OFF, PauseMode.SLOWMO, PauseMode.ON)
+                .withTooltip(t -> TriStateTooltip.withState(Component.empty()).get(t));
+        this.addRenderableWidget(new BorderedCycleButton(builder.withInitialValue(config.abilities.pauseInventory)
+                .create(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.inventory"), (button, state) -> {
+                    config.abilities.pauseInventory = state;
+                })));
+
+        this.addRenderableWidget(new BorderedCycleButton(builder.withInitialValue(config.abilities.pauseCreativeInventory)
+                .create(rightX, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.creativeInventory"), (button, state) -> {
+                    config.abilities.pauseCreativeInventory = state;
+                })));
         y += totalSize;
-        this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.death"), (button) -> {
-            config.abilities.pauseDeath = PauseMode.getNext(config.abilities.pauseDeath);
-        }, ToggleButton.TriStateTooltip.withState(Component.empty()), () -> config.abilities.pauseDeath));
-        this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.gameModeSwitcher"), (button) -> {
-            config.abilities.pauseGameModeSwitcher = PauseMode.getNext(config.abilities.pauseGameModeSwitcher);
-        }, ToggleButton.TriStateTooltip.withState(Component.empty()), () -> config.abilities.pauseGameModeSwitcher));
+        this.addRenderableWidget(new BorderedCycleButton(builder.withInitialValue(config.abilities.pauseDeath)
+                .create(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.death"), (button, state) -> {
+                    config.abilities.pauseDeath = state;
+                })));
+        this.addRenderableWidget(new BorderedCycleButton(builder.withInitialValue(config.abilities.pauseGameModeSwitcher)
+                .create(rightX, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.gameModeSwitcher"), (button, state) -> {
+                    config.abilities.pauseGameModeSwitcher = state;
+                })));
         y += totalSize;
         return y;
     }
 
     public int createGeneralButtons(int x0, int y, int width, int height) {
         int buttonWidth = width / 2 - 2;
-        this.addRenderableWidget(new ToggleButton(x0, y, width, height,
-                Component.translatable("menu.inventorypause.settings.enabled"), button -> config.setEnabled(!config.isEnabled()), Tooltip.create(Component.translatable("menu.inventorypause.settings.enabled.tooltip")), () -> PauseMode.fromBoolean(config.isEnabled())));
+        CycleButton.Builder<PauseMode> builder = CycleButton.builder(PauseMode::getDisplayName)
+                .withValues(PauseMode.OFF, PauseMode.ON);
+        Tooltip enabled = Tooltip.create(Component.translatable("menu.inventorypause.settings.enabled.tooltip"));
+        this.addRenderableWidget(new BorderedCycleButton(builder.withInitialValue(config.isEnabled() ? PauseMode.ON : PauseMode.OFF)
+                .withTooltip(pauseMode -> enabled)
+                .create(x0, y, width, height, Component.translatable("menu.inventorypause.settings.enabled"), (button, state) -> {
+                    config.setEnabled(state == PauseMode.ON);
+                })));
+
         y += totalSize;
-        this.addRenderableWidget(new ToggleButton(x0, y, buttonWidth, height,
-                Component.translatable("menu.inventorypause.settings.disableSaving"), button -> config.disableSaving = !config.disableSaving, Tooltip.create(Component.translatable("menu.inventorypause.settings.disableSaving.tooltip")), () -> PauseMode.fromBoolean(!config.disableSaving)));
-        this.addRenderableWidget(new ToggleButton(x0 + width / 2 + 2, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.pauseSounds"), (button) -> {
-            config.pauseSounds = !config.pauseSounds;
-        }, Tooltip.create(Component.translatable("menu.inventorypause.settings.pauseSounds.tooltip")), () -> PauseMode.fromBoolean(config.pauseSounds)));
+        var save = Tooltip.create(Component.translatable("menu.inventorypause.settings.disableSaving.tooltip"));
+        this.addRenderableWidget(new BorderedCycleButton(builder.withInitialValue(config.disableSaving ? PauseMode.OFF : PauseMode.ON)
+                .withTooltip(pauseMode -> save)
+                .create(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.disableSaving"), (button, state) -> {
+                    config.disableSaving = state == PauseMode.OFF;
+                })));
+        var sounds = Tooltip.create(Component.translatable("menu.inventorypause.settings.pauseSounds.tooltip"));
+        this.addRenderableWidget(new BorderedCycleButton(builder.withInitialValue(config.pauseSounds ? PauseMode.ON : PauseMode.OFF)
+                .withTooltip(pauseMode -> sounds)
+                .create(x0 + width / 2 + 2, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.pauseSounds"), (button, state) -> {
+                    config.pauseSounds = state == PauseMode.ON;
+                })));
+
         y += totalSize;
         return y;
     }

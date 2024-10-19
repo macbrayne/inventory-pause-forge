@@ -75,6 +75,6 @@ public class IndicatingEditBox extends EditBox {
         OK,
         NOT_A_SCREEN,
         VANILLA,
-        INVALID;
+        INVALID
     }
 }
