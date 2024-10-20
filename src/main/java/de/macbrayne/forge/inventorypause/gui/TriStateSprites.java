@@ -8,11 +8,11 @@ import net.minecraft.resources.ResourceLocation;
 
 public record TriStateSprites(ResourceLocation on, ResourceLocation slowmo, ResourceLocation off,
                               ResourceLocation disabled, ResourceLocation enabledFocused) {
-    public static final TriStateSprites DEFAULT = new TriStateSprites(new ResourceLocation(InventoryPause.MOD_ID, "widget/button_green_border"),
-            new ResourceLocation(InventoryPause.MOD_ID, "widget/button_yellow_border"),
-            new ResourceLocation(InventoryPause.MOD_ID, "widget/button_red_border"),
-            new ResourceLocation("widget/button_disabled"),
-            new ResourceLocation("widget/button_highlighted"));
+    public static final TriStateSprites DEFAULT = new TriStateSprites(ResourceLocation.fromNamespaceAndPath(InventoryPause.MOD_ID, "widget/button_green_border"),
+            ResourceLocation.fromNamespaceAndPath(InventoryPause.MOD_ID, "widget/button_yellow_border"),
+            ResourceLocation.fromNamespaceAndPath(InventoryPause.MOD_ID, "widget/button_red_border"),
+            ResourceLocation.withDefaultNamespace("widget/button_disabled"),
+            ResourceLocation.withDefaultNamespace("widget/button_highlighted"));
 
     public ResourceLocation get(boolean enabled, boolean focused, PauseMode mode) {
         if (enabled) {

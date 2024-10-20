@@ -22,7 +22,7 @@ public class IndicatingEditBox extends EditBox {
 
     public IndicatingEditBox(Font font, int width, int height) {
         super(font, width, height, Component.empty());
-        warning = ImageWidget.sprite(height - 10, height - 10, new ResourceLocation("notification/more"));
+        warning = ImageWidget.sprite(height - 10, height - 10, ResourceLocation.withDefaultNamespace("notification/more"));
         warning.setTooltip(Tooltip.create(Component.empty()));
         this.setResponder(s -> {
             this.status = parseClass(s);
