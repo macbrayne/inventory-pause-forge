@@ -30,12 +30,4 @@ public enum PauseMode {
     public Component getDisplayName() {
         return displayName;
     }
-
-    public static PauseMode getNext(PauseMode current) {
-        return switch (current) {
-            case OFF -> SLOWMO;
-            case SLOWMO -> ON;
-            case ON -> OFF;
-        };
-    }
 }
