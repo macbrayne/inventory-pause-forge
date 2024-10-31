@@ -1,23 +1,27 @@
+// SPDX-License-Identifier: EUPL-1.2
+
 package de.macbrayne.forge.inventorypause.mixin;
 
-import de.macbrayne.forge.inventorypause.common.ModConfig;
-import me.shedaniel.autoconfig.AutoConfig;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import de.macbrayne.forge.inventorypause.InventoryPause;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.server.IntegratedServer;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.function.BooleanSupplier;
 
 @Mixin(IntegratedServer.class)
 public class IntegratedServerMixin {
-    private static final ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+    @Shadow @Final private Minecraft minecraft;
 
-    @Inject(method = "tickServer", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiling/ProfilerFiller;push(Ljava/lang/String;)V"), cancellable = true)
-    public void tick(BooleanSupplier hasTimeLeft, CallbackInfo ci) {
-        if(config.disableSaving) {
-            ci.cancel();
+    @WrapOperation(method = "tickServer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/server/IntegratedServer;saveEverything(ZZZ)Z"))
+    public boolean disableSaving(IntegratedServer instance, boolean suppressLogs, boolean flush, boolean force, Operation<Boolean> original) {
+        if (InventoryPause.MOD_CONFIG.enabled && InventoryPause.MOD_CONFIG.disableSaving && !(this.minecraft.screen instanceof PauseScreen)) {
+            return false;
         }
+        return original.call(instance, suppressLogs, flush, force);
     }
 }

@@ -1,6 +1,9 @@
+// SPDX-License-Identifier: EUPL-1.2
+
 package de.macbrayne.forge.inventorypause.common;
 
 import de.macbrayne.forge.inventorypause.compat.ScreenDictionary;
+import de.macbrayne.forge.inventorypause.utils.CompatTick;
 import de.macbrayne.forge.inventorypause.utils.Reference;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
@@ -27,6 +30,16 @@ public class ScreenHelper {
     public static boolean isConfiguredScreen(@Nullable Screen screen) {
         return screen != null && config.enabled &&
                 (modDictionary.handleScreen(screen.getClass()) || isCustomMenu(screen) || isCompatScreen(screen));
+    }
+
+    public static boolean isPauseScreen(Screen caller) {
+        if (ScreenHelper.isCompatScreen(caller) && CompatTick.timeUntilCompatTick == 1) {
+            return false;
+        }
+        if(ScreenHelper.isConfiguredScreen(caller)) {
+            return true;
+        }
+        return false;
     }
 
     private static boolean isCustomMenu(@NotNull Screen screen) {

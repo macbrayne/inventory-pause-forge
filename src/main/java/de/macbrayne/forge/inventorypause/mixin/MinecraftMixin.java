@@ -1,5 +1,10 @@
+// SPDX-License-Identifier: EUPL-1.2
+
 package de.macbrayne.forge.inventorypause.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.common.ScreenHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -29,4 +34,11 @@ public abstract class MinecraftMixin {
         }
     }
 
+    @WrapOperation(method = "runTick(Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;isPauseScreen()Z"))
+    private boolean pauseGame(Screen instance, Operation<Boolean> original) {
+        if (InventoryPause.MOD_CONFIG.enabled && ScreenHelper.isPauseScreen(instance)) {
+            return true;
+        }
+        return original.call(instance);
+    }
 }
