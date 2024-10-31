@@ -13,6 +13,7 @@ import java.util.List;
 public class ModConfig implements ConfigData {
     public boolean enabled = true;
     public boolean disableSaving = false;
+    public boolean pauseSounds = false;
     public boolean debug = false;
 
     @ConfigEntry.Gui.CollapsibleObject
