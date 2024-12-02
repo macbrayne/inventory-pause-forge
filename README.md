@@ -37,8 +37,8 @@ This mod is __client-side only__ and won't be active in LAN worlds or on servers
 
 Supported versions:
 - 1.19.4: 2.0.0
-- 1.20-1.20.1: 1.3.1
-- 1.20.3-1.20.4: 1.5.1
+- 1.20-1.20.1: 3.0.0
+- 1.20.3-1.20.4: 4.0.0
 
 ## [Releases](https://github.com/macbrayne/inventory-pause-forge/releases)
 

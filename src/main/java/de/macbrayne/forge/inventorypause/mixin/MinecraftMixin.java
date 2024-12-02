@@ -30,7 +30,6 @@ public abstract class MinecraftMixin {
     @Unique private static final Logger inventorypause$LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
     @Unique private boolean inventorypause$isSlowMotion = false;
     @Unique private float inventorypause$originalTickRate = 20f;
-
     @Shadow
     public abstract SoundManager getSoundManager();
 
@@ -45,7 +44,7 @@ public abstract class MinecraftMixin {
 
     @Inject(at = @At("TAIL"), method = "setScreen")
     public void openScreen(@Nullable Screen screen, CallbackInfo ci) {
-        if (InventoryPause.MOD_CONFIG.isEnabled() && InventoryPause.MOD_CONFIG.pauseSounds && ScreenHelper.isConfiguredScreen(screen)) {
+        if (MOD_CONFIG.isEnabled() && MOD_CONFIG.pauseSounds && ScreenHelper.isConfiguredScreen(screen)) {
             boolean canPauseGame = isLocalServer() && !this.singleplayerServer.isPublished();
             if (canPauseGame) {
                 this.getSoundManager().pause();
@@ -55,7 +54,7 @@ public abstract class MinecraftMixin {
 
     @WrapOperation(method = "runTick(Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;isPauseScreen()Z"))
     private boolean pauseGame(Screen instance, Operation<Boolean> original) {
-        if (InventoryPause.MOD_CONFIG.isEnabled() && ScreenHelper.isPauseScreen(instance)) {
+        if (MOD_CONFIG.isEnabled() && ScreenHelper.isPauseScreen(instance)) {
             return true;
         }
         return original.call(instance);
