@@ -69,6 +69,13 @@ public class ModConfig {
         public PauseMode pauseStonecutter = PauseMode.OFF;
         public PauseMode pauseHorse = PauseMode.OFF;
         public PauseMode pauseMerchant = PauseMode.OFF;
+        public PauseMode pauseGrindstone = PauseMode.OFF;
+        public PauseMode pauseCrafter = PauseMode.OFF;
+        public PauseMode pauseSignEdit = PauseMode.OFF;
+        public PauseMode pauseSmithing = PauseMode.OFF;
+        public PauseMode pauseLectern = PauseMode.OFF;
+        public PauseMode pauseLoom = PauseMode.OFF;
+        public PauseMode pauseEnchantingTable = PauseMode.OFF;
 
         @Override
         public boolean equals(Object o) {

@@ -29,6 +29,13 @@ public class VanillaCompat {
         dict.register(HopperScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseHopper);
         dict.register(CartographyTableScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseCartographyTable);
         dict.register(StonecutterScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseStonecutter);
+        dict.register(GrindstoneScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseGrindstone);
+        dict.register(CrafterScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseCrafter);
+        dict.register(AbstractSignEditScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseSignEdit);
+        dict.register(SmithingScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseSmithing);
+        dict.register(LecternScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseLectern);
+        dict.register(LoomScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseLoom);
+        dict.register(EnchantmentScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseEnchantingTable);
 
         // World GUIs
         dict.register(HorseInventoryScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseHorse);

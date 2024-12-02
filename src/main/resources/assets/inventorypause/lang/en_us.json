@@ -35,6 +35,13 @@
   "menu.inventorypause.settings.tooltip.pauseHopper": "when accessing a Hopper",
   "menu.inventorypause.settings.tooltip.pauseCartographyTable": "when using a Cartography Table",
   "menu.inventorypause.settings.tooltip.pauseStonecutter": "when using a Stonecutter",
+  "menu.inventorypause.settings.tooltip.pauseGrindstone": "when using a Grindstone",
+  "menu.inventorypause.settings.tooltip.pauseCrafter": "when using a Crafter",
+  "menu.inventorypause.settings.tooltip.pauseSignEdit": "when editing a Sign",
+  "menu.inventorypause.settings.tooltip.pauseSmithing": "when using a Smithing Table",
+  "menu.inventorypause.settings.tooltip.pauseLectern": "when using a Lectern",
+  "menu.inventorypause.settings.tooltip.pauseLoom": "when using a Loom",
+  "menu.inventorypause.settings.tooltip.pauseEnchantingTable": "when using a Enchanting Table",
   "menu.inventorypause.settings.tooltip.pauseHorse": "when opening a Horse Inventory",
   "menu.inventorypause.settings.tooltip.pauseMerchant": "when trading with a Villager",
 

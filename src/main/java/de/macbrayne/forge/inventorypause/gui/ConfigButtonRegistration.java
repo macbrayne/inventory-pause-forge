@@ -33,6 +33,13 @@ public class ConfigButtonRegistration {
             list.add(buildInfo(Items.HOPPER, "pauseHopper", () -> abilities.pauseHopper, t -> abilities.pauseHopper = t));
             list.add(buildInfo(Items.CARTOGRAPHY_TABLE, "pauseCartographyTable", () -> abilities.pauseCartographyTable, t -> abilities.pauseCartographyTable = t));
             list.add(buildInfo(Items.STONECUTTER, "pauseStonecutter", () -> abilities.pauseStonecutter, t -> abilities.pauseStonecutter = t));
+            list.add(buildInfo(Items.GRINDSTONE, "pauseGrindstone", () -> abilities.pauseGrindstone, t -> abilities.pauseGrindstone = t));
+            list.add(buildInfo(Items.CRAFTER, "pauseCrafter", () -> abilities.pauseCrafter, t -> abilities.pauseCrafter = t));
+            list.add(buildInfo(Items.OAK_SIGN, "pauseSignEdit", () -> abilities.pauseSignEdit, t -> abilities.pauseSignEdit = t));
+            list.add(buildInfo(Items.SMITHING_TABLE, "pauseSmithing", () -> abilities.pauseSmithing, t -> abilities.pauseSmithing = t));
+            list.add(buildInfo(Items.LECTERN, "pauseLectern", () -> abilities.pauseLectern, t -> abilities.pauseLectern = t));
+            list.add(buildInfo(Items.LOOM, "pauseLoom", () -> abilities.pauseLoom, t -> abilities.pauseLoom = t));
+            list.add(buildInfo(Items.ENCHANTING_TABLE, "pauseEnchantingTable", () -> abilities.pauseEnchantingTable, t -> abilities.pauseEnchantingTable = t));
         }
         {
             list.add(buildInfo(Items.HORSE_SPAWN_EGG, "pauseHorse", () -> abilities.pauseHorse, t -> abilities.pauseHorse = t));
