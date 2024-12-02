@@ -1,50 +1,31 @@
 # Inventory Pause
-<a href="https://modrinth.com/mod/inventory-pause-forge"><img src="https://img.shields.io/modrinth/game-versions/inventory-pause-forge?label=modrinth&color=00AF5C&logo=modrinth" alt="Supported Versions"></a>
-<a href="https://modrinth.com/mod/inventory-pause-forge"><img src="https://img.shields.io/badge/dynamic/json?color=00AF5C&label=modrinth&suffix=%20downloads&query=downloads&url=https://api.modrinth.com/v2/project/F39sgYmY&style=flat&logo=modrinth" alt="Modrinth Download Count"></a>
-<a href="https://www.curseforge.com/minecraft/mc-mods/inventory-pause-forge"><img src="http://cf.way2muchnoise.eu/full_495153_downloads(E04E14-555-fff-010101-1C1C1C).svg" alt="CurseForge Download Count"></a>
-<a href="https://github.com/macbrayne/inventory-pause-forge"><img src="https://img.shields.io/badge/side-client--only-5da545" alt="Side: Client-Only"></a>
-<a href="https://github.com/macbrayne/inventory-pause-forge/blob/master/LICENSE.md"><img src="https://img.shields.io/github/license/macbrayne/inventory-pause-forge?style=flat&color=0C8E8E" alt="License"></a>
----
-## Pause your single player game when you open your inventory and more.
-<table>
-    <tr>
-        <td>(Neo)Forge</td>
-        <td><a href="https://github.com/macbrayne/inventory-pause-forge/">GitHub</a></td>
-        <td><a href="https://modrinth.com/mod/inventory-pause-forge">Modrinth</a></td>
-        <td><a href="https://www.curseforge.com/minecraft/mc-mods/inventory-pause-forge">CurseForge</a></td>
-    </tr>
-    <tr>
-        <td>Fabric (by umollu)</td>
-        <td><a href="https://github.com/umollu/inventory-pause/">GitHub</a></td>
-        <td><a href="https://modrinth.com/mod/inventory-pause">Modrinth</a></td>
-        <td><a href="https://www.curseforge.com/minecraft/mc-mods/inventory-pause">CurseForge</a></td>
-    </tr>
-    <tr>
-        <td>Fabric Legacy</td>
-        <td><a href="https://github.com/macbrayne/inventory-pause-cursed">GitHub</a></td>
-        <td><a href="https://modrinth.com/mod/inventory-pause-cursed">Modrinth</a></td>
-    </tr>
-</table>
+## Pause your singleplayer game when you open your inventory and more.
 
 ![](https://media.giphy.com/media/mCJQCNkacCMGpUDj3h/giphy.gif)
 
-This small client-side mod supports pausing when opening the inventory, when dying, opening furnaces, crafting tables, shulker boxes and even has support for other mods.
-In case of incompatibilities try adding the modded screen to the list of "Compat mod class names".
+This lightweight __client-side mod__ supports pausing or even just slowing down your __singleplayer__ game when you open menus like the
+- Inventory
+- Crafting Table, Chest, Furnace...
+- Hopper, Brewing Stand, Enchanting Table...
+- Gamemode Switcher, Death Screen...
+- Villager, Horse Inventory...
+and supports modded screens (if configured correctly)!
 
-All features can be disabled individually inside the config menu (accessible via the Forge mod list).
-
+_If a modded screen behaves weirdly when paused try adding it to the list of "Compat mod class names" to make it slow down instead of pausing it._
+Screens can be configured individually inside the config menu (accessible via the Forge mod list).
 This mod is __client-side only__ and won't be active in LAN worlds or on servers.
 
 Supported versions:
 - 1.19.4: 2.0.0
 - 1.20-1.20.1: 3.0.0
 - 1.20.3-1.20.4: 4.0.0
-
-## [Releases](https://github.com/macbrayne/inventory-pause-forge/releases)
+- 1.20.5-1.20.6: 5.0.0
 
 Releases prior to 1.2 depend on [Cloth Config Forge](https://www.curseforge.com/minecraft/mc-mods/cloth-config-forge/).
+## License
 
-The mod is licensed under the [EUPL 1.2](LICENSE).
+
+The mod is licensed under the [EUPL 1.2](https://github.com/macbrayne/inventory-pause-forge/blob/1.20.6/LICENSE).
 
 
 ## Tutorial: How to add custom screens
@@ -64,8 +45,8 @@ To add custom screens to the config you need the internal name of the screen to 
 1. Check the Minecraft Controls settings if you have assigned the keybinds for "Copy Class Name" and "Open Settings" (only available on versions released after October 2022)
 2. Open the settings and change "Enable Debug Mode" to true. This should make an overlay appear on the top left of the screen whenever you have a screen open.
 3. Navigate to the menu you want to add and depending on your mod version:
-  * (0.8.2, 0.9, 1.0 or 1.1): note down the topmost text (e.g. `appeng.client.gui.implementations.IOPortScreen`). Alternatively copy it from the Minecraft log. That is the internal name of the screen.
-  * (0.8.3, 0.9.1, 1.0.1, 1.1.1 or later): press the "Copy Class" key you assigned earlier. You should get a confirmation in chat when you do so.
+    * (0.8.2, 0.9, 1.0 or 1.1): note down the topmost text (e.g. `appeng.client.gui.implementations.IOPortScreen`). Alternatively copy it from the Minecraft log. That is the internal name of the screen.
+    * (0.8.3, 0.9.1, 1.0.1, 1.1.1 or later): press the "Copy Class" key you assigned earlier. You should get a confirmation in chat when you do so.
 4. Add an entry to "Custom Mod class names" and paste the internal name.
 
 Now the screen should be paused. If it works disable "Enable Debug Mode" again.
@@ -79,17 +60,18 @@ Note: This mod will not be able to work on all types of screens due to technical
 <summary>2.0+ (click to expand)</summary>
 
 ### Main Config
-![Ingame Config Mod Version 2.0.0 and up](https://user-images.githubusercontent.com/27809595/219973047-b3745ffa-a01b-4570-880b-886a27ecb72b.png)
+ ![Ingame Config Mod Version 2.0.0 and up](https://github.com/user-attachments/assets/4d1b5270-2ac6-4bf0-a236-3094997758fd)
 - Enable Mod: enables / disables every part of the mod apart from the debug overlay
 - Save on Pause: this can help if you experience lag spikes when quickly opening and closing inventories
+- Pause Sounds: if enabled music will stop playing in paused screens
   Enable / disable pausing of specific inventories by clicking on the corresponding button
 
 ### Mod Compat Options
-![Mod Compat Options Mod Version 2.0.0 and up](https://user-images.githubusercontent.com/27809595/219819318-6ca3852b-4e13-4fe0-957c-e27e556cc0fe.png)
+![Mod Compat Options Mod Version 2.0.0 and up](https://github.com/user-attachments/assets/235455c5-5209-4bd1-bc7e-9eb81a5b015e)
 
 - Custom mod class names: List of custom screens which get paused
-- Compat mod class names: List of custom screens which don't get fully paused. They get ticked in regular intervals as specified in Time between compat ticks.
-- Time between compat ticks: Specifies how often (20 ticks = one second) screens listed in Compat mod class names are ticked
+- Compat mod class names: List of custom screens which don't get fully paused. When they're open Minecraft time passes slower instead.
+- Slow motion speed: Specifies how much screens should be slowed down
 - Enable Debug Mode: enables an overlay for easier mod compat configuration
 </details>
 <details>
@@ -99,6 +81,7 @@ Note: This mod will not be able to work on all types of screens due to technical
  ![Ingame Config Mod Version 1.2 and up](https://user-images.githubusercontent.com/27809595/219973047-b3745ffa-a01b-4570-880b-886a27ecb72b.png)
 - Enable Mod: enables / disables every part of the mod apart from the debug overlay
 - Save on Pause: this can help if you experience lag spikes when quickly opening and closing inventories
+- Pause Sounds: if enabled music will stop playing in paused screens
 Enable / disable pausing of specific inventories by clicking on the corresponding button
     
 ### Mod Compat Options
