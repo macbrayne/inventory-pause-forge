@@ -16,7 +16,6 @@ import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 
 public class ConfigScreen extends Screen {
-    private static final int PADDING = 6;
     private final Screen lastScreen;
     private final HeaderAndFooterLayout layout;
     public ConfigList modCompatList;
@@ -39,6 +38,7 @@ public class ConfigScreen extends Screen {
         }).build());
         linear.addChild(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
             ConfigHelper.serialize();
+            InventoryPause.GUI_ENTRIES.saveStates();
             onClose();
         }).build());
 

@@ -3,18 +3,23 @@
 package de.macbrayne.forge.inventorypause;
 
 import de.macbrayne.forge.inventorypause.common.ConfigHelper;
+import de.macbrayne.forge.inventorypause.common.GuiEntries;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.compat.ScreenDictionary;
 import de.macbrayne.forge.inventorypause.events.ForgeEventBus;
 import de.macbrayne.forge.inventorypause.events.ModEventBus;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.NeoForge;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.IOException;
+import java.nio.file.Files;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod("inventorypause")
@@ -23,9 +28,13 @@ public class InventoryPause {
     private static final Logger LOGGER = LogManager.getLogger(MOD_ID);
     private static final ScreenDictionary SCREEN_DICTIONARY = new ScreenDictionary();
     public static ModConfig MOD_CONFIG = new ModConfig();
+    public static GuiEntries GUI_ENTRIES = new GuiEntries();
 
-    public InventoryPause(IEventBus modEventBus) {
+    public InventoryPause(IEventBus modEventBus, ModContainer container) {
         if (FMLEnvironment.dist == Dist.CLIENT) {
+            ConfigHelper.ensureConfigDirExists();
+            GUI_ENTRIES = GuiEntries.loadEntries(container);
+            GUI_ENTRIES.loadStates(container);
             MOD_CONFIG = ConfigHelper.deserialize();
             modEventBus.addListener(ModEventBus::clientSetup);
             modEventBus.addListener(ModEventBus::registerBindings);
