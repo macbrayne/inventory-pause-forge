@@ -3,10 +3,10 @@
 package de.macbrayne.forge.inventorypause.config.old;
 
 import de.macbrayne.forge.inventorypause.common.PauseMode;
+import de.macbrayne.forge.inventorypause.config.GuiStates;
+import de.macbrayne.forge.inventorypause.config.ModConfig;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Contains the mod config. All fields not configurable in-game are set to final
@@ -142,5 +142,38 @@ public class ModConfigTOML {
     @Override
     public int hashCode() {
         return Objects.hash(enabled, disableSaving, pauseSounds, debug, debugText, settingsForModpacks, abilities, modCompat);
+    }
+
+    public static ModConfig toV3(ModConfigTOML convert) {
+        ModConfig.ModCompat modCompat = new ModConfig.ModCompat(convert.modCompat.compatScreens, convert.modCompat.customScreens, convert.modCompat.timeBetweenCompatTicks);
+        ModConfig.SettingsForModpacks settingsForModpacks = new ModConfig.SettingsForModpacks(convert.settingsForModpacks.hideDebugButton, convert.settingsForModpacks.hideModCompatButton, convert.settingsForModpacks.registerKeybinds);
+        ModConfig.DebugText debugText = new ModConfig.DebugText(convert.debug, convert.debugText.x, convert.debugText.y, convert.debugText.maxDepth);
+        Map<String, PauseMode> states = new HashMap<>();
+        states.put("pauseInventory", convert.abilities.pauseInventory);
+        states.put("pauseCreativeInventory", convert.abilities.pauseCreativeInventory);
+        states.put("pauseDeath", convert.abilities.pauseDeath);
+        states.put("pauseGameModeSwitcher", convert.abilities.pauseGameModeSwitcher);
+        states.put("pauseCraftingTable", convert.abilities.pauseCraftingTable);
+        states.put("pauseFurnace", convert.abilities.pauseFurnace);
+        states.put("pauseShulkerBox", convert.abilities.pauseShulkerBox);
+        states.put("pauseChest", convert.abilities.pauseChest);
+        states.put("pauseAnvil", convert.abilities.pauseAnvil);
+        states.put("pauseBeacon", convert.abilities.pauseBeacon);
+        states.put("pauseDispenser", convert.abilities.pauseDispenser);
+        states.put("pauseBrewingStand", convert.abilities.pauseBrewingStand);
+        states.put("pauseHopper", convert.abilities.pauseHopper);
+        states.put("pauseCartographyTable", convert.abilities.pauseCartographyTable);
+        states.put("pauseStonecutter", convert.abilities.pauseStonecutter);
+        states.put("pauseHorse", convert.abilities.pauseHorse);
+        states.put("pauseMerchant", convert.abilities.pauseMerchant);
+        states.put("pauseGrindstone", convert.abilities.pauseGrindstone);
+        states.put("pauseCrafter", convert.abilities.pauseCrafter);
+        states.put("pauseSignEdit", convert.abilities.pauseSignEdit);
+        states.put("pauseSmithing", convert.abilities.pauseSmithing);
+        states.put("pauseLectern", convert.abilities.pauseLectern);
+        states.put("pauseLoom", convert.abilities.pauseLoom);
+        states.put("pauseEnchantingTable", convert.abilities.pauseEnchantingTable);
+
+        return new ModConfig(3, convert.disableSaving, convert.pauseSounds, convert.debug, debugText, settingsForModpacks, modCompat, new GuiStates(states));
     }
 }
