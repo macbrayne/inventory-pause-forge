@@ -3,7 +3,7 @@
 package de.macbrayne.forge.inventorypause.gui.components;
 
 import de.macbrayne.forge.inventorypause.InventoryPause;
-import de.macbrayne.forge.inventorypause.common.GuiEntries;
+import de.macbrayne.forge.inventorypause.gui.GuiEntries;
 import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.gui.GuiUtils;
 import net.minecraft.client.gui.Font;
