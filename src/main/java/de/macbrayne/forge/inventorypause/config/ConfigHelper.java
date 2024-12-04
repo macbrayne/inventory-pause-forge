@@ -52,23 +52,33 @@ public class ConfigHelper {
                 try {
                     ModConfigTOML migratedConfig = ModConfigV1.toV2(new Toml().read(path.toFile()).to(ModConfigV1.class));
                     LOGGER.warn("V1 config detected, migrating to V2 and moving old config to inventorypause.toml.old");
-                    Files.copy(FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml"), FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml.old"), StandardCopyOption.COPY_ATTRIBUTES);
+                    Files.copy(FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml"), FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml.old"), StandardCopyOption.REPLACE_EXISTING);
                     writer.write(migratedConfig, FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml").toFile());
                     LOGGER.warn("Migration complete");
                     return migratedConfig;
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    LOGGER.error("Failed to load config from file", e);
+                    return null;
                 }
             }
         } else {
-            LOGGER.warn("No config file found, creating new one");
-            ModConfigTOML config = new ModConfigTOML();
-            try {
-                writer.write(config, FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml").toFile());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            return config;
+            return null;
+        }
+    }
+
+    public static void migrateConfigToJson() {
+        ModConfigTOML config = deserialize();
+        if(config == null) {
+            return;
+        }
+        ModConfig migratedConfig = ModConfigTOML.toV3(config);
+        LOGGER.info("Migrating config to JSON");
+        migratedConfig.save();
+        LOGGER.info("Moving old config to inventorypause.toml.old");
+        try {
+            Files.move(FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml"), FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml.old"), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
