@@ -5,9 +5,7 @@ package de.macbrayne.forge.inventorypause.gui.screens;
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.common.ModConfig;
 import de.macbrayne.forge.inventorypause.common.PauseMode;
-import de.macbrayne.forge.inventorypause.gui.ConfigButtonRegistration;
 import de.macbrayne.forge.inventorypause.gui.components.BorderedCycleButton;
-import de.macbrayne.forge.inventorypause.gui.components.ButtonInfo;
 import de.macbrayne.forge.inventorypause.gui.components.TexturedCycleButton;
 import de.macbrayne.forge.inventorypause.gui.components.TriStateTooltip;
 import net.minecraft.client.Minecraft;
@@ -24,14 +22,12 @@ import java.util.List;
 public class ConfigList extends ContainerObjectSelectionList<ConfigList.Entry> {
     private final ModConfig config = InventoryPause.MOD_CONFIG;
     private static final int itemHeight = 25;
-    private final List<ButtonInfo> buttonInfos = new ArrayList<>();
     private final ConfigScreen parent;
     private static final int numberOfColumns = 9;
 
     public ConfigList(ConfigScreen parent, Minecraft minecraft) {
         super(minecraft, parent.width, parent.height - 52, 20, itemHeight);
         this.parent = parent;
-        buttonInfos.addAll(new ConfigButtonRegistration().run(config));
         initEntries();
     }
 
@@ -81,13 +77,13 @@ public class ConfigList extends ContainerObjectSelectionList<ConfigList.Entry> {
                     config.abilities.pauseGameModeSwitcher = state;
                 }))));
 
-        int numberOfRows = buttonInfos.size() / numberOfColumns + (buttonInfos.size() % numberOfColumns > 0 ? 1 : 0);
+        int numberOfRows = InventoryPause.GUI_ENTRIES.entries().size() / numberOfColumns + (InventoryPause.GUI_ENTRIES.entries().size() % numberOfColumns > 0 ? 1 : 0);
         LinearLayout[] rows = new LinearLayout[numberOfRows];
         for (int i = 0; i < numberOfRows; i++) {
             rows[i] = LinearLayout.horizontal().spacing(4);
         }
-        for (int i = 0, buttonInfosSize = buttonInfos.size(); i < buttonInfosSize; i++) {
-            ButtonInfo info = buttonInfos.get(i);
+        for (int i = 0, buttonInfosSize = InventoryPause.GUI_ENTRIES.entries().size(); i < buttonInfosSize; i++) {
+            var info = InventoryPause.GUI_ENTRIES.entries().get(i);
             int row = i / numberOfColumns;
             int padding = i % numberOfColumns == 0 ? 14 : 0;
             rows[row].addChild(TexturedCycleButton.fromButtonInfo(0, 0, 20, 20, info), rows[row].newCellSettings().paddingLeft(padding));

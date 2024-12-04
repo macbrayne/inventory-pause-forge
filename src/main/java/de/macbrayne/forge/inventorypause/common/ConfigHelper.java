@@ -2,14 +2,20 @@
 
 package de.macbrayne.forge.inventorypause.common;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.JsonOps;
 import de.macbrayne.forge.inventorypause.InventoryPause;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.Optional;
 
 import de.macbrayne.forge.inventorypause.common.old.ModConfigV1;
 import net.neoforged.fml.loading.FMLPaths;
@@ -36,7 +42,8 @@ public class ConfigHelper {
         Path path = FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml");
         if (Files.exists(path)) {
             try {
-                ModConfig config = new Toml().read(path.toFile()).to(ModConfig.class);
+                Toml toml = new Toml().read(path.toFile());
+                ModConfig config = toml.to(ModConfig.class);
                 LOGGER.debug("Successfully loaded config from file");
                 LOGGER.info("Current config version is V{}", config.CONFIG_VERSION_DO_NOT_TOUCH);
                 return config;
@@ -61,6 +68,48 @@ public class ConfigHelper {
                 throw new RuntimeException(e);
             }
             return config;
+        }
+    }
+
+    public static <T> Optional<T> attemptLoad(Path path, Codec<T> codec) {
+        Gson gson = new GsonBuilder().create();
+        if (Files.exists(path)) {
+            try {
+                var gsonReader = Files.newBufferedReader(path);
+                JsonElement element = gson.fromJson(gsonReader, JsonElement.class);
+                var result = codec.decode(JsonOps.INSTANCE, element).resultOrPartial(LOGGER::error);
+                if (result.isPresent()) {
+                    return Optional.of(result.get().getFirst());
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public static<T> void save(Path path, T object, Codec<T> codec) {
+        LOGGER.info("Writing to file {}", path);
+        InventoryPause.getScreenDictionary().setLastScreenDirty();
+        try {
+            var gsonWriter = Files.newBufferedWriter(path);
+            var result = codec.encodeStart(JsonOps.INSTANCE, object).resultOrPartial(LOGGER::error);
+            if (result.isPresent()) {
+                gsonWriter.write(new GsonBuilder().setPrettyPrinting().create().toJson(result.get()));
+                gsonWriter.close();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void ensureConfigDirExists() {
+        if(!Files.exists(FMLPaths.CONFIGDIR.get().resolve("inventorypause"))) {
+            try {
+                Files.createDirectories(FMLPaths.CONFIGDIR.get().resolve("inventorypause"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

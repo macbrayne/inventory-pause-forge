@@ -20,7 +20,7 @@ public record TriStateTooltip(Tooltip tooltipOn, Tooltip tooltipSlowmo, Tooltip 
     }
 
     public static Tooltip appendTooltipTo(Component text, PauseMode mode) {
-        String key = "menu.inventorypause.currentState." + mode.getSerialisation();
+        String key = "menu.inventorypause.currentState." + mode.getSerializedName();
         Component addendum = switch (mode) {
             case OFF -> Component.translatable(key, TEXT_NO);
             case SLOWMO -> Component.translatable(key, TEXT_SLOWMO);
