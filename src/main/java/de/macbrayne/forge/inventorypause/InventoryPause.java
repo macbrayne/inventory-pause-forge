@@ -3,8 +3,9 @@
 package de.macbrayne.forge.inventorypause;
 
 import de.macbrayne.forge.inventorypause.config.ConfigHelper;
-import de.macbrayne.forge.inventorypause.gui.GuiEntries;
+import de.macbrayne.forge.inventorypause.config.GuiEntries;
 import de.macbrayne.forge.inventorypause.config.ModConfig;
+import de.macbrayne.forge.inventorypause.config.old.ModConfigTOML;
 import de.macbrayne.forge.inventorypause.compat.ScreenDictionary;
 import de.macbrayne.forge.inventorypause.events.ForgeEventBus;
 import de.macbrayne.forge.inventorypause.events.ModEventBus;
@@ -13,9 +14,12 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.NeoForge;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.nio.file.Path;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod("inventorypause")
@@ -23,16 +27,15 @@ public class InventoryPause {
     public static final String MOD_ID = "inventorypause";
     private static final Logger LOGGER = LogManager.getLogger(MOD_ID);
     private static final ScreenDictionary SCREEN_DICTIONARY = new ScreenDictionary();
-    public static ModConfig MOD_CONFIG = new ModConfig();
+    public static ModConfig MOD_CONFIG = ModConfig.getDefault();
     public static GuiEntries GUI_ENTRIES = new GuiEntries();
 
     public InventoryPause(IEventBus modEventBus, ModContainer container) {
         if (FMLEnvironment.dist == Dist.CLIENT) {
             ConfigHelper.ensureConfigDirExists();
             GUI_ENTRIES = GuiEntries.loadEntries(container);
-            GUI_ENTRIES.loadStates(container);
-            MOD_CONFIG = ConfigHelper.deserialize();
-            GUI_ENTRIES.registerScreens();
+            MOD_CONFIG = ModConfig.load();
+            MOD_CONFIG.states.registerScreens();
             modEventBus.addListener(ModEventBus::clientSetup);
             modEventBus.addListener(ModEventBus::registerBindings);
             NeoForge.EVENT_BUS.addListener(ForgeEventBus::onGUIDrawPost);

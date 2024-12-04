@@ -2,101 +2,115 @@
 
 package de.macbrayne.forge.inventorypause.config;
 
-import de.macbrayne.forge.inventorypause.common.PauseMode;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.neoforged.fml.loading.FMLPaths;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.nio.file.Path;
+import java.util.*;
 
-/**
- * Contains the mod config. All fields not configurable in-game are set to final
- */
 public class ModConfig {
-    public static final int VERSION = 2;
-    public static boolean tempDisabled = false; // This doesn't get saved!
-    public int CONFIG_VERSION_DO_NOT_TOUCH = VERSION;
-    private final boolean enabled = true;
-    public boolean disableSaving = false;
-    public boolean pauseSounds = false;
-    public boolean debug = false;
-    public final DebugText debugText = new DebugText();
-    public final Config settingsForModpacks = new Config();
+    public static final int VERSION = 3;
+    public static final Codec<ModConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.INT.fieldOf("CONFIG_VERSION_DO_NOT_TOUCH").forGetter(config -> config.configVersion),
+            Codec.BOOL.fieldOf("disable_saving").forGetter(config -> config.disableSaving),
+            Codec.BOOL.fieldOf("pause_sounds").forGetter(config -> config.pauseSounds),
+            Codec.BOOL.fieldOf("debug").forGetter(config -> config.debugText.debug),
+            DebugText.CODEC.fieldOf("debug_text").forGetter(config -> config.debugText),
+            SettingsForModpacks.CODEC.fieldOf("settings_for_modpacks").forGetter(config -> config.settingsForModpacks),
+            ModCompat.CODEC.fieldOf("mod_compat").forGetter(config -> config.modCompat),
+            GuiStates.CODEC.fieldOf("states").forGetter(config -> config.states)
+    ).apply(instance, ModConfig::new));
 
-    public boolean isEnabled() {
-        return enabled && !tempDisabled;
+    public int configVersion = VERSION;
+    public boolean tempDisabled, disableSaving, pauseSounds;
+    public final DebugText debugText;
+    public final SettingsForModpacks settingsForModpacks;
+    public final ModCompat modCompat;
+    public final GuiStates states;
+
+    public ModConfig(int configVersion, boolean disableSaving, boolean pauseSounds, boolean debug, DebugText debugText, SettingsForModpacks settingsForModpacks, ModCompat modCompat, GuiStates states) {
+        this.configVersion = configVersion;
+        this.disableSaving = disableSaving;
+        this.pauseSounds = pauseSounds;
+        this.debugText = debugText;
+        this.settingsForModpacks = settingsForModpacks;
+        this.modCompat = modCompat;
+        this.states = states;
     }
 
-    public void setEnabled(boolean enabled) {
-        tempDisabled = !enabled;
+    public static ModConfig getDefault() {
+        return new ModConfig(VERSION, false, false, false, new DebugText(false, 4f, 4f, 3), new SettingsForModpacks(false, false, true),
+                new ModCompat(new ArrayList<>(), new ArrayList<>(), 20),
+                new GuiStates(new HashMap<>()));
+    }
+
+    public static class SettingsForModpacks {
+        public static final Codec<SettingsForModpacks> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                Codec.BOOL.fieldOf("hide_debug_button").forGetter(settingsForModpacks -> settingsForModpacks.hideDebugButton),
+                Codec.BOOL.fieldOf("hide_mod_compat_button").forGetter(settingsForModpacks -> settingsForModpacks.hideModCompatButton),
+                Codec.BOOL.fieldOf("register_keybinds").forGetter(settingsForModpacks -> settingsForModpacks.registerKeybinds)
+        ).apply(instance, SettingsForModpacks::new));
+
+        public boolean hideDebugButton, hideModCompatButton, registerKeybinds;
+
+        public SettingsForModpacks(boolean hideDebugButton, boolean hideModCompatButton, boolean registerKeybinds) {
+            this.hideDebugButton = hideDebugButton;
+            this.hideModCompatButton = hideModCompatButton;
+            this.registerKeybinds = registerKeybinds;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            SettingsForModpacks that = (SettingsForModpacks) o;
+            return hideDebugButton == that.hideDebugButton && hideModCompatButton == that.hideModCompatButton && registerKeybinds == that.registerKeybinds;
+        }
     }
 
     public static class DebugText {
-        public float x = 4f;
-        public float y = 4f;
-        public int maxDepth = 3;
+        public static final Codec<DebugText> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                Codec.BOOL.fieldOf("debug").forGetter(debugText -> debugText.debug),
+                Codec.FLOAT.fieldOf("x").forGetter(debugText -> debugText.x),
+                Codec.FLOAT.fieldOf("y").forGetter(debugText -> debugText.y),
+                Codec.INT.fieldOf("max_depth").forGetter(debugText -> debugText.maxDepth)
+        ).apply(instance, DebugText::new));
+
+        public boolean debug;
+        public float x, y;
+        public int maxDepth;
+
+        public DebugText(boolean debug, float x, float y, int maxDepth) {
+            this.x = x;
+            this.y = y;
+            this.maxDepth = maxDepth;
+        }
 
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             DebugText debugText = (DebugText) o;
-            return Float.compare(x, debugText.x) == 0 && Float.compare(y, debugText.y) == 0 && maxDepth == debugText.maxDepth;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(x, y, maxDepth);
-        }
-    }
-
-    public final Abilities abilities = new Abilities();
-
-    public final ModCompat modCompat = new ModCompat();
-
-    public static class Abilities {
-        public PauseMode pauseInventory = PauseMode.ON;
-        public PauseMode pauseCreativeInventory = PauseMode.ON;
-        public PauseMode pauseDeath = PauseMode.OFF;
-        public PauseMode pauseGameModeSwitcher = PauseMode.OFF;
-        public PauseMode pauseCraftingTable = PauseMode.OFF;
-        public PauseMode pauseFurnace = PauseMode.OFF;
-        public PauseMode pauseShulkerBox = PauseMode.OFF;
-        public PauseMode pauseChest = PauseMode.OFF;
-        public PauseMode pauseAnvil = PauseMode.OFF;
-        public PauseMode pauseBeacon = PauseMode.OFF;
-        public PauseMode pauseDispenser = PauseMode.OFF;
-        public PauseMode pauseBrewingStand = PauseMode.OFF;
-        public PauseMode pauseHopper = PauseMode.OFF;
-        public PauseMode pauseCartographyTable = PauseMode.OFF;
-        public PauseMode pauseStonecutter = PauseMode.OFF;
-        public PauseMode pauseHorse = PauseMode.OFF;
-        public PauseMode pauseMerchant = PauseMode.OFF;
-        public PauseMode pauseGrindstone = PauseMode.OFF;
-        public PauseMode pauseCrafter = PauseMode.OFF;
-        public PauseMode pauseSignEdit = PauseMode.OFF;
-        public PauseMode pauseSmithing = PauseMode.OFF;
-        public PauseMode pauseLectern = PauseMode.OFF;
-        public PauseMode pauseLoom = PauseMode.OFF;
-        public PauseMode pauseEnchantingTable = PauseMode.OFF;
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Abilities abilities = (Abilities) o;
-            return pauseAnvil == abilities.pauseAnvil && pauseBeacon == abilities.pauseBeacon && pauseDispenser == abilities.pauseDispenser && pauseBrewingStand == abilities.pauseBrewingStand && pauseHopper == abilities.pauseHopper && pauseCartographyTable == abilities.pauseCartographyTable && pauseStonecutter == abilities.pauseStonecutter && pauseHorse == abilities.pauseHorse && pauseMerchant == abilities.pauseMerchant && pauseInventory == abilities.pauseInventory && pauseCreativeInventory == abilities.pauseCreativeInventory && pauseDeath == abilities.pauseDeath && pauseGameModeSwitcher == abilities.pauseGameModeSwitcher && pauseCraftingTable == abilities.pauseCraftingTable && pauseFurnace == abilities.pauseFurnace && pauseShulkerBox == abilities.pauseShulkerBox && pauseChest == abilities.pauseChest;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(pauseAnvil, pauseBeacon, pauseDispenser, pauseBrewingStand, pauseHopper, pauseCartographyTable, pauseStonecutter, pauseHorse, pauseMerchant, pauseInventory, pauseCreativeInventory, pauseDeath, pauseGameModeSwitcher, pauseCraftingTable, pauseFurnace, pauseShulkerBox, pauseChest);
+            return debug == debugText.debug && Float.compare(x, debugText.x) == 0 && Float.compare(y, debugText.y) == 0 && maxDepth == debugText.maxDepth;
         }
     }
 
     public static class ModCompat {
-        public final List<String> customScreens = new ArrayList<>();
-        public int timeBetweenCompatTicks = 20;
-        public final List<String> compatScreens = new ArrayList<>();
+        public static final Codec<ModCompat> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                Codec.STRING.listOf().fieldOf("custom_screens").forGetter(modCompat -> modCompat.customScreens),
+                Codec.STRING.listOf().fieldOf("compat_screens").forGetter(modCompat -> modCompat.compatScreens),
+                Codec.INT.fieldOf("tick_speed").forGetter(modCompat -> modCompat.timeBetweenCompatTicks)
+        ).apply(instance, ModCompat::new));
+
+        public final List<String> customScreens, compatScreens;
+        public int timeBetweenCompatTicks;
+
+        public ModCompat(List<String> customScreens, List<String> compatScreens, int timeBetweenCompatTicks) {
+            this.customScreens = customScreens;
+            this.compatScreens = compatScreens;
+            this.timeBetweenCompatTicks = timeBetweenCompatTicks;
+        }
 
         @Override
         public boolean equals(Object o) {
@@ -105,30 +119,16 @@ public class ModConfig {
             ModCompat modCompat = (ModCompat) o;
             return timeBetweenCompatTicks == modCompat.timeBetweenCompatTicks && Objects.equals(customScreens, modCompat.customScreens) && Objects.equals(compatScreens, modCompat.compatScreens);
         }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(customScreens, timeBetweenCompatTicks, compatScreens);
-        }
     }
 
-    public static class Config {
-        public boolean hideDebugButton = false;
-        public boolean hideModCompatButton = false;
-        public boolean registerKeybinds = true;
+    public static ModConfig load() {
+        Path path = FMLPaths.CONFIGDIR.get().resolve("inventorypause/inventorypause.json");
+        return ConfigHelper.attemptLoad(path, ModConfig.CODEC).orElseGet(ModConfig::getDefault);
+    }
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Config config = (Config) o;
-            return hideDebugButton == config.hideDebugButton && hideModCompatButton == config.hideModCompatButton && registerKeybinds == config.registerKeybinds;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(hideDebugButton, hideModCompatButton, registerKeybinds);
-        }
+    public void save() {
+        Path path = FMLPaths.CONFIGDIR.get().resolve("inventorypause/inventorypause.json");
+        ConfigHelper.save(path, this, ModConfig.CODEC);
     }
 
     @Override
@@ -136,11 +136,6 @@ public class ModConfig {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ModConfig modConfig = (ModConfig) o;
-        return enabled == modConfig.enabled && disableSaving == modConfig.disableSaving && pauseSounds == modConfig.pauseSounds && debug == modConfig.debug && Objects.equals(debugText, modConfig.debugText) && Objects.equals(settingsForModpacks, modConfig.settingsForModpacks) && Objects.equals(abilities, modConfig.abilities) && Objects.equals(modCompat, modConfig.modCompat);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(enabled, disableSaving, pauseSounds, debug, debugText, settingsForModpacks, abilities, modCompat);
+        return configVersion == modConfig.configVersion && tempDisabled == modConfig.tempDisabled && disableSaving == modConfig.disableSaving && pauseSounds == modConfig.pauseSounds && Objects.equals(debugText, modConfig.debugText) && Objects.equals(settingsForModpacks, modConfig.settingsForModpacks) && Objects.equals(modCompat, modConfig.modCompat) && Objects.equals(states, modConfig.states);
     }
 }
