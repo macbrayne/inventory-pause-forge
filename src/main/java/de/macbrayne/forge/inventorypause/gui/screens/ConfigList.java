@@ -3,7 +3,7 @@
 package de.macbrayne.forge.inventorypause.gui.screens;
 
 import de.macbrayne.forge.inventorypause.InventoryPause;
-import de.macbrayne.forge.inventorypause.common.ModConfig;
+import de.macbrayne.forge.inventorypause.config.ModConfig;
 import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.gui.components.BorderedCycleButton;
 import de.macbrayne.forge.inventorypause.gui.components.TexturedCycleButton;

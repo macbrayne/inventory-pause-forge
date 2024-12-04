@@ -3,7 +3,7 @@
 package de.macbrayne.forge.inventorypause.gui.screens;
 
 import de.macbrayne.forge.inventorypause.InventoryPause;
-import de.macbrayne.forge.inventorypause.common.ConfigHelper;
+import de.macbrayne.forge.inventorypause.config.ConfigHelper;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
@@ -13,6 +13,7 @@ import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.neoforged.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 
 public class ConfigScreen extends Screen {
@@ -63,8 +64,10 @@ public class ConfigScreen extends Screen {
             this.minecraft.pushGuiLayer(new ConfirmScreen(userAccepted -> {
                 if (userAccepted) {
                     ConfigHelper.serialize();
+                    InventoryPause.GUI_ENTRIES.saveStates();
                 } else {
                     InventoryPause.MOD_CONFIG = ConfigHelper.deserialize();
+                    InventoryPause.GUI_ENTRIES.loadStates(ModList.get().getModContainerById(InventoryPause.MOD_ID).get());
                 }
                 this.minecraft.popGuiLayer();
                 this.minecraft.setScreen(lastScreen);

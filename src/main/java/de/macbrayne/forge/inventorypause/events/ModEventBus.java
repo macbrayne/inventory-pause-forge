@@ -4,7 +4,6 @@ package de.macbrayne.forge.inventorypause.events;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import de.macbrayne.forge.inventorypause.InventoryPause;
-import de.macbrayne.forge.inventorypause.compat.VanillaCompat;
 import de.macbrayne.forge.inventorypause.gui.screens.ConfigScreen;
 import net.minecraft.client.KeyMapping;
 import net.neoforged.fml.ModLoadingContext;
@@ -42,7 +41,6 @@ public class ModEventBus {
 
     public static void clientSetup(@SuppressWarnings("unused") FMLClientSetupEvent event) {
         ModLoadingContext.get().registerExtensionPoint(IConfigScreenFactory.class, () -> (mc, screen) -> new ConfigScreen(screen));
-        new VanillaCompat().register();
     }
 
 

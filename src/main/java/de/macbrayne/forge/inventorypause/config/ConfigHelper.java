@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EUPL-1.2
 
-package de.macbrayne.forge.inventorypause.common;
+package de.macbrayne.forge.inventorypause.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,7 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
-import de.macbrayne.forge.inventorypause.common.old.ModConfigV1;
+import de.macbrayne.forge.inventorypause.config.old.ModConfigV1;
 import net.neoforged.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

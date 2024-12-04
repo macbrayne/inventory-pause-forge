@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: EUPL-1.2
 
-package de.macbrayne.forge.inventorypause.common.old;
+package de.macbrayne.forge.inventorypause.config.old;
 
-import de.macbrayne.forge.inventorypause.common.ModConfig;
+import de.macbrayne.forge.inventorypause.config.ModConfig;
 import de.macbrayne.forge.inventorypause.common.PauseMode;
 
 import java.util.ArrayList;

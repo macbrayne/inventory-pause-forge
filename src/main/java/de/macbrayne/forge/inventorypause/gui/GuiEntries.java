@@ -1,11 +1,18 @@
 // SPDX-License-Identifier: EUPL-1.2
 
-package de.macbrayne.forge.inventorypause.common;
+package de.macbrayne.forge.inventorypause.gui;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.macbrayne.forge.inventorypause.InventoryPause;
+import de.macbrayne.forge.inventorypause.compat.ScreenDictionary;
+import de.macbrayne.forge.inventorypause.config.ConfigHelper;
+import de.macbrayne.forge.inventorypause.common.PauseMode;
+import net.minecraft.client.gui.screens.DeathScreen;
+import net.minecraft.client.gui.screens.debug.GameModeSwitcherScreen;
+import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.loading.FMLPaths;
@@ -54,6 +61,18 @@ public class GuiEntries {
         Map<String, PauseMode> stringified = new HashMap<>();
         this.states.forEach((key, value) -> stringified.put(key.configEntry(), value));
         ConfigHelper.save(FMLPaths.CONFIGDIR.get().resolve("inventorypause/states.json"), stringified, STATES_CODEC);
+    }
+
+    public void registerScreens() {
+        ScreenDictionary dict = InventoryPause.getScreenDictionary();
+
+        dict.register(InventoryScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseInventory);
+        dict.register(CreativeModeInventoryScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseCreativeInventory);
+        dict.register(DeathScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseDeath);
+        dict.register(GameModeSwitcherScreen.class, () -> InventoryPause.MOD_CONFIG.abilities.pauseGameModeSwitcher);
+        entries.forEach(entry -> {
+            dict.register(entry.target, () -> states.get(entry));
+        });
     }
 
     private static Optional<Map<String, PauseMode>> attemptLoadStates(Path path) {
