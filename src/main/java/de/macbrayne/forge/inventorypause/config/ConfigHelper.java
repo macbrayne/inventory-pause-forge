@@ -17,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
+import de.macbrayne.forge.inventorypause.config.old.ModConfigTOML;
 import de.macbrayne.forge.inventorypause.config.old.ModConfigV1;
 import net.neoforged.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
@@ -37,19 +38,19 @@ public class ConfigHelper {
     }
 
 
-    public static ModConfig deserialize() {
+    public static ModConfigTOML deserialize() {
         LOGGER.debug("Trying to load config from file");
         Path path = FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml");
         if (Files.exists(path)) {
             try {
                 Toml toml = new Toml().read(path.toFile());
-                ModConfig config = toml.to(ModConfig.class);
+                ModConfigTOML config = toml.to(ModConfigTOML.class);
                 LOGGER.debug("Successfully loaded config from file");
                 LOGGER.info("Current config version is V{}", config.CONFIG_VERSION_DO_NOT_TOUCH);
                 return config;
             } catch (Exception ignored) {
                 try {
-                    ModConfig migratedConfig = ModConfigV1.toV2(new Toml().read(path.toFile()).to(ModConfigV1.class));
+                    ModConfigTOML migratedConfig = ModConfigV1.toV2(new Toml().read(path.toFile()).to(ModConfigV1.class));
                     LOGGER.warn("V1 config detected, migrating to V2 and moving old config to inventorypause.toml.old");
                     Files.copy(FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml"), FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml.old"), StandardCopyOption.COPY_ATTRIBUTES);
                     writer.write(migratedConfig, FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml").toFile());
@@ -61,7 +62,7 @@ public class ConfigHelper {
             }
         } else {
             LOGGER.warn("No config file found, creating new one");
-            ModConfig config = new ModConfig();
+            ModConfigTOML config = new ModConfigTOML();
             try {
                 writer.write(config, FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml").toFile());
             } catch (IOException e) {

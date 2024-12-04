@@ -3,8 +3,8 @@
 package de.macbrayne.forge.inventorypause.gui.components;
 
 import de.macbrayne.forge.inventorypause.InventoryPause;
-import de.macbrayne.forge.inventorypause.gui.GuiEntries;
 import de.macbrayne.forge.inventorypause.common.PauseMode;
+import de.macbrayne.forge.inventorypause.config.GuiEntry;
 import de.macbrayne.forge.inventorypause.gui.GuiUtils;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -21,16 +21,16 @@ public class TexturedCycleButton extends BorderedCycleButton {
         this.icon = icon;
     }
 
-    public static TexturedCycleButton fromButtonInfo(int x, int y, int width, int height, GuiEntries.GuiEntry info) {
-        var a = InventoryPause.GUI_ENTRIES;
+    public static TexturedCycleButton fromButtonInfo(int x, int y, int width, int height, GuiEntry info) {
+        var states = InventoryPause.MOD_CONFIG.states;
         Component buttonInfoComponent = Component.translatable("menu.inventorypause.settings.tooltip." + info.configEntry());
         Component narration = Component.translatable("menu.inventorypause.settings.tooltip.pause", buttonInfoComponent);
         TriStateTooltip tooltip = TriStateTooltip.withState(Component.translatable("menu.inventorypause.settings.tooltip.ellipsis", buttonInfoComponent));
         return new TexturedCycleButton(CycleButton.builder(PauseMode::getDisplayName)
                 .withValues(PauseMode.OFF, PauseMode.SLOWMO, PauseMode.ON)
                 .withTooltip(tooltip::get)
-                .withInitialValue(a.states.get(info))
-                .create(x, y, width, height, narration, (button, value) -> a.states.put(info, value)), info.icon());
+                .withInitialValue(states.get(info))
+                .create(x, y, width, height, narration, (button, value) -> states.put(info, value)), info.icon());
     }
 
     @Override

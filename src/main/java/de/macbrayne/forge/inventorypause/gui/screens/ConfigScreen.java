@@ -4,6 +4,7 @@ package de.macbrayne.forge.inventorypause.gui.screens;
 
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.config.ConfigHelper;
+import de.macbrayne.forge.inventorypause.config.ModConfig;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
@@ -13,7 +14,6 @@ import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.neoforged.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 
 public class ConfigScreen extends Screen {
@@ -34,12 +34,11 @@ public class ConfigScreen extends Screen {
         layout.addToContents(modCompatList);
         LinearLayout linear = LinearLayout.horizontal().spacing(8);
         linear.addChild(new Button.Builder(CommonComponents.GUI_CANCEL, (p_96788_) -> {
-            InventoryPause.MOD_CONFIG = ConfigHelper.deserialize();
+            InventoryPause.MOD_CONFIG = ModConfig.load();
             onClose();
         }).build());
         linear.addChild(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
-            ConfigHelper.serialize();
-            InventoryPause.GUI_ENTRIES.saveStates();
+            InventoryPause.MOD_CONFIG.save();
             onClose();
         }).build());
 
@@ -60,14 +59,13 @@ public class ConfigScreen extends Screen {
 
     @Override
     public void onClose() {
-        if (!ConfigHelper.deserialize().equals(InventoryPause.MOD_CONFIG)) {
+        ModConfig diskVersion = ModConfig.load();
+        if (!diskVersion.equals(InventoryPause.MOD_CONFIG)) {
             this.minecraft.pushGuiLayer(new ConfirmScreen(userAccepted -> {
                 if (userAccepted) {
-                    ConfigHelper.serialize();
-                    InventoryPause.GUI_ENTRIES.saveStates();
+                    InventoryPause.MOD_CONFIG.save();
                 } else {
-                    InventoryPause.MOD_CONFIG = ConfigHelper.deserialize();
-                    InventoryPause.GUI_ENTRIES.loadStates(ModList.get().getModContainerById(InventoryPause.MOD_ID).get());
+                    InventoryPause.MOD_CONFIG = diskVersion;
                 }
                 this.minecraft.popGuiLayer();
                 this.minecraft.setScreen(lastScreen);

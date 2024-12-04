@@ -49,10 +49,10 @@ public class ModCompatScreen extends Screen {
             xDone += width / 2 + 2;
             this.addRenderableWidget(new BorderedCycleButton(CycleButton.builder(PauseMode::getDisplayName)
                     .withValues(PauseMode.OFF, PauseMode.ON)
-                    .withInitialValue(PauseMode.fromBoolean(InventoryPause.MOD_CONFIG.debug))
+                    .withInitialValue(PauseMode.fromBoolean(InventoryPause.MOD_CONFIG.debugText.debug))
                     .withTooltip(value -> Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.debug_mode.tooltip")))
                     .create(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.modCompat.debug_mode"), (button, value) -> {
-                        InventoryPause.MOD_CONFIG.debug = value == PauseMode.ON;
+                        InventoryPause.MOD_CONFIG.debugText.debug = value == PauseMode.ON;
                     })));
         }
         this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {

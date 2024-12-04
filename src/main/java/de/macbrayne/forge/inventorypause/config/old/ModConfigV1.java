@@ -2,7 +2,6 @@
 
 package de.macbrayne.forge.inventorypause.config.old;
 
-import de.macbrayne.forge.inventorypause.config.ModConfig;
 import de.macbrayne.forge.inventorypause.common.PauseMode;
 
 import java.util.ArrayList;
@@ -163,8 +162,8 @@ public class ModConfigV1 {
     }
 
 
-    public static ModConfig toV2(ModConfigV1 modConfigV1) {
-        ModConfig modConfig = new ModConfig();
+    public static ModConfigTOML toV2(ModConfigV1 modConfigV1) {
+        ModConfigTOML modConfig = new ModConfigTOML();
         modConfig.setEnabled(modConfigV1.enabled);
         modConfig.disableSaving = modConfigV1.disableSaving;
         modConfig.pauseSounds = modConfigV1.pauseSounds;

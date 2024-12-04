@@ -26,7 +26,7 @@ public class ForgeEventBus {
 
     public static void onGUIDrawPost(ScreenEvent.Render.Post event) {
         Screen screen = event.getScreen();
-        if (MOD_CONFIG.debug) {
+        if (MOD_CONFIG.debugText.debug) {
             int line = 0;
             for (Class<?> cl = screen.getClass(); cl.getSuperclass() != null && line < MOD_CONFIG.debugText.maxDepth; cl = cl.getSuperclass()) {
                 if (!Screen.class.isAssignableFrom(cl) || cl == Screen.class) {
@@ -39,7 +39,7 @@ public class ForgeEventBus {
     }
 
     public static void onScreenEvent(ScreenEvent.KeyReleased.Post event) {
-        if(!MOD_CONFIG.isEnabled()) {
+        if(!MOD_CONFIG.debugText.debug) {
             return;
         }
         if (ModEventBus.COPY_CLASS_NAME.get().isActiveAndMatches(InputConstants.getKey(event.getKeyCode(), event.getScanCode()))) {
@@ -83,7 +83,7 @@ public class ForgeEventBus {
             minecraft.setScreen(new ConfigScreen(minecraft.screen));
         }
 
-        if(!MOD_CONFIG.isEnabled()) {
+        if(MOD_CONFIG.tempDisabled) {
             return;
         }
         while (ModEventBus.PAUSE_GAME.get().consumeClick()) {

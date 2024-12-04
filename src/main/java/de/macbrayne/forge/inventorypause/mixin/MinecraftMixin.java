@@ -44,7 +44,7 @@ public abstract class MinecraftMixin {
 
     @Inject(at = @At("TAIL"), method = "setScreen")
     public void openScreen(@Nullable Screen screen, CallbackInfo ci) {
-        if (MOD_CONFIG.isEnabled() && MOD_CONFIG.pauseSounds && ScreenHelper.isConfiguredScreen(screen)) {
+        if (!MOD_CONFIG.tempDisabled && MOD_CONFIG.pauseSounds && ScreenHelper.isConfiguredScreen(screen)) {
             boolean canPauseGame = isLocalServer() && !this.singleplayerServer.isPublished();
             if (canPauseGame) {
                 this.getSoundManager().pause();
@@ -54,7 +54,7 @@ public abstract class MinecraftMixin {
 
     @WrapOperation(method = "runTick(Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;isPauseScreen()Z"))
     private boolean pauseGame(Screen instance, Operation<Boolean> original) {
-        if (MOD_CONFIG.isEnabled() && ScreenHelper.isPauseScreen(instance)) {
+        if (!MOD_CONFIG.tempDisabled && ScreenHelper.isPauseScreen(instance)) {
             return true;
         }
         return original.call(instance);
@@ -63,7 +63,7 @@ public abstract class MinecraftMixin {
     @Inject(method = "setScreen", at = @At(value = "RETURN"))
     private void setAndInitialisedScreen(Screen newScreen, CallbackInfo ci, @Local(ordinal = 1) Screen oldScreen) {
         boolean isSlowmo = inventorypause$isSlowMotion;
-        if (MOD_CONFIG.isEnabled() && this.isSingleplayer() && newScreen != oldScreen) {
+        if (!MOD_CONFIG.tempDisabled && this.isSingleplayer() && newScreen != oldScreen) {
             if (newScreen != null && ScreenHelper.isSlowmoScreen(newScreen) && !isSlowmo) {
                 ServerTickRateManager servertickratemanager = getSingleplayerServer().tickRateManager();
                 float newTickRate = 20f / MOD_CONFIG.modCompat.timeBetweenCompatTicks;
@@ -79,7 +79,7 @@ public abstract class MinecraftMixin {
                 inventorypause$isSlowMotion = false;
             }
         }
-        if (MOD_CONFIG.debug && newScreen != null && !ScreenHelper.isConfiguredScreen(newScreen)) {
+        if (MOD_CONFIG.debugText.debug && newScreen != null && !ScreenHelper.isConfiguredScreen(newScreen)) {
             inventorypause$LOGGER.info("Changing screen to {}", newScreen.getClass().getName());
         }
     }

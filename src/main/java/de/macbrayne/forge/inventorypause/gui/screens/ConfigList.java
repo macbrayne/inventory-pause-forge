@@ -4,6 +4,7 @@ package de.macbrayne.forge.inventorypause.gui.screens;
 
 import de.macbrayne.forge.inventorypause.InventoryPause;
 import de.macbrayne.forge.inventorypause.config.ModConfig;
+import de.macbrayne.forge.inventorypause.config.old.ModConfigTOML;
 import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.gui.components.BorderedCycleButton;
 import de.macbrayne.forge.inventorypause.gui.components.TexturedCycleButton;
@@ -36,10 +37,10 @@ public class ConfigList extends ContainerObjectSelectionList<ConfigList.Entry> {
             CycleButton.Builder<PauseMode> onOffBuilder = CycleButton.builder(PauseMode::getDisplayName)
                     .withValues(PauseMode.OFF, PauseMode.ON);
             Tooltip enabled = Tooltip.create(Component.translatable("menu.inventorypause.settings.enabled.tooltip"));
-            this.addEntry(new SingleEntry<>(new BorderedCycleButton(onOffBuilder.withInitialValue(config.isEnabled() ? PauseMode.ON : PauseMode.OFF)
+            this.addEntry(new SingleEntry<>(new BorderedCycleButton(onOffBuilder.withInitialValue(config.tempDisabled ? PauseMode.OFF : PauseMode.ON)
                     .withTooltip(pauseMode -> enabled)
                     .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings.enabled"), (button, state) -> {
-                        config.setEnabled(state == PauseMode.ON);
+                        config.tempDisabled = (state != PauseMode.ON);
                     }))));
 
             var save = Tooltip.create(Component.translatable("menu.inventorypause.settings.disableSaving.tooltip"));
@@ -61,20 +62,20 @@ public class ConfigList extends ContainerObjectSelectionList<ConfigList.Entry> {
                 .withTooltip(t -> TriStateTooltip.withState(Component.empty()).get(t));
 
 
-        addEntry(new SplitEntry<>(new BorderedCycleButton(builder.withInitialValue(config.abilities.pauseInventory)
+        addEntry(new SplitEntry<>(new BorderedCycleButton(builder.withInitialValue(config.states.pauseInventory)
                 .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings.inventory"), (button, state) -> {
-                    config.abilities.pauseInventory = state;
-                })), new BorderedCycleButton(builder.withInitialValue(config.abilities.pauseCreativeInventory)
+                    config.states.pauseInventory = state;
+                })), new BorderedCycleButton(builder.withInitialValue(config.states.pauseCreativeInventory)
                 .create(0, 0, 0, height, Component.translatable("menu.inventorypause.settings.creativeInventory"), (button, state) -> {
-                    config.abilities.pauseCreativeInventory = state;
+                    config.states.pauseCreativeInventory = state;
                 }))));
 
-        addEntry(new SplitEntry<>(new BorderedCycleButton(builder.withInitialValue(config.abilities.pauseDeath)
+        addEntry(new SplitEntry<>(new BorderedCycleButton(builder.withInitialValue(config.states.pauseDeath)
                 .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings.death"), (button, state) -> {
-                    config.abilities.pauseDeath = state;
-                })), new BorderedCycleButton(builder.withInitialValue(config.abilities.pauseGameModeSwitcher)
+                    config.states.pauseDeath = state;
+                })), new BorderedCycleButton(builder.withInitialValue(config.states.pauseGameModeSwitcher)
                 .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings.gameModeSwitcher"), (button, state) -> {
-                    config.abilities.pauseGameModeSwitcher = state;
+                    config.states.pauseGameModeSwitcher = state;
                 }))));
 
         int numberOfRows = InventoryPause.GUI_ENTRIES.entries().size() / numberOfColumns + (InventoryPause.GUI_ENTRIES.entries().size() % numberOfColumns > 0 ? 1 : 0);
