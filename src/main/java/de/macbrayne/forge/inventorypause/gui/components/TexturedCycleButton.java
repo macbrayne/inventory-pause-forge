@@ -21,7 +21,7 @@ public class TexturedCycleButton extends BorderedCycleButton {
         this.icon = icon;
     }
 
-    public static TexturedCycleButton fromButtonInfo(int x, int y, int width, int height, GuiEntry info) {
+    public static TexturedCycleButton fromButtonInfo(int x, int y, int width, int height, GuiEntry.Icon info) {
         var states = InventoryPause.MOD_CONFIG.states;
         Component buttonInfoComponent = Component.translatable("menu.inventorypause.settings.tooltip." + info.configEntry());
         Component narration = Component.translatable("menu.inventorypause.settings.tooltip.pause", buttonInfoComponent);
@@ -30,7 +30,7 @@ public class TexturedCycleButton extends BorderedCycleButton {
                 .withValues(PauseMode.OFF, PauseMode.SLOWMO, PauseMode.ON)
                 .withTooltip(tooltip::get)
                 .withInitialValue(states.get(info))
-                .create(x, y, width, height, narration, (button, value) -> states.put(info, value)), info.icon());
+                .create(x, y, width, height, narration, (button, value) -> states.put(info, value)), info.content());
     }
 
     @Override

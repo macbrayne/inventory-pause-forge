@@ -23,7 +23,7 @@ public class DeathScreenMixin {
 
     @Inject(method = "init", at = @At(value = "RETURN"))
     private void yourHandlerMethod(CallbackInfo ci) {
-        if(!MOD_CONFIG.tempDisabled && MOD_CONFIG.states.pauseDeath == PauseMode.SLOWMO) {
+        if(!MOD_CONFIG.tempDisabled && MOD_CONFIG.states.get("pauseDeath") == PauseMode.SLOWMO) {
             this.delayTicker += Math.max((int) Math.floor(20f - 20f / MOD_CONFIG.modCompat.timeBetweenCompatTicks - 1), 0);
             inventorypause$LOGGER.debug("Forwarding death screen button delay by {} ticks", this.delayTicker);
         }

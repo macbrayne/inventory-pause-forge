@@ -23,8 +23,8 @@ public class InventoryPause {
     public static final String MOD_ID = "inventorypause";
     private static final Logger LOGGER = LogManager.getLogger(MOD_ID);
     private static final ScreenDictionary SCREEN_DICTIONARY = new ScreenDictionary();
-    public static ModConfig MOD_CONFIG = ModConfig.getDefault();
     public static GuiEntries GUI_ENTRIES = new GuiEntries();
+    public static ModConfig MOD_CONFIG = ModConfig.getDefault();
 
     public InventoryPause(IEventBus modEventBus, ModContainer container) {
         if (FMLEnvironment.dist == Dist.CLIENT) {
