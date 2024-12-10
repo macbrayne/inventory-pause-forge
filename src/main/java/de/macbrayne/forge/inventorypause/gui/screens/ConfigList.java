@@ -2,9 +2,10 @@
 
 package de.macbrayne.forge.inventorypause.gui.screens;
 
+import com.mojang.datafixers.util.Either;
 import de.macbrayne.forge.inventorypause.InventoryPause;
+import de.macbrayne.forge.inventorypause.config.GuiEntry;
 import de.macbrayne.forge.inventorypause.config.ModConfig;
-import de.macbrayne.forge.inventorypause.config.old.ModConfigTOML;
 import de.macbrayne.forge.inventorypause.common.PauseMode;
 import de.macbrayne.forge.inventorypause.gui.components.BorderedCycleButton;
 import de.macbrayne.forge.inventorypause.gui.components.TexturedCycleButton;
@@ -33,28 +34,31 @@ public class ConfigList extends ContainerObjectSelectionList<ConfigList.Entry> {
     }
 
     private void initEntries() {
-        {
-            CycleButton.Builder<PauseMode> onOffBuilder = CycleButton.builder(PauseMode::getDisplayName)
-                    .withValues(PauseMode.OFF, PauseMode.ON);
-            Tooltip enabled = Tooltip.create(Component.translatable("menu.inventorypause.settings.enabled.tooltip"));
-            this.addEntry(new SingleEntry<>(new BorderedCycleButton(onOffBuilder.withInitialValue(config.tempDisabled ? PauseMode.OFF : PauseMode.ON)
-                    .withTooltip(pauseMode -> enabled)
-                    .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings.enabled"), (button, state) -> {
-                        config.tempDisabled = (state != PauseMode.ON);
-                    }))));
+        CycleButton.Builder<PauseMode> onOffBuilder = CycleButton.builder(PauseMode::getDisplayName)
+                .withValues(PauseMode.OFF, PauseMode.ON);
+        Tooltip enabled = Tooltip.create(Component.translatable("menu.inventorypause.settings.enabled.tooltip"));
+        this.addEntry(new SingleEntry<>(new BorderedCycleButton(onOffBuilder.withInitialValue(config.tempDisabled ? PauseMode.OFF : PauseMode.ON)
+                .withTooltip(pauseMode -> enabled)
+                .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings.enabled"), (button, state) -> {
+                    config.tempDisabled = (state != PauseMode.ON);
+                }))));
 
-            var save = Tooltip.create(Component.translatable("menu.inventorypause.settings.disableSaving.tooltip"));
-            var sounds = Tooltip.create(Component.translatable("menu.inventorypause.settings.pauseSounds.tooltip"));
-            this.addEntry(new SplitEntry<>(new BorderedCycleButton(onOffBuilder.withInitialValue(config.disableSaving ? PauseMode.OFF : PauseMode.ON)
-                    .withTooltip(pauseMode -> save)
-                    .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings.disableSaving"), (button, state) -> {
-                        config.disableSaving = state == PauseMode.OFF;
-                    })), new BorderedCycleButton(onOffBuilder.withInitialValue(config.pauseSounds ? PauseMode.ON : PauseMode.OFF)
-                    .withTooltip(pauseMode -> sounds)
-                    .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings.pauseSounds"), (button, state) -> {
-                        config.pauseSounds = state == PauseMode.ON;
-                    }))));
-        }
+        var save = Tooltip.create(Component.translatable("menu.inventorypause.settings.disableSaving.tooltip"));
+        var sounds = Tooltip.create(Component.translatable("menu.inventorypause.settings.pauseSounds.tooltip"));
+        this.addEntry(new SplitEntry<>(new BorderedCycleButton(onOffBuilder.withInitialValue(config.disableSaving ? PauseMode.OFF : PauseMode.ON)
+                .withTooltip(pauseMode -> save)
+                .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings.disableSaving"), (button, state) -> {
+                    config.disableSaving = state == PauseMode.OFF;
+                })), new BorderedCycleButton(onOffBuilder.withInitialValue(config.pauseSounds ? PauseMode.ON : PauseMode.OFF)
+                .withTooltip(pauseMode -> sounds)
+                .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings.pauseSounds"), (button, state) -> {
+                    config.pauseSounds = state == PauseMode.ON;
+                }))));
+
+        initDynamicEntries();
+    }
+
+    private void initDynamicEntries() {
         this.addEntry(new TextEntry(Component.translatable("menu.inventorypause.settings.title.pause")));
 
         CycleButton.Builder<PauseMode> builder = CycleButton.builder(PauseMode::getDisplayName)
@@ -62,38 +66,38 @@ public class ConfigList extends ContainerObjectSelectionList<ConfigList.Entry> {
                 .withTooltip(t -> TriStateTooltip.withState(Component.empty()).get(t));
 
 
-        addEntry(new SplitEntry<>(new BorderedCycleButton(builder.withInitialValue(config.states.pauseInventory)
-                .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings.inventory"), (button, state) -> {
-                    config.states.pauseInventory = state;
-                })), new BorderedCycleButton(builder.withInitialValue(config.states.pauseCreativeInventory)
-                .create(0, 0, 0, height, Component.translatable("menu.inventorypause.settings.creativeInventory"), (button, state) -> {
-                    config.states.pauseCreativeInventory = state;
-                }))));
+        var contiguous = getContiguous(InventoryPause.GUI_ENTRIES.entries());
 
-        addEntry(new SplitEntry<>(new BorderedCycleButton(builder.withInitialValue(config.states.pauseDeath)
-                .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings.death"), (button, state) -> {
-                    config.states.pauseDeath = state;
-                })), new BorderedCycleButton(builder.withInitialValue(config.states.pauseGameModeSwitcher)
-                .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings.gameModeSwitcher"), (button, state) -> {
-                    config.states.pauseGameModeSwitcher = state;
-                }))));
-
-        int numberOfRows = InventoryPause.GUI_ENTRIES.entries().size() / numberOfColumns + (InventoryPause.GUI_ENTRIES.entries().size() % numberOfColumns > 0 ? 1 : 0);
-        LinearLayout[] rows = new LinearLayout[numberOfRows];
-        for (int i = 0; i < numberOfRows; i++) {
-            rows[i] = LinearLayout.horizontal().spacing(4);
+        for (var entry : contiguous) {
+            entry.ifLeft(icons -> {
+                System.out.println(icons);
+                int numberOfRows = icons.size() / numberOfColumns + (icons.size() % numberOfColumns > 0 ? 1 : 0);
+                for (int row = 0; row < numberOfRows; row++) {
+                    LinearLayout layout = LinearLayout.horizontal().spacing(4);
+                    for (int i = 0; i < icons.size(); i++) {
+                        int padding = i % numberOfColumns == 0 ? 14 : 0;
+                        if (i / numberOfColumns == row) {
+                            layout.addChild(TexturedCycleButton.fromButtonInfo(0, 0, 20, 20, icons.get(i)), layout.newCellSettings().paddingLeft(padding));
+                        }
+                    }
+                    layout.arrangeElements();
+                    addEntry(new LinearLayoutEntry(layout));
+                }
+            });
+            entry.ifRight(texts -> {
+                System.out.println(texts);
+                for (int i = 0; i < texts.size(); i += 2) {
+                    final int finalI = i;
+                    addEntry(new SplitEntry<>(new BorderedCycleButton(builder.withInitialValue(config.states.get(texts.get(i)))
+                            .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings." + texts.get(finalI).content()), (button, state) -> {
+                                config.states.put(texts.get(finalI), state);
+                            })), new BorderedCycleButton(builder.withInitialValue(config.states.get(texts.get(i + 1)))
+                            .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings." + texts.get(finalI + 1).content()), (button, state) -> {
+                                config.states.put(texts.get(finalI + 1), state);
+                            }))));
+                }
+            });
         }
-        for (int i = 0, buttonInfosSize = InventoryPause.GUI_ENTRIES.entries().size(); i < buttonInfosSize; i++) {
-            var info = InventoryPause.GUI_ENTRIES.entries().get(i);
-            int row = i / numberOfColumns;
-            int padding = i % numberOfColumns == 0 ? 14 : 0;
-            rows[row].addChild(TexturedCycleButton.fromButtonInfo(0, 0, 20, 20, info), rows[row].newCellSettings().paddingLeft(padding));
-        }
-        for (LinearLayout row : rows) {
-            addEntry(new LinearLayoutEntry(row));
-            row.arrangeElements();
-        }
-
         if (!InventoryPause.MOD_CONFIG.settingsForModpacks.hideModCompatButton) {
             addEntry(new SingleEntry<>(new Button.Builder(Component.translatable("menu.inventorypause.settings.mod_compat_options"), button -> this.minecraft.setScreen(new ModCompatScreen(parent)))
                     .tooltip(Tooltip.create(Component.translatable("menu.inventorypause.settings.mod_compat_options.tooltip"))).build()));
@@ -195,7 +199,7 @@ public class ConfigList extends ContainerObjectSelectionList<ConfigList.Entry> {
             layout.visitWidgets(widget -> widget.render(guiGraphics, mouseX, mouseY, partialTick));
         }
 
-            @Override
+        @Override
         public List<? extends NarratableEntry> narratables() {
             return children;
         }
@@ -203,6 +207,31 @@ public class ConfigList extends ContainerObjectSelectionList<ConfigList.Entry> {
         @Override
         public List<? extends GuiEventListener> children() {
             return children;
+        }
+    }
+
+
+    private static List<Either<List<GuiEntry.Icon>, List<GuiEntry.Text>>> getContiguous(List<GuiEntry<?>> entries) {
+        List<Either<List<GuiEntry.Icon>, List<GuiEntry.Text>>> result = new ArrayList<>();
+        List<GuiEntry<?>> currentGroup = new ArrayList<>();
+        for (GuiEntry<?> entry : entries) {
+            if (!currentGroup.isEmpty() && entry.getClass() != currentGroup.getFirst().getClass()) {
+                addGroupToResult(result, currentGroup);
+                currentGroup.clear();
+            }
+            currentGroup.add(entry);
+        }
+        if (!currentGroup.isEmpty()) {
+            addGroupToResult(result, currentGroup);
+        }
+        return result;
+    }
+
+    private static void addGroupToResult(List<Either<List<GuiEntry.Icon>, List<GuiEntry.Text>>> result, List<GuiEntry<?>> group) {
+        if (group.getFirst() instanceof GuiEntry.Icon icon) {
+            result.add(Either.left(group.stream().map(item -> (GuiEntry.Icon) item).toList()));
+        } else if (group.getFirst() instanceof GuiEntry.Text text) {
+            result.add(Either.right(group.stream().map(item -> (GuiEntry.Text) item).toList()));
         }
     }
 }

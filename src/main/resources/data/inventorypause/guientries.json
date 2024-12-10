@@ -1,5 +1,25 @@
 {
-  "icon_buttons": [
+  "buttons": [
+    {
+      "config_entry": "pauseInventory",
+      "content_translation_key": "inventory",
+      "target": "net.minecraft.client.gui.screens.inventory.InventoryScreen"
+    },
+    {
+      "config_entry": "pauseCreativeInventory",
+      "content_translation_key": "creativeInventory",
+      "target": "net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen"
+    },
+    {
+      "config_entry": "pauseDeath",
+      "content_translation_key": "death",
+      "target": "net.minecraft.client.gui.screens.DeathScreen"
+    },
+    {
+      "config_entry": "pauseGameModeSwitcher",
+      "content_translation_key": "gameModeSwitcher",
+      "target": "net.minecraft.client.gui.screens.debug.GameModeSwitcherScreen"
+    },
     {
       "config_entry": "pauseCraftingTable",
       "icon":{
@@ -92,7 +112,7 @@
       "target": "net.minecraft.client.gui.screens.inventory.CrafterScreen"
     },
     {
-      "config_entry": "pauseSign",
+      "config_entry": "pauseSignEdit",
       "icon": {
         "id": "minecraft:oak_sign"
       },
