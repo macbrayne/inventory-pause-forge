@@ -29,6 +29,7 @@ public class GuiStates {
     }
 
     public PauseMode get(GuiEntry<?> entry) {
+        states.putIfAbsent(entry, entry.defaultState());
         return states.get(entry);
     }
 

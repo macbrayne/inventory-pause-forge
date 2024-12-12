@@ -22,7 +22,7 @@ public class GuiEntries {
             entry -> entry instanceof GuiEntry.Icon icon ? Either.left(icon) : Either.right((GuiEntry.Text) entry)
     );
     public static final Codec<GuiEntries> ENTRIES_CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            GUI_ENTRY_CODEC.listOf().fieldOf("buttons").forGetter(GuiEntries::entries)
+            GUI_ENTRY_CODEC.listOf().optionalFieldOf("buttons", new ArrayList<>()).forGetter(GuiEntries::entries)
     ).apply(instance, GuiEntries::new));
     public final List<GuiEntry<?>> entries = new ArrayList<>();
 

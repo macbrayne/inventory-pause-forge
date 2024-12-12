@@ -3,11 +3,13 @@
     {
       "config_entry": "pauseInventory",
       "content_translation_key": "inventory",
+      "default_state": "true",
       "target": "net.minecraft.client.gui.screens.inventory.InventoryScreen"
     },
     {
       "config_entry": "pauseCreativeInventory",
       "content_translation_key": "creativeInventory",
+      "default_state": "true",
       "target": "net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen"
     },
     {
