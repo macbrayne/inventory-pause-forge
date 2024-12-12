@@ -5,6 +5,7 @@ package de.macbrayne.forge.inventorypause.config;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import de.macbrayne.forge.inventorypause.common.PauseMode;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
@@ -19,16 +20,19 @@ public sealed class GuiEntry<T> permits GuiEntry.Icon, GuiEntry.Text {
     }, Class::getName);
     private final String configEntry;
     private final T content;
+    private final PauseMode defaultState;
     private final Class<?> target;
 
 
-    public GuiEntry(String configEntry, T icon, Class<?> target) {
+    public GuiEntry(String configEntry, T icon, PauseMode defaultState, Class<?> target) {
         Objects.requireNonNull(configEntry, "configEntry");
         Objects.requireNonNull(icon, "icon");
         Objects.requireNonNull(target, "target");
+        Objects.requireNonNull(defaultState, "defaultContent");
         this.configEntry = configEntry;
         this.content = icon;
         this.target = target;
+        this.defaultState = defaultState;
     }
 
     public String configEntry() {
@@ -37,6 +41,10 @@ public sealed class GuiEntry<T> permits GuiEntry.Icon, GuiEntry.Text {
 
     public T content() {
         return content;
+    }
+
+    public PauseMode defaultState() {
+        return defaultState;
     }
 
     public Class<?> target() {
@@ -60,11 +68,12 @@ public sealed class GuiEntry<T> permits GuiEntry.Icon, GuiEntry.Text {
         public static final Codec<Icon> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Codec.STRING.fieldOf("config_entry").forGetter(Icon::configEntry),
                 ItemStack.STRICT_SINGLE_ITEM_CODEC.fieldOf("icon").forGetter(Icon::content),
+                PauseMode.CODEC.optionalFieldOf("default_state", PauseMode.OFF).forGetter(Icon::defaultState),
                 CLASS_CODEC.fieldOf("target").forGetter(Icon::target)
         ).apply(instance, Icon::new));
 
-        public Icon(String configEntry, ItemStack icon, Class<?> target) {
-            super(configEntry, icon, target);
+        public Icon(String configEntry, ItemStack icon, PauseMode defaultState, Class<?> target) {
+            super(configEntry, icon, defaultState, target);
         }
     }
 
@@ -72,11 +81,12 @@ public sealed class GuiEntry<T> permits GuiEntry.Icon, GuiEntry.Text {
         public static final Codec<Text> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Codec.STRING.fieldOf("config_entry").forGetter(Text::configEntry),
                 Codec.STRING.fieldOf("content_translation_key").forGetter(Text::content),
+                PauseMode.CODEC.optionalFieldOf("default_state", PauseMode.OFF).forGetter(Text::defaultState),
                 CLASS_CODEC.fieldOf("target").forGetter(Text::target)
         ).apply(instance, Text::new));
 
-        public Text(String configEntry, String contentTranslationKey, Class<?> target) {
-            super(configEntry, contentTranslationKey, target);
+        public Text(String configEntry, String contentTranslationKey, PauseMode defaultState, Class<?> target) {
+            super(configEntry, contentTranslationKey, defaultState, target);
         }
     }
 }
