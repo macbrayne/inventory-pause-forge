@@ -44,7 +44,7 @@ public abstract class MinecraftMixin {
 
     @Inject(at = @At("TAIL"), method = "setScreen")
     public void openScreen(@Nullable Screen screen, CallbackInfo ci) {
-        if (!MOD_CONFIG.tempDisabled && MOD_CONFIG.pauseSounds && ScreenHelper.isConfiguredScreen(screen)) {
+        if (MOD_CONFIG.pauseSounds && ScreenHelper.isConfiguredScreen(screen)) {
             boolean canPauseGame = isLocalServer() && !this.singleplayerServer.isPublished();
             if (canPauseGame) {
                 this.getSoundManager().pause();
@@ -54,7 +54,7 @@ public abstract class MinecraftMixin {
 
     @WrapOperation(method = "runTick(Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;isPauseScreen()Z"))
     private boolean pauseGame(Screen instance, Operation<Boolean> original) {
-        if (!MOD_CONFIG.tempDisabled && ScreenHelper.isPauseScreen(instance)) {
+        if (ScreenHelper.isPauseScreen(instance)) {
             return true;
         }
         return original.call(instance);
@@ -63,7 +63,7 @@ public abstract class MinecraftMixin {
     @Inject(method = "setScreen", at = @At(value = "RETURN"))
     private void setAndInitialisedScreen(Screen newScreen, CallbackInfo ci, @Local(ordinal = 1) Screen oldScreen) {
         boolean isSlowmo = inventorypause$isSlowMotion;
-        if (!MOD_CONFIG.tempDisabled && this.isSingleplayer() && newScreen != oldScreen) {
+        if (this.isSingleplayer() && newScreen != oldScreen) {
             if (newScreen != null && ScreenHelper.isSlowmoScreen(newScreen) && !isSlowmo) {
                 ServerTickRateManager servertickratemanager = getSingleplayerServer().tickRateManager();
                 float newTickRate = MOD_CONFIG.modCompat.slowmoTickSpeed;

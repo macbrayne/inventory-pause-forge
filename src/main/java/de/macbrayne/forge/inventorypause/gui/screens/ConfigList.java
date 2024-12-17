@@ -36,13 +36,6 @@ public class ConfigList extends ContainerObjectSelectionList<ConfigList.Entry> {
     private void initEntries() {
         CycleButton.Builder<PauseMode> onOffBuilder = CycleButton.builder(PauseMode::getDisplayName)
                 .withValues(PauseMode.OFF, PauseMode.ON);
-        Tooltip enabled = Tooltip.create(Component.translatable("menu.inventorypause.settings.enabled.tooltip"));
-        this.addEntry(new SingleEntry<>(new BorderedCycleButton(onOffBuilder.withInitialValue(config.tempDisabled ? PauseMode.OFF : PauseMode.ON)
-                .withTooltip(pauseMode -> enabled)
-                .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings.enabled"), (button, state) -> {
-                    config.tempDisabled = (state != PauseMode.ON);
-                }))));
-
         var save = Tooltip.create(Component.translatable("menu.inventorypause.settings.disableSaving.tooltip"));
         var sounds = Tooltip.create(Component.translatable("menu.inventorypause.settings.pauseSounds.tooltip"));
         this.addEntry(new SplitEntry<>(new BorderedCycleButton(onOffBuilder.withInitialValue(config.disableSaving ? PauseMode.OFF : PauseMode.ON)
