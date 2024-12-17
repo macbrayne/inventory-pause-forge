@@ -145,7 +145,7 @@ public class ModConfigTOML {
     }
 
     public static ModConfig toV3(ModConfigTOML convert) {
-        ModConfig.ModCompat modCompat = new ModConfig.ModCompat(convert.modCompat.compatScreens, convert.modCompat.customScreens, convert.modCompat.timeBetweenCompatTicks);
+        ModConfig.ModCompat modCompat = new ModConfig.ModCompat(convert.modCompat.compatScreens, convert.modCompat.customScreens, (int) Math.ceil(20f / convert.modCompat.timeBetweenCompatTicks));
         ModConfig.SettingsForModpacks settingsForModpacks = new ModConfig.SettingsForModpacks(convert.settingsForModpacks.hideDebugButton, convert.settingsForModpacks.hideModCompatButton, convert.settingsForModpacks.registerKeybinds);
         ModConfig.DebugText debugText = new ModConfig.DebugText(convert.debug, convert.debugText.x, convert.debugText.y, convert.debugText.maxDepth);
         Map<String, PauseMode> states = new HashMap<>();
