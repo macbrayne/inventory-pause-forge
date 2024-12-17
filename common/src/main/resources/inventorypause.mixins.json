@@ -1,12 +1,12 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.example.examplemod.mixin",
+  "package": "de.macbrayne.inventorypause.mixin",
   "refmap": "${mod_id}.refmap.json",
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "client": [
-    "MixinMinecraft"
+    "de.macbrayne.common.inventorypause.mixin.MixinMinecraft"
   ],
   "server": [],
   "injectors": {

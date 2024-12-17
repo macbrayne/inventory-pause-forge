@@ -1,6 +1,8 @@
-package com.example.examplemod;
+// SPDX-License-Identifier: EUPL-1.2
 
-import com.example.examplemod.platform.Services;
+package de.macbrayne.common.inventorypause;
+
+import de.macbrayne.common.inventorypause.platform.Services;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Items;
 

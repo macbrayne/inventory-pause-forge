@@ -1,8 +1,12 @@
-package com.example.examplemod;
+// SPDX-License-Identifier: EUPL-1.2
 
+package de.macbrayne.fabric.inventorypause;
+
+import de.macbrayne.common.inventorypause.CommonClass;
+import de.macbrayne.common.inventorypause.Constants;
 import net.fabricmc.api.ModInitializer;
 
-public class ExampleMod implements ModInitializer {
+public class InventoryPause implements ModInitializer {
     
     @Override
     public void onInitialize() {

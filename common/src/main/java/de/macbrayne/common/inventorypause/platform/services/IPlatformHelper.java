@@ -1,4 +1,6 @@
-package com.example.examplemod.platform.services;
+// SPDX-License-Identifier: EUPL-1.2
+
+package de.macbrayne.common.inventorypause.platform.services;
 
 public interface IPlatformHelper {
 
