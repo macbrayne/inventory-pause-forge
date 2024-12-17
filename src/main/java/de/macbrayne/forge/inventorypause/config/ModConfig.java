@@ -23,7 +23,7 @@ public class ModConfig {
     ).apply(instance, ModConfig::new));
 
     public int configVersion = VERSION;
-    public boolean tempDisabled, disableSaving, pauseSounds;
+    public boolean disableSaving, pauseSounds;
     public final DebugText debugText;
     public final SettingsForModpacks settingsForModpacks;
     public final ModCompat modCompat;
@@ -107,8 +107,8 @@ public class ModConfig {
         public int slowmoTickSpeed;
 
         public ModCompat(List<String> customScreens, List<String> compatScreens, int slowmoTickSpeed) {
-            this.customScreens = customScreens;
-            this.compatScreens = compatScreens;
+            this.customScreens = new ArrayList<>(customScreens);
+            this.compatScreens = new ArrayList<>(compatScreens);
             this.slowmoTickSpeed = slowmoTickSpeed;
         }
 

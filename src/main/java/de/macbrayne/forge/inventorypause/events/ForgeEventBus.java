@@ -82,10 +82,6 @@ public class ForgeEventBus {
         while (ModEventBus.OPEN_SETTINGS.get().consumeClick()) {
             minecraft.setScreen(new ConfigScreen(minecraft.screen));
         }
-
-        if(MOD_CONFIG.tempDisabled) {
-            return;
-        }
         while (ModEventBus.PAUSE_GAME.get().consumeClick()) {
             if (!(minecraft.screen instanceof DummyPauseScreen)) {
                 minecraft.setScreen(new DummyPauseScreen());
