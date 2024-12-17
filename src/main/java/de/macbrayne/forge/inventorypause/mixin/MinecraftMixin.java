@@ -29,7 +29,7 @@ import static de.macbrayne.forge.inventorypause.InventoryPause.MOD_CONFIG;
 public abstract class MinecraftMixin {
     @Unique private static final Logger inventorypause$LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
     @Unique private boolean inventorypause$isSlowMotion = false;
-    @Unique private float inventorypause$originalTickRate = 20f;
+    @Unique private float inventorypause$originalTickRate = 1f;
     @Shadow
     public abstract SoundManager getSoundManager();
 
@@ -66,7 +66,7 @@ public abstract class MinecraftMixin {
         if (!MOD_CONFIG.tempDisabled && this.isSingleplayer() && newScreen != oldScreen) {
             if (newScreen != null && ScreenHelper.isSlowmoScreen(newScreen) && !isSlowmo) {
                 ServerTickRateManager servertickratemanager = getSingleplayerServer().tickRateManager();
-                float newTickRate = 20f / MOD_CONFIG.modCompat.timeBetweenCompatTicks;
+                float newTickRate = MOD_CONFIG.modCompat.slowmoTickSpeed;
                 inventorypause$originalTickRate = servertickratemanager.tickrate();
                 servertickratemanager.setTickRate(newTickRate);
                 inventorypause$LOGGER.debug("Opening {} (slow-motion)", newScreen);

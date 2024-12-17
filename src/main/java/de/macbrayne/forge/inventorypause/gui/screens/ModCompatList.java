@@ -51,12 +51,12 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.customScreens.add"), addEntry -> button -> {
             int i = children().indexOf(addEntry);
             children().add(i, new CustomEntry(newEntry));
-            modCustomSupplier.get().add("New Entry");
+            modCustomSupplier.get().add("");
         }));
 
         // Time Between Compat Ticks
-        NumEntry numEntry = new ModCompatList.NumEntry(() -> InventoryPause.MOD_CONFIG.modCompat.timeBetweenCompatTicks,
-                value -> InventoryPause.MOD_CONFIG.modCompat.timeBetweenCompatTicks = value, 20);
+        NumEntry numEntry = new ModCompatList.NumEntry(() -> InventoryPause.MOD_CONFIG.modCompat.slowmoTickSpeed,
+                value -> InventoryPause.MOD_CONFIG.modCompat.slowmoTickSpeed = value, 1);
         this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks"), numEntry::getTooltip));
         this.addEntry(numEntry);
 
@@ -69,7 +69,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens.add"), addEntry -> (button) -> {
             int i = children().indexOf(addEntry);
             children().add(i, new CompatEntry(newEntry));
-            modCustomSupplier.get().add("New Entry");
+            modCustomSupplier.get().add("");
         }));
     }
 
@@ -342,7 +342,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
         private void onEdit(String currentValue) {
             ((MutableTooltip) numBox.getTooltip()).inventorypause$updateMessage(minecraft, getTooltip());
-            this.resetButton.active = !currentValue.equals("20");
+            this.resetButton.active = !currentValue.equals("1");
         }
 
         @Override
@@ -371,7 +371,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             }
             if(Integer.parseInt(numBox.getValue()) > 20) {
                 numBox.setValue("20");
-                LOGGER.info("Tick rate cannot be lower than 20");
+                LOGGER.info("Tick rate cannot be higher than 20");
             }
         }
 
@@ -395,7 +395,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             Locale locale = Minecraft.getInstance().getLanguageManager().getJavaLocale();
             float valueInHertz = 20f;
             if (!numBox.getValue().isEmpty()) {
-                valueInHertz = 20f / Integer.parseInt(numBox.getValue());
+                valueInHertz = Integer.parseInt(numBox.getValue());
             }
             return Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks.tooltip",
                     String.format(locale, "%.2f", valueInHertz),

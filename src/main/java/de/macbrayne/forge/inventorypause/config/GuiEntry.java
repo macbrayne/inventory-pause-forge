@@ -67,7 +67,7 @@ public sealed class GuiEntry<T> permits GuiEntry.Icon, GuiEntry.Text {
     public static final class Icon extends GuiEntry<ItemStack> {
         public static final Codec<Icon> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Codec.STRING.fieldOf("config_entry").forGetter(Icon::configEntry),
-                ItemStack.STRICT_SINGLE_ITEM_CODEC.fieldOf("icon").forGetter(Icon::content),
+                ItemStack.SINGLE_ITEM_CODEC.fieldOf("icon").forGetter(Icon::content),
                 PauseMode.CODEC.optionalFieldOf("default_state", PauseMode.OFF).forGetter(Icon::defaultState),
                 CLASS_CODEC.fieldOf("target").forGetter(Icon::target)
         ).apply(instance, Icon::new));

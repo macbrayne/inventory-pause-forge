@@ -41,7 +41,7 @@ public class ModConfig {
 
     public static ModConfig getDefault() {
         return new ModConfig(VERSION, false, false, false, new DebugText(false, 4f, 4f, 3), new SettingsForModpacks(false, false, true),
-                new ModCompat(new ArrayList<>(), new ArrayList<>(), 20),
+                new ModCompat(new ArrayList<>(), new ArrayList<>(), 1),
                 new GuiStates(new HashMap<>()));
     }
 
@@ -98,18 +98,18 @@ public class ModConfig {
 
     public static class ModCompat {
         public static final Codec<ModCompat> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                Codec.STRING.listOf().fieldOf("custom_screens").forGetter(modCompat -> modCompat.customScreens),
-                Codec.STRING.listOf().fieldOf("compat_screens").forGetter(modCompat -> modCompat.compatScreens),
-                Codec.INT.fieldOf("tick_speed").forGetter(modCompat -> modCompat.timeBetweenCompatTicks)
+                Codec.STRING.listOf().fieldOf("custom_classes_pause").forGetter(modCompat -> modCompat.customScreens),
+                Codec.STRING.listOf().fieldOf("custom_classes_slowmo").forGetter(modCompat -> modCompat.compatScreens),
+                Codec.INT.fieldOf("slow_motion_tick_speed").forGetter(modCompat -> modCompat.slowmoTickSpeed)
         ).apply(instance, ModCompat::new));
 
         public final List<String> customScreens, compatScreens;
-        public int timeBetweenCompatTicks;
+        public int slowmoTickSpeed;
 
-        public ModCompat(List<String> customScreens, List<String> compatScreens, int timeBetweenCompatTicks) {
+        public ModCompat(List<String> customScreens, List<String> compatScreens, int slowmoTickSpeed) {
             this.customScreens = customScreens;
             this.compatScreens = compatScreens;
-            this.timeBetweenCompatTicks = timeBetweenCompatTicks;
+            this.slowmoTickSpeed = slowmoTickSpeed;
         }
 
         @Override
@@ -117,7 +117,7 @@ public class ModConfig {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             ModCompat modCompat = (ModCompat) o;
-            return timeBetweenCompatTicks == modCompat.timeBetweenCompatTicks && Objects.equals(customScreens, modCompat.customScreens) && Objects.equals(compatScreens, modCompat.compatScreens);
+            return slowmoTickSpeed == modCompat.slowmoTickSpeed && Objects.equals(customScreens, modCompat.customScreens) && Objects.equals(compatScreens, modCompat.compatScreens);
         }
     }
 
@@ -136,6 +136,6 @@ public class ModConfig {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ModConfig modConfig = (ModConfig) o;
-        return configVersion == modConfig.configVersion && tempDisabled == modConfig.tempDisabled && disableSaving == modConfig.disableSaving && pauseSounds == modConfig.pauseSounds && Objects.equals(debugText, modConfig.debugText) && Objects.equals(settingsForModpacks, modConfig.settingsForModpacks) && Objects.equals(modCompat, modConfig.modCompat) && Objects.equals(states, modConfig.states);
+        return configVersion == modConfig.configVersion && disableSaving == modConfig.disableSaving && pauseSounds == modConfig.pauseSounds && Objects.equals(debugText, modConfig.debugText) && Objects.equals(settingsForModpacks, modConfig.settingsForModpacks) && Objects.equals(modCompat, modConfig.modCompat) && Objects.equals(states, modConfig.states);
     }
 }
