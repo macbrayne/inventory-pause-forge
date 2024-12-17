@@ -1,6 +1,8 @@
-package com.example.examplemod.platform;
+// SPDX-License-Identifier: EUPL-1.2
 
-import com.example.examplemod.platform.services.IPlatformHelper;
+package de.macbrayne.fabric.inventorypause.platform;
+
+import de.macbrayne.common.inventorypause.platform.services.IPlatformHelper;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class FabricPlatformHelper implements IPlatformHelper {

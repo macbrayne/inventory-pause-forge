@@ -2,6 +2,7 @@
 
 package de.macbrayne.forge.inventorypause;
 
+import de.macbrayne.common.inventorypause.CommonClass;
 import de.macbrayne.forge.inventorypause.config.ConfigHelper;
 import de.macbrayne.forge.inventorypause.config.GuiEntries;
 import de.macbrayne.forge.inventorypause.config.ModConfig;
@@ -28,6 +29,7 @@ public class InventoryPause {
 
     public InventoryPause(IEventBus modEventBus, ModContainer container) {
         if (FMLEnvironment.dist == Dist.CLIENT) {
+            CommonClass.init();
             ConfigHelper.ensureConfigDirExists();
             GUI_ENTRIES = GuiEntries.loadEntries(container);
             ConfigHelper.migrateConfigToJson();
