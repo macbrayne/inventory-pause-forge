@@ -13,7 +13,7 @@ import java.util.Objects;
 public sealed class GuiEntry<T> permits GuiEntry.Icon, GuiEntry.Text {
     private static final Codec<Class<?>> CLASS_CODEC = Codec.STRING.comapFlatMap(className -> {
         try {
-            return DataResult.success(Class.forName(className, false, GuiEntries.class.getClassLoader()));
+            return DataResult.success(Class.forName(className, false, GuiEntry.class.getClassLoader()));
         } catch (ClassNotFoundException e) {
             return DataResult.error(() -> "Could not find class " + className);
         }
