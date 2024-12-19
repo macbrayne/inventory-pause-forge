@@ -2,9 +2,6 @@
 
 package de.macbrayne.inventorypause;
 
-import de.macbrayne.inventorypause.config.ConfigHelper;
-import de.macbrayne.inventorypause.config.GuiEntries;
-import de.macbrayne.inventorypause.config.ModConfig;
 import de.macbrayne.inventorypause.events.ForgeEventBus;
 import de.macbrayne.inventorypause.events.ModEventBus;
 import net.neoforged.api.distmarker.Dist;
@@ -14,17 +11,10 @@ import net.neoforged.neoforge.common.NeoForge;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(value = "inventorypause", dist = Dist.CLIENT)
-public class InventoryPause {
-    public static GuiEntries GUI_ENTRIES = new GuiEntries();
-    public static ModConfig MOD_CONFIG = ModConfig.getDefault();
-
-    public InventoryPause(IEventBus modEventBus) {
+public class InventoryPauseNeo {
+    public InventoryPauseNeo(IEventBus modEventBus) {
         CommonClass.init();
-        ConfigHelper.ensureConfigDirExists();
-        GUI_ENTRIES = GuiEntries.loadEntries();
-        ConfigHelper.migrateConfigToJson();
-        MOD_CONFIG = ModConfig.load();
-        MOD_CONFIG.states.registerScreens();
+        InventoryPause.MOD_CONFIG.states.registerScreens();
         modEventBus.addListener(ModEventBus::clientSetup);
         modEventBus.addListener(ModEventBus::registerBindings);
         NeoForge.EVENT_BUS.addListener(ForgeEventBus::onGUIDrawPost);

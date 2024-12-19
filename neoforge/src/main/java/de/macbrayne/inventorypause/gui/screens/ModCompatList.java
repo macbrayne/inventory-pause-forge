@@ -202,11 +202,11 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         public ItemEntry(String configValue, Supplier<List<String>> supplier, Button.CreateNarration moveButtonNarrationSupplier) {
             this.configValue = configValue;
             this.supplier = supplier;
-            this.removeButton = new HoverButton(new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.delete"), (button) -> {
+            this.removeButton = new HoverButton(0, 0, 20, 20, Component.translatable("menu.inventorypause.settings.modCompat.delete"), (button) -> {
                 ModCompatList.this.removeEntry(this);
                 removedEntries.add(this);
                 unfocusEntry();
-            }).size(20, 20).createNarration(p_253695_ -> Component.translatable("narrator.inventorypause.settings.modCompat.delete", configValue)));
+            }, p_253695_ -> Component.translatable("narrator.inventorypause.settings.modCompat.delete", configValue));
             this.moveButton = new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.moveUp"), button -> moveItem()).size(20, 20)
                     .createNarration(moveButtonNarrationSupplier).build();
             this.editBox = new IndicatingEditBox(ModCompatList.this.minecraft.font, 180, 20);
@@ -331,12 +331,11 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.numBox.setResponder(this::onEdit);
             this.numBox.setTooltip(Tooltip.create(getTooltip()));
 
-            this.resetButton = new HoverButton(new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.reset"), (button) -> {
+            this.resetButton = new HoverButton(0, 0, 40, 20, Component.translatable("menu.inventorypause.settings.modCompat.reset"), (button) -> {
                 this.numBox.setValue(String.valueOf(defaultValue));
                 this.onEdit(String.valueOf(defaultValue));
-            })
-                    .size(40, 20).createNarration(p_253695_ -> Component.translatable("narrator.controls.reset", defaultValue))
-                    .tooltip(Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.reset.tooltip"))));
+            }, p_253695_ -> Component.translatable("narrator.controls.reset", defaultValue));
+            resetButton.setTooltip(Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.reset.tooltip")));
             onEdit(this.numBox.getValue());
         }
 

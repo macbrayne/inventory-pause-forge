@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 public class HoverButton extends Button {
     final Component hoverComponent;
 
-    public HoverButton(Builder builder) {
-        this(builder, builder.build().getMessage().copy().withStyle(ChatFormatting.RED));
+    public HoverButton(int x, int y, int width, int height, Component message, OnPress onPress, CreateNarration narration) {
+        this(x, y, width, height, message, message.copy().withStyle(ChatFormatting.RED), onPress, narration);
     }
 
-    public HoverButton(Builder builder, Component hoverComponent) {
-        super(builder);
+    public HoverButton(int x, int y, int width, int height, Component message, Component hoverComponent, OnPress onPress, CreateNarration narration) {
+        super(x, y, width, height, message, onPress, narration);
         this.hoverComponent = hoverComponent;
     }
 
