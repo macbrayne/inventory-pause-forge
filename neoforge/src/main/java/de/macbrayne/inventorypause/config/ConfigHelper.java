@@ -20,7 +20,7 @@ import java.util.Optional;
 
 import de.macbrayne.inventorypause.config.old.ModConfigTOML;
 import de.macbrayne.inventorypause.config.old.ModConfigV1;
-import net.neoforged.fml.loading.FMLPaths;
+import de.macbrayne.inventorypause.platform.Services;
 import org.slf4j.Logger;
 
 public class ConfigHelper {
@@ -31,7 +31,7 @@ public class ConfigHelper {
         LOGGER.info("Writing config to file");
         Constants.SCREEN_DICTIONARY.setLastScreenDirty();
         try {
-            writer.write(InventoryPause.MOD_CONFIG, FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml").toFile());
+            writer.write(InventoryPause.MOD_CONFIG, Services.PLATFORM.getConfigDir().resolve("inventorypause.toml").toFile());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -40,7 +40,7 @@ public class ConfigHelper {
 
     public static ModConfigTOML deserialize() {
         LOGGER.debug("Trying to load config from file");
-        Path path = FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml");
+        Path path = Services.PLATFORM.getConfigDir().resolve("inventorypause.toml");
         if (Files.exists(path)) {
             try {
                 Toml toml = new Toml().read(path.toFile());
@@ -52,8 +52,8 @@ public class ConfigHelper {
                 try {
                     ModConfigTOML migratedConfig = ModConfigV1.toV2(new Toml().read(path.toFile()).to(ModConfigV1.class));
                     LOGGER.warn("V1 config detected, migrating to V2 and moving old config to inventorypause.toml.old");
-                    Files.copy(FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml"), FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml.old"), StandardCopyOption.REPLACE_EXISTING);
-                    writer.write(migratedConfig, FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml").toFile());
+                    Files.copy(Services.PLATFORM.getConfigDir().resolve("inventorypause.toml"), Services.PLATFORM.getConfigDir().resolve("inventorypause.toml.old"), StandardCopyOption.REPLACE_EXISTING);
+                    writer.write(migratedConfig, Services.PLATFORM.getConfigDir().resolve("inventorypause.toml").toFile());
                     LOGGER.warn("Migration complete");
                     return migratedConfig;
                 } catch (Exception e) {
@@ -76,7 +76,7 @@ public class ConfigHelper {
         migratedConfig.save();
         LOGGER.info("Moving old config to inventorypause.toml.old");
         try {
-            Files.move(FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml"), FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml.old"), StandardCopyOption.REPLACE_EXISTING);
+            Files.move(Services.PLATFORM.getConfigDir().resolve("inventorypause.toml"), Services.PLATFORM.getConfigDir().resolve("inventorypause.toml.old"), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -115,9 +115,9 @@ public class ConfigHelper {
     }
 
     public static void ensureConfigDirExists() {
-        if(!Files.exists(FMLPaths.CONFIGDIR.get().resolve("inventorypause"))) {
+        if(!Files.exists(Services.PLATFORM.getConfigDir().resolve("inventorypause"))) {
             try {
-                Files.createDirectories(FMLPaths.CONFIGDIR.get().resolve("inventorypause"));
+                Files.createDirectories(Services.PLATFORM.getConfigDir().resolve("inventorypause"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

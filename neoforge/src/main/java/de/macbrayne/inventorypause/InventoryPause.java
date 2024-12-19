@@ -9,7 +9,6 @@ import de.macbrayne.inventorypause.events.ForgeEventBus;
 import de.macbrayne.inventorypause.events.ModEventBus;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 
@@ -19,10 +18,10 @@ public class InventoryPause {
     public static GuiEntries GUI_ENTRIES = new GuiEntries();
     public static ModConfig MOD_CONFIG = ModConfig.getDefault();
 
-    public InventoryPause(IEventBus modEventBus, ModContainer container) {
+    public InventoryPause(IEventBus modEventBus) {
         CommonClass.init();
         ConfigHelper.ensureConfigDirExists();
-        GUI_ENTRIES = GuiEntries.loadEntries(container);
+        GUI_ENTRIES = GuiEntries.loadEntries();
         ConfigHelper.migrateConfigToJson();
         MOD_CONFIG = ModConfig.load();
         MOD_CONFIG.states.registerScreens();

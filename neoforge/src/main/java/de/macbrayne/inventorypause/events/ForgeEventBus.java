@@ -4,7 +4,6 @@ package de.macbrayne.inventorypause.events;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import de.macbrayne.inventorypause.Constants;
-import de.macbrayne.inventorypause.InventoryPause;
 import de.macbrayne.inventorypause.config.ConfigHelper;
 import de.macbrayne.inventorypause.common.PauseMode;
 import de.macbrayne.inventorypause.common.ScreenHelper;
@@ -16,8 +15,6 @@ import net.minecraft.client.gui.screens.controls.KeyBindsScreen;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import static de.macbrayne.inventorypause.InventoryPause.MOD_CONFIG;
 
