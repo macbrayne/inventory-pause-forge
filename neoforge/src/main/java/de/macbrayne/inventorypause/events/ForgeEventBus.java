@@ -3,6 +3,7 @@
 package de.macbrayne.inventorypause.events;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import de.macbrayne.inventorypause.Constants;
 import de.macbrayne.inventorypause.InventoryPause;
 import de.macbrayne.inventorypause.config.ConfigHelper;
 import de.macbrayne.inventorypause.common.PauseMode;
@@ -19,7 +20,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static de.macbrayne.inventorypause.InventoryPause.MOD_CONFIG;
-import static de.macbrayne.inventorypause.InventoryPause.getScreenDictionary;
 
 public class ForgeEventBus {
     private static final Logger LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
@@ -49,7 +49,7 @@ public class ForgeEventBus {
                 return;
             }
 
-            if (getScreenDictionary().handleScreen(screen.getClass()) != PauseMode.OFF) {
+            if (Constants.SCREEN_DICTIONARY.handleScreen(screen.getClass()) != PauseMode.OFF) {
                 Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.alreadyCovered"));
                 return;
             }
