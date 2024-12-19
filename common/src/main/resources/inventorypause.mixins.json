@@ -6,8 +6,10 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "client": [
-    "MixinMinecraft",
-    "mojank.TooltipMixin"
+    "IntegratedServerMixin",
+    "MinecraftMixin",
+    "mojank.TooltipMixin",
+    "qol.DeathScreenMixin"
   ],
   "server": [],
   "injectors": {

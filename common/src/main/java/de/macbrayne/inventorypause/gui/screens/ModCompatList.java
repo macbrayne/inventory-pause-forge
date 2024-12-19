@@ -391,7 +391,10 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
 
         public Component getTooltip() {
-            Locale locale = Minecraft.getInstance().getLanguageManager().getJavaLocale();
+            String selected = Minecraft.getInstance().getLanguageManager().getSelected();
+            final String[] langSplit = selected.split("_", 2);
+            var locale = langSplit.length == 1 ? new java.util.Locale(langSplit[0]) : new java.util.Locale(langSplit[0], langSplit[1]);
+
             float valueInHertz = 20f;
             if (!numBox.getValue().isEmpty()) {
                 valueInHertz = Integer.parseInt(numBox.getValue());
