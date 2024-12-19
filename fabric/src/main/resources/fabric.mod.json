@@ -16,7 +16,7 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-          "de.macbrayne.inventorypause.InventoryPause"
+          "de.macbrayne.inventorypause.InventoryPauseFabric"
         ]
     },
     "mixins": [

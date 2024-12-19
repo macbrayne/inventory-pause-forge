@@ -10,8 +10,7 @@
     "IntegratedServerMixin",
     "MinecraftMixin",
     "KeyboardHandlerMixin",
-    "qol.DeathScreenMixin",
-    "mojank.TooltipMixin"
+    "qol.DeathScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

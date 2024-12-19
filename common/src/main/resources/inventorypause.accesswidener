@@ -1,0 +1,11 @@
+accessWidener v2 named
+accessible method net/minecraft/client/gui/components/CycleButton <init> (IIIILnet/minecraft/network/chat/Component;Lnet/minecraft/network/chat/Component;ILjava/lang/Object;Lnet/minecraft/client/gui/components/CycleButton$ValueListSupplier;Ljava/util/function/Function;Ljava/util/function/Function;Lnet/minecraft/client/gui/components/CycleButton$OnValueChange;Lnet/minecraft/client/OptionInstance$TooltipSupplier;Z)V
+
+accessible field net/minecraft/client/gui/components/CycleButton name Lnet/minecraft/network/chat/Component;
+accessible field net/minecraft/client/gui/components/CycleButton index I
+accessible field net/minecraft/client/gui/components/CycleButton values Lnet/minecraft/client/gui/components/CycleButton$ValueListSupplier;
+accessible field net/minecraft/client/gui/components/CycleButton valueStringifier Ljava/util/function/Function;
+accessible field net/minecraft/client/gui/components/CycleButton narrationProvider Ljava/util/function/Function;
+accessible field net/minecraft/client/gui/components/CycleButton onValueChange Lnet/minecraft/client/gui/components/CycleButton$OnValueChange;
+accessible field net/minecraft/client/gui/components/CycleButton tooltipSupplier Lnet/minecraft/client/OptionInstance$TooltipSupplier;
+accessible field net/minecraft/client/gui/components/CycleButton displayOnlyValue Z

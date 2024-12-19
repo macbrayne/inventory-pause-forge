@@ -4,7 +4,7 @@ package de.macbrayne.inventorypause;
 
 import net.fabricmc.api.ModInitializer;
 
-public class InventoryPause implements ModInitializer {
+public class InventoryPauseFabric implements ModInitializer {
     
     @Override
     public void onInitialize() {

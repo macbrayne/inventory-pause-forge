@@ -27,4 +27,7 @@ public class BorderedCycleButton extends CycleButton<PauseMode> {
 
         renderString(guiGraphics, Minecraft.getInstance().font, getFGColor() | Mth.ceil(this.alpha * 255.0F) << 24);
     }
+    public int getFGColor() {
+        return this.active ? 16777215 : 10526880; // White : Light Grey
+    }
 }
