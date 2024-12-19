@@ -5,8 +5,7 @@ package de.macbrayne.inventorypause.config;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.loading.FMLPaths;
+import de.macbrayne.inventorypause.platform.Services;
 
 import java.nio.file.Path;
 import java.util.*;
@@ -33,9 +32,9 @@ public class GuiEntries {
         return entries;
     }
 
-    public static GuiEntries loadEntries(ModContainer container) {
-        return attemptLoadEntries(FMLPaths.CONFIGDIR.get().resolve("inventorypause/guientries.json")).orElseGet(
-                () -> attemptLoadEntries(container.getModInfo().getOwningFile().getFile().findResource("data/inventorypause/guientries.json")).orElseGet(GuiEntries::new)
+    public static GuiEntries loadEntries() {
+        return attemptLoadEntries(Services.PLATFORM.getConfigDir().resolve("inventorypause/guientries.json")).orElseGet(
+                () -> attemptLoadEntries(Services.PLATFORM.findResourceInOwningFile("data/inventorypause/guientries.json")).orElseGet(GuiEntries::new)
         );
     }
 

@@ -4,7 +4,7 @@ package de.macbrayne.inventorypause.config;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.neoforged.fml.loading.FMLPaths;
+import de.macbrayne.inventorypause.platform.Services;
 
 import java.nio.file.Path;
 import java.util.*;
@@ -122,12 +122,12 @@ public class ModConfig {
     }
 
     public static ModConfig load() {
-        Path path = FMLPaths.CONFIGDIR.get().resolve("inventorypause/inventorypause.json");
+        Path path = Services.PLATFORM.getConfigDir().resolve("inventorypause/inventorypause.json");
         return ConfigHelper.attemptLoad(path, ModConfig.CODEC).orElseGet(ModConfig::getDefault);
     }
 
     public void save() {
-        Path path = FMLPaths.CONFIGDIR.get().resolve("inventorypause/inventorypause.json");
+        Path path = Services.PLATFORM.getConfigDir().resolve("inventorypause/inventorypause.json");
         ConfigHelper.save(path, this, ModConfig.CODEC);
     }
 
