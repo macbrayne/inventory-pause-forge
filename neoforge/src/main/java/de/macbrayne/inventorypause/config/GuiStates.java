@@ -3,18 +3,18 @@
 package de.macbrayne.inventorypause.config;
 
 import com.mojang.serialization.Codec;
+import de.macbrayne.inventorypause.Constants;
 import de.macbrayne.inventorypause.InventoryPause;
 import de.macbrayne.inventorypause.common.PauseMode;
 import de.macbrayne.inventorypause.compat.ScreenDictionary;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class GuiStates {
-    private static final Logger LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
+    private static final Logger LOGGER = Constants.LOG;
     public static final Codec<Map<String, PauseMode>> STATES_CODEC = Codec.unboundedMap(Codec.STRING, PauseMode.CODEC);
     public static final Codec<GuiStates> CODEC = STATES_CODEC.xmap(GuiStates::new, GuiStates::convertBack);;
 
@@ -63,7 +63,7 @@ public class GuiStates {
     }
 
     public void registerScreens() {
-        ScreenDictionary dict = InventoryPause.getScreenDictionary();
+        ScreenDictionary dict = Constants.SCREEN_DICTIONARY;
         InventoryPause.GUI_ENTRIES.entries().forEach(entry -> {
             dict.register(entry.target(), () -> get(entry));
         });

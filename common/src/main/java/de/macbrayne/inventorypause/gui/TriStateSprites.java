@@ -2,15 +2,15 @@
 
 package de.macbrayne.inventorypause.gui;
 
-import de.macbrayne.inventorypause.InventoryPause;
+import de.macbrayne.inventorypause.Constants;
 import de.macbrayne.inventorypause.common.PauseMode;
 import net.minecraft.resources.ResourceLocation;
 
 public record TriStateSprites(ResourceLocation on, ResourceLocation slowmo, ResourceLocation off,
                               ResourceLocation disabled, ResourceLocation enabledFocused) {
-    public static final TriStateSprites DEFAULT = new TriStateSprites(new ResourceLocation(InventoryPause.MOD_ID, "widget/button_green_border"),
-            new ResourceLocation(InventoryPause.MOD_ID, "widget/button_yellow_border"),
-            new ResourceLocation(InventoryPause.MOD_ID, "widget/button_red_border"),
+    public static final TriStateSprites DEFAULT = new TriStateSprites(new ResourceLocation(Constants.MOD_ID, "widget/button_green_border"),
+            new ResourceLocation(Constants.MOD_ID, "widget/button_yellow_border"),
+            new ResourceLocation(Constants.MOD_ID, "widget/button_red_border"),
             new ResourceLocation("widget/button_disabled"),
             new ResourceLocation("widget/button_highlighted"));
 

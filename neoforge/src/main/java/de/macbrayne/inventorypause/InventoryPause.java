@@ -5,7 +5,6 @@ package de.macbrayne.inventorypause;
 import de.macbrayne.inventorypause.config.ConfigHelper;
 import de.macbrayne.inventorypause.config.GuiEntries;
 import de.macbrayne.inventorypause.config.ModConfig;
-import de.macbrayne.inventorypause.compat.ScreenDictionary;
 import de.macbrayne.inventorypause.events.ForgeEventBus;
 import de.macbrayne.inventorypause.events.ModEventBus;
 import net.neoforged.api.distmarker.Dist;
@@ -22,7 +21,6 @@ import org.apache.logging.log4j.Logger;
 public class InventoryPause {
     public static final String MOD_ID = "inventorypause";
     private static final Logger LOGGER = LogManager.getLogger(MOD_ID);
-    private static final ScreenDictionary SCREEN_DICTIONARY = new ScreenDictionary();
     public static GuiEntries GUI_ENTRIES = new GuiEntries();
     public static ModConfig MOD_CONFIG = ModConfig.getDefault();
 
@@ -42,9 +40,5 @@ public class InventoryPause {
         } else {
             LOGGER.error("Not on client, disabling mod");
         }
-    }
-
-    public static ScreenDictionary getScreenDictionary() {
-        return SCREEN_DICTIONARY;
     }
 }

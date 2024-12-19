@@ -5,18 +5,14 @@ package de.macbrayne.inventorypause.config;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import de.macbrayne.inventorypause.InventoryPause;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.loading.FMLPaths;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.nio.file.Path;
 import java.util.*;
 import java.util.function.Function;
 
 public class GuiEntries {
-    private static final Logger LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
     public static final Codec<GuiEntry<?>> GUI_ENTRY_CODEC = Codec.either(GuiEntry.Icon.CODEC, GuiEntry.Text.CODEC).xmap(
             either -> either.map(Function.identity(), Function.identity()),
             entry -> entry instanceof GuiEntry.Icon icon ? Either.left(icon) : Either.right((GuiEntry.Text) entry)

@@ -9,6 +9,7 @@ import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
+import de.macbrayne.inventorypause.Constants;
 import de.macbrayne.inventorypause.InventoryPause;
 
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class ConfigHelper {
 
     public static void serialize() {
         LOGGER.info("Writing config to file");
-        InventoryPause.getScreenDictionary().setLastScreenDirty();
+        Constants.SCREEN_DICTIONARY.setLastScreenDirty();
         try {
             writer.write(InventoryPause.MOD_CONFIG, FMLPaths.CONFIGDIR.get().resolve("inventorypause.toml").toFile());
         } catch (IOException e) {
@@ -101,7 +102,7 @@ public class ConfigHelper {
 
     public static<T> void save(Path path, T object, Codec<T> codec) {
         LOGGER.info("Writing to file {}", path);
-        InventoryPause.getScreenDictionary().setLastScreenDirty();
+        Constants.SCREEN_DICTIONARY.setLastScreenDirty();
         try {
             var gsonWriter = Files.newBufferedWriter(path);
             var result = codec.encodeStart(JsonOps.INSTANCE, object).resultOrPartial(LOGGER::error);

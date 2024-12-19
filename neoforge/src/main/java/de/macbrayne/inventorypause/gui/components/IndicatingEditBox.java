@@ -2,7 +2,7 @@
 
 package de.macbrayne.inventorypause.gui.components;
 
-import de.macbrayne.inventorypause.InventoryPause;
+import de.macbrayne.inventorypause.Constants;
 import de.macbrayne.inventorypause.common.PauseMode;
 import de.macbrayne.inventorypause.gui.mojank.MutableTooltip;
 import de.macbrayne.inventorypause.gui.screens.ModCompatList;
@@ -62,7 +62,7 @@ public class IndicatingEditBox extends EditBox {
             if(!Screen.class.isAssignableFrom(clazz)) {
                 return ClassStatus.NOT_A_SCREEN;
             }
-            if(InventoryPause.getScreenDictionary().handleScreen(clazz) != PauseMode.OFF) {
+            if(Constants.SCREEN_DICTIONARY.handleScreen(clazz) != PauseMode.OFF) {
                 return ClassStatus.VANILLA;
             }
             return ClassStatus.OK;
