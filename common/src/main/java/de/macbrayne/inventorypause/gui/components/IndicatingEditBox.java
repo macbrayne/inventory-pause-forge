@@ -5,7 +5,6 @@ package de.macbrayne.inventorypause.gui.components;
 import de.macbrayne.inventorypause.Constants;
 import de.macbrayne.inventorypause.common.PauseMode;
 import de.macbrayne.inventorypause.gui.mojank.MutableTooltip;
-import de.macbrayne.inventorypause.gui.screens.ModCompatList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -58,7 +57,7 @@ public class IndicatingEditBox extends EditBox {
             return ClassStatus.INVALID;
         }
         try {
-            Class<?> clazz = Class.forName(name, false, ModCompatList.class.getClassLoader());
+            Class<?> clazz = Class.forName(name, false, IndicatingEditBox.class.getClassLoader());
             if(!Screen.class.isAssignableFrom(clazz)) {
                 return ClassStatus.NOT_A_SCREEN;
             }

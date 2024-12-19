@@ -22,8 +22,6 @@ import org.apache.logging.log4j.Logger;
 import static de.macbrayne.inventorypause.InventoryPause.MOD_CONFIG;
 
 public class ForgeEventBus {
-    private static final Logger LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
-
     public static void onGUIDrawPost(ScreenEvent.Render.Post event) {
         Screen screen = event.getScreen();
         if (MOD_CONFIG.debugText.debug) {

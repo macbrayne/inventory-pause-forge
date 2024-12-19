@@ -3,6 +3,7 @@
 package de.macbrayne.inventorypause.events;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import de.macbrayne.inventorypause.Constants;
 import de.macbrayne.inventorypause.InventoryPause;
 import de.macbrayne.inventorypause.gui.screens.ConfigScreen;
 import net.minecraft.client.KeyMapping;
@@ -12,11 +13,10 @@ import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.common.util.Lazy;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
 
 public class ModEventBus {
-    private static final Logger LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
+    private static final Logger LOGGER = Constants.LOG;
     // Key mapping is lazily initialized, so it doesn't exist until it is registered
     public static final Lazy<KeyMapping> PAUSE_GAME = Lazy.of(() -> new KeyMapping(
             "key.inventorypause.pauseGame", // Localisation

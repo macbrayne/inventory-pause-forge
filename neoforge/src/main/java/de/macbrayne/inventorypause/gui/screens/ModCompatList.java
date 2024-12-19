@@ -3,6 +3,7 @@
 package de.macbrayne.inventorypause.gui.screens;
 
 import com.google.common.collect.ImmutableList;
+import de.macbrayne.inventorypause.Constants;
 import de.macbrayne.inventorypause.InventoryPause;
 import de.macbrayne.inventorypause.gui.components.HoverButton;
 import de.macbrayne.inventorypause.gui.components.IndicatingEditBox;
@@ -14,10 +15,9 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.network.chat.Component;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 import java.util.*;
 import java.util.function.Function;
@@ -26,7 +26,7 @@ import java.util.function.IntSupplier;
 import java.util.function.Supplier;
 
 public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.Entry> {
-    private static final Logger LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
+    private static final Logger LOGGER = Constants.LOG;
     private static final String newEntry = Component.translatable("menu.inventorypause.settings.modCompat.new").getString();
     private final Supplier<List<String>> modCompatSupplier;
     private final Supplier<List<String>> modCustomSupplier;
