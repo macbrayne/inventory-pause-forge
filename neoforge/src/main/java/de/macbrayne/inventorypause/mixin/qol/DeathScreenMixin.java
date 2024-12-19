@@ -2,11 +2,10 @@
 
 package de.macbrayne.inventorypause.mixin.qol;
 
-import de.macbrayne.inventorypause.InventoryPause;
+import de.macbrayne.inventorypause.Constants;
 import de.macbrayne.inventorypause.common.PauseMode;
 import net.minecraft.client.gui.screens.DeathScreen;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -18,7 +17,7 @@ import static de.macbrayne.inventorypause.InventoryPause.MOD_CONFIG;
 
 @Mixin(DeathScreen.class)
 public class DeathScreenMixin {
-    @Unique private static final Logger inventorypause$LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
+    @Unique private static final Logger inventorypause$LOGGER = Constants.LOG;
     @Shadow private int delayTicker;
 
     @Inject(method = "init", at = @At(value = "RETURN"))

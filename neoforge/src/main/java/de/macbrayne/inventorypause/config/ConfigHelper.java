@@ -21,11 +21,10 @@ import java.util.Optional;
 import de.macbrayne.inventorypause.config.old.ModConfigTOML;
 import de.macbrayne.inventorypause.config.old.ModConfigV1;
 import net.neoforged.fml.loading.FMLPaths;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
 
 public class ConfigHelper {
-    private static final Logger LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
+    private static final Logger LOGGER = Constants.LOG;
     private static final TomlWriter writer = new TomlWriter();
 
     public static void serialize() {

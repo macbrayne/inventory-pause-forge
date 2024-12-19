@@ -5,6 +5,7 @@ package de.macbrayne.inventorypause.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
+import de.macbrayne.inventorypause.Constants;
 import de.macbrayne.inventorypause.InventoryPause;
 import de.macbrayne.inventorypause.common.ScreenHelper;
 import net.minecraft.client.Minecraft;
@@ -13,7 +14,7 @@ import net.minecraft.client.server.IntegratedServer;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.server.ServerTickRateManager;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -27,7 +28,7 @@ import static de.macbrayne.inventorypause.InventoryPause.MOD_CONFIG;
 
 @Mixin(Minecraft.class)
 public abstract class MinecraftMixin {
-    @Unique private static final Logger inventorypause$LOGGER = LogManager.getLogger(InventoryPause.MOD_ID);
+    @Unique private static final Logger inventorypause$LOGGER = Constants.LOG;
     @Unique private boolean inventorypause$isSlowMotion = false;
     @Unique private float inventorypause$originalTickRate = 1f;
     @Shadow
