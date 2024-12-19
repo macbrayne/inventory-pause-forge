@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(KeyboardHandler.class)
-public class KeyboardHandlerMixin {
+public class KeyboardHandlerMixinNeo {
     @Inject(method = "keyPress(JIIII)V", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/InputConstants;isKeyDown(JI)Z", ordinal = 0), cancellable = true)
     void injectKeyCheck(long pWindowPointer, int pKey, int pScanCode, int pAction, int pModifiers, CallbackInfo ci) {
         if (pKey == GLFW.GLFW_KEY_ESCAPE && Minecraft.getInstance().screen instanceof DummyPauseScreen) {

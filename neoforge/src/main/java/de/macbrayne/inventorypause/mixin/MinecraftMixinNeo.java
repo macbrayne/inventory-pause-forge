@@ -2,15 +2,12 @@
 
 package de.macbrayne.inventorypause.mixin;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import de.macbrayne.inventorypause.Constants;
 import de.macbrayne.inventorypause.common.ScreenHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.server.IntegratedServer;
-import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.server.ServerTickRateManager;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,39 +22,16 @@ import javax.annotation.Nullable;
 import static de.macbrayne.inventorypause.InventoryPause.MOD_CONFIG;
 
 @Mixin(Minecraft.class)
-public abstract class MinecraftMixin {
+public abstract class MinecraftMixinNeo {
     @Unique private static final Logger inventorypause$LOGGER = Constants.LOG;
     @Unique private boolean inventorypause$isSlowMotion = false;
     @Unique private float inventorypause$originalTickRate = 1f;
-    @Shadow
-    public abstract SoundManager getSoundManager();
 
     @Shadow
-    public abstract boolean isLocalServer();
+    public abstract boolean isSingleplayer();
 
-    @Shadow private @Nullable IntegratedServer singleplayerServer;
-
-    @Shadow public abstract boolean isSingleplayer();
-
-    @Shadow @Nullable public abstract IntegratedServer getSingleplayerServer();
-
-    @Inject(at = @At("TAIL"), method = "setScreen")
-    public void openScreen(@Nullable Screen screen, CallbackInfo ci) {
-        if (MOD_CONFIG.pauseSounds && ScreenHelper.isConfiguredScreen(screen)) {
-            boolean canPauseGame = isLocalServer() && !this.singleplayerServer.isPublished();
-            if (canPauseGame) {
-                this.getSoundManager().pause();
-            }
-        }
-    }
-
-    @WrapOperation(method = "runTick(Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;isPauseScreen()Z"))
-    private boolean pauseGame(Screen instance, Operation<Boolean> original) {
-        if (ScreenHelper.isPauseScreen(instance)) {
-            return true;
-        }
-        return original.call(instance);
-    }
+    @Shadow @Nullable
+    public abstract IntegratedServer getSingleplayerServer();
 
     @Inject(method = "setScreen", at = @At(value = "RETURN"))
     private void setAndInitialisedScreen(Screen newScreen, CallbackInfo ci, @Local(ordinal = 1) Screen oldScreen) {
