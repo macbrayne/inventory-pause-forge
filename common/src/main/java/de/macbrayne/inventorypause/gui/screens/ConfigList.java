@@ -4,9 +4,9 @@ package de.macbrayne.inventorypause.gui.screens;
 
 import com.mojang.datafixers.util.Either;
 import de.macbrayne.inventorypause.InventoryPause;
+import de.macbrayne.inventorypause.common.PauseMode;
 import de.macbrayne.inventorypause.config.GuiEntry;
 import de.macbrayne.inventorypause.config.ModConfig;
-import de.macbrayne.inventorypause.common.PauseMode;
 import de.macbrayne.inventorypause.gui.components.BorderedCycleButton;
 import de.macbrayne.inventorypause.gui.components.TexturedCycleButton;
 import de.macbrayne.inventorypause.gui.components.TriStateTooltip;

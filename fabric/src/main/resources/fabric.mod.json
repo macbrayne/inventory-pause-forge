@@ -13,10 +13,13 @@
     },
     "license": "${license}",
     "icon": "${mod_id}.png",
-    "environment": "*",
+    "environment": "client",
     "entrypoints": {
-        "main": [
+        "client": [
           "de.macbrayne.inventorypause.InventoryPauseFabric"
+        ],
+        "modmenu": [
+            "de.macbrayne.inventorypause.ModMenuEntrypoint"
         ]
     },
     "mixins": [

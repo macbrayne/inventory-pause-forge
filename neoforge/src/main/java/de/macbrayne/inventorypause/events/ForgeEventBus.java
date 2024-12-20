@@ -3,16 +3,10 @@
 package de.macbrayne.inventorypause.events;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import de.macbrayne.inventorypause.Constants;
-import de.macbrayne.inventorypause.config.ConfigHelper;
-import de.macbrayne.inventorypause.common.PauseMode;
-import de.macbrayne.inventorypause.common.ScreenHelper;
 import de.macbrayne.inventorypause.gui.screens.ConfigScreen;
 import de.macbrayne.inventorypause.gui.screens.DummyPauseScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.controls.KeyBindsScreen;
-import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
 
@@ -34,38 +28,11 @@ public class ForgeEventBus {
     }
 
     public static void onScreenEvent(ScreenEvent.KeyReleased.Post event) {
-        if(!MOD_CONFIG.debugText.debug) {
-            return;
-        }
         if (ModEventBus.COPY_CLASS_NAME.get().isActiveAndMatches(InputConstants.getKey(event.getKeyCode(), event.getScanCode()))) {
-            Screen screen = event.getScreen();
-            var name = screen.getClass().getName();
-            if(!Minecraft.getInstance().isSingleplayer()) {
-                return;
-            }
-
-            if (Constants.SCREEN_DICTIONARY.handleScreen(screen.getClass()) != PauseMode.OFF) {
-                Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.alreadyCovered"));
-                return;
-            }
-            if (MOD_CONFIG.modCompat.customScreens.contains(name)) {
-                Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.duplicate"));
-                return;
-            }
-            if (screen.isPauseScreen()) {
-                Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.pausedScreen"));
-                return;
-            }
-            MOD_CONFIG.modCompat.customScreens.add(name);
-            ConfigHelper.serialize();
-            Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.action"));
+            CommonEvents.copyClassNameAction(event.getScreen());
         }
         if (ModEventBus.PAUSE_GAME.get().isActiveAndMatches(InputConstants.getKey(event.getKeyCode(), event.getScanCode()))) {
-            Minecraft minecraft = Minecraft.getInstance();
-            if (minecraft.isSingleplayer() && !ScreenHelper.isPauseScreen(minecraft.screen) && !minecraft.screen.isPauseScreen() &&
-                    !(minecraft.screen instanceof DummyPauseScreen) && !(minecraft.screen instanceof KeyBindsScreen)) {
-                minecraft.pushGuiLayer(new DummyPauseScreen());
-            }
+            CommonEvents.pauseGameAction(event.getScreen());
         }
     }
 
@@ -79,7 +46,7 @@ public class ForgeEventBus {
         }
         while (ModEventBus.PAUSE_GAME.get().consumeClick()) {
             if (!(minecraft.screen instanceof DummyPauseScreen)) {
-                minecraft.setScreen(new DummyPauseScreen());
+                minecraft.setScreen(new DummyPauseScreen(minecraft.screen));
             }
         }
     }
