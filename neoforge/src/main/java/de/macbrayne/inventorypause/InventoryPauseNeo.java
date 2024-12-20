@@ -14,7 +14,6 @@ import net.neoforged.neoforge.common.NeoForge;
 public class InventoryPauseNeo {
     public InventoryPauseNeo(IEventBus modEventBus) {
         CommonClass.init();
-        InventoryPause.MOD_CONFIG.states.registerScreens();
         modEventBus.addListener(ModEventBus::clientSetup);
         modEventBus.addListener(ModEventBus::registerBindings);
         NeoForge.EVENT_BUS.addListener(ForgeEventBus::onGUIDrawPost);

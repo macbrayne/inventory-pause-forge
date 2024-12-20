@@ -60,13 +60,12 @@ public class ConfigScreen extends Screen {
     public void onClose() {
         ModConfig diskVersion = ModConfig.load();
         if (!diskVersion.equals(InventoryPause.MOD_CONFIG)) {
-            this.minecraft.pushGuiLayer(new ConfirmScreen(userAccepted -> {
+            this.minecraft.setScreen(new ConfirmScreen(userAccepted -> {
                 if (userAccepted) {
                     InventoryPause.MOD_CONFIG.save();
                 } else {
                     InventoryPause.MOD_CONFIG = diskVersion;
                 }
-                this.minecraft.popGuiLayer();
                 this.minecraft.setScreen(lastScreen);
             }, Component.translatable("menu.inventorypause.settings.confirmation.title"), Component.translatable("menu.inventorypause.settings.confirmation.description")));
         } else {
