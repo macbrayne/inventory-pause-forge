@@ -8,8 +8,10 @@ import de.macbrayne.inventorypause.gui.screens.ConfigScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import org.lwjgl.glfw.GLFW;
 
 public class InventoryPauseFabric implements ClientModInitializer {
@@ -41,6 +43,13 @@ public class InventoryPauseFabric implements ClientModInitializer {
         KeyBindingHelper.registerKeyBinding(COPY_CLASS_NAME);
         KeyBindingHelper.registerKeyBinding(OPEN_SETTINGS);
         ClientTickEvents.END_CLIENT_TICK.register(InventoryPauseFabric::endClientTick);
+        ScreenEvents.BEFORE_INIT.register(InventoryPauseFabric::screenInit);
+    }
+
+    private static void screenInit(Minecraft client, Screen screen, int scaledWidth, int scaledHeight) {
+        ScreenEvents.afterRender(screen).register((screen1, drawContext, mouseX, mouseY, tickDelta) -> {
+            CommonEvents.onGuiPostDraw(screen1, drawContext);
+        });
     }
 
     private static void endClientTick(Minecraft minecraft) {

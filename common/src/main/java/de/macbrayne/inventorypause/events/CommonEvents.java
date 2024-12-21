@@ -5,11 +5,14 @@ package de.macbrayne.inventorypause.events;
 import de.macbrayne.inventorypause.Constants;
 import de.macbrayne.inventorypause.common.PauseMode;
 import de.macbrayne.inventorypause.common.ScreenHelper;
+import de.macbrayne.inventorypause.common.ScreenUnpause;
 import de.macbrayne.inventorypause.config.ConfigHelper;
 import de.macbrayne.inventorypause.gui.screens.DummyPauseScreen;
 import it.unimi.dsi.fastutil.booleans.BooleanConsumer;
 import it.unimi.dsi.fastutil.floats.FloatConsumer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.controls.KeyBindsScreen;
 import net.minecraft.network.chat.Component;
@@ -45,9 +48,13 @@ public class CommonEvents {
 
     public static void pauseGameAction(Screen screen) {
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.isSingleplayer() && !ScreenHelper.isPauseScreen(screen) && !screen.isPauseScreen() &&
-                !(screen instanceof DummyPauseScreen) && !(screen instanceof KeyBindsScreen)) {
-            minecraft.setScreen(new DummyPauseScreen(screen));
+        if (minecraft.isSingleplayer() && !(screen instanceof DummyPauseScreen) && !(screen instanceof KeyBindsScreen) &&
+                !(screen instanceof PauseScreen)) {
+            if (!screen.isPauseScreen() && !ScreenHelper.isPauseScreen(screen)) {
+                minecraft.setScreen(new DummyPauseScreen(screen));
+            } else if (!ScreenHelper.isSlowmoScreen(screen)) {
+                ((ScreenUnpause) screen).inventorypause$invertForceUnpause();
+            }
         }
     }
 
@@ -70,6 +77,22 @@ public class CommonEvents {
         }
         if (MOD_CONFIG.debugText.debug && newScreen != null && !ScreenHelper.isConfiguredScreen(newScreen)) {
             LOGGER.info("Changing screen to {}", newScreen.getClass().getName());
+        }
+    }
+
+    public static void onGuiPostDraw(Screen screen, GuiGraphics guiGraphics) {
+        if (MOD_CONFIG.debugText.debug) {
+            int line = 0;
+            for (Class<?> cl = screen.getClass(); cl.getSuperclass() != null && line < MOD_CONFIG.debugText.maxDepth; cl = cl.getSuperclass()) {
+                if (!Screen.class.isAssignableFrom(cl) || cl == Screen.class) {
+                    continue;
+                }
+                guiGraphics.drawString(Minecraft.getInstance().font, cl.getName(), (int) MOD_CONFIG.debugText.x, (int) (MOD_CONFIG.debugText.y + 10 * line), 0xffffffff);
+                line++;
+            }
+        }
+        if (((ScreenUnpause) screen).inventorypause$getForceUnpause()) {
+            guiGraphics.drawString(Minecraft.getInstance().font, "Force unpaused...", (int) MOD_CONFIG.debugText.x, (int) (MOD_CONFIG.debugText.y), 0xffffffff);
         }
     }
 }

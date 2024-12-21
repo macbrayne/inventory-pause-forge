@@ -5,6 +5,7 @@ package de.macbrayne.inventorypause.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import de.macbrayne.inventorypause.common.ScreenHelper;
+import de.macbrayne.inventorypause.common.ScreenUnpause;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.server.IntegratedServer;
@@ -40,6 +41,9 @@ public abstract class MinecraftMixin {
 
     @WrapOperation(method = "runTick(Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;isPauseScreen()Z"))
     private boolean pauseGame(Screen instance, Operation<Boolean> original) {
+        if (((ScreenUnpause) instance).inventorypause$getForceUnpause()) {
+            return false;
+        }
         if (ScreenHelper.isPauseScreen(instance)) {
             return true;
         }
