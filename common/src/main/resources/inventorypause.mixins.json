@@ -9,6 +9,7 @@
     "IntegratedServerMixin",
     "KeyboardHandlerMixin",
     "MinecraftMixin",
+    "ScreenMixin",
     "mojank.TooltipMixin",
     "qol.DeathScreenMixin"
   ],

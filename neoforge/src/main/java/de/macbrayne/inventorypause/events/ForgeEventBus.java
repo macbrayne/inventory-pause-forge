@@ -6,25 +6,12 @@ import com.mojang.blaze3d.platform.InputConstants;
 import de.macbrayne.inventorypause.gui.screens.ConfigScreen;
 import de.macbrayne.inventorypause.gui.screens.DummyPauseScreen;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
 
-import static de.macbrayne.inventorypause.InventoryPause.MOD_CONFIG;
-
 public class ForgeEventBus {
     public static void onGUIDrawPost(ScreenEvent.Render.Post event) {
-        Screen screen = event.getScreen();
-        if (MOD_CONFIG.debugText.debug) {
-            int line = 0;
-            for (Class<?> cl = screen.getClass(); cl.getSuperclass() != null && line < MOD_CONFIG.debugText.maxDepth; cl = cl.getSuperclass()) {
-                if (!Screen.class.isAssignableFrom(cl) || cl == Screen.class) {
-                    continue;
-                }
-                event.getGuiGraphics().drawString(event.getScreen().getMinecraft().font, cl.getName(), (int) MOD_CONFIG.debugText.x, (int) (MOD_CONFIG.debugText.y + 10 * line), 0xffffffff);
-                line++;
-            }
-        }
+        CommonEvents.onGuiPostDraw(event.getScreen(), event.getGuiGraphics());
     }
 
     public static void onScreenEvent(ScreenEvent.KeyReleased.Post event) {

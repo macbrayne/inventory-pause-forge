@@ -7,7 +7,10 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.macbrayne.inventorypause.platform.Services;
 
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 public class ModConfig {
     public static final int VERSION = 3;
@@ -82,6 +85,7 @@ public class ModConfig {
         public int maxDepth;
 
         public DebugText(boolean debug, float x, float y, int maxDepth) {
+            this.debug = debug;
             this.x = x;
             this.y = y;
             this.maxDepth = maxDepth;
