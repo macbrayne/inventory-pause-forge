@@ -32,8 +32,8 @@ public class ForgeEventBus {
             minecraft.setScreen(new ConfigScreen(minecraft.screen));
         }
         while (ModEventBus.PAUSE_GAME.get().consumeClick()) {
-            if (!(minecraft.screen instanceof DummyPauseScreen)) {
-                minecraft.setScreen(new DummyPauseScreen(minecraft.screen));
+            if (minecraft.screen == null) {
+                minecraft.setScreen(new DummyPauseScreen(null));
             }
         }
     }

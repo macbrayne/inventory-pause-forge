@@ -2,7 +2,7 @@
 
 package de.macbrayne.inventorypause;
 
-import de.macbrayne.inventorypause.compat.ScreenDictionary;
+import de.macbrayne.inventorypause.common.ScreenDictionary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

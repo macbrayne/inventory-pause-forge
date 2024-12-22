@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: EUPL-1.2
 
-package de.macbrayne.inventorypause.compat;
+package de.macbrayne.inventorypause.common;
 
-import de.macbrayne.inventorypause.common.PauseMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;

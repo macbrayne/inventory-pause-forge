@@ -6,7 +6,7 @@ import com.mojang.serialization.Codec;
 import de.macbrayne.inventorypause.Constants;
 import de.macbrayne.inventorypause.InventoryPause;
 import de.macbrayne.inventorypause.common.PauseMode;
-import de.macbrayne.inventorypause.compat.ScreenDictionary;
+import de.macbrayne.inventorypause.common.ScreenDictionary;
 import org.slf4j.Logger;
 
 import java.util.HashMap;
