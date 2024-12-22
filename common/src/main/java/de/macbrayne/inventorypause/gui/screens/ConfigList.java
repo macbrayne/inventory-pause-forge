@@ -3,6 +3,7 @@
 package de.macbrayne.inventorypause.gui.screens;
 
 import com.mojang.datafixers.util.Either;
+import de.macbrayne.inventorypause.Constants;
 import de.macbrayne.inventorypause.InventoryPause;
 import de.macbrayne.inventorypause.common.PauseMode;
 import de.macbrayne.inventorypause.config.GuiEntry;
@@ -52,6 +53,7 @@ public class ConfigList extends ContainerObjectSelectionList<ConfigList.Entry> {
     }
 
     private void initDynamicEntries() {
+        Constants.LOG.debug("Adding dynamic buttons to config screen");
         this.addEntry(new TextEntry(Component.translatable("menu.inventorypause.settings.title.pause")));
 
         CycleButton.Builder<PauseMode> builder = CycleButton.builder(PauseMode::getDisplayName)
@@ -63,7 +65,7 @@ public class ConfigList extends ContainerObjectSelectionList<ConfigList.Entry> {
 
         for (var entry : contiguous) {
             entry.ifLeft(icons -> {
-                System.out.println(icons);
+                Constants.LOG.debug("Continuous list of icons: {}", icons);
                 int numberOfRows = icons.size() / numberOfColumns + (icons.size() % numberOfColumns > 0 ? 1 : 0);
                 for (int row = 0; row < numberOfRows; row++) {
                     LinearLayout layout = LinearLayout.horizontal().spacing(4);
@@ -78,7 +80,7 @@ public class ConfigList extends ContainerObjectSelectionList<ConfigList.Entry> {
                 }
             });
             entry.ifRight(texts -> {
-                System.out.println(texts);
+                Constants.LOG.debug("Continuous list of texts: {}", texts);
                 for (int i = 0; i < texts.size(); i += 2) {
                     final int finalI = i;
                     addEntry(new SplitEntry<>(new BorderedCycleButton(builder.withInitialValue(config.states.get(texts.get(i)))

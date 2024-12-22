@@ -13,7 +13,7 @@ import net.neoforged.neoforge.common.NeoForge;
 @Mod(value = "inventorypause", dist = Dist.CLIENT)
 public class InventoryPauseNeo {
     public InventoryPauseNeo(IEventBus modEventBus) {
-        CommonClass.init();
+        InventoryPause.init();
         modEventBus.addListener(ModEventBus::clientSetup);
         modEventBus.addListener(ModEventBus::registerBindings);
         NeoForge.EVENT_BUS.addListener(ForgeEventBus::onGUIDrawPost);

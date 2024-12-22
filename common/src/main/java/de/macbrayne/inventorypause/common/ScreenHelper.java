@@ -4,7 +4,6 @@ package de.macbrayne.inventorypause.common;
 
 import de.macbrayne.inventorypause.Constants;
 import de.macbrayne.inventorypause.InventoryPause;
-import de.macbrayne.inventorypause.compat.ScreenDictionary;
 import net.minecraft.client.gui.screens.Screen;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
