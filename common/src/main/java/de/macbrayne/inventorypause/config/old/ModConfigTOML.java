@@ -2,6 +2,7 @@
 
 package de.macbrayne.inventorypause.config.old;
 
+import de.macbrayne.inventorypause.common.KeyBehaviour;
 import de.macbrayne.inventorypause.common.PauseMode;
 import de.macbrayne.inventorypause.config.GuiStates;
 import de.macbrayne.inventorypause.config.ModConfig;
@@ -174,6 +175,6 @@ public class ModConfigTOML {
         states.put("pauseLoom", convert.abilities.pauseLoom);
         states.put("pauseEnchantingTable", convert.abilities.pauseEnchantingTable);
 
-        return new ModConfig(3, convert.disableSaving, convert.pauseSounds, convert.debug, debugText, settingsForModpacks, modCompat, new GuiStates(states));
+        return new ModConfig(3, convert.disableSaving, convert.pauseSounds, KeyBehaviour.ForceUnpause.UNPAUSE, convert.debug, debugText, settingsForModpacks, modCompat, new GuiStates(states));
     }
 }

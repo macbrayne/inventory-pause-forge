@@ -41,7 +41,7 @@ public abstract class MinecraftMixin {
 
     @WrapOperation(method = "runTick(Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;isPauseScreen()Z"))
     private boolean pauseGame(Screen instance, Operation<Boolean> original) {
-        if (((ScreenUnpause) instance).inventorypause$getForceUnpause()) {
+        if (MOD_CONFIG.forceUnpauseBehaviour.isUnpause() && ((ScreenUnpause) instance).inventorypause$getForceUnpause()) {
             return false;
         }
         if (ScreenHelper.isPauseScreen(instance)) {
