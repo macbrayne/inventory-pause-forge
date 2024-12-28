@@ -4,6 +4,7 @@ package de.macbrayne.inventorypause.config;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import de.macbrayne.inventorypause.common.KeyBehaviour;
 import de.macbrayne.inventorypause.platform.Services;
 
 import java.nio.file.Path;
@@ -18,6 +19,7 @@ public class ModConfig {
             Codec.INT.fieldOf("CONFIG_VERSION_DO_NOT_TOUCH").forGetter(config -> config.configVersion),
             Codec.BOOL.fieldOf("disable_saving").forGetter(config -> config.disableSaving),
             Codec.BOOL.fieldOf("pause_sounds").forGetter(config -> config.pauseSounds),
+            KeyBehaviour.ForceUnpause.CODEC.fieldOf("force_unpause_behaviour").forGetter(config -> config.forceUnpauseBehaviour),
             Codec.BOOL.fieldOf("debug").forGetter(config -> config.debugText.debug),
             DebugText.CODEC.fieldOf("debug_text").forGetter(config -> config.debugText),
             SettingsForModpacks.CODEC.fieldOf("settings_for_modpacks").forGetter(config -> config.settingsForModpacks),
@@ -27,15 +29,17 @@ public class ModConfig {
 
     public int configVersion = VERSION;
     public boolean disableSaving, pauseSounds;
+    public KeyBehaviour.ForceUnpause forceUnpauseBehaviour = KeyBehaviour.ForceUnpause.UNPAUSE;
     public final DebugText debugText;
     public final SettingsForModpacks settingsForModpacks;
     public final ModCompat modCompat;
     public final GuiStates states;
 
-    public ModConfig(int configVersion, boolean disableSaving, boolean pauseSounds, boolean debug, DebugText debugText, SettingsForModpacks settingsForModpacks, ModCompat modCompat, GuiStates states) {
+    public ModConfig(int configVersion, boolean disableSaving, boolean pauseSounds, KeyBehaviour.ForceUnpause forceUnpauseBehaviour, boolean debug, DebugText debugText, SettingsForModpacks settingsForModpacks, ModCompat modCompat, GuiStates states) {
         this.configVersion = configVersion;
         this.disableSaving = disableSaving;
         this.pauseSounds = pauseSounds;
+        this.forceUnpauseBehaviour = forceUnpauseBehaviour;
         this.debugText = debugText;
         this.settingsForModpacks = settingsForModpacks;
         this.modCompat = modCompat;
@@ -43,7 +47,7 @@ public class ModConfig {
     }
 
     public static ModConfig getDefault() {
-        return new ModConfig(VERSION, false, false, false, new DebugText(false, 4f, 4f, 3), new SettingsForModpacks(false, false, true),
+        return new ModConfig(VERSION, false, false, KeyBehaviour.ForceUnpause.UNPAUSE, false, new DebugText(false, 4f, 4f, 3), new SettingsForModpacks(false, false, true),
                 new ModCompat(new ArrayList<>(), new ArrayList<>(), 1),
                 new GuiStates(new HashMap<>()));
     }

@@ -3,6 +3,7 @@
 package de.macbrayne.inventorypause.gui.screens;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.GenericMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -17,9 +18,22 @@ public class DummyPauseScreen extends GenericMessageScreen {
     }
 
     @Override
-    public void renderBackground(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        this.renderBlurredBackground(pPartialTick);
-        this.renderMenuBackground(pGuiGraphics);
+    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        guiGraphics.pose().pushPose();
+        if (oldScreen != null) {
+            this.oldScreen.renderWithTooltip(guiGraphics, Integer.MAX_VALUE, Integer.MAX_VALUE, partialTick);
+        }
+        guiGraphics.pose().popPose();
+        this.renderBlurredBackground(partialTick);
+        this.renderMenuBackground(guiGraphics);
+    }
+
+    @Override
+    public void resize(Minecraft minecraft, int width, int height) {
+        if (oldScreen != null) {
+            oldScreen.resize(minecraft, width, height);
+        }
+        super.resize(minecraft, width, height);
     }
 
     @Override
