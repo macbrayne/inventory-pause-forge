@@ -16,10 +16,10 @@
     "environment": "client",
     "entrypoints": {
         "client": [
-          "de.macbrayne.inventorypause.InventoryPauseFabric"
+          "de.macbrayne.menupause.MenuPauseFabric"
         ],
         "modmenu": [
-            "de.macbrayne.inventorypause.ModMenuEntrypoint"
+            "de.macbrayne.menupause.ModMenuEntrypoint"
         ]
     },
     "mixins": [

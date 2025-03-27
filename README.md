@@ -1,5 +1,6 @@
-# Inventory Pause
-## Pause your singleplayer game when you open your inventory and more.
+# Menu Tickrate Control
+## formerly known as Inventory Pause
+## Customisable mod to pause menus or slow time down!
 
 ![](https://media.giphy.com/media/mCJQCNkacCMGpUDj3h/giphy.gif)
 

@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "de.macbrayne.menupause.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "${mod_id}.refmap.json",
+  "client": [
+    "MinecraftMixinFabric"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
+  
