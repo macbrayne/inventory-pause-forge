@@ -34,7 +34,7 @@ jobs:
           arguments: build modrinth curseforge
 
       - name: 🛠️ Publish with Gradle
-        run: gradle build modrinth curseforge
+        run: ./gradlew build modrinth curseforge
 
       - name: 📦 Upload artifacts
         uses: actions/upload-artifact@v4
