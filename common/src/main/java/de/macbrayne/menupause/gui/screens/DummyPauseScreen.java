@@ -13,7 +13,7 @@ public class DummyPauseScreen extends GenericMessageScreen {
     public final Screen oldScreen;
 
     public DummyPauseScreen(Screen oldScreen) {
-        super(Component.translatable("menu.inventorypause.pauseGameAnywhere.title"));
+        super(Component.translatable("menu.menupause.pauseGameAnywhere.title"));
         this.oldScreen = oldScreen;
     }
 

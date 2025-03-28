@@ -37,15 +37,15 @@ public class ConfigList extends ContainerObjectSelectionList<ConfigList.Entry> {
     private void initEntries() {
         CycleButton.Builder<PauseMode> onOffBuilder = CycleButton.builder(PauseMode::getDisplayName)
                 .withValues(PauseMode.OFF, PauseMode.ON);
-        var save = Tooltip.create(Component.translatable("menu.inventorypause.settings.disableSaving.tooltip"));
-        var sounds = Tooltip.create(Component.translatable("menu.inventorypause.settings.pauseSounds.tooltip"));
+        var save = Tooltip.create(Component.translatable("menu.menupause.settings.disableSaving.tooltip"));
+        var sounds = Tooltip.create(Component.translatable("menu.menupause.settings.pauseSounds.tooltip"));
         this.addEntry(new SplitEntry<>(new BorderedCycleButton(onOffBuilder.withInitialValue(config.disableSaving ? PauseMode.OFF : PauseMode.ON)
                 .withTooltip(pauseMode -> save)
-                .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings.disableSaving"), (button, state) -> {
+                .create(0, 0, 0, 0, Component.translatable("menu.menupause.settings.disableSaving"), (button, state) -> {
                     config.disableSaving = state == PauseMode.OFF;
                 })), new BorderedCycleButton(onOffBuilder.withInitialValue(config.pauseSounds ? PauseMode.ON : PauseMode.OFF)
                 .withTooltip(pauseMode -> sounds)
-                .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings.pauseSounds"), (button, state) -> {
+                .create(0, 0, 0, 0, Component.translatable("menu.menupause.settings.pauseSounds"), (button, state) -> {
                     config.pauseSounds = state == PauseMode.ON;
                 }))));
 
@@ -54,7 +54,7 @@ public class ConfigList extends ContainerObjectSelectionList<ConfigList.Entry> {
 
     private void initDynamicEntries() {
         Constants.LOG.debug("Adding dynamic buttons to config screen");
-        this.addEntry(new TextEntry(Component.translatable("menu.inventorypause.settings.title.pause")));
+        this.addEntry(new TextEntry(Component.translatable("menu.menupause.settings.title.pause")));
 
         CycleButton.Builder<PauseMode> builder = CycleButton.builder(PauseMode::getDisplayName)
                 .withValues(PauseMode.OFF, PauseMode.SLOWMO, PauseMode.ON)
@@ -84,18 +84,18 @@ public class ConfigList extends ContainerObjectSelectionList<ConfigList.Entry> {
                 for (int i = 0; i < texts.size(); i += 2) {
                     final int finalI = i;
                     addEntry(new SplitEntry<>(new BorderedCycleButton(builder.withInitialValue(config.states.get(texts.get(i)))
-                            .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings." + texts.get(finalI).content()), (button, state) -> {
+                            .create(0, 0, 0, 0, Component.translatable("menu.menupause.settings." + texts.get(finalI).content()), (button, state) -> {
                                 config.states.put(texts.get(finalI), state);
                             })), new BorderedCycleButton(builder.withInitialValue(config.states.get(texts.get(i + 1)))
-                            .create(0, 0, 0, 0, Component.translatable("menu.inventorypause.settings." + texts.get(finalI + 1).content()), (button, state) -> {
+                            .create(0, 0, 0, 0, Component.translatable("menu.menupause.settings." + texts.get(finalI + 1).content()), (button, state) -> {
                                 config.states.put(texts.get(finalI + 1), state);
                             }))));
                 }
             });
         }
         if (!MenuPause.MOD_CONFIG.settingsForModpacks.hideModCompatButton) {
-            addEntry(new SingleEntry<>(new Button.Builder(Component.translatable("menu.inventorypause.settings.mod_compat_options"), button -> this.minecraft.setScreen(new ModCompatScreen(parent)))
-                    .tooltip(Tooltip.create(Component.translatable("menu.inventorypause.settings.mod_compat_options.tooltip"))).build()));
+            addEntry(new SingleEntry<>(new Button.Builder(Component.translatable("menu.menupause.settings.mod_compat_options"), button -> this.minecraft.setScreen(new ModCompatScreen(parent)))
+                    .tooltip(Tooltip.create(Component.translatable("menu.menupause.settings.mod_compat_options.tooltip"))).build()));
         }
     }
 

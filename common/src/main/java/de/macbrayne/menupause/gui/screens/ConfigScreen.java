@@ -21,7 +21,7 @@ public class ConfigScreen extends Screen {
     public ConfigList modCompatList;
 
     public ConfigScreen(Screen lastScreen) {
-        super(Component.translatable("menu.inventorypause.settings.title"));
+        super(Component.translatable("menu.menupause.settings.title"));
         this.lastScreen = lastScreen;
         layout = new HeaderAndFooterLayout(this);
     }
@@ -67,7 +67,7 @@ public class ConfigScreen extends Screen {
                     MenuPause.MOD_CONFIG = diskVersion;
                 }
                 this.minecraft.setScreen(lastScreen);
-            }, Component.translatable("menu.inventorypause.settings.confirmation.title"), Component.translatable("menu.inventorypause.settings.confirmation.description")));
+            }, Component.translatable("menu.menupause.settings.confirmation.title"), Component.translatable("menu.menupause.settings.confirmation.description")));
         } else {
             this.minecraft.setScreen(lastScreen);
         }

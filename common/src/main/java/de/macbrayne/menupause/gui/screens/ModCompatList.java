@@ -27,7 +27,7 @@ import java.util.function.Supplier;
 
 public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.Entry> {
     private static final Logger LOGGER = Constants.LOG;
-    private static final String newEntry = Component.translatable("menu.inventorypause.settings.modCompat.new").getString();
+    private static final String newEntry = Component.translatable("menu.menupause.settings.modCompat.new").getString();
     private final Supplier<List<String>> modCompatSupplier;
     private final Supplier<List<String>> modCustomSupplier;
     private final List<ItemEntry> removedEntries = new ArrayList<>();
@@ -42,13 +42,13 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
     private void initEntries() {
         // Custom Screens
-        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.customScreens"),
-                Component.translatable("menu.inventorypause.settings.modCompat.customScreens.tooltip")));
+        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.menupause.settings.modCompat.customScreens"),
+                Component.translatable("menu.menupause.settings.modCompat.customScreens.tooltip")));
         ArrayList<String> modCustomClasses = new ArrayList<>(modCustomSupplier.get());
         for (String aClass : modCustomClasses) {
             this.addEntry(new CustomEntry(aClass));
         }
-        this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.customScreens.add"), addEntry -> button -> {
+        this.addEntry(new AddEntry(Component.translatable("menu.menupause.settings.modCompat.customScreens.add"), addEntry -> button -> {
             int i = children().indexOf(addEntry);
             children().add(i, new CustomEntry(newEntry));
             modCustomSupplier.get().add("");
@@ -57,16 +57,16 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         // Time Between Compat Ticks
         NumEntry numEntry = new ModCompatList.NumEntry(() -> MenuPause.MOD_CONFIG.modCompat.slowmoTickSpeed,
                 value -> MenuPause.MOD_CONFIG.modCompat.slowmoTickSpeed = value, 1);
-        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks"), numEntry::getTooltip));
+        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.menupause.settings.modCompat.timeBetweenCompatTicks"), numEntry::getTooltip));
         this.addEntry(numEntry);
 
-        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens"),
-                Component.translatable("menu.inventorypause.settings.modCompat.compatScreens.tooltip")));
+        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.menupause.settings.modCompat.compatScreens"),
+                Component.translatable("menu.menupause.settings.modCompat.compatScreens.tooltip")));
         ArrayList<String> modCompatClasses = new ArrayList<>(modCompatSupplier.get());
         for (String aClass : modCompatClasses) {
             this.addEntry(new CompatEntry(aClass));
         }
-        this.addEntry(new AddEntry(Component.translatable("menu.inventorypause.settings.modCompat.compatScreens.add"), addEntry -> (button) -> {
+        this.addEntry(new AddEntry(Component.translatable("menu.menupause.settings.modCompat.compatScreens.add"), addEntry -> (button) -> {
             int i = children().indexOf(addEntry);
             children().add(i, new CompatEntry(newEntry));
             modCustomSupplier.get().add("");
@@ -202,12 +202,12 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         public ItemEntry(String configValue, Supplier<List<String>> supplier, Button.CreateNarration moveButtonNarrationSupplier) {
             this.configValue = configValue;
             this.supplier = supplier;
-            this.removeButton = new HoverButton(0, 0, 20, 20, Component.translatable("menu.inventorypause.settings.modCompat.delete"), (button) -> {
+            this.removeButton = new HoverButton(0, 0, 20, 20, Component.translatable("menu.menupause.settings.modCompat.delete"), (button) -> {
                 ModCompatList.this.removeEntry(this);
                 removedEntries.add(this);
                 unfocusEntry();
-            }, p_253695_ -> Component.translatable("narrator.inventorypause.settings.modCompat.delete", configValue));
-            this.moveButton = new Button.Builder(Component.translatable("menu.inventorypause.settings.modCompat.moveUp"), button -> moveItem()).size(20, 20)
+            }, p_253695_ -> Component.translatable("narrator.menupause.settings.modCompat.delete", configValue));
+            this.moveButton = new Button.Builder(Component.translatable("menu.menupause.settings.modCompat.moveUp"), button -> moveItem()).size(20, 20)
                     .createNarration(moveButtonNarrationSupplier).build();
             this.editBox = new IndicatingEditBox(ModCompatList.this.minecraft.font, 180, 20);
             editBox.setMaxLength(512);
@@ -277,7 +277,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
     public class CompatEntry extends ItemEntry {
 
         public CompatEntry(String content) {
-            super(content, modCompatSupplier, p_253695_ -> Component.translatable("narrator.inventorypause.settings.modCompat.moveUp"));
+            super(content, modCompatSupplier, p_253695_ -> Component.translatable("narrator.menupause.settings.modCompat.moveUp"));
         }
 
         @Override
@@ -297,8 +297,8 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
 
     public class CustomEntry extends ItemEntry {
         public CustomEntry(String content) {
-            super(content, modCustomSupplier, p_253695_ -> Component.translatable("narrator.inventorypause.settings.modCompat.moveDown"));
-            getMoveButton().setMessage(Component.translatable("menu.inventorypause.settings.modCompat.moveDown"));
+            super(content, modCustomSupplier, contentSupplier -> Component.translatable("narrator.menupause.settings.modCompat.moveDown"));
+            getMoveButton().setMessage(Component.translatable("menu.menupause.settings.modCompat.moveDown"));
         }
 
         @Override
@@ -331,11 +331,11 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             this.numBox.setResponder(this::onEdit);
             this.numBox.setTooltip(Tooltip.create(getTooltip()));
 
-            this.resetButton = new HoverButton(0, 0, 40, 20, Component.translatable("menu.inventorypause.settings.modCompat.reset"), (button) -> {
+            this.resetButton = new HoverButton(0, 0, 40, 20, Component.translatable("menu.menupause.settings.modCompat.reset"), (button) -> {
                 this.numBox.setValue(String.valueOf(defaultValue));
                 this.onEdit(String.valueOf(defaultValue));
             }, p_253695_ -> Component.translatable("narrator.controls.reset", defaultValue));
-            resetButton.setTooltip(Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.reset.tooltip")));
+            resetButton.setTooltip(Tooltip.create(Component.translatable("menu.menupause.settings.modCompat.reset.tooltip")));
             onEdit(this.numBox.getValue());
         }
 
@@ -399,7 +399,7 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             if (!numBox.getValue().isEmpty()) {
                 valueInHertz = Integer.parseInt(numBox.getValue());
             }
-            return Component.translatable("menu.inventorypause.settings.modCompat.timeBetweenCompatTicks.tooltip",
+            return Component.translatable("menu.menupause.settings.modCompat.timeBetweenCompatTicks.tooltip",
                     String.format(locale, "%.2f", valueInHertz),
                     String.format(locale, "%.2f", (1 - 1 / (20f / valueInHertz)) * 100));
         }

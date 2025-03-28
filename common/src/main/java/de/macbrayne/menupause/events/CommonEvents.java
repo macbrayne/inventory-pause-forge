@@ -30,20 +30,20 @@ public class CommonEvents {
         }
 
         if (Constants.SCREEN_DICTIONARY.handleScreen(screen.getClass()) != PauseMode.OFF) {
-            Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.alreadyCovered"));
+            Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.menupause.addToList.error.alreadyCovered"));
             return;
         }
         if (MOD_CONFIG.modCompat.customScreens.contains(name)) {
-            Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.duplicate"));
+            Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.menupause.addToList.error.duplicate"));
             return;
         }
         if (screen.isPauseScreen()) {
-            Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.error.pausedScreen"));
+            Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.menupause.addToList.error.pausedScreen"));
             return;
         }
         MOD_CONFIG.modCompat.customScreens.add(name);
         ConfigHelper.serialize();
-        Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.inventorypause.addToList.action"));
+        Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.menupause.addToList.action"));
     }
 
     public static void pauseGameAction(Screen screen) {

@@ -19,24 +19,24 @@ public class ModEventBus {
     private static final Logger LOGGER = Constants.LOG;
     // Key mapping is lazily initialized, so it doesn't exist until it is registered
     public static final Lazy<KeyMapping> PAUSE_GAME = Lazy.of(() -> new KeyMapping(
-            "key.inventorypause.pauseGame", // Localisation
+            "key.menupause.pauseGame", // Localisation
             KeyConflictContext.UNIVERSAL, // Only open in-game
             InputConstants.UNKNOWN, // No default mapping
-            "key.categories.inventorypause.main" // Category localisation
+            "key.categories.menupause.main" // Category localisation
     ));
 
     public static final Lazy<KeyMapping> COPY_CLASS_NAME = Lazy.of(() -> new KeyMapping(
-            "key.inventorypause.addToList", // Localisation
+            "key.menupause.addToList", // Localisation
             KeyConflictContext.GUI, // Only open in-game
             InputConstants.UNKNOWN, // No default mapping
-            "key.categories.inventorypause.main" // Category localisation
+            "key.categories.menupause.main" // Category localisation
     ));
 
     public static final Lazy<KeyMapping> OPEN_SETTINGS = Lazy.of(() -> new KeyMapping(
-            "key.inventorypause.openSettings", // Localisation
+            "key.menupause.openSettings", // Localisation
             KeyConflictContext.IN_GAME, // Only open in-game
             InputConstants.UNKNOWN, // No default mapping
-            "key.categories.inventorypause.main" // Category localisation
+            "key.categories.menupause.main" // Category localisation
     ));
 
     public static void clientSetup(@SuppressWarnings("unused") FMLClientSetupEvent event) {

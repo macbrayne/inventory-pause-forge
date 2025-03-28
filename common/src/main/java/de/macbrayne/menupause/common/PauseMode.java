@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public enum PauseMode implements StringRepresentable {
     OFF("false", CommonComponents.OPTION_OFF.plainCopy().withStyle(ChatFormatting.RED)),
-    SLOWMO("slowmo", Component.translatable("menu.inventorypause.slowmo").withStyle(ChatFormatting.YELLOW)),
+    SLOWMO("slowmo", Component.translatable("menu.menupause.slowmo").withStyle(ChatFormatting.YELLOW)),
     ON("true", CommonComponents.OPTION_ON.plainCopy().withStyle(ChatFormatting.DARK_GREEN));
 
     public static final Codec<PauseMode> CODEC = StringRepresentable.fromEnum(PauseMode::values);

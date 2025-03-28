@@ -11,7 +11,7 @@ import net.minecraft.network.chat.Component;
 public record TriStateTooltip(Tooltip tooltipOn, Tooltip tooltipSlowmo, Tooltip tooltipOff) {
     static final Component TEXT_YES = CommonComponents.OPTION_ON.plainCopy().withStyle(ChatFormatting.DARK_GREEN);
     static final Component TEXT_NO = CommonComponents.OPTION_OFF.plainCopy().withStyle(ChatFormatting.RED);
-    static final Component TEXT_SLOWMO = Component.translatable("menu.inventorypause.slowmo").withStyle(ChatFormatting.YELLOW);
+    static final Component TEXT_SLOWMO = Component.translatable("menu.menupause.slowmo").withStyle(ChatFormatting.YELLOW);
 
     public static TriStateTooltip withState(Component tooltipComponent) {
         return new TriStateTooltip(appendTooltipTo(tooltipComponent, PauseMode.ON),
@@ -20,7 +20,7 @@ public record TriStateTooltip(Tooltip tooltipOn, Tooltip tooltipSlowmo, Tooltip 
     }
 
     public static Tooltip appendTooltipTo(Component text, PauseMode mode) {
-        String key = "menu.inventorypause.currentState." + mode.getSerializedName();
+        String key = "menu.menupause.currentState." + mode.getSerializedName();
         Component addendum = switch (mode) {
             case OFF -> Component.translatable(key, TEXT_NO);
             case SLOWMO -> Component.translatable(key, TEXT_SLOWMO);
