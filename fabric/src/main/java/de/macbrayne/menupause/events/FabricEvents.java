@@ -17,24 +17,24 @@ import org.lwjgl.glfw.GLFW;
 public class FabricEvents {
 
     public static final KeyMapping PAUSE_GAME = new KeyMapping(
-            "key.inventorypause.pauseGame", // Localisation
+            "key.menupause.pauseGame", // Localisation
             InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_UNKNOWN, // No default mapping
-            "key.categories.inventorypause.main" // Category localisation
+            "key.categories.menupause.main" // Category localisation
     );
 
     public static final KeyMapping COPY_CLASS_NAME = new KeyMapping(
-            "key.inventorypause.addToList", // Localisation
+            "key.menupause.addToList", // Localisation
             InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_UNKNOWN, // No default mapping
-            "key.categories.inventorypause.main" // Category localisation
+            "key.categories.menupause.main" // Category localisation
     );
 
     public static final KeyMapping OPEN_SETTINGS = new KeyMapping(
-            "key.inventorypause.openSettings", // Localisation
+            "key.menupause.openSettings", // Localisation
             InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_UNKNOWN, // No default mapping
-            "key.categories.inventorypause.main" // Category localisation
+            "key.categories.menupause.main" // Category localisation
     );
 
     public static void screenInit(Minecraft client, Screen screen, int scaledWidth, int scaledHeight) {

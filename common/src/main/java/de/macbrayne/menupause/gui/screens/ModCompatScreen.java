@@ -20,7 +20,7 @@ public class ModCompatScreen extends Screen {
     public ModCompatList modCompatList;
 
     protected ModCompatScreen(Screen lastScreen) {
-        super(Component.translatable("menu.inventorypause.settings.mod_compat_options"));
+        super(Component.translatable("menu.menupause.settings.mod_compat_options"));
         this.lastScreen = lastScreen;
     }
 
@@ -50,8 +50,8 @@ public class ModCompatScreen extends Screen {
             this.addRenderableWidget(new BorderedCycleButton(CycleButton.builder(PauseMode::getDisplayName)
                     .withValues(PauseMode.OFF, PauseMode.ON)
                     .withInitialValue(PauseMode.fromBoolean(MenuPause.MOD_CONFIG.debugText.debug))
-                    .withTooltip(value -> Tooltip.create(Component.translatable("menu.inventorypause.settings.modCompat.debug_mode.tooltip")))
-                    .create(x0, y, buttonWidth, height, Component.translatable("menu.inventorypause.settings.modCompat.debug_mode"), (button, value) -> {
+                    .withTooltip(value -> Tooltip.create(Component.translatable("menu.menupause.settings.modCompat.debug_mode.tooltip")))
+                    .create(x0, y, buttonWidth, height, Component.translatable("menu.menupause.settings.modCompat.debug_mode"), (button, value) -> {
                         MenuPause.MOD_CONFIG.debugText.debug = value == PauseMode.ON;
                     })));
         }

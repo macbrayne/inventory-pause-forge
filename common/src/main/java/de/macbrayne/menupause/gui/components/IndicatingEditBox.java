@@ -26,7 +26,7 @@ public class IndicatingEditBox extends EditBox {
         this.setResponder(s -> {
             this.status = parseClass(s);
             if(status != ClassStatus.OK) {
-                String translation = "menu.inventorypause.settings.modCompat.entry.tooltip." + switch (status) {
+                String translation = "menu.menupause.settings.modCompat.entry.tooltip." + switch (status) {
                     case NOT_A_SCREEN -> "not_a_screen";
                     case VANILLA -> "vanilla";
                     case INVALID -> "invalid";
