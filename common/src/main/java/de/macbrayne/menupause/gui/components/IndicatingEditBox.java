@@ -52,6 +52,11 @@ public class IndicatingEditBox extends EditBox {
         }
     }
 
+    @Override
+    public int getInnerWidth() {
+        return super.getInnerWidth() - warning.getWidth() - 5;
+    }
+
     private static ClassStatus parseClass(String name) {
         if(!name.contains(".") || name.startsWith("java")) {
             return ClassStatus.INVALID;
