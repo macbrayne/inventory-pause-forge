@@ -30,8 +30,6 @@ jobs:
       - name: 🤗 Setup Gradle, build and publish artifacts
         uses: gradle/actions/setup-gradle@v3
         continue-on-error: true
-        with:
-          arguments: build modrinth curseforge
 
       - name: 🛠️ Publish with Gradle
         run: ./gradlew build modrinth curseforge
