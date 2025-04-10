@@ -173,7 +173,7 @@ public class ModConfigTOML {
         states.put("pauseSmithing", convert.abilities.pauseSmithing);
         states.put("pauseLectern", convert.abilities.pauseLectern);
         states.put("pauseLoom", convert.abilities.pauseLoom);
-        states.put("pauseEnchantingTable", convert.abilities.pauseEnchantingTable);
+        states.put("pauseEnchantmentScreen", convert.abilities.pauseEnchantingTable);
 
         return new ModConfig(3, convert.disableSaving, convert.pauseSounds, KeyBehaviour.ForceUnpause.UNPAUSE, convert.debug, debugText, settingsForModpacks, modCompat, new GuiStates(states));
     }
