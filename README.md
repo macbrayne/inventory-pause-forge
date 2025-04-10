@@ -1,4 +1,4 @@
-# Menu Tickrate Control
+# Menu Pause
 ## formerly known as Inventory Pause
 ## Customisable mod to pause menus or slow time down!
 
