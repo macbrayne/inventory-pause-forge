@@ -27,7 +27,7 @@ updateJSONURL = "https://api.modrinth.com/updates/inventory-pause-forge/forge_up
 # A URL for the "homepage" for this mod, displayed in the mod UI
 displayURL="https://github.com/macbrayne/inventory-pause-forge/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-#logoFile="menupause.png" #optional
+logoFile="menupause.png" #optional
 # A text field displayed in the mod UI
 credits="${credits}" #optional
 # A text field displayed in the mod UI
