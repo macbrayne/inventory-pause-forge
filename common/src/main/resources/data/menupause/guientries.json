@@ -142,7 +142,7 @@
       "target": "net.minecraft.client.gui.screens.inventory.LoomScreen"
     },
     {
-      "config_entry": "pauseEnchantmentTable",
+      "config_entry": "pauseEnchantmentScreen",
       "icon": {
         "id":"minecraft:enchanting_table"
       },
