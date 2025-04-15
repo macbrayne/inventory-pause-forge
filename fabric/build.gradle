@@ -39,9 +39,21 @@ loom {
             ideConfigGenerated(true)
             runDir("runs/client")
         }
+
+        datagen {
+            client()
+            setConfigName("Fabric Data Generation")
+            ideConfigGenerated(true)
+
+            property("fabric-api.datagen")
+            property("fabric-api.datagen.strict-validation", "true") // '--all' sets '--validate' to true as well
+            property("fabric-api.datagen.output-dir", file("src/main/generated").absolutePath)
+            runDir("build/datagen")
+        }
     }
 }
 
+sourceSets.main.resources { srcDir "src/main/generated" }
 
 modrinth { // Make sure it runs after build!
     token = System.getenv("MODRINTH") // An environment property called MODRINTH that is your token, set via Gradle CLI, GitHub Actions, Idea Run Configuration, or other

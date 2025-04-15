@@ -41,4 +41,12 @@ public interface IPlatformHelper {
     Path getConfigDir();
 
     Path findResourceInOwningFile(String path);
+
+    default String mappingsFromDev(String clazz) {
+        return clazz;
+    }
+
+    default String mappingsToDev(String clazz) {
+        return clazz;
+    }
 }

@@ -137,6 +137,7 @@ public class ModConfig {
 
     public void save() {
         Path path = Services.PLATFORM.getConfigDir().resolve(Constants.MOD_ID + "/" + Constants.MOD_ID + ".json");
+        Constants.SCREEN_DICTIONARY.setLastScreenDirty();
         ConfigHelper.save(path, this, ModConfig.CODEC);
     }
 

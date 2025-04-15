@@ -68,7 +68,7 @@ public class ConfigHelper {
 
     public static void migrateConfigToJson() {
         ModConfigTOML config = deserialize();
-        if(config == null) {
+        if (config == null) {
             return;
         }
         ModConfig migratedConfig = ModConfigTOML.toV3(config);
@@ -99,23 +99,19 @@ public class ConfigHelper {
         return Optional.empty();
     }
 
-    public static<T> void save(Path path, T object, Codec<T> codec) {
-        LOGGER.info("Writing to file {}", path);
-        Constants.SCREEN_DICTIONARY.setLastScreenDirty();
-        try {
-            var gsonWriter = Files.newBufferedWriter(path);
+    public static <T> void save(Path path, T object, Codec<T> codec) {
+        LOGGER.info("Writing to file {}", path.toAbsolutePath());
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (var gsonWriter = Files.newBufferedWriter(path)) {
             var result = codec.encodeStart(JsonOps.INSTANCE, object).resultOrPartial(LOGGER::error);
-            if (result.isPresent()) {
-                gsonWriter.write(new GsonBuilder().setPrettyPrinting().create().toJson(result.get()));
-                gsonWriter.close();
-            }
+            gson.toJson(result.orElseThrow(), gsonWriter);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            LOGGER.error("Failed to write to file {}", path.toAbsolutePath(), e);
         }
     }
 
     public static void ensureConfigDirExists() {
-        if(!Files.exists(Services.PLATFORM.getConfigDir().resolve(Constants.MOD_ID))) {
+        if (!Files.exists(Services.PLATFORM.getConfigDir().resolve(Constants.MOD_ID))) {
             try {
                 Files.createDirectories(Services.PLATFORM.getConfigDir().resolve(Constants.MOD_ID));
             } catch (IOException e) {

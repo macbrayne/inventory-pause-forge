@@ -6,6 +6,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.macbrayne.menupause.common.PauseMode;
+import de.macbrayne.menupause.platform.Services;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
@@ -13,11 +14,12 @@ import java.util.Objects;
 public sealed class GuiEntry<T> permits GuiEntry.Icon, GuiEntry.Text {
     private static final Codec<Class<?>> CLASS_CODEC = Codec.STRING.comapFlatMap(className -> {
         try {
-            return DataResult.success(Class.forName(className, false, GuiEntry.class.getClassLoader()));
+            String mappedClassName = Services.PLATFORM.mappingsToDev(className);
+            return DataResult.success(Class.forName(mappedClassName, false, GuiEntry.class.getClassLoader()));
         } catch (ClassNotFoundException e) {
             return DataResult.error(() -> "Could not find class " + className);
         }
-    }, Class::getName);
+    }, aClass -> Services.PLATFORM.mappingsFromDev(aClass.getName()));
     private final String configEntry;
     private final T content;
     private final PauseMode defaultState;

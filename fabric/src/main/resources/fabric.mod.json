@@ -14,12 +14,16 @@
     "license": "${license}",
     "icon": "${mod_id}.png",
     "environment": "client",
+    "accessWidener" : "menupause.accesswidener",
     "entrypoints": {
         "client": [
           "de.macbrayne.menupause.MenuPauseFabric"
         ],
         "modmenu": [
             "de.macbrayne.menupause.ModMenuEntrypoint"
+        ],
+        "fabric-datagen": [
+            "de.macbrayne.menupause.datagen.MenuPauseDataGenerator"
         ]
     },
     "mixins": [
