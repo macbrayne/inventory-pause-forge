@@ -14,7 +14,6 @@ import net.neoforged.neoforge.common.NeoForge;
 @Mod(value = Constants.MOD_ID, dist = Dist.CLIENT)
 public class MenuPauseNeo {
     public MenuPauseNeo(IEventBus modEventBus) {
-        MenuPause.init();
         modEventBus.addListener(ModEventBus::clientSetup);
         modEventBus.addListener(ModEventBus::registerBindings);
         modEventBus.addListener(MenuPauseDataGenerator::onInitializeDataGenerator);

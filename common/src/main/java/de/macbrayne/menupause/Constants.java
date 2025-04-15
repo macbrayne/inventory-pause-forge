@@ -11,5 +11,5 @@ public class Constants {
 	public static final String MOD_ID = "menupause";
 	public static final String MOD_NAME = "MenuPause";
 	public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
-	public static final ScreenDictionary SCREEN_DICTIONARY = new ScreenDictionary();
+	public static ScreenDictionary SCREEN_DICTIONARY = new ScreenDictionary();
 }

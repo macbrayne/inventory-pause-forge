@@ -63,10 +63,11 @@ public class GuiStates {
     }
 
     public void registerScreens() {
-        ScreenDictionary dict = Constants.SCREEN_DICTIONARY;
+        ScreenDictionary dict = new ScreenDictionary();
         MenuPause.GUI_ENTRIES.entries().forEach(entry -> {
             dict.register(entry.target(), () -> get(entry));
         });
+        Constants.SCREEN_DICTIONARY = dict;
     }
 
     @Override

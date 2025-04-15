@@ -10,7 +10,6 @@ import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 public class MenuPauseFabric implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        MenuPause.init();
         FabricEvents.registerKeybindings();
         ClientTickEvents.END_CLIENT_TICK.register(FabricEvents::endClientTick);
         ScreenEvents.BEFORE_INIT.register(FabricEvents::screenInit);

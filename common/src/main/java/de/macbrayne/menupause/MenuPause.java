@@ -14,13 +14,11 @@ public class MenuPause {
     public static final GuiEntries GUI_ENTRIES = GuiEntries.loadEntries();
     public static ModConfig MOD_CONFIG = loadModConfig();
 
-    public static void init() {
-        MOD_CONFIG.states.registerScreens();
-    }
-
     public static ModConfig loadModConfig() {
         ConfigHelper.ensureConfigDirExists();
         ConfigHelper.migrateConfigToJson();
-        return ModConfig.load();
+        ModConfig config = ModConfig.load();
+        config.states.registerScreens();
+        return config;
     }
 }
