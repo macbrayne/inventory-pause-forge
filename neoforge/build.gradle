@@ -13,15 +13,22 @@ if (at.exists()) {
     minecraft.accessTransformers.file at
 }
 runs {
-    client {
+    configureEach {
+        modSource project.sourceSets.main
+
         dependencies {
             runtime('com.moandjiezana.toml:toml4j:0.7.2') {
                 transitive(false)
             }
         }
+    }
 
-        modSource project.sourceSets.main
+    client {
         systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+    }
+
+    data {
+        programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
     }
 }
 

@@ -21,7 +21,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.JsonOps;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
@@ -41,7 +40,7 @@ public abstract class FabricCodecDataProvider<T> implements DataProvider {
     private final CompletableFuture<HolderLookup.Provider> registriesFuture;
     private final Codec<T> codec;
 
-    protected FabricCodecDataProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registriesFuture, PackOutput.Target outputType, String directoryName, Codec<T> codec) {
+    protected FabricCodecDataProvider(PackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registriesFuture, PackOutput.Target outputType, String directoryName, Codec<T> codec) {
         this.pathResolver = dataOutput.createPathProvider(outputType, directoryName);
         this.registriesFuture = Objects.requireNonNull(registriesFuture);
         this.codec = codec;

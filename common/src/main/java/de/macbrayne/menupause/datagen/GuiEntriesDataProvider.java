@@ -4,7 +4,6 @@ package de.macbrayne.menupause.datagen;
 
 import de.macbrayne.menupause.config.GuiEntries;
 import de.macbrayne.menupause.config.GuiEntry;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +15,7 @@ import java.util.function.BiConsumer;
 
 public abstract class GuiEntriesDataProvider extends FabricCodecDataProvider<GuiEntries> {
 
-    protected GuiEntriesDataProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+    protected GuiEntriesDataProvider(PackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(dataOutput, registriesFuture, PackOutput.Target.DATA_PACK, "", GuiEntries.ENTRIES_CODEC);
     }
 

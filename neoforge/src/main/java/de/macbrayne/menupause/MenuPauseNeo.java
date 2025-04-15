@@ -2,6 +2,7 @@
 
 package de.macbrayne.menupause;
 
+import de.macbrayne.menupause.datagen.MenuPauseDataGenerator;
 import de.macbrayne.menupause.events.ForgeEventBus;
 import de.macbrayne.menupause.events.ModEventBus;
 import net.neoforged.api.distmarker.Dist;
@@ -16,6 +17,7 @@ public class MenuPauseNeo {
         MenuPause.init();
         modEventBus.addListener(ModEventBus::clientSetup);
         modEventBus.addListener(ModEventBus::registerBindings);
+        modEventBus.addListener(MenuPauseDataGenerator::onInitializeDataGenerator);
         NeoForge.EVENT_BUS.addListener(ForgeEventBus::onGUIDrawPost);
         NeoForge.EVENT_BUS.addListener(ForgeEventBus::onScreenEvent);
         NeoForge.EVENT_BUS.addListener(ForgeEventBus::onClientTick);
