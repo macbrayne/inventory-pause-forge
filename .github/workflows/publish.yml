@@ -31,8 +31,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
 
       - name: 🛠️ Publish with Gradle
-        run: ./gradlew build modrinth curseforge
-        continue-on-error: true
+        run: ./gradlew :fabric:runDatagen :neoforge:runData build modrinth curseforge
 
       - name: 📦 Upload artifacts
         uses: actions/upload-artifact@v4
