@@ -29,6 +29,7 @@ tasks.named('compileJava', JavaCompile) {
 processResources {
     dependsOn(configurations.commonResources)
     from(configurations.commonResources)
+    exclude('.cache/**')
 }
 
 tasks.named('javadoc', Javadoc).configure {
