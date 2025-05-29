@@ -23,7 +23,7 @@ public abstract class GuiEntriesDataProvider extends FabricCodecDataProvider<Gui
     protected void configure(BiConsumer<ResourceLocation, GuiEntries> provider, HolderLookup.Provider lookup) {
         List<GuiEntry<?>> entries = new ArrayList<>();
         accept(entries);
-        provider.accept(new ResourceLocation("menupause", "guientries"), new GuiEntries(entries));
+        provider.accept(ResourceLocation.fromNamespaceAndPath("menupause", "guientries"), new GuiEntries(entries));
     }
 
 
