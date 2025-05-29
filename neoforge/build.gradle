@@ -28,11 +28,11 @@ runs {
     }
 
     data {
-        programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        programArguments.addAll '--mod', project.mod_id, '--all', '--flat', '--output', file('src/main/generated').getAbsolutePath(), '--existing', file('src/main/resources').getAbsolutePath()
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
+sourceSets.main.resources { srcDir 'src/main/generated' }
 
 dependencies {
     implementation "net.neoforged:neoforge:${neoforge_version}"
