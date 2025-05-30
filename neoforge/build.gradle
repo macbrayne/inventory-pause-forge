@@ -26,6 +26,7 @@ neoForge {
         }
         data {
             data()
+            programArguments.addAll '--mod', project.mod_id, '--all', '--flat', '--output', file('src/main/generated').getAbsolutePath(), '--existing', file('src/main/resources').getAbsolutePath()
         }
     }
     mods {
