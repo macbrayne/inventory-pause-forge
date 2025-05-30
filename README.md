@@ -13,8 +13,8 @@ This lightweight __client-side mod__ supports pausing or even just slowing down 
 
 and supports modded screens (configurable)!
 
-_If a modded screen behaves weirdly when paused try adding it to the list of "Compat mod class names" to make it slow down instead of pausing it._
-Screens can be configured individually inside the config menu.
+_If a modded screen behaves weirdly when paused (e.g. missing functionality) try moving it to the list of "Custom screens to slow down"._
+Screens can be configured individually in the config menu.
 
 This mod is __client-side only__ and won't be active in LAN worlds or on servers.
 
