@@ -40,7 +40,7 @@ sourceSets.main.resources { srcDir 'src/main/generated' }
 dependencies {
     // Mod Dependencies
     jarJar(implementation('com.moandjiezana.toml:toml4j:0.7.2')) {
-        transitive(false)
+        transitive = false
     }
     additionalRuntimeClasspath "com.moandjiezana.toml:toml4j:0.7.2"
 }
