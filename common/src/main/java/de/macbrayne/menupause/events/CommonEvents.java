@@ -42,7 +42,7 @@ public class CommonEvents {
             return;
         }
         MOD_CONFIG.modCompat.customScreens.add(name);
-        ConfigHelper.serialize();
+        MOD_CONFIG.save();
         Minecraft.getInstance().player.sendSystemMessage(Component.translatable("chat.menupause.addToList.action"));
     }
 

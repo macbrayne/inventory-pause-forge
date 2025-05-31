@@ -6,11 +6,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.moandjiezana.toml.Toml;
-import com.moandjiezana.toml.TomlWriter;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import de.macbrayne.menupause.Constants;
-import de.macbrayne.menupause.MenuPause;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -25,18 +23,6 @@ import org.slf4j.Logger;
 
 public class ConfigHelper {
     private static final Logger LOGGER = Constants.LOG;
-    private static final TomlWriter writer = new TomlWriter();
-
-    public static void serialize() {
-        LOGGER.info("Writing config to file");
-        Constants.SCREEN_DICTIONARY.setLastScreenDirty();
-        try {
-            writer.write(MenuPause.MOD_CONFIG, Services.PLATFORM.getConfigDir().resolve("inventorypause.toml").toFile());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 
     public static ModConfigTOML deserialize() {
         LOGGER.debug("Trying to load config from file");
@@ -51,9 +37,7 @@ public class ConfigHelper {
             } catch (Exception ignored) {
                 try {
                     ModConfigTOML migratedConfig = ModConfigV1.toV2(new Toml().read(path.toFile()).to(ModConfigV1.class));
-                    LOGGER.warn("V1 config detected, migrating to V2 and moving old config to inventorypause.toml.old");
-                    Files.copy(Services.PLATFORM.getConfigDir().resolve("inventorypause.toml"), Services.PLATFORM.getConfigDir().resolve("inventorypause.toml.old"), StandardCopyOption.REPLACE_EXISTING);
-                    writer.write(migratedConfig, Services.PLATFORM.getConfigDir().resolve("inventorypause.toml").toFile());
+                    LOGGER.warn("V1 config detected, migrating to V2 and attempting conversion to JSON");
                     LOGGER.warn("Migration complete");
                     return migratedConfig;
                 } catch (Exception e) {
