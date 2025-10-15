@@ -2,7 +2,7 @@ plugins {
     id 'multiloader-loader'
     id 'fabric-loom' version '1.10-SNAPSHOT'
     id "com.modrinth.minotaur" version "2.+"
-    id "net.darkhax.curseforgegradle" version "1.1.24"
+    id "net.darkhax.curseforgegradle" version "1.1.28"
 }
 
 repositories {
