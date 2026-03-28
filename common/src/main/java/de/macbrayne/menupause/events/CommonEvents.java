@@ -13,6 +13,7 @@ import it.unimi.dsi.fastutil.booleans.BooleanConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.PauseScreen;
+import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.options.controls.KeyBindsScreen;
 import net.minecraft.network.chat.Component;
@@ -62,7 +63,8 @@ public class CommonEvents {
         TickrateController controller = (TickrateController) Minecraft.getInstance();
         boolean isSlowmo = controller.menupause$isSlowMotion();
         float originalTickRate = controller.menupause$getOriginalTickRate();
-        if (newScreen != oldScreen) {
+        if (newScreen != oldScreen &&
+                !(newScreen instanceof ReceivingLevelScreen)) { // Tick rate change sometimes doesn't register when respawning (changing level?)
             if (newScreen != null && ScreenHelper.isSlowmoScreen(newScreen) && !isSlowmo) {
                 ServerTickRateManager servertickratemanager = Minecraft.getInstance().getSingleplayerServer().tickRateManager();
                 float newTickRate = MOD_CONFIG.modCompat.slowmoTickSpeed;
