@@ -14,15 +14,12 @@ import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.network.chat.Component;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.util.*;
 import java.util.function.Function;
-import java.util.function.IntConsumer;
-import java.util.function.IntSupplier;
 import java.util.function.Supplier;
 
 public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.Entry> {
@@ -53,12 +50,6 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
             children().add(i, new CustomEntry(newEntry));
             modCustomSupplier.get().add("");
         }));
-
-        // Time Between Compat Ticks
-        NumEntry numEntry = new ModCompatList.NumEntry(() -> MenuPause.MOD_CONFIG.modCompat.slowmoTickSpeed,
-                value -> MenuPause.MOD_CONFIG.modCompat.slowmoTickSpeed = value, 1);
-        this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.menupause.settings.modCompat.timeBetweenCompatTicks"), numEntry::getTooltip));
-        this.addEntry(numEntry);
 
         this.addEntry(new ModCompatList.SectionEntry(Component.translatable("menu.menupause.settings.modCompat.compatScreens"),
                 Component.translatable("menu.menupause.settings.modCompat.compatScreens.tooltip")));
@@ -316,95 +307,6 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
     }
 
-    public class NumEntry extends Entry implements Saveable {
-        private final IntConsumer valueConsumer;
-        private final EditBox numBox;
-        private final Button resetButton;
-
-
-        public NumEntry(IntSupplier valueSupplier, IntConsumer valueConsumer, int defaultValue) {
-            this.valueConsumer = valueConsumer;
-            this.numBox = new EditBox(ModCompatList.this.minecraft.font, 0, 0, 180, 20, Component.empty());
-            this.numBox.setMaxLength(2);
-            this.numBox.setValue(String.valueOf(valueSupplier.getAsInt()));
-            this.numBox.setFilter(s -> s.isEmpty() || (NumberUtils.isParsable(s) && !s.contains("-")));
-            this.numBox.setResponder(this::onEdit);
-            this.numBox.setTooltip(Tooltip.create(getTooltip()));
-
-            this.resetButton = new HoverButton(0, 0, 40, 20, Component.translatable("menu.menupause.settings.modCompat.reset"), (button) -> {
-                this.numBox.setValue(String.valueOf(defaultValue));
-                this.onEdit(String.valueOf(defaultValue));
-            }, p_253695_ -> Component.translatable("narrator.controls.reset", defaultValue));
-            resetButton.setTooltip(Tooltip.create(Component.translatable("menu.menupause.settings.modCompat.reset.tooltip")));
-            onEdit(this.numBox.getValue());
-        }
-
-        private void onEdit(String currentValue) {
-            ((MutableTooltip) numBox.getTooltip()).menupause$updateMessage(minecraft, getTooltip());
-            this.resetButton.active = !currentValue.equals("1");
-        }
-
-        @Override
-        public @NotNull List<? extends NarratableEntry> narratables() {
-            return ImmutableList.of(numBox, resetButton);
-        }
-
-        @Override
-        public void render(@NotNull GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            this.numBox.render(guiGraphics, mouseX, mouseY, tickDelta);
-            this.resetButton.render(guiGraphics, mouseX, mouseY, tickDelta);
-            this.resetButton.setX(x + 190 - 10);
-            this.resetButton.setY(y);
-            this.resetButton.render(guiGraphics, mouseX, mouseY, tickDelta);
-            this.numBox.setX(x);
-            this.numBox.setY(y);
-            this.numBox.setWidth(190 - 15);
-            this.numBox.render(guiGraphics, mouseX, mouseY, tickDelta);
-        }
-
-        @Override
-        public void setFocused(boolean state) {
-            super.setFocused(state);
-            if (getFocused() == numBox) {
-                numBox.setFocused(state);
-            }
-            if(Integer.parseInt(numBox.getValue()) > 20) {
-                numBox.setValue("20");
-                LOGGER.info("Tick rate cannot be higher than 20");
-            }
-        }
-
-        @Override
-        public @NotNull List<? extends GuiEventListener> children() {
-            return ImmutableList.of(numBox, resetButton);
-        }
-
-        @Override
-        public void save() {
-            if (numBox.getValue().isEmpty()) {
-                return;
-            }
-            int value = Math.abs(Integer.parseInt(this.numBox.getValue()));
-            if (value > 0) {
-                valueConsumer.accept(value);
-            }
-        }
-
-        public Component getTooltip() {
-            String selected = Minecraft.getInstance().getLanguageManager().getSelected();
-            final String[] langSplit = selected.split("_", 2);
-            var locale = langSplit.length == 1 ? new java.util.Locale(langSplit[0]) : new java.util.Locale(langSplit[0], langSplit[1]);
-
-            float valueInHertz = 20f;
-            if (!numBox.getValue().isEmpty()) {
-                valueInHertz = Integer.parseInt(numBox.getValue());
-            }
-            return Component.translatable("menu.menupause.settings.modCompat.timeBetweenCompatTicks.tooltip",
-                    String.format(locale, "%.2f", valueInHertz),
-                    String.format(locale, "%.2f", (1 - 1 / (20f / valueInHertz)) * 100));
-        }
-    }
-
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (!this.isMouseOver(mouseX, mouseY)) {
@@ -435,7 +337,4 @@ public class ModCompatList extends ContainerObjectSelectionList<ModCompatList.En
         }
     }
 
-    interface Saveable {
-        void save();
-    }
 }

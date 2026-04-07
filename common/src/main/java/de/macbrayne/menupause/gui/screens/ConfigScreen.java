@@ -34,9 +34,11 @@ public class ConfigScreen extends Screen {
         LinearLayout linear = LinearLayout.horizontal().spacing(8);
         linear.addChild(new Button.Builder(CommonComponents.GUI_CANCEL, (p_96788_) -> {
             MenuPause.MOD_CONFIG = ModConfig.load();
+            resetChanges();
             onClose();
         }).build());
         linear.addChild(new Button.Builder(CommonComponents.GUI_DONE, (p_96786_) -> {
+            saveChanges();
             MenuPause.MOD_CONFIG.save();
             onClose();
         }).build());
@@ -49,6 +51,22 @@ public class ConfigScreen extends Screen {
         });
     }
 
+    public void saveChanges() {
+        for (ConfigList.Entry item : modCompatList.children()) {
+            if (item instanceof Saveable saveable) {
+                saveable.save();
+            }
+        }
+    }
+
+    public void resetChanges() {
+        for (ConfigList.Entry item : modCompatList.children()) {
+            if (item instanceof Saveable saveable) {
+                saveable.reset();
+            }
+        }
+    }
+
     @Override
     protected void repositionElements() {
         this.modCompatList.setSize(this.width, this.layout.getContentHeight());
@@ -58,10 +76,21 @@ public class ConfigScreen extends Screen {
 
     @Override
     public void onClose() {
+        boolean isDirty = false;
+        for (ConfigList.Entry item : modCompatList.children()) {
+            if (item instanceof Saveable saveable) {
+                if (saveable.isDirty()) {
+                    isDirty = true;
+                    break;
+                }
+            }
+        }
         ModConfig diskVersion = ModConfig.load();
-        if (!diskVersion.equals(MenuPause.MOD_CONFIG)) {
+
+        if (isDirty || !diskVersion.equals(MenuPause.MOD_CONFIG)) {
             this.minecraft.setScreen(new ConfirmScreen(userAccepted -> {
                 if (userAccepted) {
+                    saveChanges();
                     MenuPause.MOD_CONFIG.save();
                 } else {
                     MenuPause.MOD_CONFIG = diskVersion;
